@@ -1,0 +1,42 @@
+#pragma once
+
+#include "object.h"
+#include "stdafx.h"
+
+class PLAYER : public OBJECT
+{
+private:
+	float _fMaxHealthPoint;			//최대 생명력
+	float _fCurrentHealthPoint;		//현재 생명력
+	float _fSpeed;					//속도
+	float _fArmor;					//방어력
+	float _fEvasion;				//회피율
+	float _fCriticalHit;			//치명타율
+
+	float _fPosMovingX;				//움직이는 용 x
+	float _fPosMovingY;				//움직이는 용 y
+	int		_nCollsionMovingWidth;	//움직임 충돌용 가로
+	int		_nCollsionMovingHeight;	//움직임 충돌용 세로
+
+	//위자드오브레전드는 이동 타일을 확인하는 용의 사각형과 중앙값을 따로 가지고 있어야한다.
+	//플레이어를 가볍게 상하로 구분하고 아래 사각형을 이동시 충돌 렉트로 한다
+
+	float _fSkillDelayTime[6];			//스킬 딜레이 시간//스킬 세팅된것이 6개 있다고 치자...
+public:
+	PLAYER();
+	~PLAYER();
+
+	//씬이 끝나면 다른 것이 저장 되야 할 수 있기에 필요
+	void load();
+	//씬이 끝나면 저장이 필요하다. 스킬은 무엇을 들고 있는지 망토는 무엇인지 등등의 정보를 저장한다.
+	void save();
+	//초기화
+	void init();
+
+
+	//자식들에서 재정의 필수
+	virtual void update()			override;
+	virtual void release()			override;
+	virtual void render(HDC hdc)	override;
+
+};

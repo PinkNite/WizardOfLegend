@@ -18,6 +18,7 @@ private:
 	float	_travelRangeX;
 	float	_travelRangeY;
 	RECT	_rcCameraLimit;
+	
 
 public:
 	CAMERA();
@@ -28,14 +29,8 @@ public:
 
 	void render(HDC hdc);
 	void renderinit();
-	image* getCameraBuffer() { return _pCameraBuffer; }
-	HDC getMemDC() { return _pCameraBuffer->getMemDC(); }
-	
-
-	void	setting(int nPosX,int nPosY);
-	void	setMap(image* background);
-
-	void	settingCameraRange(int nLeft, int nTop, int nRight, int nBottom);
+	void	setting(int nPosX,int nPosY);										//중점 좌표를 잡는다
+	void	settingCameraRange(int nLeft, int nTop, int nRight, int nBottom);	//카메라 그리는 영역을 설정
 private:
 	void	setLeftTop();
 
@@ -45,7 +40,6 @@ public:
 	void	moveLeft(float offset);
 	void	moveUp(float offset);
 	void	moveDown(float offset);
-
 
 	void	outOfRange();
 
@@ -59,4 +53,10 @@ public:
 	inline	bool getMoving() { return _isMoving; }
 
 	inline	RECT getLimitRect() { return _rcCameraLimit; }
+
+
+public:
+	image * getCameraBuffer() { return _pCameraBuffer; }
+	HDC getMemDC() { return _pCameraBuffer->getMemDC(); }
+	void	setCameraBuffer(image* pImg) { _pCameraBuffer = pImg; }
 };

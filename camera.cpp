@@ -17,9 +17,9 @@ void CAMERA::init(int posX, int posY, int width, int height)
 	_height = height;
 	setLeftTop();
 
-	_rcCameraLimit = { 0,0,CAMERASIZEX,CAMERASIZEY };
+	_rcCameraLimit = { 0,0,_width,_height };
 
-	_pCameraBuffer = IMAGEMANAGER->addImage("camera", CAMERASIZEX,CAMERASIZEY);
+	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _width, _height);
 }
 
 void CAMERA::update()
@@ -33,7 +33,7 @@ void CAMERA::render(HDC hdc)
 
 void CAMERA::renderinit()
 {
-	PatBlt(_pCameraBuffer->getMemDC(), 0, 0, CAMERASIZEX, CAMERASIZEY, WHITENESS);
+	PatBlt(_pCameraBuffer->getMemDC(), 0, 0, _width, _height, WHITENESS);
 
 }
 
@@ -45,9 +45,7 @@ void CAMERA::setting(int nPosX, int nPosY)
 	setLeftTop();
 }
 
-void CAMERA::setMap(image * background)
-{
-}
+
 
 void CAMERA::settingCameraRange(int nLeft, int nTop, int nRight, int nBottom)
 {

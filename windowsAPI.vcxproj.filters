@@ -64,6 +64,9 @@
     <Filter Include="PlayGround\Scene\mapedit">
       <UniqueIdentifier>{80026794-264f-4b98-bca4-562a4c7dd489}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\player">
+      <UniqueIdentifier>{542a0739-2cf5-4e8e-8fc9-34ab102babaa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -165,6 +168,9 @@
     <ClInclude Include="mapEdit.h">
       <Filter>PlayGround\Scene\mapedit</Filter>
     </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>PlayGround\player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -253,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="mapEdit.cpp">
       <Filter>PlayGround\Scene\mapedit</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>PlayGround\player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
