@@ -91,8 +91,6 @@ void gameNode::render()
 
 LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	PAINTSTRUCT ps;		//조사 한 번 해바밤바1
-	HDC			hdc;	//조사 한 번 해바밤바2
 
 	switch (iMessage)
 	{
@@ -109,8 +107,8 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		break;
 
 		case WM_MOUSEMOVE:
-			_ptMouse.x = static_cast<float>(LOWORD(lParam));
-			_ptMouse.y = static_cast<float>(HIWORD(lParam));
+			_ptMouse.x = static_cast<LONG>(LOWORD(lParam));
+			_ptMouse.y = static_cast<LONG>(HIWORD(lParam));
 
 		break;
 

@@ -55,6 +55,15 @@
     <Filter Include="2DFramework\Astar">
       <UniqueIdentifier>{b138a597-909f-472c-9327-199aecf80f8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\Scene">
+      <UniqueIdentifier>{8b170f82-b69e-4865-9700-0c8169e747c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\Scene\stage">
+      <UniqueIdentifier>{5e6a1754-9a1a-4972-b92d-9fd776d49e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\Scene\mapedit">
+      <UniqueIdentifier>{80026794-264f-4b98-bca4-562a4c7dd489}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -150,6 +159,12 @@
     <ClInclude Include="object.h">
       <Filter>PlayGround</Filter>
     </ClInclude>
+    <ClInclude Include="stageScene.h">
+      <Filter>PlayGround\Scene\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="mapEdit.h">
+      <Filter>PlayGround\Scene\mapedit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -232,6 +247,12 @@
     </ClCompile>
     <ClCompile Include="object.cpp">
       <Filter>PlayGround</Filter>
+    </ClCompile>
+    <ClCompile Include="stageScene.cpp">
+      <Filter>PlayGround\Scene\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="mapEdit.cpp">
+      <Filter>PlayGround\Scene\mapedit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

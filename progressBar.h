@@ -22,8 +22,8 @@ public:
 
 	void setGauge(float currentGauge, float maxGauge);
 
-	void setX(int x) { _x = x; }
-	void setY(int y) { _y = y; }
+	void setX(float x) { _x = x; }
+	void setY(float y) { _y = y; }
 
 };
 

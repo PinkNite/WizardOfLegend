@@ -420,14 +420,14 @@ void MAPTOOL::save()
 	
 	file = CreateFile("map01.map", GENERIC_WRITE, NULL, NULL,
 		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	WriteFile(file, strTmp.c_str(), strTmp.length(), &write, NULL);
+	WriteFile(file, strTmp.c_str(), static_cast<DWORD>(strTmp.length()), &write, NULL);
 	CloseHandle(file);
 
 	strTmp.clear();
 	strTmp.append(setSaveMapTool());
 	file = CreateFile("mapFull01.map", GENERIC_WRITE, NULL, NULL,
 		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	WriteFile(file, strTmp.c_str(), strTmp.length(), &write, NULL);
+	WriteFile(file, strTmp.c_str(), static_cast<DWORD>(strTmp.length()), &write, NULL);
 	CloseHandle(file);
 }
 
@@ -527,6 +527,8 @@ int MAPTOOL::getPacManPosX()
 			}
 		}
 	}
+
+	return 0;
 }
 
 int MAPTOOL::getPacManPosY()
@@ -541,6 +543,7 @@ int MAPTOOL::getPacManPosY()
 			}
 		}
 	}
+	return 0;
 }
 
 void MAPTOOL::deleteObject()
@@ -619,5 +622,6 @@ int MAPTOOL::getEnemyPosY(TILE::OBJECT enemy)
 			}
 		}
 	}
+	return 0;
 }
 

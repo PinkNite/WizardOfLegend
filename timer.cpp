@@ -56,7 +56,7 @@ void timer::tick(float lockFPS)
 	if (_FPSTimeElapsed > 1.0f)
 	{
 		_frameRate = _FPSFrameCount;
-		_FPSFrameCount = 0.0f;
+		_FPSFrameCount = 0;
 		_FPSTimeElapsed = 0.0f;
 	}
 }
