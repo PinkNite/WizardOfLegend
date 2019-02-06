@@ -330,7 +330,7 @@ void MAPTOOL::readjustMap()
 					//À§ÂÊ Å½»ö °¡´É
 					if (_vvMap[j-1][i]->getIsWall())
 					{
-						nFrame |= TOP;
+						nFrame |= MAP_TOP;
 					}
 				}
 
@@ -339,7 +339,7 @@ void MAPTOOL::readjustMap()
 					//¾Æ·¡ Å½»ö °¡´É
 					if (_vvMap[j + 1][i]->getIsWall())
 					{
-						nFrame |= BOTTOM;
+						nFrame |= MAP_BOTTOM;
 					}
 					
 				}
@@ -349,7 +349,7 @@ void MAPTOOL::readjustMap()
 					//ÁÂÃø Å½»ö °¡´É
 					if (_vvMap[j][i - 1]->getIsWall())
 					{
-						nFrame |= LEFT;
+						nFrame |= MAP_LEFT;
 					}
 				}
 
@@ -359,7 +359,7 @@ void MAPTOOL::readjustMap()
 					
 					if (_vvMap[j][i + 1]->getIsWall())
 					{
-						nFrame |= RIGHT;
+						nFrame |= MAP_RIGHT;
 					}
 				}
 
@@ -368,7 +368,7 @@ void MAPTOOL::readjustMap()
 				//	//ÁÂ»ó Å½»ö °¡´É
 				//	if (_vvMap[j-1][i-1]->getIsWall())
 				//	{
-				//		nFrame |= LEFT_TOP;
+				//		nFrame |= MAP_LEFT_TOP;
 				//	}
 				//}
 
@@ -377,7 +377,7 @@ void MAPTOOL::readjustMap()
 				//	//¿ì»ó Å½»ö °¡´É
 				//	if (_vvMap[j - 1][i + 1]->getIsWall())
 				//	{
-				//		nFrame |= RIGHT_TOP;
+				//		nFrame |= MAP_RIGHT_TOP;
 				//	}
 				//}
 
@@ -386,7 +386,7 @@ void MAPTOOL::readjustMap()
 				//	//ÁÂÇÏ Å½»ö °¡´É
 				//	if (_vvMap[j + 1][i - 1]->getIsWall())
 				//	{
-				//		nFrame |= LEFT_BOTTOM;
+				//		nFrame |= MAP_LEFT_BOTTOM;
 				//	}
 				//}
 
@@ -395,7 +395,7 @@ void MAPTOOL::readjustMap()
 				//	//¿ìÇÏ Å½»ö °¡´É
 				//	if (_vvMap[j + 1][i + 1]->getIsWall())
 				//	{
-				//		nFrame |= RIGHT_BOTTOM;
+				//		nFrame |= MAP_RIGHT_BOTTOM;
 				//	}
 				//}
 				

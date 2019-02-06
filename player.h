@@ -5,6 +5,31 @@
 
 class PLAYER : public OBJECT
 {
+public:
+	enum class DIRECTION
+	{
+		LEFT = 0,
+		RIGHT,
+		UP,
+		DOWN,
+		MAX
+	};
+
+	enum class ACTION
+	{
+		IDLE = 0,
+		RUN,
+		DASH,
+		ATTACK_MOTION_01,
+		ATTACK_MOTION_02,
+		ATTACK_MOTION_03,
+		ATTACK_MOTION_04,
+		DAMAGE,
+		DEATH,
+		MAX
+	};
+
+
 private:
 	float _fMaxHealthPoint;			//최대 생명력
 	float _fCurrentHealthPoint;		//현재 생명력
@@ -13,8 +38,8 @@ private:
 	float _fEvasion;				//회피율
 	float _fCriticalHit;			//치명타율
 
-	float _fPosMovingX;				//움직이는 용 x
-	float _fPosMovingY;				//움직이는 용 y
+	float	_fPosMovingX;				//움직이는 용 x
+	float	_fPosMovingY;				//움직이는 용 y
 	int		_nCollsionMovingWidth;	//움직임 충돌용 가로
 	int		_nCollsionMovingHeight;	//움직임 충돌용 세로
 
@@ -22,6 +47,16 @@ private:
 	//플레이어를 가볍게 상하로 구분하고 아래 사각형을 이동시 충돌 렉트로 한다
 
 	float _fSkillDelayTime[6];			//스킬 딜레이 시간//스킬 세팅된것이 6개 있다고 치자...
+
+	// 방향과 액션의 이름
+	string _arDirection[static_cast<const int>(DIRECTION::MAX)];
+	string _arAction[static_cast<const int>(ACTION::MAX)];
+	
+	RECT	_rcMovingCollision;
+	RECT	_rcDamageCollision;
+	//오브젝트의 사각형은 없는 취급 할것이다.
+	//이미지 사이즈가 오브젝트에 비해 월등이 크기 때문이다.
+
 public:
 	PLAYER();
 	~PLAYER();
