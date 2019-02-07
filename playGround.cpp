@@ -17,13 +17,15 @@ HRESULT playGround::init()
 	gameNode::init(true);
 	
 	
-	MapEditScene = new MAPEDIT();
-	stageScene = new STAGESCENE();
+	_pMapEditScene = new MAPEDIT();
+	_pstageScene = new STAGESCENE();
+	_pMinTest = new MINTESTSCENE();
 
-	SCENEMANAGER->addScene("mapEditScene", MapEditScene);
-	SCENEMANAGER->addScene("stageScene", stageScene);
+	SCENEMANAGER->addScene("mapEditScene", _pMapEditScene);
+	SCENEMANAGER->addScene("stageScene", _pstageScene);
+	SCENEMANAGER->addScene("MinTest", _pMinTest);
 
-	SCENEMANAGER->changeScene("mapEditScene");
+	SCENEMANAGER->changeScene("MinTest");
 
 	return S_OK;
 }

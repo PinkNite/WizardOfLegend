@@ -1,14 +1,15 @@
 #pragma once
 #include "gameNode.h"
-
 #include "mapEdit.h"
 #include "stageScene.h"
+#include "minTest.h"
 
 class playGround : public gameNode
 {
 private:
-	gameNode *	MapEditScene;
-	gameNode*	stageScene;
+	gameNode *	_pMapEditScene;
+	gameNode*	_pstageScene;
+	gameNode*	_pMinTest;
 public:
 	virtual HRESULT init();
 	virtual void release();
