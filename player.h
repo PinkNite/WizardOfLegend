@@ -72,8 +72,8 @@ private:
 	string		_strObjectName;
 
 	//이동방향
-	float		_fAngle;
-	
+	float		_fAngleX;
+	float		_fAngleY;
 public:
 	PLAYER();
 	~PLAYER();
