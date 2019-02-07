@@ -267,7 +267,10 @@ void PLAYER::move()
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
 	{
-		_action = PLAYER::ACTION::IDLE;
+		if (_action == PLAYER::ACTION::RUN)
+		{
+			_action = PLAYER::ACTION::IDLE;
+		}
 		if (KEYMANAGER->isStayKeyDown(VK_UP))
 		{
 			_direction = PLAYER::DIRECTION::BACK;
@@ -282,7 +285,11 @@ void PLAYER::move()
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
 	{
-		_action = PLAYER::ACTION::IDLE;
+		if (_action == PLAYER::ACTION::RUN)
+		{
+			_action = PLAYER::ACTION::IDLE;
+		}
+		
 		if (KEYMANAGER->isStayKeyDown(VK_UP))
 		{
 			_direction = PLAYER::DIRECTION::BACK;
@@ -296,6 +303,71 @@ void PLAYER::move()
 		settingAni();
 	}
 	
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		//스피드를 증가 그리고 몇프레임동안은 그스피드와 방향값 유지
+		//끝나고 런이나 아이들로 변경
+		_fDashTime = 0.0f;
+		_fTmpX = _fAngleX;
+		_fTmpY = _fAngleY;
+
+		if (_action == PLAYER::ACTION::IDLE)
+		{
+			switch (_direction)
+			{
+			case PLAYER::DIRECTION::FORWARD:
+				_fTmpY = PI + PI / 2.0f;
+				break;
+			case PLAYER::DIRECTION::RIGHT:
+				_fTmpX = 0;
+				break;
+			case PLAYER::DIRECTION::LEFT:
+				_fTmpX = PI;
+				break;
+			case PLAYER::DIRECTION::BACK:
+				_fTmpY = PI / 2.0f;
+				break;
+			}
+		}
+		_action = PLAYER::ACTION::DASH;
+		settingAni();
+
+	}
+
+	if (_action == PLAYER::ACTION::DASH)
+	{
+		_fSpeed = 2.0f;
+		_fAngleX = _fTmpX;
+		_fAngleY = _fTmpY;
+
+		if (_fDashTime <= 1.0f)
+		{
+			_fDashTime += TIMEMANAGER->getElapsedTime();
+		}
+		else
+		{
+			_fDashTime = 0.0f;
+			_action = PLAYER::ACTION::IDLE;
+			if (KEYMANAGER->isStayKeyDown(VK_UP))
+			{
+				_action = PLAYER::ACTION::RUN;
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+			{
+				_action = PLAYER::ACTION::RUN;
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+			{
+				_action = PLAYER::ACTION::RUN;
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+			{
+				_action = PLAYER::ACTION::RUN;
+			}
+			settingAni();
+		}
+	}
+
 
 	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_fAngleX, _fSpeed) );
 	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fAngleY, _fSpeed) );

@@ -74,6 +74,11 @@ private:
 	//이동방향
 	float		_fAngleX;
 	float		_fAngleY;
+
+	float		_fDashTime;
+	float		_fTmpX;
+	float		_fTmpY;
+
 public:
 	PLAYER();
 	~PLAYER();
