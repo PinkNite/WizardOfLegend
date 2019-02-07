@@ -33,6 +33,12 @@ public:
 	enum { WIZARD_SPRITE_MAXFRAMEX = 14 };
 	enum { WIZARD_SPRITE_MAXFRAMEY = 16 };
 
+	enum { WIZARD_MOVING_RECT_SIZE = 32};
+
+	enum { WIZARD_COLLISION_RECT_WIDTH = 32};
+	enum { WIZARD_COLLISION_RECT_HEIGHT = 64 };
+
+
 private:
 	float _fMaxHealthPoint;			//최대 생명력
 	float _fCurrentHealthPoint;		//현재 생명력
@@ -41,10 +47,6 @@ private:
 	float _fEvasion;				//회피율
 	float _fCriticalHit;			//치명타율
 
-	float	_fPosMovingX;				//움직이는 용 x
-	float	_fPosMovingY;				//움직이는 용 y
-	int		_nCollsionMovingWidth;	//움직임 충돌용 가로
-	int		_nCollsionMovingHeight;	//움직임 충돌용 세로
 
 	//위자드오브레전드는 이동 타일을 확인하는 용의 사각형과 중앙값을 따로 가지고 있어야한다.
 	//플레이어를 가볍게 상하로 구분하고 아래 사각형을 이동시 충돌 렉트로 한다
@@ -68,6 +70,10 @@ private:
 	DIRECTION	_direction;
 	ACTION		_action;
 	string		_strObjectName;
+
+	//이동방향
+	float		_fAngle;
+	
 public:
 	PLAYER();
 	~PLAYER();
@@ -96,6 +102,7 @@ private:
 
 	//스킬마다 스킬 시전 시간을 가지고 그 시간이 지나면 애니메이션을 바꾸고 하자
 
-	
-
+	void move();
+	void settingPos();
+	void settingAni();
 };

@@ -8,10 +8,6 @@ PLAYER::PLAYER() :
 	_fArmor(0.0f),
 	_fEvasion(0.0f),
 	_fCriticalHit(0.0f),
-	_fPosMovingX(0.0f),
-	_fPosMovingY(0.0f),
-	_nCollsionMovingWidth(0),
-	_nCollsionMovingHeight(0),
 	_fSkillDelayTime{},
 	_arDirection{},
 	_arAction{},
@@ -39,7 +35,7 @@ void PLAYER::save()
 void PLAYER::init()
 {
 	//ÃÊ±â À§Ä¡ Áß¾Ó°ª
-	OBJECT::init(50, 50, 100, 100);
+	OBJECT::init(200, 200, 100, 100);
 	OBJECT::setImage(IMAGEMANAGER->addFrameImage("wizardSprites", "resource/player/wizardSprites.bmp", WIZARD_SPRITE_WIDTH, WIZARD_SPRITE_HEIGHT, WIZARD_SPRITE_MAXFRAMEX, WIZARD_SPRITE_MAXFRAMEY, true, RGB(255, 0, 255)));
 	setEnumName();
 	_pAnimation = new animation();
@@ -50,16 +46,19 @@ void PLAYER::init()
 	_fArmor = 0.0f;
 	_fEvasion = 0.0f;
 	_fCriticalHit = 0.0f;
+	_strObjectName = "player";
 	setAnimation();
 	_direction = PLAYER::DIRECTION::FORWARD;
 	_action = PLAYER::ACTION::IDLE;
-	_strObjectName = "player";
 	_pAnimation = KEYANIMANAGER->findAnimation(_strObjectName, addAniString(_arDirection[static_cast<int>(_direction)], _arAction[static_cast<int>(_action)]));
 	_pAnimation->start();
 }
 
 void PLAYER::update()
 {
+	move();
+
+
 
 }
 
@@ -71,7 +70,9 @@ void PLAYER::release()
 
 void PLAYER::render(HDC hdc)
 {
-	OBJECT::getImage()->aniRender(hdc, static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()), _pAnimation);
+	Rectangle(hdc, _rcMovingCollision);
+	OBJECT::getImage()->aniRenderCenter(hdc, static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()), _pAnimation);
+
 }
 
 void PLAYER::setEnumName()
@@ -176,6 +177,77 @@ void PLAYER::addPlayerKeyAni(const string & strDir, const string & strAction, in
 
 	KEYANIMANAGER->addArrayFrameAnimation(_strObjectName, addAniString(strDir, strAction), "wizardSprites", _arFrame, nFrameCount, nFPS, bIsLoop);
 
+}
+
+void PLAYER::move()
+{
+	_fAngle = 0.0f;
+	_fSpeed = 0.0f;
+	if (KEYMANAGER->isOnceKeyDown(VK_UP))
+	{
+		//ÁÂ¿ì »óÅÂ¸é ¹ê
+		_direction = PLAYER::DIRECTION::BACK;
+		_action = PLAYER::ACTION::RUN;
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	{
+		//ÁÂ¿ì »óÅÂ¸é ¹ê
+		_direction = PLAYER::DIRECTION::FORWARD;
+		_action = PLAYER::ACTION::RUN;
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	{
+		_direction = PLAYER::DIRECTION::LEFT;
+		_action = PLAYER::ACTION::RUN;
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+	{
+		_direction = PLAYER::DIRECTION::RIGHT;
+		_action = PLAYER::ACTION::RUN;
+	}
+
+	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	{
+		_fAngle += PI / 2.0f;
+		_fSpeed = 1.0f;
+	}
+	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	{
+		_fAngle += PI / 2.0f + PI;
+		_fSpeed = 1.0f;
+	}
+
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	{
+		_fAngle += PI;
+		_fSpeed = 1.0f;
+	}
+	else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	{
+		_fAngle += 0.0f;
+		_fSpeed = 1.0f;
+	}
+
+	
+
+	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_fAngle, _fSpeed) );
+	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fAngle, _fSpeed) );
+	settingPos();
+}
+
+void PLAYER::settingPos()
+{
+	_rcDamageCollision = RectMakeCenter(static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()),
+		WIZARD_COLLISION_RECT_WIDTH, WIZARD_COLLISION_RECT_HEIGHT);
+
+	_rcMovingCollision = RectMakeCenter(static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()) + 16,
+		WIZARD_MOVING_RECT_SIZE, WIZARD_MOVING_RECT_SIZE);
+}
+
+void PLAYER::settingAni()
+{
+	_pAnimation = KEYANIMANAGER->findAnimation(_strObjectName, addAniString(_arDirection[static_cast<int>(_direction)], _arAction[static_cast<int>(_action)]));
+	_pAnimation->start();
 }
 
 

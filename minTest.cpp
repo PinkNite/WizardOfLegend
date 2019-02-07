@@ -18,10 +18,12 @@ HRESULT MINTESTSCENE::init()
 
 void MINTESTSCENE::update()
 {
+	_pPlayer->update();
 }
 
 void MINTESTSCENE::release()
 {
+	_pPlayer->release();
 }
 
 void MINTESTSCENE::render()

@@ -177,6 +177,9 @@
     <ClInclude Include="minTest.h">
       <Filter>PlayGround\Scene\MinTest</Filter>
     </ClInclude>
+    <ClInclude Include="FrameWork.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
