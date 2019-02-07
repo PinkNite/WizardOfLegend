@@ -67,6 +67,9 @@
     <Filter Include="PlayGround\player">
       <UniqueIdentifier>{542a0739-2cf5-4e8e-8fc9-34ab102babaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\Scene\MinTest">
+      <UniqueIdentifier>{09571b50-dd5b-4306-87b8-5a5cbd07b222}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -171,6 +174,9 @@
     <ClInclude Include="player.h">
       <Filter>PlayGround\player</Filter>
     </ClInclude>
+    <ClInclude Include="minTest.h">
+      <Filter>PlayGround\Scene\MinTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -262,6 +268,9 @@
     </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>PlayGround\player</Filter>
+    </ClCompile>
+    <ClCompile Include="minTest.cpp">
+      <Filter>PlayGround\Scene\MinTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

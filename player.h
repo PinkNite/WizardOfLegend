@@ -2,16 +2,16 @@
 
 #include "object.h"
 #include "stdafx.h"
-
+#include "animation.h"
 class PLAYER : public OBJECT
 {
 public:
 	enum class DIRECTION
 	{
-		LEFT = 0,
+		FORWARD = 0,
 		RIGHT,
-		UP,
-		DOWN,
+		LEFT,
+		BACK,
 		MAX
 	};
 
@@ -28,7 +28,10 @@ public:
 		DEATH,
 		MAX
 	};
-
+	enum { WIZARD_SPRITE_WIDTH = 1344 };
+	enum { WIZARD_SPRITE_HEIGHT = 1536 };
+	enum { WIZARD_SPRITE_MAXFRAMEX = 14 };
+	enum { WIZARD_SPRITE_MAXFRAMEY = 16 };
 
 private:
 	float _fMaxHealthPoint;			//최대 생명력
@@ -51,12 +54,20 @@ private:
 	// 방향과 액션의 이름
 	string _arDirection[static_cast<const int>(DIRECTION::MAX)];
 	string _arAction[static_cast<const int>(ACTION::MAX)];
-	
+
 	RECT	_rcMovingCollision;
 	RECT	_rcDamageCollision;
 	//오브젝트의 사각형은 없는 취급 할것이다.
 	//이미지 사이즈가 오브젝트에 비해 월등이 크기 때문이다.
 
+	animation* _pAnimation;
+	
+	//프레임
+	int _arFrame[12];
+
+	DIRECTION	_direction;
+	ACTION		_action;
+	string		_strObjectName;
 public:
 	PLAYER();
 	~PLAYER();
@@ -73,5 +84,18 @@ public:
 	virtual void update()			override;
 	virtual void release()			override;
 	virtual void render(HDC hdc)	override;
+
+
+private:
+	void setEnumName();
+	void setAnimation();
+
+	const string addAniString(const string& strDir, const string& strAction);
+
+	void addPlayerKeyAni(const string & strDir, const string & strAction, int nStartFrame,int nEndFrame, int nFPS, bool bIsLoop);
+
+	//스킬마다 스킬 시전 시간을 가지고 그 시간이 지나면 애니메이션을 바꾸고 하자
+
+	
 
 };
