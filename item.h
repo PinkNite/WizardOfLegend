@@ -28,7 +28,7 @@ private:
 	vector<tagItem>::iterator _viItem;
 	map<int, vector<tagItem>> _mItem;
 	int _num;
-	image* _pImage;
+
 public:
 	ITEM();
 	~ITEM();

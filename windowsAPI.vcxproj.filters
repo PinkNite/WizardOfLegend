@@ -76,6 +76,9 @@
     <Filter Include="PlayGround\Scene\leeTest">
       <UniqueIdentifier>{c9ede4c9-027e-4b22-b9f5-e64f12dcbdce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\UI">
+      <UniqueIdentifier>{1ac4ee81-4474-4e16-b4a0-0db385028b72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -195,6 +198,9 @@
     <ClInclude Include="leeTest.h">
       <Filter>PlayGround\Scene\leeTest</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -298,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="leeTest.cpp">
       <Filter>PlayGround\Scene\leeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>PlayGround\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

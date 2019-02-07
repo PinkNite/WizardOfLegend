@@ -12,9 +12,9 @@ ITEM::~ITEM()
 HRESULT ITEM::init()
 {
 	OBJECT::setImage(IMAGEMANAGER->addFrameImage("items", "resource/image/ItemIcons.bmp", 624, 624, 16, 16, true, RGB(255, 0, 255)));
-	_pImage = new image;
+	
 	//_pImage = IMAGEMANAGER->addFrameImage("items", "resourse/image/ItemIcons.bmp", 624, 624, 16, 16, true, RGB(255, 0, 255));
-	_pImage = IMAGEMANAGER->findImage("items");
+
 
 	for (int i = 0; i < 256; i++)
 	{
@@ -1526,7 +1526,7 @@ void ITEM::render(HDC hdc)
 		_num++;
 	}
 	char str[200];
-	_pImage->frameRender(hdc, 300, 100, _mItem.find(_num)->second[_num].frameX, _mItem.find(_num)->second[_num].frameY);
+	OBJECT::getImage()->frameRender(hdc, 300, 100, _mItem.find(_num)->second[_num].frameX, _mItem.find(_num)->second[_num].frameY);
 	fontRender(hdc, _mItem.find(_num)->second[_num].name, 300, 200, 30, RGB(250, 50, 50));
 	fontRender(hdc, _mItem.find(_num)->second[_num].info, 300, 250, 15, RGB(50, 50, 50));
 	sprintf_s(str, "ºí·ç:%d", _mItem.find(_num)->second[_num].costA);
