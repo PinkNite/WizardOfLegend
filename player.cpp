@@ -16,7 +16,9 @@ PLAYER::PLAYER() :
 	_pAnimation(nullptr),
 	_arFrame{},
 	_direction(PLAYER::DIRECTION::FORWARD),
-	_action(PLAYER::ACTION::IDLE)
+	_action(PLAYER::ACTION::IDLE),
+	_fAngleX(0.0f),
+	_fAngleY(0.0f)
 {
 }
 
@@ -58,7 +60,7 @@ void PLAYER::update()
 {
 	move();
 
-
+	KEYANIMANAGER->update();
 
 }
 
@@ -101,10 +103,10 @@ void PLAYER::setAnimation()
 	{
 		addPlayerKeyAni(_arDirection[i], _arAction[static_cast<int>(PLAYER::ACTION::IDLE)], i, i, 1, true);
 	}
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)],	_arAction[static_cast<int>(PLAYER::ACTION::RUN)],  4, 13, 2, true);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)],	_arAction[static_cast<int>(PLAYER::ACTION::RUN)], 14, 23, 2, true);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)],	_arAction[static_cast<int>(PLAYER::ACTION::RUN)], 33, 24, 2, true);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)],	_arAction[static_cast<int>(PLAYER::ACTION::RUN)], 34, 43, 2, true);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)],	_arAction[static_cast<int>(PLAYER::ACTION::RUN)],  4, 13, 12, true);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)],	_arAction[static_cast<int>(PLAYER::ACTION::RUN)], 14, 23, 12, true);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)],	_arAction[static_cast<int>(PLAYER::ACTION::RUN)], 33, 24, 12, true);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)],	_arAction[static_cast<int>(PLAYER::ACTION::RUN)], 34, 43, 12, true);
 
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::DASH)], 44, 47, 4, false);
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)],	_arAction[static_cast<int>(PLAYER::ACTION::DASH)], 48, 53, 6, false);
@@ -181,57 +183,122 @@ void PLAYER::addPlayerKeyAni(const string & strDir, const string & strAction, in
 
 void PLAYER::move()
 {
-	_fAngle = 0.0f;
+	_fAngleX = PI/2.0f;
+	_fAngleY = 0.0f;
 	_fSpeed = 0.0f;
 	if (KEYMANAGER->isOnceKeyDown(VK_UP))
 	{
 		//аб©Л ╩Себ╦И ╧Й
-		_direction = PLAYER::DIRECTION::BACK;
+
+		if (_action != PLAYER::ACTION::RUN)
+		{
+			_direction = PLAYER::DIRECTION::BACK;
+		}
 		_action = PLAYER::ACTION::RUN;
+		
+		settingAni();
 	}
+
 	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
 		//аб©Л ╩Себ╦И ╧Й
-		_direction = PLAYER::DIRECTION::FORWARD;
+		if (_action != PLAYER::ACTION::RUN)
+		{
+			_direction = PLAYER::DIRECTION::FORWARD;
+		}
 		_action = PLAYER::ACTION::RUN;
+		settingAni();
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 	{
 		_direction = PLAYER::DIRECTION::LEFT;
 		_action = PLAYER::ACTION::RUN;
+		settingAni();
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 	{
 		_direction = PLAYER::DIRECTION::RIGHT;
 		_action = PLAYER::ACTION::RUN;
+		settingAni();
 	}
 
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
-		_fAngle += PI / 2.0f;
+		_fAngleY = PI / 2.0f;
 		_fSpeed = 1.0f;
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
-		_fAngle += PI / 2.0f + PI;
+		_fAngleY = PI / 2.0f + PI;
 		_fSpeed = 1.0f;
 	}
 
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
-		_fAngle += PI;
+		_fAngleX = PI;
 		_fSpeed = 1.0f;
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
-		_fAngle += 0.0f;
+
+		_fAngleX = 0.0f;
 		_fSpeed = 1.0f;
 	}
 
+	if (KEYMANAGER->isOnceKeyUp(VK_UP))
+	{
+		if (_direction != PLAYER::DIRECTION::LEFT &&
+			_direction != PLAYER::DIRECTION::RIGHT)
+		{
+			_action = PLAYER::ACTION::IDLE;
+			settingAni();
+		}
+		
+	}
+
+	if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+	{
+		if (_direction != PLAYER::DIRECTION::LEFT &&
+			_direction != PLAYER::DIRECTION::RIGHT)
+		{
+			_action = PLAYER::ACTION::IDLE;
+			settingAni();
+		}		
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+	{
+		_action = PLAYER::ACTION::IDLE;
+		if (KEYMANAGER->isStayKeyDown(VK_UP))
+		{
+			_direction = PLAYER::DIRECTION::BACK;
+			_action = PLAYER::ACTION::RUN;
+		}
+		if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+		{
+			_direction = PLAYER::DIRECTION::FORWARD;
+			_action = PLAYER::ACTION::RUN;
+		}
+		settingAni();
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+	{
+		_action = PLAYER::ACTION::IDLE;
+		if (KEYMANAGER->isStayKeyDown(VK_UP))
+		{
+			_direction = PLAYER::DIRECTION::BACK;
+			_action = PLAYER::ACTION::RUN;
+		}
+		if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+		{
+			_direction = PLAYER::DIRECTION::FORWARD;
+			_action = PLAYER::ACTION::RUN;
+		}
+		settingAni();
+	}
 	
 
-	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_fAngle, _fSpeed) );
-	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fAngle, _fSpeed) );
+	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_fAngleX, _fSpeed) );
+	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fAngleY, _fSpeed) );
 	settingPos();
 }
 
