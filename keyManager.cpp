@@ -106,6 +106,7 @@ void keyManager::update()
 	{
 		for (int i = 0; i < KEYMAXCOUNT; i++)
 		{
+
 			if (_arKeyDownCount[i] >= 2)
 			{
 				_arKeyDouble[i] = true;
@@ -205,6 +206,15 @@ bool keyManager::isDBClickRButton()
 	if (_isDBCRButton == true)
 	{
 		_isDBCRButton = false;
+		return true;
+	}
+	return false;
+}
+
+bool keyManager::isDBClickKey(int key)
+{
+	if (_arKeyDouble[key])
+	{
 		return true;
 	}
 	return false;

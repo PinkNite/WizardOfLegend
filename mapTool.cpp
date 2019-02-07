@@ -449,7 +449,7 @@ void MAPTOOL::load()
 	const char* separator = "/"; //구분자
 	char* token;
 
-	//맵툴에는 타일 사이즈/ 타일 가로 갯수/ 타일 세로 갯수 / 파레트 셀 갯수
+	//맵툴에는 타일 사이즈/ 타일 가로 갯수/ 타일 세로 갯수
 
 	token = strtok_s(strTmp, separator, &temp);
 
@@ -482,7 +482,7 @@ void MAPTOOL::load()
 		for (int i = 0; i < _nTileCountX; i++)
 		{
 			
-			//노드인덱스/주변값/벽/프레임x/프레임y			
+			//노드인덱스/주변값/벽/프레임x/프레임y	//오브젝트	
 			_vvMap[j][i]->setNodeIndex(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setAroundWall(atoi(tokenMap));

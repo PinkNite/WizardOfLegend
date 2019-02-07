@@ -60,6 +60,7 @@ public:
 	bool isDBClickLButton();
 	bool isDBClickRButton();
 
+	bool isDBClickKey(int key);
 
 	bool TranslateMessage(const MSG * pMSG);
 };
