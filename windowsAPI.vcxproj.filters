@@ -70,6 +70,12 @@
     <Filter Include="PlayGround\Scene\MinTest">
       <UniqueIdentifier>{09571b50-dd5b-4306-87b8-5a5cbd07b222}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\item">
+      <UniqueIdentifier>{00805c19-5342-4523-b383-7982cc802da6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\Scene\leeTest">
+      <UniqueIdentifier>{c9ede4c9-027e-4b22-b9f5-e64f12dcbdce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -180,6 +186,15 @@
     <ClInclude Include="FrameWork.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="itemManager.h">
+      <Filter>PlayGround\item</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>PlayGround\item</Filter>
+    </ClInclude>
+    <ClInclude Include="leeTest.h">
+      <Filter>PlayGround\Scene\leeTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -274,6 +289,15 @@
     </ClCompile>
     <ClCompile Include="minTest.cpp">
       <Filter>PlayGround\Scene\MinTest</Filter>
+    </ClCompile>
+    <ClCompile Include="itemManager.cpp">
+      <Filter>PlayGround\item</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>PlayGround\item</Filter>
+    </ClCompile>
+    <ClCompile Include="leeTest.cpp">
+      <Filter>PlayGround\Scene\leeTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -20,13 +20,15 @@ HRESULT playGround::init()
 	_pMapEditScene = new MAPEDIT();
 	_pstageScene = new STAGESCENE();
 	_pMinTest = new MINTESTSCENE();
+	_pLeeTest = new LEETEST();
 
 	SCENEMANAGER->addScene("mapEditScene", _pMapEditScene);
 	SCENEMANAGER->addScene("stageScene", _pstageScene);
 	SCENEMANAGER->addScene("MinTest", _pMinTest);
+	SCENEMANAGER->addScene("leeTest", _pLeeTest);
 
 	SCENEMANAGER->changeScene("MinTest");
-
+	SCENEMANAGER->changeScene("leeTest");
 	return S_OK;
 }
 
