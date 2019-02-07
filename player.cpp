@@ -20,8 +20,7 @@ PLAYER::PLAYER() :
 	_pAnimation(nullptr),
 	_arFrame{},
 	_direction(PLAYER::DIRECTION::FORWARD),
-	_action(PLAYER::ACTION::IDLE),
-	_strObjectName("")
+	_action(PLAYER::ACTION::IDLE)
 {
 }
 
@@ -95,6 +94,8 @@ void PLAYER::setEnumName()
 
 void PLAYER::setAnimation()
 {
+	KEYANIMANAGER->addObject(_strObjectName);
+
 	for (int i = 0; i < static_cast<int>(PLAYER::DIRECTION::MAX); i++)
 	{
 		addPlayerKeyAni(_arDirection[i], _arAction[static_cast<int>(PLAYER::ACTION::IDLE)], i, i, 1, true);
@@ -131,7 +132,7 @@ void PLAYER::setAnimation()
 
 	for (int i = 0; i < static_cast<int>(PLAYER::DIRECTION::MAX); i++)
 	{
-		addPlayerKeyAni(_arDirection[i], _arAction[static_cast<int>(PLAYER::ACTION::DEATH)], i + 203, i, 1, true);
+		addPlayerKeyAni(_arDirection[i], _arAction[static_cast<int>(PLAYER::ACTION::DAMAGE)], i + 203, i+203, 1, true);
 	}
 
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::DEATH)], 207,216,10, false);
@@ -173,7 +174,7 @@ void PLAYER::addPlayerKeyAni(const string & strDir, const string & strAction, in
 		}
 	}
 
-	KEYANIMANAGER->addArrayFrameAnimation("player", addAniString(strDir, strAction), "wizardSprites", _arFrame, nFrameCount, nFPS, bIsLoop);
+	KEYANIMANAGER->addArrayFrameAnimation(_strObjectName, addAniString(strDir, strAction), "wizardSprites", _arFrame, nFrameCount, nFPS, bIsLoop);
 
 }
 
