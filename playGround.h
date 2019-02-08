@@ -7,7 +7,7 @@
 class playGround : public gameNode
 {
 private:
-	gameNode *	_pMapEditScene;
+	gameNode*	_pMapEditScene;
 	gameNode*	_pstageScene;
 	gameNode*	_pMinTest;
 

@@ -82,8 +82,28 @@ void button::update()
 		}
 	}
 	else _direction = BUTTONDIRECTION_NULL;
+}
 
-
+void button::update(RECT rc)
+{
+	_rc = RectMake(rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
+	if (PtInRect(&_rc, _ptMouse))
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			_direction = BUTTONDIRECTION_DOWN;
+		}
+		else if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON) && _direction == BUTTONDIRECTION_DOWN)
+		{
+			_direction = BUTTONDIRECTION_UP;
+			_callbackFunction();
+		}
+		else
+		{
+			_direction = BUTTONDIRECTION_COLLISION;
+		}
+	}
+	else _direction = BUTTONDIRECTION_NULL;
 }
 
 void button::render(HDC hdc)

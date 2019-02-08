@@ -60,6 +60,7 @@ public:
 
 	void release();
 	void update();
+	void update(RECT rc);
 	void render(HDC hdc);
 	void render(HDC hdc, int moveY);
 };
