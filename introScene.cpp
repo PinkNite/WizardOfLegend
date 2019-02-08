@@ -5,7 +5,7 @@
 
 
 INTROSCENE::INTROSCENE()
-	:_jumpPower(0),_time(NULL),_fontX(0),_angle(0),_speed(5),_count(0),_end(0),_timer(0),_jumpCount(0),_gravity(0)
+	:_jumpPower(0),_time(NULL),_fontX(0),_angle(0),_speed(7),_count(0),_end(0),_timer(0),_jumpCount(0),_gravity(0),_isStart(0)
 {
 }
 
@@ -26,6 +26,54 @@ HRESULT INTROSCENE::init()
 	_angle = PI;
 	_gravity = 0.6f;
 	_jumpCount = 1;
+	//버튼들
+	_pressButton.r = 255;
+	_pressButton.g = 255;
+	_pressButton.b = 255;
+	_pressButton.count = 0;
+	_pressButton.x = WINSIZEX / 2;//WINSIZEX / 2 - 70;
+	_pressButton.y = WINSIZEY - 100;
+	_pressButton.isSelect = false;
+	_singlePlayer.r = 255;
+	_singlePlayer.g = 255;
+	_singlePlayer.b = 255;
+	_singlePlayer.count = 0;
+	_singlePlayer.size = 30;
+	_singlePlayer.x = WINSIZEX / 2;//WINSIZEX / 2 - 75;
+	_singlePlayer.y = WINSIZEY - 400;
+	_singlePlayer.isSelect = false;
+	_option.r=255;
+	_option.g=255;
+	_option.b=255;
+	_option.count=0;
+	_option.size = 30;
+	_option.x = WINSIZEX / 2;// WINSIZEX / 2 - 40;
+	_option.y = WINSIZEY - 300;
+	_option.isSelect = false;
+	_credit.r = 255;
+	_credit.g = 255;
+	_credit.b = 255;
+	_credit.count = 0;
+	_credit.size = 30;
+	_credit.x = WINSIZEX / 2;// WINSIZEX / 2 - 38;
+	_credit.y = WINSIZEY - 250;
+	_credit.isSelect = false;
+	_mapEditor.r = 255;
+	_mapEditor.g = 255;
+	_mapEditor.b = 255;
+	_mapEditor.count = 0;
+	_mapEditor.size = 30;
+	_mapEditor.x = WINSIZEX / 2;// WINSIZEX / 2 - 55;
+	_mapEditor.y = WINSIZEY - 350;
+	_mapEditor.isSelect = false;
+	_quit.r=255;
+	_quit.g=255;
+	_quit.b=255;
+	_quit.count=0;
+	_quit.size = 30;
+	_quit.x = WINSIZEX / 2;// WINSIZEX / 2 - 20;
+	_quit.y = WINSIZEY - 200;
+	_quit.isSelect = false;
 	imageSetting();
 	return S_OK;
 }
@@ -43,17 +91,39 @@ void INTROSCENE::update()
 {
 	//시간을 계산할 식
 	_time += TIMEMANAGER->getElapsedTime();
+	
 	//이미지 오프
 	actionOff(3,6, &_99.alpha,5);
 	actionOn(6,16, &_introPeople.alpha, 5);
 	actionOff(16,20, &_introPeople.alpha, 5);
 	actionOn(20,24, &_title.alpha,5);
-	actionJump(20, 24, &_logo.y, &_title.y);
 	//글자를 떨굼
+	actionJump(20, 24, &_logo.y, &_title.y);
 	
-	//이미지 온
+	//충돌
+	if (isCollision(_fontX+350 , _arrFontY[7], _hello.x, _hello.y))
+	{
+		_hello.speed = 20;
+	}
+		_hello.x -= _hello.speed;
+		_hello.y -= _hello.speed;
 	
-	
+	//엔터키나 마우스클릭하면 버튼 화면 사라짐
+	if (_jumpCount==2&&!_pressButton.isSelect && (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) || KEYMANAGER->isOnceKeyDown(VK_RETURN)))
+	{
+		_pressButton.isSelect = true;
+		//로고창 위로 살짝
+		
+	}
+	if (_pressButton.isSelect)
+	{
+		//로고창 위로 살짝
+		if (_logo.y > -150)
+		{
+			_logo.y -= 10;
+		}
+		
+	}
 }
 
 void INTROSCENE::render()
@@ -65,9 +135,9 @@ void INTROSCENE::render()
 	_logo.image->alphaRender(getMemDC(),_logo.x,_logo.y,_logo.alpha);
 	_introPeople.image->alphaRender(getMemDC(), _introPeople.x, _introPeople.y, _introPeople.alpha);
 	
-	char str[220];
-	sprintf_s(str, "%d", _introPeople.alpha);
-	TextOut(getMemDC(), 400, 400, str, strlen(str));
+	/*char str[220];
+	sprintf_s(str, "%2d%2d%2d", _pressButton.r, _pressButton.g, _pressButton.b);
+	TextOut(getMemDC(), 400, 400, str, strlen(str));*/
 	
 
 	if (_time < 20)
@@ -80,7 +150,7 @@ void INTROSCENE::render()
 			case 0:
 				if (_time > 8 + i * 0.2f && _time < 20)
 				{
-					fontRender(getMemDC(), "P", "쉐도우9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					fontRender(getMemDC(), "P", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
 					if (_time > 10 + i * 0.2f)
 					{
 						_arrFontY[i] += GRAVITY;
@@ -90,7 +160,7 @@ void INTROSCENE::render()
 			case 1:
 				if (_time > 8 + i * 0.2f && _time < 20)
 				{
-					fontRender(getMemDC(), "I", "쉐도우9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					fontRender(getMemDC(), "I", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
 					if (_time > 10 + i * 0.2f)
 					{
 						_arrFontY[i] += GRAVITY;
@@ -100,7 +170,7 @@ void INTROSCENE::render()
 			case 2:
 				if (_time > 8 + i * 0.2f && _time < 20)
 				{
-					fontRender(getMemDC(), "N", "쉐도우9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					fontRender(getMemDC(), "N", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
 					if (_time > 10 + i * 0.2f)
 					{
 						_arrFontY[i] += GRAVITY;
@@ -110,7 +180,7 @@ void INTROSCENE::render()
 			case 3:
 				if (_time > 8 + i * 0.2f && _time < 20)
 				{
-					fontRender(getMemDC(), "K", "쉐도우9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					fontRender(getMemDC(), "K", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
 					if (_time > 10 + i * 0.2f)
 					{
 						_arrFontY[i] += GRAVITY;
@@ -120,7 +190,7 @@ void INTROSCENE::render()
 			case 4:
 				if (_time > 8 + i * 0.2f && _time < 20)
 				{
-					fontRender(getMemDC(), "N", "쉐도우9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					fontRender(getMemDC(), "N", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
 					if (_time > 10 + i * 0.2f)
 					{
 						_arrFontY[i] += GRAVITY;
@@ -130,7 +200,7 @@ void INTROSCENE::render()
 			case 5:
 				if (_time > 8 + i * 0.2f && _time < 20)
 				{
-					fontRender(getMemDC(), "I", "쉐도우9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					fontRender(getMemDC(), "I", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
 					if (_time > 10 + i * 0.2f)
 					{
 						_arrFontY[i] += GRAVITY;
@@ -140,7 +210,7 @@ void INTROSCENE::render()
 			case 6:
 				if (_time > 8 + i * 0.2f && _time < 20)
 				{
-					fontRender(getMemDC(), "T", "쉐도우9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					fontRender(getMemDC(), "T", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
 					if (_time > 10 + i * 0.2f)
 					{
 						_arrFontY[i] += GRAVITY;
@@ -150,7 +220,7 @@ void INTROSCENE::render()
 			case 7:
 				if (_time > 8 + i * 0.2f && _time < 20)
 				{
-					fontRender(getMemDC(), "E", "쉐도우9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					fontRender(getMemDC(), "E", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
 					if (_time > 10 + i * 0.2f&&_time<16)
 					{
 						if (_time < 14)
@@ -159,7 +229,7 @@ void INTROSCENE::render()
 						}
 						else
 						{
-							_angle = 2 * PI - PI / 4;
+							_angle = 2 * PI - PI / 6;
 						}
 						_speed += 0.1f;
 						_fontX += cosf(_angle) * _speed;
@@ -173,33 +243,79 @@ void INTROSCENE::render()
 
 		}
 	}
-	if (_time > 14.5f&&_time<20)
+	if (_time > 6&&_time<20)
 	{
 		draw();
 	}
-	if (_jumpCount == 0 && _timer <= _time + 2.0f)
+	if (_jumpCount == 0&&!_pressButton.isSelect ) //button오프일ㄸㅐ
+		
 	{
-		fontRender(getMemDC(), "PRESS ANI BUTTON", "쉐도우9", WINSIZEX / 2 - 40, WINSIZEY -200, 40, RGB(255, 255, 255));
+		
+		switch (_pressButton.count%2)
+		{
+		case 0:
+			if (_pressButton.r > 94 && _pressButton.g > 94 && _pressButton.b > 94)
+			{
+			_pressButton.r -= 5;
+			_pressButton.g -= 5;
+			_pressButton.b -= 5;
+				if (_pressButton.r == 90 && _pressButton.g == 90 && _pressButton.b == 90)
+				{
+					_pressButton.count++;
+				}
+			}
+			break;
+		default:
+			if (_pressButton.r < 255 && _pressButton.g < 255 && _pressButton.b < 255)
+			{
+				_pressButton.r += 5;
+				_pressButton.g += 5;
+				_pressButton.b += 5;
+				if (_pressButton.r == 255 && _pressButton.g == 255 && _pressButton.b == 255)
+				{
+					_pressButton.count++;
+				}
+
+			}
+			
+			break;
+		}
+		fontRender(getMemDC(), "PRESS ANI BUTTON", "휴먼둥근헤드라인", _pressButton.x, _pressButton.y, 15, RGB(_pressButton.r, _pressButton.g, _pressButton.b));
+		
 	}
 
-	fontRender(getMemDC(), " ", "굴림체", WINSIZEX / 2 + 20, WINSIZEY / 2, 20, RGB(255, 51, 153));
+	//메뉴창에서 나옴
+	if (_pressButton.isSelect)
+	{
+		fontRender(getMemDC(), "SINGLEPLAYER", "elephant", _singlePlayer.x, _singlePlayer.y, _singlePlayer.size, RGB(_singlePlayer.r, _singlePlayer.g, _singlePlayer.b));
+		fontRender(getMemDC(), "MAPEDITOR", "elephant", _mapEditor.x, _mapEditor.y, _mapEditor.size, RGB(_mapEditor.r, _mapEditor.g, _mapEditor.b));
+		fontRender(getMemDC(), "OPTIONS", "elephant", _option.x, _option.y, _option.size, RGB(_option.r, _option.g, _option.b));
+		fontRender(getMemDC(), "CREDITS", "elephant", _credit.x, _credit.y, _credit.size, RGB(_credit.r, _credit.g, _credit.b));
+		fontRender(getMemDC(), "QUIT", "elephant", _quit.x, _quit.y, _quit.size, RGB(_quit.r, _quit.g, _quit.b));
+
+	}
+	fontRender(getMemDC(), " ", "굴림체", WINSIZEX / 2, WINSIZEY / 2, 20, RGB(255, 51, 153));
+
+	//_fontX, _arrFontY[7], _hello.x, _hello.y
+		//RectangleMake(getMemDC(), _fontX+350, _arrFontY[7], 5, 5);
+		//RectangleMake(getMemDC(), _hello.x, _hello.y, 100, 100);
 }
 
 void INTROSCENE::imageSetting()
 {
 	//이미지
 	_title.image = new image;
-	_title.image = IMAGEMANAGER->addImage("title", "resource/intro/title.bmp", 1422, 800, false, RGB(0, 0, 0));
+	_title.image = IMAGEMANAGER->addImage("title", "resource/intro/title.bmp", 1600, 900, false, RGB(0, 0, 0));
 	_title.alpha = 0;
 	_title.x = 0;
 	_title.y = 0;
 	_logo.image = new image;
-	_logo.image = IMAGEMANAGER->addImage("logo", "resource/intro/logo.bmp", 1422, 800, true, RGB(255, 0, 255));
+	_logo.image = IMAGEMANAGER->addImage("logo", "resource/intro/logo.bmp", 1600, 900, true, RGB(255, 0, 255));
 	_logo.alpha = 255;
 	_logo.x = 0;
 	_logo.y = -700;
 	_99.image = new image;
-	_99.image = IMAGEMANAGER->addImage("99small", "resource/intro/99small.bmp", 1422, 800, true, RGB(255, 0, 255));
+	_99.image = IMAGEMANAGER->addImage("99small", "resource/intro/99small.bmp", 1600, 900, true, RGB(255, 0, 255));
 	_99.alpha = 255;
 	_99.x = 0;
 	_99.y = 0;
@@ -219,6 +335,7 @@ void INTROSCENE::imageSetting()
 	_hello.y = WINSIZEY - IMAGEMANAGER->findImage("hello")->getFrameHeight() - 10;
 	_hello.currentX = 0;
 	_hello.currentY = 0;
+	_hello.speed = 0;
 	
 }
 
@@ -251,45 +368,67 @@ void INTROSCENE::actionOn(float numA,float numB,int * alpha, int numC)
 void INTROSCENE::actionJump(float numA, float numB, float* y, float* y2)
 {
 	
-	if ((*y) < 0 && _time >= numA)
+	if (_time < numB)
 	{
-		(*y) -= _jumpPower;
-		_jumpPower -= _gravity;
-	}
-	if ((*y) >= 0 && _jumpCount == 1)
-	{
+		if ((*y) < 0 && _time >= numA)
+		{
+			(*y) -= _jumpPower;
+			_jumpPower -= _gravity;
+		}
+		if ((*y) >= 0 && _jumpCount == 1)
+		{
 
-		_jumpPower = 10.5f;
-		(*y) -= _jumpPower;
-		_jumpCount--;
+			_jumpPower = 10.5f;
+			(*y) -= _jumpPower;
+			_jumpCount--;
 
-		_timer = _time;
+			_timer = _time;
 
-	}
-	if (_jumpCount==0&&_timer <= _time + 2.0f)//_time > numB
-	{
-		(*y2) = RND->getFromIntTo(0, 10);
-	}
+		}
 
-	if ((*y) >= 0 && _jumpCount == 0)
-	{
-		(*y) = 0;
-		(*y2) = 0;
+		if (_jumpCount == 0 && _timer <= _time + 2.0f)//_time > numB
+		{
+			(*y2) = RND->getFromIntTo(0, 10);
+		}
+
+		if ((*y) >= 0 && _jumpCount == 0)
+		{
+			(*y) = 0;
+			(*y2) = 0;
+			_jumpCount = 2;
+		}
 	}
 }
 
 void INTROSCENE::fontRender(HDC hdc, const char * str,const char* str2, int x, int y, int num, COLORREF color)
 {
+	//char str1[500];
+	//SetTextColor(hdc, color);
+	//HFONT font, oldfont;
+	//SetBkMode(hdc, TRANSPARENT);
+	//font = CreateFont(num, 0, 0, 0, 300, 0, 0, 0, DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, DEFAULT_PITCH / FF_SWISS, TEXT(str2));
+	//oldfont = (HFONT)SelectObject(hdc, font);
+	//sprintf_s(str1, str);
+	//TextOut(hdc, x, y, str, strlen(str));
+	////DeleteObject(oldfont);
+	//DeleteObject(font);
+
+	RECT rcText;
+	rcText = RectMakeCenter(x, y, strlen(str)*num, num);
+
+
 	char str1[500];
 	SetTextColor(hdc, color);
 	HFONT font, oldfont;
 	SetBkMode(hdc, TRANSPARENT);
 	font = CreateFont(num, 0, 0, 0, 300, 0, 0, 0, DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, DEFAULT_PITCH / FF_SWISS, TEXT(str2));
 	oldfont = (HFONT)SelectObject(hdc, font);
-	sprintf_s(str1, str);
-	TextOut(hdc, x, y, str, strlen(str));
-	//DeleteObject(oldfont);
+	
+	DrawText(hdc, TEXT(str), strlen(str), &rcText, DT_CENTER);
+		SelectObject(hdc, oldfont);
+
 	DeleteObject(font);
+
 }
 
 void INTROSCENE::draw()
@@ -307,6 +446,18 @@ void INTROSCENE::draw()
 
 	_hello.image->frameRender(getMemDC(), _hello.x, _hello.y, _hello.currentX, _hello.currentY);
 
+}
+
+bool INTROSCENE::isCollision(int x, int y, int x2, int y2)
+{
+	//반지름 5로 가정
+	RECT rc = RectMake(x2, y2, 100, 100);
+	if (PtInRect(&rc, PointMake(x, y)))
+	{
+
+	return true;
+	}
+	return false;
 }
 
 
