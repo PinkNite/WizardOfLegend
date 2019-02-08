@@ -46,5 +46,6 @@ public:
 	void frameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
 
 	void loopRender(string strKey, HDC hdc, const LPRECT drawArea, int offSetX, int offSetY);
+	
 };
 

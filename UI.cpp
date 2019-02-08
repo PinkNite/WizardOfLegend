@@ -28,7 +28,7 @@ void UI::update()
 {
 
 }
-
+ 
 void UI::render(HDC hdc)
 {
 	

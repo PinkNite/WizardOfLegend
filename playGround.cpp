@@ -21,14 +21,17 @@ HRESULT playGround::init()
 	_pstageScene = new STAGESCENE();
 	_pMinTest = new MINTESTSCENE();
 	_pLeeTest = new LEETEST();
+	_pIntroScene = new INTROSCENE();
 
 	SCENEMANAGER->addScene("mapEditScene", _pMapEditScene);
 	SCENEMANAGER->addScene("stageScene", _pstageScene);
 	SCENEMANAGER->addScene("MinTest", _pMinTest);
 	SCENEMANAGER->addScene("leeTest", _pLeeTest);
+	SCENEMANAGER->addScene("intro", _pIntroScene);
 
 	SCENEMANAGER->changeScene("MinTest");
 	SCENEMANAGER->changeScene("leeTest");
+	SCENEMANAGER->changeScene("intro");
 	return S_OK;
 }
 
@@ -54,7 +57,7 @@ void playGround::update()
 
 void playGround::render()
 {
-	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
+	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, BLACKNESS);
 	//===========================================================
 	SCENEMANAGER->render();
 	TIMEMANAGER->render(getMemDC());

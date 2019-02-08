@@ -79,6 +79,9 @@
     <Filter Include="PlayGround\UI">
       <UniqueIdentifier>{1ac4ee81-4474-4e16-b4a0-0db385028b72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\Scene\intro">
+      <UniqueIdentifier>{736a8faf-9161-40a0-90d2-e07d3ed222a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -201,6 +204,9 @@
     <ClInclude Include="UI.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
+    <ClInclude Include="introScene.h">
+      <Filter>PlayGround\Scene\intro</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -307,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="introScene.cpp">
+      <Filter>PlayGround\Scene\intro</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
