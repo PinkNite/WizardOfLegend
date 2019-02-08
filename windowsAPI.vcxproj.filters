@@ -70,6 +70,12 @@
     <Filter Include="PlayGround\Scene\MinTest">
       <UniqueIdentifier>{09571b50-dd5b-4306-87b8-5a5cbd07b222}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\player\state">
+      <UniqueIdentifier>{2d24587c-d3c1-4f86-b415-a0e0ef23da3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\player\state\statecpp">
+      <UniqueIdentifier>{15cccabf-5e84-45c7-84f0-22e608380a36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -180,6 +186,36 @@
     <ClInclude Include="FrameWork.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="state.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="stateIdle.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="stateRun.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="stateDash.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="stateSkillOne.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="stateSkillTwo.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="stateSkillThree.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="stateSkillFour.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="stateDamage.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="stateDeath.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -274,6 +310,33 @@
     </ClCompile>
     <ClCompile Include="minTest.cpp">
       <Filter>PlayGround\Scene\MinTest</Filter>
+    </ClCompile>
+    <ClCompile Include="stateDamage.cpp">
+      <Filter>PlayGround\player\state\statecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stateDash.cpp">
+      <Filter>PlayGround\player\state\statecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stateDeath.cpp">
+      <Filter>PlayGround\player\state\statecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stateIdle.cpp">
+      <Filter>PlayGround\player\state\statecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stateRun.cpp">
+      <Filter>PlayGround\player\state\statecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stateSkillFour.cpp">
+      <Filter>PlayGround\player\state\statecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stateSkillOne.cpp">
+      <Filter>PlayGround\player\state\statecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stateSkillThree.cpp">
+      <Filter>PlayGround\player\state\statecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stateSkillTwo.cpp">
+      <Filter>PlayGround\player\state\statecpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

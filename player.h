@@ -3,9 +3,13 @@
 #include "object.h"
 #include "stdafx.h"
 #include "animation.h"
+
+class STATE;
+
 class PLAYER : public OBJECT
 {
 public:
+	//애니메이션 용
 	enum class DIRECTION
 	{
 		FORWARD = 0,
@@ -14,7 +18,7 @@ public:
 		BACK,
 		MAX
 	};
-
+	//애니메이션 용
 	enum class ACTION
 	{
 		IDLE = 0,
@@ -28,6 +32,34 @@ public:
 		DEATH,
 		MAX
 	};
+
+	//상태용
+	enum class PLAYER_STATE
+	{
+		IDLE = 0,
+		RUN,
+		DASH,
+		SKILL_01,
+		SKILL_02,
+		SKILL_03,
+		SKILL_04,
+		SKILL_05,
+		DAMAGE,
+		DEATH,
+		MAX
+	};
+
+	//이동용
+	enum class MOVE_DIRECTION
+	{
+		NONE = 0,
+		LEFT = 1,
+		RIGHT = 2,
+		TOP = 4,
+		BOTTOM = 8
+	};
+
+
 	enum { WIZARD_SPRITE_WIDTH = 1344 };
 	enum { WIZARD_SPRITE_HEIGHT = 1536 };
 	enum { WIZARD_SPRITE_MAXFRAMEX = 14 };
@@ -38,7 +70,7 @@ public:
 	enum { WIZARD_COLLISION_RECT_WIDTH = 32};
 	enum { WIZARD_COLLISION_RECT_HEIGHT = 64 };
 
-
+	
 private:
 	float _fMaxHealthPoint;			//최대 생명력
 	float _fCurrentHealthPoint;		//현재 생명력
@@ -79,6 +111,12 @@ private:
 	float		_fTmpX;
 	float		_fTmpY;
 
+
+	STATE*		_pCurrentState;
+	STATE*		_arState[static_cast<const int>(PLAYER::PLAYER_STATE::MAX)];
+
+
+	MOVE_DIRECTION _eMoveDirection;
 public:
 	PLAYER();
 	~PLAYER();
@@ -109,5 +147,27 @@ private:
 
 	void move();
 	void settingPos();
+	
+
+
+public:
+//state pattern용
+//skill은 좀더 생각할 필요가 있다.
+//스킬이 뭔지 알아야한다.
+
+	void setState(PLAYER::PLAYER_STATE ePlayerState);
+	void setDirection(PLAYER::DIRECTION eDirection);
 	void settingAni();
+	void setAction(PLAYER::ACTION eAction);
+	
+public:
+	void moveUp(float fSpeed);
+	void moveDown(float fSpeed);
+	void moveLeft(float fSpeed);
+	void moveRight(float fSpeed);
+
+	
+	inline float getSpeed() { return _fSpeed; }
+	void dash();
+
 };

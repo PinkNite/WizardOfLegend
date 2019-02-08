@@ -54,11 +54,15 @@ void PLAYER::init()
 	_action = PLAYER::ACTION::IDLE;
 	_pAnimation = KEYANIMANAGER->findAnimation(_strObjectName, addAniString(_arDirection[static_cast<int>(_direction)], _arAction[static_cast<int>(_action)]));
 	_pAnimation->start();
+	_eMoveDirection = PLAYER::MOVE_DIRECTION::NONE;
 }
 
 void PLAYER::update()
 {
 	move();
+
+
+
 
 	KEYANIMANAGER->update();
 
@@ -387,6 +391,59 @@ void PLAYER::settingAni()
 {
 	_pAnimation = KEYANIMANAGER->findAnimation(_strObjectName, addAniString(_arDirection[static_cast<int>(_direction)], _arAction[static_cast<int>(_action)]));
 	_pAnimation->start();
+}
+
+void PLAYER::setAction(PLAYER::ACTION eAction)
+{
+	_action = eAction;
+}
+
+void PLAYER::moveUp(float fSpeed)
+{
+	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(PI/2.0f, fSpeed));
+	settingPos();
+}
+
+void PLAYER::moveDown(float fSpeed)
+{
+	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(PI / 2.0f + PI, fSpeed));
+	settingPos();
+}
+
+void PLAYER::moveLeft(float fSpeed)
+{
+	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(PI, fSpeed));
+	settingPos();
+}
+
+void PLAYER::moveRight(float fSpeed)
+{
+	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(0.0f, fSpeed));
+	settingPos();
+}
+
+void PLAYER::dash()
+{
+	if (!KEYMANAGER->isKeyDown('W') &&
+		!KEYMANAGER->isKeyDown('A') &&
+		!KEYMANAGER->isKeyDown('S') &&
+		!KEYMANAGER->isKeyDown('D'))
+	{
+		
+	}
+
+}
+
+
+
+void PLAYER::setState(PLAYER::PLAYER_STATE ePlayerState)
+{
+	_pCurrentState = _arState[static_cast<int>(ePlayerState)];
+}
+
+void PLAYER::setDirection(PLAYER::DIRECTION eDirection)
+{
+	_direction = eDirection;
 }
 
 

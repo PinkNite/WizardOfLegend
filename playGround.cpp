@@ -27,6 +27,7 @@ HRESULT playGround::init()
 
 	SCENEMANAGER->changeScene("MinTest");
 
+
 	return S_OK;
 }
 
@@ -44,7 +45,6 @@ void playGround::update()
 	gameNode::update();
 
 
-
 	SCENEMANAGER->update();
 }
 
@@ -52,9 +52,11 @@ void playGround::update()
 
 void playGround::render()
 {
-	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
+	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, BLACKNESS);
 	//===========================================================
 	SCENEMANAGER->render();
+
+
 	TIMEMANAGER->render(getMemDC());
 	//===========================================================
 	this->getBackBuffer()->render(getHDC(), 0, 0);

@@ -81,6 +81,7 @@ void gameNode::update()
 {
 	SOUNDMANAGER->update();
 	KEYMANAGER->update();
+	TIMEMANAGER->update();
 }
 
 void gameNode::render()

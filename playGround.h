@@ -10,6 +10,7 @@ private:
 	gameNode *	_pMapEditScene;
 	gameNode*	_pstageScene;
 	gameNode*	_pMinTest;
+
 public:
 	virtual HRESULT init();
 	virtual void release();
