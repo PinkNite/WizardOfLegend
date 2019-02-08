@@ -15,6 +15,8 @@ void STATE_IDLE::onBtnW(PLAYER* pPlayer)
 	pPlayer->setDirection(PLAYER::DIRECTION::BACK);
 	pPlayer->setAction(PLAYER::ACTION::RUN);
 	pPlayer->settingAni();
+	pPlayer->setDirectionUp();
+
 }
 
 void STATE_IDLE::onBtnA(PLAYER* pPlayer)
@@ -23,6 +25,7 @@ void STATE_IDLE::onBtnA(PLAYER* pPlayer)
 	pPlayer->setDirection(PLAYER::DIRECTION::LEFT);
 	pPlayer->setAction(PLAYER::ACTION::RUN);
 	pPlayer->settingAni();
+	pPlayer->setDirectionLeft();
 }
 
 void STATE_IDLE::onBtnS(PLAYER* pPlayer)
@@ -31,6 +34,8 @@ void STATE_IDLE::onBtnS(PLAYER* pPlayer)
 	pPlayer->setDirection(PLAYER::DIRECTION::FORWARD);
 	pPlayer->setAction(PLAYER::ACTION::RUN);
 	pPlayer->settingAni();
+	pPlayer->setDirectionDown();
+
 }
 
 void STATE_IDLE::onBtnD(PLAYER* pPlayer)
@@ -39,6 +44,8 @@ void STATE_IDLE::onBtnD(PLAYER* pPlayer)
 	pPlayer->setDirection(PLAYER::DIRECTION::RIGHT);
 	pPlayer->setAction(PLAYER::ACTION::RUN);
 	pPlayer->settingAni();
+	pPlayer->setDirectionRight();
+
 }
 
 void STATE_IDLE::onBtnQ(PLAYER* pPlayer)

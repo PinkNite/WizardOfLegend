@@ -71,8 +71,8 @@ void PLAYER::init()
 void PLAYER::update()
 {
 	//move();
-	input();
 
+	input();
 	_pCurrentState->update(this);
 
 	KEYANIMANAGER->update();
@@ -241,12 +241,12 @@ void PLAYER::moveRight(float fSpeed)
 	settingPos();
 }
 
-void PLAYER::dash()
+void PLAYER::dash(float fOffset)
 {
-	float fSpeed = 1.5f * _fSpeed * TIMEMANAGER->getElapsedTime();
-	switch (_eMoveDirection)
+	float fSpeed = fOffset * _fSpeed * TIMEMANAGER->getElapsedTime();
+	
+	if (_eMoveDirection == PLAYER::MOVE_DIRECTION::NONE)
 	{
-	case PLAYER::MOVE_DIRECTION::NONE:
 		if (_direction == PLAYER::DIRECTION::LEFT)
 		{
 			_eMoveDirection = PLAYER::MOVE_DIRECTION::LEFT;
@@ -263,6 +263,11 @@ void PLAYER::dash()
 		{
 			_eMoveDirection = PLAYER::MOVE_DIRECTION::TOP;
 		}
+	}
+
+
+	switch (_eMoveDirection)
+	{
 
 	case PLAYER::MOVE_DIRECTION::LEFT:
 		moveLeft(fSpeed);
@@ -296,50 +301,7 @@ void PLAYER::dash()
 
 }
 
-void PLAYER::settingMovingDirection()
-{
-	_eMoveDirection = PLAYER::MOVE_DIRECTION::NONE;
-	if (KEYMANAGER->isKeyDown('W'))
-	{
-		_eMoveDirection = PLAYER::MOVE_DIRECTION::TOP;
-	}
-	if (KEYMANAGER->isKeyDown('S'))
-	{
-		_eMoveDirection = PLAYER::MOVE_DIRECTION::BOTTOM;
-	}
-	if (KEYMANAGER->isKeyDown('A'))
-	{
-		if (_eMoveDirection == PLAYER::MOVE_DIRECTION::TOP)
-		{
-			_eMoveDirection = PLAYER::MOVE_DIRECTION::LEFT_TOP;
-		}
-		else if (_eMoveDirection == PLAYER::MOVE_DIRECTION::BOTTOM)
-		{
-			_eMoveDirection = PLAYER::MOVE_DIRECTION::LEFT_BOTTOM;
-		}
-		else
-		{
-			_eMoveDirection = PLAYER::MOVE_DIRECTION::LEFT;
-		}
-	}
-	if (KEYMANAGER->isKeyDown('D'))
-	{
-		if (_eMoveDirection == PLAYER::MOVE_DIRECTION::TOP)
-		{
-			_eMoveDirection = PLAYER::MOVE_DIRECTION::RIGHT_TOP;
-		}
-		else if (_eMoveDirection == PLAYER::MOVE_DIRECTION::BOTTOM)
-		{
-			_eMoveDirection = PLAYER::MOVE_DIRECTION::RIGHT_BOTTOM;
-		}
-		else
-		{
-			_eMoveDirection = PLAYER::MOVE_DIRECTION::RIGHT;
-		}
-	}
 
-	movePlayer();
-}
 
 void PLAYER::movePlayer()
 {
@@ -384,13 +346,62 @@ void PLAYER::movePlayer()
 
 }
 
+void PLAYER::setDirectionUp()
+{
+	_eMoveDirection = PLAYER::MOVE_DIRECTION::TOP;
+
+}
+
+void PLAYER::setDirectionDown()
+{
+	_eMoveDirection = PLAYER::MOVE_DIRECTION::BOTTOM;
+
+}
+
+void PLAYER::setDirectionLeft()
+{
+	if (_eMoveDirection == PLAYER::MOVE_DIRECTION::TOP)
+	{
+		_eMoveDirection = PLAYER::MOVE_DIRECTION::LEFT_TOP;
+	}
+	else if (_eMoveDirection == PLAYER::MOVE_DIRECTION::BOTTOM)
+	{
+		_eMoveDirection = PLAYER::MOVE_DIRECTION::LEFT_BOTTOM;
+	}
+	else
+	{
+		_eMoveDirection = PLAYER::MOVE_DIRECTION::LEFT;
+	}
+}
+
+void PLAYER::setDirectionRight()
+{
+	if (_eMoveDirection == PLAYER::MOVE_DIRECTION::TOP)
+	{
+		_eMoveDirection = PLAYER::MOVE_DIRECTION::RIGHT_TOP;
+	}
+	else if (_eMoveDirection == PLAYER::MOVE_DIRECTION::BOTTOM)
+	{
+		_eMoveDirection = PLAYER::MOVE_DIRECTION::RIGHT_BOTTOM;
+	}
+	else
+	{
+		_eMoveDirection = PLAYER::MOVE_DIRECTION::RIGHT;
+	}
+}
+
 void PLAYER::input()
 {
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::RUN)])
+	{
+		_eMoveDirection = PLAYER::MOVE_DIRECTION::NONE;
+	}
+
 	if (KEYMANAGER->isKeyDown('W'))
 	{
 		_pCurrentState->onBtnW(this);
 	}
-	if (KEYMANAGER->isKeyDown('S'))
+	else if (KEYMANAGER->isKeyDown('S'))
 	{
 		_pCurrentState->onBtnS(this);
 	}
@@ -398,7 +409,7 @@ void PLAYER::input()
 	{
 		_pCurrentState->onBtnA(this);
 	}
-	if (KEYMANAGER->isKeyDown('D'))
+	else if (KEYMANAGER->isKeyDown('D'))
 	{
 		_pCurrentState->onBtnD(this);
 	}

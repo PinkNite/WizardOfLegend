@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "stateDash.h"
 
-STATE_DASH::STATE_DASH()
+STATE_DASH::STATE_DASH():
+	fOffset(2.5f)
 {
 }
 
@@ -53,13 +54,29 @@ void STATE_DASH::update(PLAYER * pPlayer)
 {
 	if (pPlayer->getDashTime() < 0.5f)
 	{
-		pPlayer->dash();
+		if (pPlayer->getDashTime() < 0.2f)
+		{
+			pPlayer->getAni()->stop();
+		}
+		else {
+			if (!pPlayer->getAni()->isPlay()) {
+				pPlayer->getAni()->start();
+			}
+			if (fOffset > 0.1f)
+			{
+				fOffset -= 0.1f;
+			}
+		}
+		pPlayer->dash(fOffset);
 		pPlayer->addDashTime();
+		
+		
 	}
 	else
 	{
 		pPlayer->setState(PLAYER::PLAYER_STATE::RUN);
 		pPlayer->setAction(PLAYER::ACTION::RUN);
 		pPlayer->settingAni();
+		fOffset = 2.5f;
 	}
 }

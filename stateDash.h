@@ -5,7 +5,7 @@
 
 class STATE_DASH : public STATE {
 private:
-
+	float fOffset;
 public:
 	STATE_DASH();
 	~STATE_DASH();

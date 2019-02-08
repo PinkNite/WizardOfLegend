@@ -171,9 +171,13 @@ public:
 
 	
 	inline float getSpeed() { return _fSpeed; }
-	void dash();
-	void settingMovingDirection();
+	void dash(float fOffset);
 	void movePlayer();
+
+	void setDirectionUp();
+	void setDirectionDown();
+	void setDirectionLeft();
+	void setDirectionRight();
 
 public:
 	inline void setDashTime(float fDashTime) { _fDashTime = fDashTime; }
@@ -182,4 +186,6 @@ public:
 
 public:
 	inline PLAYER::DIRECTION getDrection() { return _direction; }
+	inline animation* getAni() { return _pAnimation; }
+
 };

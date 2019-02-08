@@ -19,6 +19,7 @@ void STATE_RUN::onBtnW(PLAYER* pPlayer)
 			pPlayer->settingAni();
 		}
 	}
+	pPlayer->setDirectionUp();
 }
 
 void STATE_RUN::onBtnA(PLAYER* pPlayer)
@@ -28,6 +29,7 @@ void STATE_RUN::onBtnA(PLAYER* pPlayer)
 		pPlayer->setDirection(PLAYER::DIRECTION::LEFT);
 		pPlayer->settingAni();
 	}
+	pPlayer->setDirectionLeft();
 }
 
 void STATE_RUN::onBtnS(PLAYER* pPlayer)
@@ -39,6 +41,7 @@ void STATE_RUN::onBtnS(PLAYER* pPlayer)
 			pPlayer->settingAni();
 		}
 	}
+	pPlayer->setDirectionDown();
 }
 
 void STATE_RUN::onBtnD(PLAYER* pPlayer)
@@ -48,6 +51,7 @@ void STATE_RUN::onBtnD(PLAYER* pPlayer)
 		pPlayer->setDirection(PLAYER::DIRECTION::RIGHT);
 		pPlayer->settingAni();
 	}
+	pPlayer->setDirectionRight();
 }
 
 void STATE_RUN::onBtnQ(PLAYER* pPlayer)
@@ -85,5 +89,5 @@ void STATE_RUN::onBtnR(PLAYER * pPlayer)
 
 void STATE_RUN::update(PLAYER * pPlayer)
 {
-	pPlayer->settingMovingDirection();
+	pPlayer->movePlayer();
 }
