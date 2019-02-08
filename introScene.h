@@ -26,6 +26,8 @@ private:
 	TAGINTRO _99;
 	TAGINTRO _introPeople;
 	TAGINTRO _hello;
+	
+	image* _pMouse;
 	int _fontX, _arrFontY[8];
 	float _angle;
 	float _speed;
@@ -47,7 +49,7 @@ private:
 	/*animation* _pAni;*/
 	bool _isStart;
 
-	
+	int test;
 
 public:
 	INTROSCENE();
@@ -63,6 +65,6 @@ public:
 	void fontRender(HDC hdc, const char * str,const char* str2, int x, int y, int num, COLORREF color);
 	void draw();
 	bool isCollision(int x, int y, int x2, int y2);
-
+	void buttonClick();
 };
 
