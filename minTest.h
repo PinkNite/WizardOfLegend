@@ -8,7 +8,6 @@ class MINTESTSCENE : public gameNode
 {
 private:
 	PLAYER * _pPlayer;
-	float	_fTime;
 
 public:
 	MINTESTSCENE();

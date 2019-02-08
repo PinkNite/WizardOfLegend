@@ -81,7 +81,6 @@ void gameNode::update()
 {
 	SOUNDMANAGER->update();
 	KEYMANAGER->update();
-	TIMEMANAGER->update();
 }
 
 void gameNode::render()
@@ -102,9 +101,6 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		{
 			this->render();
 		}
-		break;
-		case WM_TIMER:
-			this->update();
 		break;
 
 		case WM_MOUSEMOVE:
