@@ -51,4 +51,15 @@ void STATE_DASH::onBtnR(PLAYER * pPlayer)
 
 void STATE_DASH::update(PLAYER * pPlayer)
 {
+	if (pPlayer->getDashTime() < 0.5f)
+	{
+		pPlayer->dash();
+		pPlayer->addDashTime();
+	}
+	else
+	{
+		pPlayer->setState(PLAYER::PLAYER_STATE::RUN);
+		pPlayer->setAction(PLAYER::ACTION::RUN);
+		pPlayer->settingAni();
+	}
 }

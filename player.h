@@ -53,10 +53,15 @@ public:
 	enum class MOVE_DIRECTION
 	{
 		NONE = 0,
-		LEFT = 1,
-		RIGHT = 2,
-		TOP = 4,
-		BOTTOM = 8
+		LEFT,
+		RIGHT,
+		TOP,
+		BOTTOM,
+		LEFT_TOP,
+		LEFT_BOTTOM,
+		RIGHT_TOP,
+		RIGHT_BOTTOM,
+		MAX
 	};
 
 
@@ -108,15 +113,13 @@ private:
 	float		_fAngleY;
 
 	float		_fDashTime;
-	float		_fTmpX;
-	float		_fTmpY;
 
 
 	STATE*		_pCurrentState;
 	STATE*		_arState[static_cast<const int>(PLAYER::PLAYER_STATE::MAX)];
 
 
-	MOVE_DIRECTION _eMoveDirection;
+	MOVE_DIRECTION			_eMoveDirection;
 public:
 	PLAYER();
 	~PLAYER();
@@ -145,7 +148,6 @@ private:
 
 	//스킬마다 스킬 시전 시간을 가지고 그 시간이 지나면 애니메이션을 바꾸고 하자
 
-	void move();
 	void settingPos();
 	
 
@@ -159,7 +161,8 @@ public:
 	void setDirection(PLAYER::DIRECTION eDirection);
 	void settingAni();
 	void setAction(PLAYER::ACTION eAction);
-	
+	void input();
+	void initState();
 public:
 	void moveUp(float fSpeed);
 	void moveDown(float fSpeed);
@@ -169,5 +172,14 @@ public:
 	
 	inline float getSpeed() { return _fSpeed; }
 	void dash();
+	void settingMovingDirection();
+	void movePlayer();
 
+public:
+	inline void setDashTime(float fDashTime) { _fDashTime = fDashTime; }
+	inline float getDashTime() { return _fDashTime; }
+	void addDashTime() { _fDashTime += TIMEMANAGER->getElapsedTime(); }
+
+public:
+	inline PLAYER::DIRECTION getDrection() { return _direction; }
 };
