@@ -5,7 +5,7 @@
 
 
 INTROSCENE::INTROSCENE()
-	//:_pImage(nullptr),_jumpPower(0),_time(NULL)
+	:_pImage(nullptr),_jumpPower(0),_time(NULL),_fontX(0),_angle(0),_speed(0)
 {
 }
 
@@ -15,8 +15,15 @@ INTROSCENE::~INTROSCENE()
 
 HRESULT INTROSCENE::init()
 {
-	_time = 0;
+	//_time = 0;
+	_fontX = WINSIZEX/2 - 200;
+	for (int i = 0; i < 8; i++)
+	{
+
+	_arrFontY[i] = WINSIZEY / 2 - 200;
 	
+	}
+	_angle = PI;
 	imageSetting();
 	return S_OK;
 }
@@ -38,24 +45,126 @@ void INTROSCENE::update()
 	actionOff(3, &_99.alpha,5);
 	actionOn(6, &_introPeople.alpha, 5);
 	
-	actionOn(10, &_title.alpha,5);
+	actionOn(20, &_title.alpha,5);
+
+	//±ÛÀÚ¸¦ ¶³±À
+	
 	//ÀÌ¹ÌÁö ¿Â
 
 }
 
 void INTROSCENE::render()
 {
-	
+
 	//IMAGEMANAGER->findImage("title")->alphaRender(getMemDC(), 0, 0,255);
-	_99.image->alphaRender(getMemDC(),_99.x,_99.y,_99.alpha);
-	
-	_title.image->alphaRender(getMemDC(),_title.x,_title.y,_title.alpha);
+	_99.image->alphaRender(getMemDC(), _99.x, _99.y, _99.alpha);
+
+	_title.image->alphaRender(getMemDC(), _title.x, _title.y, _title.alpha);
 	//_logo.image->alphaRender(getMemDC(),_logo.x,_logo.y,_logo.alpha);
-	_introPeople.image->alphaRender(getMemDC(),_introPeople.x,_introPeople.y, _introPeople.alpha);
-	_hello.image->alphaRender(getMemDC(), _hello.x,_hello.y,_hello.alpha);
+	_introPeople.image->alphaRender(getMemDC(), _introPeople.x, _introPeople.y, _introPeople.alpha);
+	_hello.image->alphaRender(getMemDC(), _hello.x, _hello.y, _hello.alpha);
 	char str[220];
 	sprintf_s(str, "%d", _99.alpha);
 	TextOut(getMemDC(), 400, 400, str, strlen(str));
+	
+
+	if (_time < 20)
+	{
+		for (int i = 0; i < 8; i++)
+		{
+
+			switch (i)
+			{
+			case 0:
+				if (_time > 8 + i * 0.2f && _time < 20)
+				{
+					fontRender(getMemDC(), "P", "½¦µµ¿ì9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					if (_time > 10 + i * 0.2f)
+					{
+						_arrFontY[i] += GRAVITY;
+					}
+				}
+				break;
+			case 1:
+				if (_time > 8 + i * 0.2f && _time < 20)
+				{
+					fontRender(getMemDC(), "I", "½¦µµ¿ì9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					if (_time > 10 + i * 0.2f)
+					{
+						_arrFontY[i] += GRAVITY;
+					}
+				}
+				break;
+			case 2:
+				if (_time > 8 + i * 0.2f && _time < 20)
+				{
+					fontRender(getMemDC(), "N", "½¦µµ¿ì9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					if (_time > 10 + i * 0.2f)
+					{
+						_arrFontY[i] += GRAVITY;
+					}
+				}
+				break;
+			case 3:
+				if (_time > 8 + i * 0.2f && _time < 20)
+				{
+					fontRender(getMemDC(), "K", "½¦µµ¿ì9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					if (_time > 10 + i * 0.2f)
+					{
+						_arrFontY[i] += GRAVITY;
+					}
+				}
+				break;
+			case 4:
+				if (_time > 8 + i * 0.2f && _time < 20)
+				{
+					fontRender(getMemDC(), "N", "½¦µµ¿ì9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					if (_time > 10 + i * 0.2f)
+					{
+						_arrFontY[i] += GRAVITY;
+					}
+				}
+				break;
+			case 5:
+				if (_time > 8 + i * 0.2f && _time < 20)
+				{
+					fontRender(getMemDC(), "I", "½¦µµ¿ì9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					if (_time > 10 + i * 0.2f)
+					{
+						_arrFontY[i] += GRAVITY;
+					}
+				}
+				break;
+			case 6:
+				if (_time > 8 + i * 0.2f && _time < 20)
+				{
+					fontRender(getMemDC(), "T", "½¦µµ¿ì9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					if (_time > 10 + i * 0.2f)
+					{
+						_arrFontY[i] += GRAVITY;
+					}
+				}
+				break;
+			case 7:
+				if (_time > 8 + i * 0.2f && _time < 20)
+				{
+					fontRender(getMemDC(), "E", "½¦µµ¿ì9", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
+					if (_time > 10 + i * 0.2f)
+					{
+						_angle += 0.1f;
+						_speed += 0.1f;
+						_fontX += cosf(_angle) * _speed;
+						
+						_arrFontY[i] += -sinf(_angle) * _speed;
+					}
+				}
+				break;
+
+			}
+
+		}
+	}
+	fontRender(getMemDC(), " ", "±¼¸²Ã¼", WINSIZEX / 2 + 20, WINSIZEY / 2, 20, RGB(255, 51, 153));
 }
 
 void INTROSCENE::imageSetting()
@@ -115,16 +224,17 @@ void INTROSCENE::actionOn(float numA, int * alpha, int numB)
 	}
 }
 
-void INTROSCENE::fontRender(HDC hdc, const char * str, int x, int y, int num, COLORREF color)
+void INTROSCENE::fontRender(HDC hdc, const char * str,const char* str2, int x, int y, int num, COLORREF color)
 {
 	char str1[500];
 	SetTextColor(hdc, color);
 	HFONT font, oldfont;
 	SetBkMode(hdc, TRANSPARENT);
-	font = CreateFont(num, 0, 0, 0, 300, 0, 0, 0, DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, DEFAULT_PITCH / FF_SWISS, TEXT("±Ã¼­Ã¼"));
+	font = CreateFont(num, 0, 0, 0, 300, 0, 0, 0, DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, DEFAULT_PITCH / FF_SWISS, TEXT(str2));
 	oldfont = (HFONT)SelectObject(hdc, font);
 	sprintf_s(str1, str);
 	TextOut(hdc, x, y, str, strlen(str));
+	//DeleteObject(oldfont);
 	DeleteObject(font);
 }
 

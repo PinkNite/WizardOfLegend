@@ -1527,8 +1527,8 @@ void ITEM::render(HDC hdc)
 	}
 	char str[200];
 	OBJECT::getImage()->frameRender(hdc, 300, 100, _mItem.find(_num)->second[_num].frameX, _mItem.find(_num)->second[_num].frameY);
-	fontRender(hdc, _mItem.find(_num)->second[_num].name, 300, 200, 30, RGB(250, 50, 50));
-	fontRender(hdc, _mItem.find(_num)->second[_num].info, 300, 250, 15, RGB(50, 50, 50));
+	fontRender(hdc, _mItem.find(_num)->second[_num].name,"±¼¸²Ã¼", 300, 200, 30, RGB(250, 50, 50));
+	fontRender(hdc, _mItem.find(_num)->second[_num].info,"±¼¸²Ã¼", 300, 250, 15, RGB(50, 50, 50));
 	sprintf_s(str, "ºí·ç:%d", _mItem.find(_num)->second[_num].costA);
 	TextOut(hdc, 300, 350, str, strlen(str));
 	sprintf_s(str, "°ñµå:%d", _mItem.find(_num)->second[_num].costB);
@@ -1537,13 +1537,13 @@ void ITEM::render(HDC hdc)
 	TextOut(hdc, 400, 500, str, strlen(str));
 }
 
-void ITEM::fontRender(HDC hdc, const char * str, int x, int y, int num, COLORREF color)
+void ITEM::fontRender(HDC hdc, const char * str, const char* str2, int x, int y, int num, COLORREF color)
 {
 	char str1[500];
 	SetTextColor(hdc, color);
 	HFONT font, oldfont;
 	SetBkMode(hdc, TRANSPARENT);
-	font = CreateFont(num, 0, 0, 0, 300, 0, 0, 0, DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, DEFAULT_PITCH / FF_SWISS, TEXT("±Ã¼­Ã¼"));
+	font = CreateFont(num, 0, 0, 0, 300, 0, 0, 0, DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, DEFAULT_PITCH / FF_SWISS, TEXT(str2));
 	oldfont = (HFONT)SelectObject(hdc, font);
 	sprintf_s(str1, str);
 	TextOut(hdc, x, y, str, strlen(str));

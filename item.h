@@ -36,5 +36,5 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
-	void fontRender(HDC hdc, const char * str, int x, int y, int num, COLORREF color);
+	void fontRender(HDC hdc, const char * str, const char* str2, int x, int y, int num, COLORREF color);
 };
