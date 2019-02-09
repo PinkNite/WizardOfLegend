@@ -3,16 +3,19 @@
 void MAPEDIT::callBackMapWall()
 {
 	printf_s("Wall버튼을 눌렀네요\n");
+	_mapEditstate = MAPEDITSTATE::MAPEDITWALL;
 }
 
 void MAPEDIT::callBackMapTerrain()
 {
 	printf_s("Terrain버튼을 눌렀네요\n");
+	_mapEditstate = MAPEDITSTATE::MAPEDITTERRAIN;
 }
 
 void MAPEDIT::callBackMapObject()
 {
 	printf_s("Object버튼을 눌렀네요\n");
+	_mapEditstate = MAPEDITSTATE::MAPEDITOBJECT;
 }
 
 void MAPEDIT::callBackMapSave()
@@ -35,16 +38,18 @@ MAPEDIT::~MAPEDIT()
 
 HRESULT MAPEDIT::init()
 {
-	RelicUITypePageBG = IMAGEMANAGER->addImage("RelicUITypePageBG", "resource/UI/RelicUITypePageBG.bmp", 576, 600, true, RGB(255, 0, 255));
-	RelicUIDrawer = IMAGEMANAGER->addFrameImage("RelicUIDrawer", "resource/UI/RelicUIDrawer.bmp", 469, 520, 1, 5, true, RGB(255, 0, 255));
-	RelicUIBG = IMAGEMANAGER->addImage("UIBackGround", "resource/UI/RelicUIBG.bmp", 600, 900, true, RGB(255, 0, 255));
-	RelicUIBG2 = IMAGEMANAGER->addImage("UIBackGround2", "resource/UI/RelicUIBG2.bmp", 600, 900, true, RGB(255, 0, 255)); 
+	imgRelicUITypePageBG = IMAGEMANAGER->addImage("RelicUITypePageBG", "resource/UI/RelicUITypePageBG.bmp", 576, 600, true, RGB(255, 0, 255));
+	imgRelicUIDrawer = IMAGEMANAGER->addFrameImage("RelicUIDrawer", "resource/UI/RelicUIDrawer.bmp", 469, 520, 1, 5, true, RGB(255, 0, 255));
+	imgRelicUIBG = IMAGEMANAGER->addImage("UIBackGround", "resource/UI/RelicUIBG.bmp", 600, 900, true, RGB(255, 0, 255));
+	imgRelicUIBG2 = IMAGEMANAGER->addImage("UIBackGround2", "resource/UI/RelicUIBG2.bmp", 600, 900, true, RGB(255, 0, 255)); 
+	imgRelicUISelectPageBG = IMAGEMANAGER->addImage("RelicUISelectPageBG", "resource/UI/RelicUISelectPageBG.bmp", 571, 648, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Wall", "resource/UI/WallUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Terrain", "resource/UI/TerrainUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Object", "resource/UI/ObjectUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Save", "resource/UI/SaveUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Load", "resource/UI/LoadUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
-	rcTypePage = RectMake(1015, 277, RelicUITypePageBG->GetWidth(), RelicUITypePageBG->GetHeight());
+	rcTypePage = RectMake(1015, 277, imgRelicUITypePageBG->GetWidth(), imgRelicUITypePageBG->GetHeight());
+	rcSelectPage = RectMake(1015, 277, imgRelicUISelectPageBG->GetWidth(), imgRelicUISelectPageBG->GetHeight());
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -73,7 +78,7 @@ HRESULT MAPEDIT::init()
 
 	_index = _count = 0;
 	movingWindow.x = movingWindow.y = 0;
-	_drawerVertexSize = 20;
+	_drawerVertexSize = 40;
 	_mapEditstate = MAPEDITSTATE::MAPEDITMENU;
 
 	return S_OK;
@@ -84,6 +89,18 @@ void MAPEDIT::update()
 	if (_mapEditstate == MAPEDITSTATE::MAPEDITMENU)
 	{
 		updateMenu();
+	}
+	else if (_mapEditstate == MAPEDITSTATE::MAPEDITWALL)
+	{
+		updateWall();
+	}
+	else if (_mapEditstate == MAPEDITSTATE::MAPEDITTERRAIN)
+	{
+		updateTerrain();
+	}
+	else if (_mapEditstate == MAPEDITSTATE::MAPEDITOBJECT)
+	{
+		updateObject();
 	}
 }
 
@@ -102,14 +119,26 @@ void MAPEDIT::release()
 
 void MAPEDIT::render()
 {
-	RelicUIBG->render(getMemDC(), 1000, 0);
+	//imgRelicUIBG->render(getMemDC(), 1000, 0);
 	if (_mapEditstate == MAPEDITSTATE::MAPEDITMENU)
 	{
 		renderMenu();
 	}
-	for (int i = 0; i < 4; i++)
+	else if (_mapEditstate == MAPEDITSTATE::MAPEDITWALL)
 	{
-		RectangleMake(getMemDC(), rcTypePageVertex[i].left, rcTypePageVertex[i].top, rcTypePageVertex[i].right - rcTypePageVertex[i].left, rcTypePageVertex[i].bottom - rcTypePageVertex[i].top);
+		renderWall();
+	}
+	else if (_mapEditstate == MAPEDITSTATE::MAPEDITTERRAIN)
+	{
+		renderTerrain();
+	}
+	else if (_mapEditstate == MAPEDITSTATE::MAPEDITOBJECT)
+	{
+		renderObject();
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_BACK))
+	{
+		_mapEditstate = MAPEDITSTATE::MAPEDITMENU;
 	}
 }
 
@@ -122,31 +151,23 @@ void MAPEDIT::updateMenu()
 	_btnSave->update(rcRelicUIDrawer[4]);
 
 	//왼쪽 위 모서리
-	rcTypePageVertex[0] = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
-	//오른쪽 위 모서리
-	rcTypePageVertex[1] = RectMake(rcTypePage.right - _drawerVertexSize, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
-	//오른쪽 아래 모서리
-	rcTypePageVertex[2] = RectMake(rcTypePage.right - _drawerVertexSize, rcTypePage.bottom - _drawerVertexSize, _drawerVertexSize, _drawerVertexSize);
-	//왼쪽 아래 모서리
-	rcTypePageVertex[3] = RectMake(rcTypePage.left, rcTypePage.bottom - _drawerVertexSize, _drawerVertexSize, _drawerVertexSize);
+	rcTypePageVertex = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
 
 	//창 무브
-	for (int i = 0; i < 4; i++)
+	
+	if(PtInRect(&rcTypePageVertex, _ptMouse))
 	{
-		if(PtInRect(&rcTypePageVertex[i], _ptMouse))
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
-			if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-			{
-				_clickVertex = true;
-			}
+			_clickVertex = true;
 		}
 	}
 	if (_clickVertex == true)
 	{
-		rcTypePage.left = _ptMouse.x - 10;
-		rcTypePage.top = _ptMouse.y - 10;
-		rcTypePage.right = rcTypePage.left + RelicUITypePageBG->GetWidth();
-		rcTypePage.bottom = rcTypePage.top + RelicUITypePageBG->GetHeight();
+		rcTypePage.left = _ptMouse.x - _drawerVertexSize / 2;
+		rcTypePage.top = _ptMouse.y - _drawerVertexSize / 2;
+		rcTypePage.right = rcTypePage.left + imgRelicUITypePageBG->GetWidth();
+		rcTypePage.bottom = rcTypePage.top + imgRelicUITypePageBG->GetHeight();
 		for (int i = 0; i < 5; i++)
 		{
 			rcRelicUIDrawer[i] = RectMake(53 + rcTypePage.left, rcTypePage.top + 61 + 96 * i, 470, 88);
@@ -168,7 +189,7 @@ void MAPEDIT::updateMenu()
 			{
 				_VarationY[1] = i;
 				_index++;
-				RelicUIDrawer->SetFrameY(_index);
+				imgRelicUIDrawer->SetFrameY(_index);
 				if (_index == 0)
 				{
 					_moveY[i] = 0;
@@ -189,9 +210,9 @@ void MAPEDIT::updateMenu()
 				{
 					_moveY[i] = 18;
 				}
-				if (_index >= RelicUIDrawer->getMaxFrameY())
+				if (_index >= imgRelicUIDrawer->getMaxFrameY())
 				{
-					_index = RelicUIDrawer->getMaxFrameY();
+					_index = imgRelicUIDrawer->getMaxFrameY();
 				}
 				_count = 0;
 			}
@@ -205,8 +226,8 @@ void MAPEDIT::updateMenu()
 		//마우스를 빠르게 이동할때 1.예외처리가 걸리지 못했을 때 index를 0으로
 		if (_VarationY[0] != _VarationY[1])
 		{
-			RelicUIDrawer->SetFrameX(0);
-			RelicUIDrawer->SetFrameY(0);
+			imgRelicUIDrawer->SetFrameX(0);
+			imgRelicUIDrawer->SetFrameY(0);
 			_index = 0;
 		}
 	}
@@ -214,8 +235,8 @@ void MAPEDIT::updateMenu()
 	//1. 다른메뉴창 선택시 index를 0으로
 	if (_ptInbtn[0] == _ptInbtn[1] == _ptInbtn[2] == _ptInbtn[3] == _ptInbtn[4] == false)
 	{
-		RelicUIDrawer->SetFrameX(0);
-		RelicUIDrawer->SetFrameY(0);
+		imgRelicUIDrawer->SetFrameX(0);
+		imgRelicUIDrawer->SetFrameY(0);
 		_index = 0;
 	}
 	_count++;
@@ -223,41 +244,160 @@ void MAPEDIT::updateMenu()
 
 void MAPEDIT::updateWall()
 {
+	//왼쪽 위 모서리
+	rcSelectPageVertex = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
+	//창 무브
+	if (PtInRect(&rcSelectPageVertex, _ptMouse))
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			_clickVertex = true;
+		}
+	}
+
+	if (_clickVertex == true)
+	{
+		rcSelectPage.left = _ptMouse.x - _drawerVertexSize / 2;
+		rcSelectPage.top = _ptMouse.y - _drawerVertexSize / 2;
+		rcSelectPage.right = rcSelectPage.left + imgRelicUISelectPageBG->GetWidth();
+		rcSelectPage.bottom = rcSelectPage.top + imgRelicUISelectPageBG->GetHeight();
+		rcTypePage.left = _ptMouse.x - _drawerVertexSize / 2;
+		rcTypePage.top = _ptMouse.y - _drawerVertexSize / 2;
+		rcTypePage.right = rcTypePage.left + imgRelicUITypePageBG->GetWidth();
+		rcTypePage.bottom = rcTypePage.top + imgRelicUITypePageBG->GetHeight();
+		for (int i = 0; i < 5; i++)
+		{
+			rcRelicUIDrawer[i] = RectMake(53 + rcTypePage.left, rcTypePage.top + 61 + 96 * i, 470, 88);
+			rcBtnTitle[i] = RectMake(53 + rcTypePage.left, 61 + 96 * i, IMAGEMANAGER->findImage("Wall")->getFrameWidth(), IMAGEMANAGER->findImage("Wall")->getFrameHeight());
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_clickVertex = false;
+		}
+	}
 }
 
 void MAPEDIT::updateTerrain()
 {
+	//왼쪽 위 모서리
+	rcSelectPageVertex = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
+	//창 무브
+	if (PtInRect(&rcSelectPageVertex, _ptMouse))
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			_clickVertex = true;
+		}
+	}
+
+	if (_clickVertex == true)
+	{
+		rcSelectPage.left = _ptMouse.x - _drawerVertexSize / 2;
+		rcSelectPage.top = _ptMouse.y - _drawerVertexSize / 2;
+		rcSelectPage.right = rcSelectPage.left + imgRelicUISelectPageBG->GetWidth();
+		rcSelectPage.bottom = rcSelectPage.top + imgRelicUISelectPageBG->GetHeight();
+		rcTypePage.left = _ptMouse.x - _drawerVertexSize / 2;
+		rcTypePage.top = _ptMouse.y - _drawerVertexSize / 2;
+		rcTypePage.right = rcTypePage.left + imgRelicUITypePageBG->GetWidth();
+		rcTypePage.bottom = rcTypePage.top + imgRelicUITypePageBG->GetHeight();
+		for (int i = 0; i < 5; i++)
+		{
+			rcRelicUIDrawer[i] = RectMake(53 + rcTypePage.left, rcTypePage.top + 61 + 96 * i, 470, 88);
+			rcBtnTitle[i] = RectMake(53 + rcTypePage.left, 61 + 96 * i, IMAGEMANAGER->findImage("Wall")->getFrameWidth(), IMAGEMANAGER->findImage("Wall")->getFrameHeight());
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_clickVertex = false;
+		}
+	}
 }
 
 void MAPEDIT::updateObject()
 {
+	//왼쪽 위 모서리
+	rcSelectPageVertex = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
+	//창 무브
+	if (PtInRect(&rcSelectPageVertex, _ptMouse))
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			_clickVertex = true;
+		}
+	}
+
+	if (_clickVertex == true)
+	{
+		rcSelectPage.left = _ptMouse.x - _drawerVertexSize / 2;
+		rcSelectPage.top = _ptMouse.y - _drawerVertexSize / 2;
+		rcSelectPage.right = rcSelectPage.left + imgRelicUISelectPageBG->GetWidth();
+		rcSelectPage.bottom = rcSelectPage.top + imgRelicUISelectPageBG->GetHeight();
+		rcTypePage.left = _ptMouse.x - _drawerVertexSize / 2;
+		rcTypePage.top = _ptMouse.y - _drawerVertexSize / 2;
+		rcTypePage.right = rcTypePage.left + imgRelicUITypePageBG->GetWidth();
+		rcTypePage.bottom = rcTypePage.top + imgRelicUITypePageBG->GetHeight();
+		for (int i = 0; i < 5; i++)
+		{
+			rcRelicUIDrawer[i] = RectMake(53 + rcTypePage.left, rcTypePage.top + 61 + 96 * i, 470, 88);
+			rcBtnTitle[i] = RectMake(53 + rcTypePage.left, 61 + 96 * i, IMAGEMANAGER->findImage("Wall")->getFrameWidth(), IMAGEMANAGER->findImage("Wall")->getFrameHeight());
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_clickVertex = false;
+		}
+	}
 }
 
 void MAPEDIT::renderMenu()
 {
-	RelicUITypePageBG->render(getMemDC(), rcTypePage.left, rcTypePage.top);
+	imgRelicUITypePageBG->render(getMemDC(), rcTypePage.left, rcTypePage.top);
 	for (int i = 0; i < 5; i++)
 	{
 		if (_ptInbtn[i] == true)
 		{
-			RelicUIDrawer->frameRender(getMemDC(), rcRelicUIDrawer[i].left, rcRelicUIDrawer[i].top);
+			imgRelicUIDrawer->frameRender(getMemDC(), rcRelicUIDrawer[i].left, rcRelicUIDrawer[i].top);
 		}
 	}
 	_btnWall->render(getMemDC(), _moveY[0]);
 	_btnTerrain->render(getMemDC(), _moveY[1]);
 	_btnObject->render(getMemDC(), _moveY[2]);
-	_btnSave->render(getMemDC(), _moveY[3]);
-	_btnLoad->render(getMemDC(), _moveY[4]);
+	_btnLoad->render(getMemDC(), _moveY[3]);
+	_btnSave->render(getMemDC(), _moveY[4]);
+	if (KEYMANAGER->isToggleKey(VK_F1))
+	{
+		RectangleMake(getMemDC(), rcTypePageVertex.left, rcTypePageVertex.top, rcTypePageVertex.right - rcTypePageVertex.left, rcTypePageVertex.bottom - rcTypePageVertex.top);
+
+	}
 }
 
 void MAPEDIT::renderWall()
 {
+	imgRelicUISelectPageBG->render(getMemDC(), rcTypePage.left, rcTypePage.top);
+	IMAGEMANAGER->findImage("Wall")->frameRender(getMemDC(), rcTypePage.left + 179, rcTypePage.top + 40, 0, 0);
+	if (KEYMANAGER->isToggleKey(VK_F1))
+	{
+		RectangleMake(getMemDC(), rcSelectPageVertex.left, rcSelectPageVertex.top, rcSelectPageVertex.right - rcSelectPageVertex.left, rcSelectPageVertex.bottom - rcSelectPageVertex.top);
+		
+	}
 }
 
 void MAPEDIT::renderTerrain()
 {
+	imgRelicUISelectPageBG->render(getMemDC(), rcTypePage.left, rcTypePage.top);
+	IMAGEMANAGER->findImage("Terrain")->frameRender(getMemDC(), rcTypePage.left + 179, rcTypePage.top + 40, 0, 0);
+	if (KEYMANAGER->isToggleKey(VK_F1))
+	{
+		RectangleMake(getMemDC(), rcSelectPageVertex.left, rcSelectPageVertex.top, rcSelectPageVertex.right - rcSelectPageVertex.left, rcSelectPageVertex.bottom - rcSelectPageVertex.top);
+
+	}
 }
 
 void MAPEDIT::renderObject()
 {
+	imgRelicUISelectPageBG->render(getMemDC(), rcTypePage.left, rcTypePage.top);
+	IMAGEMANAGER->findImage("Object")->frameRender(getMemDC(), rcTypePage.left + 179, rcTypePage.top + 40, 0, 0);
+	if (KEYMANAGER->isToggleKey(VK_F1))
+	{
+		RectangleMake(getMemDC(), rcSelectPageVertex.left, rcSelectPageVertex.top, rcSelectPageVertex.right - rcSelectPageVertex.left, rcSelectPageVertex.bottom - rcSelectPageVertex.top);
+
+	}
 }

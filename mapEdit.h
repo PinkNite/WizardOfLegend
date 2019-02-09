@@ -19,16 +19,18 @@ public:
 	};
 
 private:
-	image* RelicUIBG;
-	image* RelicUIBG2;
-	image* RelicUITypePageBG;
-	image* RelicUIDrawer;
-	image* RelicUISelectPageBG;
+	image* imgRelicUIBG;
+	image* imgRelicUIBG2;
+	image* imgRelicUITypePageBG;
+	image* imgRelicUIDrawer;
+	image* imgRelicUISelectPageBG;
 
 	RECT rcRelicUIDrawer[5];
 	RECT rcBtnTitle[5];
-	RECT rcTypePageVertex[4];
+	RECT rcTypePageVertex;
 	RECT rcTypePage;
+	RECT rcSelectPageVertex;
+	RECT rcSelectPage;
 	POINT pt[3];
 	POINT movingWindow;
 
