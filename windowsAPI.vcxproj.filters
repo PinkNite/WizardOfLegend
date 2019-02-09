@@ -76,6 +76,9 @@
     <Filter Include="PlayGround\player\state\statecpp">
       <UniqueIdentifier>{15cccabf-5e84-45c7-84f0-22e608380a36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\enemy">
+      <UniqueIdentifier>{590ac659-54e4-445b-bf7e-5365e70913da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -216,6 +219,9 @@
     <ClInclude Include="stateDeath.h">
       <Filter>PlayGround\player\state</Filter>
     </ClInclude>
+    <ClInclude Include="boss.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -337,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="stateSkillTwo.cpp">
       <Filter>PlayGround\player\state\statecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="boss.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
