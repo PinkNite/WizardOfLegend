@@ -25,7 +25,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("stageScene", _pstageScene);
 	SCENEMANAGER->addScene("MinTest", _pMinTest);
 
-	SCENEMANAGER->changeScene("mapEditScene");
+	SCENEMANAGER->changeScene("MinTest");
 
 	return S_OK;
 }

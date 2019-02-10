@@ -155,6 +155,7 @@
     <ClInclude Include="BossStateIdle.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="circleEffect.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="FrameWork.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="BossStateIdle.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="circleEffect.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="gameNode.cpp" />

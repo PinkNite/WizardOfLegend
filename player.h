@@ -3,6 +3,7 @@
 #include "object.h"
 #include "stdafx.h"
 #include "animation.h"
+#include "circleEffect.h"
 
 class STATE;
 
@@ -120,6 +121,10 @@ private:
 
 
 	MOVE_DIRECTION			_eMoveDirection;
+	CIRCLEEFFECT*		_pCirEffect;
+	
+	float		_fAttackDirAngle;
+
 public:
 	PLAYER();
 	~PLAYER();

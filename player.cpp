@@ -28,7 +28,12 @@ PLAYER::PLAYER() :
 	_direction(PLAYER::DIRECTION::FORWARD),
 	_action(PLAYER::ACTION::IDLE),
 	_fAngleX(0.0f),
-	_fAngleY(0.0f)
+	_fAngleY(0.0f),
+	_pCurrentState(nullptr),
+	_arState{},
+	_eMoveDirection(PLAYER::MOVE_DIRECTION::NONE),
+	_pCirEffect(nullptr),
+	_fAttackDirAngle(0.0f)
 {
 }
 
@@ -66,11 +71,16 @@ void PLAYER::init()
 	_pAnimation->start();
 	_eMoveDirection = PLAYER::MOVE_DIRECTION::NONE;
 	initState();
+	_pCirEffect = new CIRCLEEFFECT();
+	_pCirEffect->init();
+	_fAttackDirAngle = PI + PI / 2.0f;
 }
 
 void PLAYER::update()
 {
-	//move();
+	
+	_fAttackDirAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY() + WIZARD_MOVING_RECT_SIZE/2.0f, static_cast<float>(_ptMouse.x), static_cast<float>(_ptMouse.y));
+	_pCirEffect->update(OBJECT::getPosX(), OBJECT::getPosY() + WIZARD_MOVING_RECT_SIZE / 2.0f, _fAttackDirAngle);
 
 	input();
 	_pCurrentState->update(this);
@@ -83,13 +93,18 @@ void PLAYER::release()
 {
 	OBJECT::setImage(nullptr);
 	_pAnimation = nullptr;
+
+	_pCirEffect->release();
+	delete _pCirEffect;
+	_pCirEffect = nullptr;
+
 }
 
 void PLAYER::render(HDC hdc)
 {
+	_pCirEffect->render(hdc);
 	Rectangle(hdc, _rcMovingCollision);
 	OBJECT::getImage()->aniRenderCenter(hdc, static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()), _pAnimation);
-
 }
 
 void PLAYER::setEnumName()
@@ -417,6 +432,10 @@ void PLAYER::input()
 	{
 		_pCurrentState->onBtnSpace(this);
 	}
+
+
+
+
 }
 
 void PLAYER::initState()
