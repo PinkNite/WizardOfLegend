@@ -134,7 +134,7 @@ HRESULT image::init(const char * fileName, int width, int height, BOOL trans, CO
 	_imageInfo->width = width;
 	_imageInfo->height = height;
 
-	int len = (int)strlen(fileName);
+	int len = strlen(fileName);
 
 	//파일경로 및 이름을 받아온다
 	_fileName = new CHAR[len + 1];
@@ -192,7 +192,7 @@ HRESULT image::init(const char * fileName, float x, float y, int width, int heig
 	_imageInfo->width = width;
 	_imageInfo->height = height;
 
-	int len = (int)strlen(fileName);
+	int len = strlen(fileName);
 
 	//파일경로 및 이름을 받아온다
 	_fileName = new CHAR[len + 1];
@@ -256,7 +256,7 @@ HRESULT image::init(const char * fileName, float x, float y, int width, int heig
 	_imageInfo->maxFrameX = frameX - 1;
 	_imageInfo->maxFrameY = frameY - 1;
 
-	int len = (int)strlen(fileName);
+	int len = strlen(fileName);
 
 	//파일경로 및 이름을 받아온다
 	_fileName = new CHAR[len + 1];
@@ -318,7 +318,7 @@ HRESULT image::init(const char * fileName, int width, int height, int frameX, in
 	_imageInfo->maxFrameX = frameX - 1;
 	_imageInfo->maxFrameY = frameY - 1;
 
-	int len = (int)strlen(fileName);
+	int len = strlen(fileName);
 
 	//파일경로 및 이름을 받아온다
 	_fileName = new CHAR[len + 1];
@@ -462,6 +462,33 @@ void image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int sour
 	}
 }
 
+void image::renderCenter(HDC hdc, int dstX, int dstY)
+{
+	if (_trans)
+	{
+		//특정칼라를 제외하고 DC -> DC 사이로 고속복사 해주는 함수
+		GdiTransparentBlt(
+			hdc,					//복사될 DC
+			dstX - _imageInfo->width/2,					//이미지 그려줄 시작X좌표(left)
+			dstY -_imageInfo->height/2,					//이미지 그려줄 시작Y좌표(top)
+			_imageInfo->width,		//복사될 가로크기
+			_imageInfo->height,		//복사될 세로크기
+			_imageInfo->hMemDC,
+			0, 0,					//복사시작할 XY좌표
+			_imageInfo->width,		//복사할 가로/세로크기
+			_imageInfo->height,
+			_transColor				//복사때 제외할 칼라(뺄 칼라)
+		);
+	}
+	else
+	{
+		BitBlt(hdc, dstX - _imageInfo->width / 2, dstY - _imageInfo->height / 2,
+			_imageInfo->width, _imageInfo->height,
+			_imageInfo->hMemDC, 0, 0, SRCCOPY);
+	}
+
+}
+
 void image::frameRender(HDC hdc, int destX, int destY)
 {
 	if (_trans)
@@ -521,6 +548,69 @@ void image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int cu
 			_imageInfo->currentFrameX * _imageInfo->frameWidth,
 			_imageInfo->currentFrameY * _imageInfo->frameHeight, SRCCOPY);
 	}
+}
+
+void image::frameRenderCenter(HDC hdc, int dstX, int dstY)
+{
+	if (_trans)
+	{
+		//특정칼라를 제외하고 DC -> DC 사이로 고속복사 해주는 함수
+		GdiTransparentBlt(
+			hdc,					//복사될 DC
+			dstX - _imageInfo->frameWidth/2,					//이미지 그려줄 시작X좌표(left)
+			dstY - _imageInfo->frameHeight/2,					//이미지 그려줄 시작Y좌표(top)
+			_imageInfo->frameWidth,				//복사될 가로크기
+			_imageInfo->frameHeight,				//복사될 세로크기
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,			//복사시작할 XY좌표
+			_imageInfo->frameWidth,				//복사할 가로/세로크기
+			_imageInfo->frameHeight,
+			_transColor				//복사때 제외할 칼라(뺄 칼라)
+		);
+	}
+	else
+	{
+		BitBlt(hdc, dstX - _imageInfo->frameWidth / 2, dstY - _imageInfo->frameHeight / 2,
+			_imageInfo->frameWidth, _imageInfo->frameHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight, SRCCOPY);
+	}
+
+}
+
+void image::frameRenderCenter(HDC hdc, int dstX, int dstY, int currentFrameX, int currentFrameY)
+{
+	_imageInfo->currentFrameX = currentFrameX;
+	_imageInfo->currentFrameY = currentFrameY;
+
+	if (_trans)
+	{
+		//특정칼라를 제외하고 DC -> DC 사이로 고속복사 해주는 함수
+		GdiTransparentBlt(
+			hdc,					//복사될 DC
+			dstX - _imageInfo->frameWidth / 2,					//이미지 그려줄 시작X좌표(left)
+			dstY - _imageInfo->frameHeight / 2,					//이미지 그려줄 시작Y좌표(top)
+			_imageInfo->frameWidth,				//복사될 가로크기
+			_imageInfo->frameHeight,				//복사될 세로크기
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,			//복사시작할 XY좌표
+			_imageInfo->frameWidth,				//복사할 가로/세로크기
+			_imageInfo->frameHeight,
+			_transColor				//복사때 제외할 칼라(뺄 칼라)
+		);
+	}
+	else
+	{
+		BitBlt(hdc, dstX - _imageInfo->frameWidth / 2, dstY - _imageInfo->frameHeight / 2,
+			_imageInfo->frameWidth, _imageInfo->frameHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight, SRCCOPY);
+	}
+
 }
 
 void image::loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY)
@@ -618,13 +708,13 @@ void image::alphaRender(HDC hdc, BYTE alpha)
 			_transColor				//복사때 제외할 칼라(뺄 칼라)
 		);
 
-		AlphaBlend(hdc, (int)_imageInfo->x, (int)_imageInfo->y, _imageInfo->width,
+		AlphaBlend(hdc, _imageInfo->x, _imageInfo->y, _imageInfo->width,
 			_imageInfo->height, _blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
 			_blendFunc);
 	}
 	else
 	{
-		AlphaBlend(hdc, (int)_imageInfo->x, (int)_imageInfo->y, _imageInfo->width,
+		AlphaBlend(hdc, _imageInfo->x, _imageInfo->y, _imageInfo->width,
 			_imageInfo->height, _imageInfo->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
 			_blendFunc);
 	}
@@ -678,6 +768,6 @@ void image::aniRender(HDC hdc, int destX, int destY, animation* ani)
 
 void image::aniRenderCenter(HDC hdc, int destX, int destY, animation * ani)
 {
-	render(hdc, destX - ani->getFrameWidth() / 2, destY - ani->getFrameHeight() / 2, ani->getFramePos().x , ani->getFramePos().y , ani->getFrameWidth(), ani->getFrameHeight());
+	render(hdc, destX - ani->getFrameWidth()/2, destY - ani->getFrameHeight() / 2, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
 
 }

@@ -42,8 +42,7 @@ public:
 	void render(string strKey, HDC hdc, int destX, int destY);
 	void render(string strKey, HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight);
 
-	void frameRender(string strKey, HDC hdc, int destX, int destY);
-	void frameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
+	//오늘 과제 1. 프레임렌더 함수를 완성시켜보자 *^^* 3분컷가능
 
 	void loopRender(string strKey, HDC hdc, const LPRECT drawArea, int offSetX, int offSetY);
 };
