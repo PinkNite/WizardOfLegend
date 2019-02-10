@@ -3,10 +3,11 @@
 #include "stdafx.h"
 #include "animation.h"
 
-class STATE;
+class BossState;
 
 class BOSS : public OBJECT
 {
+public:
 	enum class DIRECTION
 	{
 		FRONT = 0,
@@ -39,18 +40,6 @@ class BOSS : public OBJECT
 		MAX
 	};
 
-	enum class SKILL
-	{
-		// 마법 시전 준비
-		SPELL_01,
-		SPELL_02,
-		SPELL_03,
-		// 마법 모션
-		SKILL_01,
-		SKILL_02,
-		SKILL_03,
-	};
-
 	enum class SKILL_TYPE
 	{
 		CHAKRAM,
@@ -65,7 +54,9 @@ class BOSS : public OBJECT
 		IDLE = 0,
 		RUN,
 		DASH,
-		SKILL,
+		SKILL_01,
+		SKILL_02,
+		SKILL_03,
 		DAMAGE,
 		DEATH,
 		MAX
@@ -100,8 +91,8 @@ private:
 
 	float		_fDashTime;
 
-	STATE*		_pCurrentState;
-	STATE*		_arState[static_cast<const int>(BOSS_STATE::MAX)];
+	BossState*		_pCurrentState;
+	BossState*		_arState[static_cast<const int>(BOSS_STATE::MAX)];
 
 public:
 	BOSS();

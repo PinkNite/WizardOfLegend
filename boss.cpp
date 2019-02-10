@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "boss.h"
+#include "BossStateIdle.h"
 
 
 BOSS::BOSS() :
@@ -38,7 +39,8 @@ void BOSS::init()
 	setEnumName();
 	setAnimation();
 	_direction = DIRECTION::RIGHT;
-	_action = ACTION::ICED_OUT;
+	//_action = ACTION::ICED_OUT;
+	_action = ACTION::IDLE;
 	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, addAniString(_arDirection[static_cast<int>(_direction)], _arAction[static_cast<int>(_action)]));
 	_pAnimation->start();
 	
@@ -123,6 +125,9 @@ void BOSS::handleKey()
 
 void BOSS::initState()
 {
+	_arState[int(BOSS_STATE::IDLE)] = new BossStateIdle();
+	//_arState[int(BOSS_STATE::RUN)] = new BossStateIdle();
+
 }
 
 void BOSS::moveUp(float speed)

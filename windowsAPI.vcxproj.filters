@@ -220,6 +220,12 @@
       <Filter>PlayGround\player\state</Filter>
     </ClInclude>
     <ClInclude Include="boss.h">
+      <Filter>PlayGround\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BossState.h">
+      <Filter>PlayGround\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BossStateIdle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -345,6 +351,9 @@
       <Filter>PlayGround\player\state\statecpp</Filter>
     </ClCompile>
     <ClCompile Include="boss.cpp">
+      <Filter>PlayGround\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BossStateIdle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
