@@ -9,7 +9,7 @@ MAGIC::~MAGIC()
 {
 }
 
-void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime)
+void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, string& strKey)
 {
 	_fPosX = -2000.0f;
 	_fPosY = -2000.0f;
@@ -23,6 +23,8 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	_fActiveTime = 0.0f;
 	_fTotalTime = fTotalTime;
 	_bIsActive = false;
+	_bIsPlayer = false;
+	_strKey = strKey;
 }
 
 void MAGIC::release()
@@ -41,7 +43,7 @@ void MAGIC::update()
 		
 		if (_fActiveTime >= _fTotalTime)
 		{
-			returnPool();
+			_bIsActive = false;
 			return;
 		}
 
@@ -60,7 +62,7 @@ void MAGIC::render(HDC hdc)
 	_pImg->aniRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY), _pEffectAni);
 }
 
-void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed)
+void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer)
 {
 	_fPosX = fPosX;
 	_fPosY = fPosY;
@@ -70,12 +72,12 @@ void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed)
 
 	_fMoveAngle = fMoveAngle;
 	_fMoveSpeed = fMoveSpeed;
+	_bIsPlayer = bIsPlayer;
 }
 
 void MAGIC::returnPool()
 {
 	_fActiveTime = 0.0f;
-	_bIsActive = false;
 	_fPosX = -2000;
 	_fPosY = -2000;
 	_pEffectAni->stop();

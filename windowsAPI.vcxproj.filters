@@ -264,6 +264,9 @@
     <ClInclude Include="magic.h">
       <Filter>PlayGround\magic</Filter>
     </ClInclude>
+    <ClInclude Include="magicMgr.h">
+      <Filter>PlayGround\magic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -405,6 +408,9 @@
       <Filter>PlayGround\Scene\bossStage</Filter>
     </ClCompile>
     <ClCompile Include="magic.cpp">
+      <Filter>PlayGround\magic</Filter>
+    </ClCompile>
+    <ClCompile Include="magicMgr.cpp">
       <Filter>PlayGround\magic</Filter>
     </ClCompile>
   </ItemGroup>

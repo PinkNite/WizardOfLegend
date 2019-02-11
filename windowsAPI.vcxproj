@@ -167,6 +167,7 @@
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="magic.h" />
+    <ClInclude Include="magicMgr.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="mapEdit.h" />
     <ClInclude Include="mapTool.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="magic.cpp" />
+    <ClCompile Include="magicMgr.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapEdit.cpp" />
     <ClCompile Include="mapTool.cpp" />
