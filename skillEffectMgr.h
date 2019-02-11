@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "skillEffect.h"
 
+//전적으로 바닥에 깔리는 스킬이 끝나고 일정시간 지나고 사라지는 effect를 관리하는 매니저
 class SKILL_EFFECT_MGR
 {
 private:

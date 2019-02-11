@@ -1,0 +1,84 @@
+#include "stdafx.h"
+#include "magic.h"
+
+MAGIC::MAGIC()
+{
+}
+
+MAGIC::~MAGIC()
+{
+}
+
+void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime)
+{
+	_fPosX = -2000.0f;
+	_fPosY = -2000.0f;
+	_nWidth = nWidth;
+	_nHeight = nHeight;
+	_pImg = pImg;
+	_pEffectAni = new animation();
+	_pEffectAni->init(_pImg->GetWidth(), _pImg->GetHeight(), nFrameMaxX, nFrameMaxY);
+	_pEffectAni->setDefPlayFrame(false, false);
+	_pEffectAni->setFPS(nFps);
+	_fActiveTime = 0.0f;
+	_fTotalTime = fTotalTime;
+	_bIsActive = false;
+}
+
+void MAGIC::release()
+{
+	delete _pEffectAni;
+	_pEffectAni = nullptr;
+	_pImg = nullptr;
+}
+
+void MAGIC::update()
+{
+	if (_bIsActive)
+	{
+		_fActiveTime += TIMEMANAGER->getElapsedTime();
+
+		
+		if (_fActiveTime >= _fTotalTime)
+		{
+			returnPool();
+			return;
+		}
+
+		_fPosX += Mins::presentPowerX(_fMoveAngle, _fMoveSpeed);
+		_fPosY += Mins::presentPowerY(_fMoveAngle, _fMoveSpeed);
+		
+
+		_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);
+	}
+}
+
+void MAGIC::render(HDC hdc)
+{
+	if (!_bIsActive)
+		return;
+	_pImg->aniRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY), _pEffectAni);
+}
+
+void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed)
+{
+	_fPosX = fPosX;
+	_fPosY = fPosY;
+	_pEffectAni->start();
+	_fActiveTime = 0.0f;
+	_bIsActive = true;
+
+	_fMoveAngle = fMoveAngle;
+	_fMoveSpeed = fMoveSpeed;
+}
+
+void MAGIC::returnPool()
+{
+	_fActiveTime = 0.0f;
+	_bIsActive = false;
+	_fPosX = -2000;
+	_fPosY = -2000;
+	_pEffectAni->stop();
+	_fMoveAngle = 0.0f;
+	_fMoveSpeed = 0.0f;
+}

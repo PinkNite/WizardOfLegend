@@ -88,6 +88,9 @@
     <Filter Include="PlayGround\enemy\boss">
       <UniqueIdentifier>{95aa060c-db1d-417e-b1d1-6d024abf7d5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\magic">
+      <UniqueIdentifier>{293276b9-fad5-47af-9925-a5d840d6fd51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -246,6 +249,9 @@
     <ClInclude Include="BossStateIdle.h">
       <Filter>PlayGround\enemy\boss</Filter>
     </ClInclude>
+    <ClInclude Include="magic.h">
+      <Filter>PlayGround\magic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -382,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="BossStateIdle.cpp">
       <Filter>PlayGround\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="magic.cpp">
+      <Filter>PlayGround\magic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
