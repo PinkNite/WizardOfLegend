@@ -23,15 +23,17 @@ HRESULT playGround::init()
 	_pLeeTest = new LEETEST();
 	_pIntroScene = new INTROSCENE();
 
+
 	SCENEMANAGER->addScene("mapEditScene", _pMapEditScene);
 	SCENEMANAGER->addScene("stageScene", _pstageScene);
 	SCENEMANAGER->addScene("MinTest", _pMinTest);
 	SCENEMANAGER->addScene("leeTest", _pLeeTest);
 	SCENEMANAGER->addScene("intro", _pIntroScene);
 
-	SCENEMANAGER->changeScene("intro");
+
 	SCENEMANAGER->changeScene("MinTest");
 	SCENEMANAGER->changeScene("leeTest");
+	SCENEMANAGER->changeScene("intro");
 	return S_OK;
 }
 

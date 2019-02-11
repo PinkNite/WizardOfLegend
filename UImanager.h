@@ -2,7 +2,7 @@
 #include "skillUI.h"
 #include "statusUI.h"
 #include "statusSelect.h"
-
+#include "gameNode.h"
 class UIMANAGER
 {
 	SKILLUI* _pSkillUI;

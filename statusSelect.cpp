@@ -4,7 +4,7 @@
 
 
 STATUSSELECT::STATUSSELECT()
-:_x(0),_y(0)
+:_x(0),_y(0),_alpha(255)
 {
 }
 
@@ -49,11 +49,17 @@ void STATUSSELECT::update()
 		_y += 2;
 	
 	}
+	//_alpha += 2;
+	if (_alpha > 100)
+	{
+		//_alpha = 0;
+	}
 }
 
 void STATUSSELECT::render(HDC hdc)
 {
-	OBJECT::getImage()->render(hdc, OBJECT::getPosX(), OBJECT::getPosY());
+	OBJECT::getImage()->alphaRender(hdc, OBJECT::getPosX(), OBJECT::getPosY(),_alpha);
+	
 	char str[128];
 	sprintf_s(str, "%2lf%2lf", _x, _y);
 	TextOut(hdc, 400, 400, str, strlen(str));

@@ -4,6 +4,7 @@
 class STATUSSELECT:public OBJECT
 {
 	float _x, _y;
+	int _alpha;
 public:
 	STATUSSELECT();
 	~STATUSSELECT();

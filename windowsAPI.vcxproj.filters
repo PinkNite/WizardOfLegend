@@ -219,6 +219,9 @@
     <ClInclude Include="statusSelect.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
+    <ClInclude Include="statusBox.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -339,6 +342,9 @@
       <Filter>PlayGround\UI</Filter>
     </ClCompile>
     <ClCompile Include="statusSelect.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="statusBox.cpp">
       <Filter>PlayGround\UI</Filter>
     </ClCompile>
   </ItemGroup>
