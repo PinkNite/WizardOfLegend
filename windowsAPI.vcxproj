@@ -151,6 +151,7 @@
     <ClInclude Include="animation.h" />
     <ClInclude Include="aStar.h" />
     <ClInclude Include="boss.h" />
+    <ClInclude Include="BossStageScene.h" />
     <ClInclude Include="BossState.h" />
     <ClInclude Include="BossStateIdle.h" />
     <ClInclude Include="button.h" />
@@ -178,8 +179,10 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singletonBase.h" />
+    <ClInclude Include="skill.h" />
     <ClInclude Include="skillEffect.h" />
     <ClInclude Include="skillEffectMgr.h" />
+    <ClInclude Include="skillMgr.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="stageScene.h" />
     <ClInclude Include="state.h" />
@@ -206,6 +209,7 @@
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="aStar.cpp" />
     <ClCompile Include="boss.cpp" />
+    <ClCompile Include="BossStageScene.cpp" />
     <ClCompile Include="BossStateIdle.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />

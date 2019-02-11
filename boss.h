@@ -64,17 +64,19 @@ public:
 
 
 private:
-	const int BOSS_IMAGE_WIDTH = 528;
-	const int BOSS_IMAGE_HEIGHT = 512;
+	const int BOSS_IMAGE_WIDTH = 792;
+	const int BOSS_IMAGE_HEIGHT = 864;
 	const int BOSS_MAX_FRAME_X = 11;
-	const int BOSS_MAX_FRAME_Y = 8;
+	const int BOSS_MAX_FRAME_Y = 9;
 
 	float _fMaxHP;
 	float _fCurrentHP;
 	float _fSpeed;
 
-	string _arDirection[static_cast<const int>(DIRECTION::MAX)];
-	string _arAction[static_cast<const int>(ACTION::MAX)];
+	map<ACTION, string> _mAction;
+	map<DIRECTION, string> _mDirection;
+	//string _arDirection[static_cast<const int>(DIRECTION::MAX)];
+	//string _arAction[static_cast<const int>(ACTION::MAX)];
 
 	animation* _pAnimation;
 
@@ -109,7 +111,7 @@ private:
 	void setEnumName();
 	void setAnimation();
 
-	const string getAniString(const string& strDir, const string& strAction);
+	const string getAnimationKey(const string& strDir, const string& strAction);
 
 	void addBossKeyAni(const string& strDir, const string& strActoin, int startFrame, int endFrame, int fps, bool isLoop);
 

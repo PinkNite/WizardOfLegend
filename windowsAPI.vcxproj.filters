@@ -88,8 +88,11 @@
     <Filter Include="PlayGround\enemy\boss">
       <UniqueIdentifier>{95aa060c-db1d-417e-b1d1-6d024abf7d5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\Scene\bossStage">
+      <UniqueIdentifier>{6761e8a9-8732-4010-94ce-9000a8176b5d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="PlayGround\magic">
-      <UniqueIdentifier>{293276b9-fad5-47af-9925-a5d840d6fd51}</UniqueIdentifier>
+      <UniqueIdentifier>{b34edd63-2f23-4fcf-82e5-f722c6935497}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +237,12 @@
     <ClInclude Include="circleEffect.h">
       <Filter>PlayGround\player</Filter>
     </ClInclude>
+    <ClInclude Include="skillMgr.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="skill.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
     <ClInclude Include="skillEffect.h">
       <Filter>PlayGround\effect</Filter>
     </ClInclude>
@@ -248,6 +257,9 @@
     </ClInclude>
     <ClInclude Include="BossStateIdle.h">
       <Filter>PlayGround\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossStageScene.h">
+      <Filter>PlayGround\Scene\bossStage</Filter>
     </ClInclude>
     <ClInclude Include="magic.h">
       <Filter>PlayGround\magic</Filter>
@@ -388,6 +400,9 @@
     </ClCompile>
     <ClCompile Include="BossStateIdle.cpp">
       <Filter>PlayGround\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossStageScene.cpp">
+      <Filter>PlayGround\Scene\bossStage</Filter>
     </ClCompile>
     <ClCompile Include="magic.cpp">
       <Filter>PlayGround\magic</Filter>
