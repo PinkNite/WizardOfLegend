@@ -19,6 +19,6 @@ public:
 	void update();
 	void render(HDC hdc);
 	
-	bool activityEffect(string strEffectKey);
+	bool activityEffect(string strEffectKey,float fPosX, float fPosY);
 	
 };

@@ -231,15 +231,6 @@
     <ClInclude Include="circleEffect.h">
       <Filter>PlayGround\player</Filter>
     </ClInclude>
-    <ClInclude Include="skillMgr.h">
-      <Filter>PlayGround\skill</Filter>
-    </ClInclude>
-    <ClInclude Include="skill.h">
-      <Filter>PlayGround\skill</Filter>
-    </ClInclude>
-    <ClInclude Include="fireDash.h">
-      <Filter>PlayGround\skill</Filter>
-    </ClInclude>
     <ClInclude Include="skillEffect.h">
       <Filter>PlayGround\effect</Filter>
     </ClInclude>
@@ -379,9 +370,6 @@
     </ClCompile>
     <ClCompile Include="circleEffect.cpp">
       <Filter>PlayGround\player</Filter>
-    </ClCompile>
-    <ClCompile Include="fireDash.cpp">
-      <Filter>PlayGround\skill</Filter>
     </ClCompile>
     <ClCompile Include="skillEffect.cpp">
       <Filter>PlayGround\effect</Filter>

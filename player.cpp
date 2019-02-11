@@ -59,7 +59,7 @@ void PLAYER::init()
 	_pAnimation->init(WIZARD_SPRITE_WIDTH, WIZARD_SPRITE_HEIGHT, WIZARD_SPRITE_MAXFRAMEX, WIZARD_SPRITE_MAXFRAMEY);
 	_fMaxHealthPoint = 500.0f;
 	_fCurrentHealthPoint = 500.0f;
-	_fSpeed = 200.0f;
+	_fSpeed = 400.0f;
 	_fArmor = 0.0f;
 	_fEvasion = 0.0f;
 	_fCriticalHit = 0.0f;
