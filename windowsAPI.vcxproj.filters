@@ -210,9 +210,6 @@
     <ClInclude Include="statusUI.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
-    <ClInclude Include="UImanager.h">
-      <Filter>PlayGround\UI</Filter>
-    </ClInclude>
     <ClInclude Include="skillUI.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
@@ -220,6 +217,9 @@
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
     <ClInclude Include="statusBox.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -335,9 +335,6 @@
     <ClCompile Include="statusUI.cpp">
       <Filter>PlayGround\UI</Filter>
     </ClCompile>
-    <ClCompile Include="UImanager.cpp">
-      <Filter>PlayGround\UI</Filter>
-    </ClCompile>
     <ClCompile Include="skillUI.cpp">
       <Filter>PlayGround\UI</Filter>
     </ClCompile>
@@ -345,6 +342,9 @@
       <Filter>PlayGround\UI</Filter>
     </ClCompile>
     <ClCompile Include="statusBox.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
       <Filter>PlayGround\UI</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,14 +3,14 @@
 #include "statusUI.h"
 #include "statusSelect.h"
 #include "gameNode.h"
-class UIMANAGER
+class UI
 {
 	SKILLUI* _pSkillUI;
 	STATUSUI* _pStatusUI;
 	
 public:
-	UIMANAGER();
-	~UIMANAGER();
+	UI();
+	~UI();
 	HRESULT init();
 	void release();
 	void update();

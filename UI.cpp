@@ -1,17 +1,17 @@
 #include "stdafx.h"
-#include "UImanager.h"
+#include "UI.h"
 
 
 
-UIMANAGER::UIMANAGER()
+UI::UI()
 {
 }
 
-UIMANAGER::~UIMANAGER()
+UI::~UI()
 {
 }
 
-HRESULT UIMANAGER::init()
+HRESULT UI::init()
 {
 	_pSkillUI = new SKILLUI;
 	_pSkillUI->init();
@@ -21,18 +21,18 @@ HRESULT UIMANAGER::init()
 	return S_OK;
 }
 
-void UIMANAGER::release()
+void UI::release()
 {
 }
 
-void UIMANAGER::update()
+void UI::update()
 {
 	_pSkillUI->update();
 	_pStatusUI->update();
 	
 }
 
-void UIMANAGER::render(HDC hdc)
+void UI::render(HDC hdc)
 {
 	_pSkillUI->render(hdc);
 	_pStatusUI->render(hdc);

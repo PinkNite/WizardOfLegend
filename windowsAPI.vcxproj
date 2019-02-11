@@ -191,7 +191,7 @@
     <ClInclude Include="introScene.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="skillUI.h" />
-    <ClInclude Include="UImanager.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +238,7 @@
     <ClCompile Include="introScene.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="skillUI.cpp" />
-    <ClCompile Include="UImanager.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="windowsAPI.cpp" />
   </ItemGroup>
