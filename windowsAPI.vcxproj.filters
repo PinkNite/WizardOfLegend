@@ -79,6 +79,12 @@
     <Filter Include="PlayGround\enemy">
       <UniqueIdentifier>{590ac659-54e4-445b-bf7e-5365e70913da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\skill">
+      <UniqueIdentifier>{c551e42c-d8ca-40de-8204-d7aaf2cb6656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\effect">
+      <UniqueIdentifier>{1d057f68-83b5-45c4-ab38-26df1f528db7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -231,6 +237,21 @@
     <ClInclude Include="circleEffect.h">
       <Filter>PlayGround\player</Filter>
     </ClInclude>
+    <ClInclude Include="skillMgr.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="skill.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="fireDash.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="skillEffect.h">
+      <Filter>PlayGround\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="skillEffectMgr.h">
+      <Filter>PlayGround\effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -361,6 +382,15 @@
     </ClCompile>
     <ClCompile Include="circleEffect.cpp">
       <Filter>PlayGround\player</Filter>
+    </ClCompile>
+    <ClCompile Include="fireDash.cpp">
+      <Filter>PlayGround\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="skillEffect.cpp">
+      <Filter>PlayGround\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="skillEffectMgr.cpp">
+      <Filter>PlayGround\effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
