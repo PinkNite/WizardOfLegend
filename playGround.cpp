@@ -29,9 +29,9 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("leeTest", _pLeeTest);
 	SCENEMANAGER->addScene("intro", _pIntroScene);
 
+	SCENEMANAGER->changeScene("intro");
 	SCENEMANAGER->changeScene("MinTest");
 	SCENEMANAGER->changeScene("leeTest");
-	SCENEMANAGER->changeScene("intro");
 	return S_OK;
 }
 

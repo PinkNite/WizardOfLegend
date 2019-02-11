@@ -4,6 +4,7 @@
 
 
 
+
 LEETEST::LEETEST()
 {
 }
@@ -14,7 +15,7 @@ LEETEST::~LEETEST()
 
 HRESULT LEETEST::init()
 {
-	_pUI = new UI;
+	_pUI = new UIMANAGER;
 	_pUI->init();
 	_pItemManager = new ITEMMANAGER;
 	_pItemManager->init();

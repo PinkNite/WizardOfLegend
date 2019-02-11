@@ -1,12 +1,12 @@
 #pragma once
 #include "object.h"
-class UI:public OBJECT
+
+class STATUSSELECT:public OBJECT
 {
-private:
-	
+	float _x, _y;
 public:
-	UI();
-	~UI();
+	STATUSSELECT();
+	~STATUSSELECT();
 	HRESULT init();
 	void release();
 	void update();

@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "item.h"
 
+
+
 ITEM::ITEM()
+	:_x(0),_y(0)
 {
 }
 
@@ -18,7 +21,7 @@ HRESULT ITEM::init()
 
 	for (int i = 0; i < 256; i++)
 	{
-		tagItem item;
+		TAGITEM item;
 		item.frameX = i % 16;
 		item.frameY = i / 16;
 		item.name = " ";
@@ -1496,7 +1499,7 @@ HRESULT ITEM::init()
 		_mItem.insert(make_pair(i, _vItem));
 
 	}
-	_num = 0;
+	_num = 60;//¾ø´Â ÀÌ¹ÌÁö
 	return S_OK;
 }
 
@@ -1519,22 +1522,37 @@ void ITEM::render(HDC hdc)
 	}*/
 	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
-		_num--;
+		//num--;
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_UP))
 	{
-		_num++;
+		//num++;
 	}
-	char str[200];
-	OBJECT::getImage()->frameRender(hdc, 300, 100, _mItem.find(_num)->second[_num].frameX, _mItem.find(_num)->second[_num].frameY);
-	fontRender(hdc, _mItem.find(_num)->second[_num].name,"±¼¸²Ã¼", 300, 200, 30, RGB(250, 50, 50));
+	//OBJECT::getImage()->frameRender(hdc, 300, 100, _mItem.find(_num)->second[_num].frameX, _mItem.find(_num)->second[_num].frameY);
+	/*fontRender(hdc, _mItem.find(_num)->second[_num].name,"±¼¸²Ã¼", 300, 200, 30, RGB(250, 50, 50));
 	fontRender(hdc, _mItem.find(_num)->second[_num].info,"±¼¸²Ã¼", 300, 250, 15, RGB(50, 50, 50));
 	sprintf_s(str, "ºí·ç:%d", _mItem.find(_num)->second[_num].costA);
 	TextOut(hdc, 300, 350, str, strlen(str));
 	sprintf_s(str, "°ñµå:%d", _mItem.find(_num)->second[_num].costB);
 	TextOut(hdc, 300, 400, str, strlen(str));
 	sprintf_s(str, "¹øÈ£: %d", _num);
-	TextOut(hdc, 400, 500, str, strlen(str));
+	TextOut(hdc, 400, 500, str, strlen(str));*/
+	//À§¿¡²¨´Â ´À¸² ¸ÊÀÌ¶ó
+	OBJECT::getImage()->frameRender(hdc, _x, _y, _vItem[_num].frameX, _vItem[_num].frameY);
+
+	//·¼¸¯½ºÂÊ¿¡ ¾µ°Í////////
+/*
+	char str[200];
+	fontRender(hdc, _vItem[_num].name, "±¼¸²Ã¼", 300, 200, 30, RGB(250, 50, 50));
+	fontRender(hdc, _vItem[_num].info, "±¼¸²Ã¼", 300, 250, 15, RGB(50, 50, 50));
+	sprintf_s(str, "ºí·ç:%d", _vItem[_num].costA);
+	TextOut(hdc, 300, 350, str, strlen(str));
+	sprintf_s(str, "°ñµå:%d", _vItem[_num].costB);
+	TextOut(hdc, 300, 400, str, strlen(str));
+	sprintf_s(str, "¹øÈ£: %d", _num);
+	TextOut(hdc, 400, 500, str, strlen(str));*/
+
+
 }
 
 void ITEM::fontRender(HDC hdc, const char * str, const char* str2, int x, int y, int num, COLORREF color)

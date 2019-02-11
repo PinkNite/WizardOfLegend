@@ -201,11 +201,23 @@
     <ClInclude Include="leeTest.h">
       <Filter>PlayGround\Scene\leeTest</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>PlayGround\UI</Filter>
-    </ClInclude>
     <ClInclude Include="introScene.h">
       <Filter>PlayGround\Scene\intro</Filter>
+    </ClInclude>
+    <ClInclude Include="relics.h">
+      <Filter>PlayGround\item</Filter>
+    </ClInclude>
+    <ClInclude Include="statusUI.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UImanager.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="skillUI.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="statusSelect.h">
+      <Filter>PlayGround\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -311,11 +323,23 @@
     <ClCompile Include="leeTest.cpp">
       <Filter>PlayGround\Scene\leeTest</Filter>
     </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>PlayGround\UI</Filter>
-    </ClCompile>
     <ClCompile Include="introScene.cpp">
       <Filter>PlayGround\Scene\intro</Filter>
+    </ClCompile>
+    <ClCompile Include="relics.cpp">
+      <Filter>PlayGround\item</Filter>
+    </ClCompile>
+    <ClCompile Include="statusUI.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UImanager.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="skillUI.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="statusSelect.cpp">
+      <Filter>PlayGround\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

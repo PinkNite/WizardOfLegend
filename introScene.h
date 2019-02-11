@@ -50,7 +50,7 @@ private:
 	TAGINTRO _option;
 	TAGINTRO _mapEditor;
 	TAGINTRO _quit;
-	/*animation* _pAni;*/
+
 	bool _isStart;
 	float _saveTime;
 
