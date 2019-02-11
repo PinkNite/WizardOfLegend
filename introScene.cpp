@@ -5,7 +5,8 @@
 
 
 INTROSCENE::INTROSCENE()
-	:_jumpPower(0),_time(NULL),_fontX(0),_angle(0),_speed(7),_count(0),_end(0),_timer(0),_jumpCount(0),_gravity(0),_isStart(0)
+	:_jumpPower(0), _time(NULL), _fontX(0), _angle(0), _speed(7), _count(0), _end(0), _timer(0), _jumpCount(0), _gravity(0), _isStart(0),
+	_menuCount(0),_saveTime(0)
 {
 }
 
@@ -42,6 +43,7 @@ HRESULT INTROSCENE::init()
 	_singlePlayer.x = WINSIZEX / 2;//WINSIZEX / 2 - 75;
 	_singlePlayer.y = WINSIZEY - 400;
 	_singlePlayer.isSelect = false;
+	_singlePlayer.rc = RectMakeCenter(_singlePlayer.x, _singlePlayer.y, (strlen("SINGLEPLAYER")-4)*_singlePlayer.size, _singlePlayer.size);
 	_option.r=255;
 	_option.g=255;
 	_option.b=255;
@@ -49,6 +51,9 @@ HRESULT INTROSCENE::init()
 	_option.size = 30;
 	_option.x = WINSIZEX / 2;// WINSIZEX / 2 - 40;
 	_option.y = WINSIZEY - 300;
+	_option.isSelect = false;
+	_option.rc = RectMakeCenter(_option.x, _option.y, (strlen("OPTION") - 1)*_option.size, _option.size);
+	//메뉴 클릭용
 	_option.isSelect = false;
 	_credit.r = 255;
 	_credit.g = 255;
@@ -58,6 +63,7 @@ HRESULT INTROSCENE::init()
 	_credit.x = WINSIZEX / 2;// WINSIZEX / 2 - 38;
 	_credit.y = WINSIZEY - 250;
 	_credit.isSelect = false;
+	_credit.rc = RectMakeCenter(_credit.x, _credit.y, (strlen("CREDIT") - 1)*_credit.size, _credit.size);
 	_mapEditor.r = 255;
 	_mapEditor.g = 255;
 	_mapEditor.b = 255;
@@ -66,6 +72,7 @@ HRESULT INTROSCENE::init()
 	_mapEditor.x = WINSIZEX / 2;// WINSIZEX / 2 - 55;
 	_mapEditor.y = WINSIZEY - 350;
 	_mapEditor.isSelect = false;
+	_mapEditor.rc = RectMakeCenter(_mapEditor.x, _mapEditor.y, (strlen("MAPEDITOR") - 3)*_mapEditor.size, _mapEditor.size);
 	_quit.r=255;
 	_quit.g=255;
 	_quit.b=255;
@@ -74,6 +81,7 @@ HRESULT INTROSCENE::init()
 	_quit.x = WINSIZEX / 2;// WINSIZEX / 2 - 20;
 	_quit.y = WINSIZEY - 200;
 	_quit.isSelect = false;
+	_quit.rc = RectMakeCenter(_quit.x, _quit.y, (strlen("QUIT") - 1)*_quit.size, _quit.size);
 	ShowCursor(false);
 	imageSetting();
 	
@@ -118,7 +126,7 @@ void INTROSCENE::update()
 	{
 		_pressButton.isSelect = true;
 		//로고창 위로 살짝
-		
+		_saveTime = _time;
 	}
 	if (_pressButton.isSelect)
 	{
@@ -133,29 +141,30 @@ void INTROSCENE::update()
 			_title.alpha = 120;
 			_logo.alpha = 120;
 		}
-	}
-	//메뉴선택하면 변하게하자
-	if (KEYMANAGER->isStayKeyDown('S'))
-	{
-		_logo.alpha -= 1;
-		_title.alpha--;
-	}
+		//버튼 클릭
 
+		if (_time > _saveTime + 1)
+		{
+			buttonClick();
+		}
+	}
+	
+	
 }
 
 void INTROSCENE::render()
 {
-	
-	
-	if ( _time < 6)
+
+
+	if (_time < 6)
 	{
 		_99.image->alphaRender(getMemDC(), _99.x, _99.y, _99.alpha);
 	}
-	if (_time > 20 )
+	if (_time > 20)
 	{
 		_title.image->alphaRender(getMemDC(), _title.x, _title.y, _title.alpha);
 	}
-	if (_time > 20 )
+	if (_time > 20)
 	{
 		_logo.image->alphaRender(getMemDC(), _logo.x, _logo.y, _logo.alpha);
 	}
@@ -163,10 +172,10 @@ void INTROSCENE::render()
 	{
 		_introPeople.image->alphaRender(getMemDC(), _introPeople.x, _introPeople.y, _introPeople.alpha);
 	}
-	/*char str[220];
-	sprintf_s(str, "%2d", test);
-	TextOut(getMemDC(), 300, 300, str, strlen(str));*/
-	
+	char str[220];
+	sprintf_s(str, "%2lf", _saveTime);
+	TextOut(getMemDC(), 300, 300, str, strlen(str));
+
 
 	if (_time < 20)
 	{
@@ -249,7 +258,7 @@ void INTROSCENE::render()
 				if (_time > 8 + i * 0.2f && _time < 20)
 				{
 					fontRender(getMemDC(), "E", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
-					if (_time > 10 + i * 0.2f&&_time<16)
+					if (_time > 10 + i * 0.2f&&_time < 16)
 					{
 						if (_time < 14)
 						{
@@ -261,7 +270,7 @@ void INTROSCENE::render()
 						}
 						_speed += 0.1f;
 						_fontX += cosf(_angle) * _speed;
-						
+
 						_arrFontY[i] += -sinf(_angle) * _speed;
 					}
 				}
@@ -271,22 +280,22 @@ void INTROSCENE::render()
 
 		}
 	}
-	if (_time > 6&&_time<20)
+	if (_time > 6 && _time < 20)
 	{
 		draw();
 	}
-	if (_jumpCount == 2&&!_pressButton.isSelect ) //button오프일ㄸㅐ
-		
+	if (_jumpCount == 2 && !_pressButton.isSelect) //button오프일ㄸㅐ
+
 	{
-		
-		switch (_pressButton.count%2)
+
+		switch (_pressButton.count % 2)
 		{
 		case 0:
 			if (_pressButton.r > 94 && _pressButton.g > 94 && _pressButton.b > 94)
 			{
-			_pressButton.r -= 5;
-			_pressButton.g -= 5;
-			_pressButton.b -= 5;
+				_pressButton.r -= 5;
+				_pressButton.g -= 5;
+				_pressButton.b -= 5;
 				if (_pressButton.r == 90 && _pressButton.g == 90 && _pressButton.b == 90)
 				{
 					_pressButton.count++;
@@ -305,11 +314,11 @@ void INTROSCENE::render()
 				}
 
 			}
-			
+
 			break;
 		}
 		fontRender(getMemDC(), "PRESS ANI BUTTON", "휴먼둥근헤드라인", _pressButton.x, _pressButton.y, 15, RGB(_pressButton.r, _pressButton.g, _pressButton.b));
-		
+
 	}
 
 	//메뉴창에서 나옴
@@ -328,6 +337,20 @@ void INTROSCENE::render()
 		//RectangleMake(getMemDC(), _fontX+350, _arrFontY[7], 5, 5);
 		//RectangleMake(getMemDC(), _hello.x, _hello.y, 100, 100);
 	_pMouse->render(getMemDC(), _ptMouse.x - 32, _ptMouse.y - 32);
+
+	//옵션 클릭되면 나오게
+	if (_option.isSelect)
+	{
+		_option.image->render(getMemDC(), 0, 0);
+	}
+	if (KEYMANAGER->isToggleKey(VK_TAB))
+	{
+		Rectangle(getMemDC(), _singlePlayer.rc);
+		Rectangle(getMemDC(), _mapEditor.rc);
+		Rectangle(getMemDC(), _option.rc);
+		Rectangle(getMemDC(), _credit.rc);
+		Rectangle(getMemDC(), _quit.rc);
+	}
 }
 
 void INTROSCENE::imageSetting()
@@ -369,6 +392,11 @@ void INTROSCENE::imageSetting()
 	_pMouse = new image;
 	_pMouse = IMAGEMANAGER->addImage("mouse", "resource/intro/mouseCursor.bmp", 64, 64,true,RGB(255,0,255));
 	
+
+
+	//옵션 이미지
+	_option.image = new image;
+	_option.image = IMAGEMANAGER->addImage("option", "resource/intro/option.bmp", 1600, 900, true, RGB(255, 0, 255));
 }
 
 void INTROSCENE::actionOff(float numA,float numB,int* alpha,int numC)//에이와 비 시간 사이에 알파값 감소
@@ -512,7 +540,76 @@ bool INTROSCENE::isCollision(int x, int y, int x2, int y2)
 
 void INTROSCENE::buttonClick()
 {
-	//if (PtInRect(&rc,_))
+	//싱글플레이어
+	if (_menuCount == 0)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_singlePlayer.rc, _ptMouse))
+		{
+			singlePlayer();
+		}
+		//맵
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_mapEditor.rc, _ptMouse))
+		{
+			mapEditor();
+		}
+		//옵션
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_option.rc, _ptMouse))
+		{
+			_menuCount = 1;
+			option();
+		}
+		//크레딧
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_credit.rc, _ptMouse))
+		{
+			_menuCount = 1;
+			credit();
+		}
+		//메뉴 나가기
+		/*if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_back.rc, _ptMouse))
+		{
+			back();
+		
+		}*/
+		//나가기
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_quit.rc, _ptMouse))
+		{
+			quit();
+		}
+	}
+}
+
+void INTROSCENE::singlePlayer()
+{
+	SCENEMANAGER->changeScene("MinTest");
+
+}
+
+void INTROSCENE::mapEditor()
+{
+	SCENEMANAGER->changeScene("leeTest");
+}
+
+void INTROSCENE::option()
+{
+	if (!_option.isSelect)
+	{
+		_option.isSelect = true;
+	}
+}
+
+void INTROSCENE::credit()
+{
+	//엔딩은 나중에
+}
+
+void INTROSCENE::back()
+{
+	_menuCount = 0;
+}
+
+void INTROSCENE::quit()
+{
+
 }
 
 
