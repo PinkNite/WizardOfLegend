@@ -8,8 +8,9 @@ public:
 	BossStateIdle();
 	~BossStateIdle();
 
-	virtual void handleState(BOSS* boss)	override;
-	virtual void update(BOSS* boss)			override;
+	virtual BossState* handleState(BOSS * boss, BOSS::BOSS_STATE state)	override;
+	virtual void enter(BOSS * boss)				override;
+	virtual void update(BOSS * boss)			override;
 
 };
 

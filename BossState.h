@@ -5,7 +5,8 @@
 class BossState abstract
 {
 public:
-	virtual void handleState(BOSS* boss)	abstract;
-	virtual void update(BOSS* boss)			abstract;
+	virtual BossState* handleState(BOSS * boss, BOSS::BOSS_STATE state)	abstract;
+	virtual void enter(BOSS * boss)				abstract;
+	virtual void update(BOSS * boss)			abstract;
 };
 

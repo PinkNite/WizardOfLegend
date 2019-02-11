@@ -109,7 +109,7 @@ private:
 	void setEnumName();
 	void setAnimation();
 
-	const string addAniString(const string& strDir, const string& strAction);
+	const string getAniString(const string& strDir, const string& strAction);
 
 	void addBossKeyAni(const string& strDir, const string& strActoin, int startFrame, int endFrame, int fps, bool isLoop);
 
@@ -119,8 +119,8 @@ public:
 	void setState(BOSS_STATE bossState);
 	void setAction(ACTION action);
 	void setDirection(DIRECTION direction);
-	void setAni();
-	void handleKey();
+	void startAnimation();
+	void handleState(BOSS_STATE bossState);
 	void initState();
 
 	void moveUp(float speed);

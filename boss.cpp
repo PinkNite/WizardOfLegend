@@ -41,16 +41,20 @@ void BOSS::init()
 	_direction = DIRECTION::RIGHT;
 	//_action = ACTION::ICED_OUT;
 	_action = ACTION::IDLE;
-	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, addAniString(_arDirection[static_cast<int>(_direction)], _arAction[static_cast<int>(_action)]));
+
+	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, getAniString(_arDirection[static_cast<int>(_direction)], _arAction[static_cast<int>(_action)]));
 	_pAnimation->start();
 	
 	initState();
+	setState(BOSS_STATE::IDLE);
 }
 
 void BOSS::update()
 {
-	handleKey();
-	//_pCurrentState->update(this);
+	// TODO: delete test code
+	//handleState();
+
+	_pCurrentState->update(this);
 
 	KEYANIMANAGER->update();
 }
@@ -92,42 +96,62 @@ void BOSS::setEnumName()
 
 void BOSS::setAnimation()
 {
+	KEYANIMANAGER->addObject(_objectName);
+
+
 }
 
-const string BOSS::addAniString(const string & strDir, const string & strAction)
+const string BOSS::getAniString(const string & strDir, const string & strAction)
 {
-	return string();
+	string temp = "";
+	temp.append(strDir);
+	temp.append("_");
+	temp.append(strAction);
+	return temp;
 }
 
 void BOSS::addBossKeyAni(const string & strDir, const string & strActoin, int startFrame, int endFrame, int fps, bool isLoop)
 {
+	int nFrameCount(0);
 }
 
 void BOSS::setState(BOSS_STATE bossState)
 {
+	_pCurrentState = _arState[static_cast<int>(bossState)];
+	this->handleState(bossState);
 }
 
 void BOSS::setAction(ACTION action)
 {
+	_action = action;
+	startAnimation();
 }
 
 void BOSS::setDirection(DIRECTION direction)
 {
 }
 
-void BOSS::setAni()
+void BOSS::startAnimation()
 {
+	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, getAniString(_arDirection[static_cast<int>(_direction)], _arAction[static_cast<int>(_action)]));
+	_pAnimation->start();
 }
 
-void BOSS::handleKey()
+void BOSS::handleState(BOSS_STATE bossState)
 {
+	BossState* state = _pCurrentState->handleState(this, bossState);
+	if (state != NULL)
+	{
+		delete _pCurrentState;
+		_pCurrentState = state;
+		_pCurrentState->enter(this);
+	}
 }
 
 void BOSS::initState()
 {
 	_arState[int(BOSS_STATE::IDLE)] = new BossStateIdle();
-	//_arState[int(BOSS_STATE::RUN)] = new BossStateIdle();
-
+	//_arState[int(BOSS_STATE::RUN)] = new BossStateRun();
 }
 
 void BOSS::moveUp(float speed)
