@@ -16,9 +16,11 @@ HRESULT STATUSSELECT::init()
 {
 	IMAGEMANAGER->addImage("statusSelect", "resource/UI/statusSelect.bmp", 46, 46, true, RGB(255, 0, 255));
 	OBJECT::setImage(IMAGEMANAGER->findImage("statusSelect"));
-	OBJECT::init(211, 146, OBJECT::getWidth(), OBJECT::getHeight());
+	OBJECT::init(211, 148, OBJECT::getWidth(), OBJECT::getHeight());
 	_x = OBJECT::getPosX();
 	_y = OBJECT::getPosY();
+	//렉트만들어서 충돌처리
+	_rc=RectMake(_x, _y, OBJECT::getWidth(), OBJECT::getHeight());
 	return S_OK;
 }
 
@@ -49,11 +51,12 @@ void STATUSSELECT::update()
 		_y += 2;
 	
 	}
-	//_alpha += 2;
+	_alpha += 2;
 	if (_alpha > 100)
 	{
 		//_alpha = 0;
 	}
+	_rc = RectMake(_x, _y, OBJECT::getWidth(), OBJECT::getHeight());
 }
 
 void STATUSSELECT::render(HDC hdc)

@@ -5,6 +5,7 @@ class STATUSSELECT:public OBJECT
 {
 	float _x, _y;
 	int _alpha;
+	RECT _rc;
 public:
 	STATUSSELECT();
 	~STATUSSELECT();
@@ -12,5 +13,7 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
+public:
+	RECT getRC() { return _rc; }
 };
 
