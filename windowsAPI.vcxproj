@@ -153,7 +153,13 @@
     <ClInclude Include="boss.h" />
     <ClInclude Include="BossStageScene.h" />
     <ClInclude Include="BossState.h" />
+    <ClInclude Include="BossStateDamage.h" />
+    <ClInclude Include="BossStateDeath.h" />
     <ClInclude Include="BossStateIdle.h" />
+    <ClInclude Include="BossStateRun.h" />
+    <ClInclude Include="BossStateSkill01.h" />
+    <ClInclude Include="BossStateSkill02.h" />
+    <ClInclude Include="BossStateSkill03.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="circleEffect.h" />
@@ -223,7 +229,13 @@
     <ClCompile Include="aStar.cpp" />
     <ClCompile Include="boss.cpp" />
     <ClCompile Include="BossStageScene.cpp" />
+    <ClCompile Include="BossStateDamage.cpp" />
+    <ClCompile Include="BossStateDeath.cpp" />
     <ClCompile Include="BossStateIdle.cpp" />
+    <ClCompile Include="BossStateRun.cpp" />
+    <ClCompile Include="BossStateSkill01.cpp" />
+    <ClCompile Include="BossStateSkill02.cpp" />
+    <ClCompile Include="BossStateSkill03.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="circleEffect.cpp" />

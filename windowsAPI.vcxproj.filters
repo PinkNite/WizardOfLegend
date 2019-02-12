@@ -315,6 +315,24 @@
     <ClInclude Include="numbers.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
+    <ClInclude Include="BossStateDamage.h">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossStateDeath.h">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossStateRun.h">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossStateSkill01.h">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossStateSkill02.h">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossStateSkill03.h">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -502,6 +520,24 @@
     </ClCompile>
     <ClCompile Include="numbers.cpp">
       <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BossStateDamage.cpp">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossStateDeath.cpp">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossStateRun.cpp">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossStateSkill01.cpp">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossStateSkill02.cpp">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossStateSkill03.cpp">
+      <Filter>PlayGround\enemy\boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -17,7 +17,7 @@ BossState* BossStateIdle::handleState(BOSS * boss, BOSS::BOSS_STATE state)
 	{
 		//return new BossStateRun();
 	}
-	return NULL;
+	return nullptr;
 }
 
 void BossStateIdle::enter(BOSS * boss)

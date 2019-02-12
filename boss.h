@@ -10,12 +10,10 @@ class BOSS : public OBJECT
 public:
 	enum class DIRECTION
 	{
-		FRONT = 0,
 		LEFT,
 		RIGHT,
-		TOP,
-		BOTTOM,
-		BACK,
+		UP,
+		DOWN,
 		MAX
 	};
 	//
@@ -64,10 +62,12 @@ public:
 
 
 private:
-	const int BOSS_IMAGE_WIDTH = 792;
-	const int BOSS_IMAGE_HEIGHT = 864;
+	const int BOSS_IMAGE_WIDTH = 990;
+	const int BOSS_IMAGE_HEIGHT = 1080;
 	const int BOSS_MAX_FRAME_X = 11;
 	const int BOSS_MAX_FRAME_Y = 9;
+	const int BOSS_RECT_WIDTH = 90;
+	const int BOSS_RECT_HEIGHT = 100; // FrameSize: 90, 120
 
 	float _fMaxHP;
 	float _fCurrentHP;
@@ -75,8 +75,6 @@ private:
 
 	map<ACTION, string> _mAction;
 	map<DIRECTION, string> _mDirection;
-	//string _arDirection[static_cast<const int>(DIRECTION::MAX)];
-	//string _arAction[static_cast<const int>(ACTION::MAX)];
 
 	animation* _pAnimation;
 
@@ -117,22 +115,23 @@ private:
 
 public:
 	// state pattern
-
+	void initState();
 	void setState(BOSS_STATE bossState);
 	void setAction(ACTION action);
 	void setDirection(DIRECTION direction);
-	void startAnimation();
 	void handleState(BOSS_STATE bossState);
-	void initState();
 
+	void startAnimation();
+
+	void handleInputKey();
 	void moveUp(float speed);
 	void moveDown(float speed);
 	void moveLeft(float speed);
 	void moveRight(float speed);
 
-	inline float getSpeed() { return _fSpeed; }
 	void dash(float offset);
-	void move();
+	void setRect();
+	void moveBoss();
 
 	void setDirectUp();
 	void setDirectDown();
@@ -140,6 +139,7 @@ public:
 	void setDirectRight();
 
 	inline void setDashTime(float dashTime) { _fDashTime = dashTime; }
+	inline float getSpeed() { return _fSpeed; }
 	inline float getDashTime() { return _fDashTime; }
 	inline DIRECTION getDiretion() { return _direction; }
 	inline animation* getAni() { return _pAnimation; }
