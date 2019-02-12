@@ -31,10 +31,11 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("leeTest", _pLeeTest);
 	SCENEMANAGER->addScene("intro", _pIntroScene);
 	
-	SCENEMANAGER->changeScene("MinTest");
+	SCENEMANAGER->changeScene("mapEditScene");
+	//SCENEMANAGER->changeScene("MinTest");
 	//SCENEMANAGER->changeScene("bossStage");
-	SCENEMANAGER->changeScene("intro");
-	SCENEMANAGER->changeScene("leeTest");
+	//SCENEMANAGER->changeScene("intro");
+	//SCENEMANAGER->changeScene("leeTest");
 
 	return S_OK;
 }

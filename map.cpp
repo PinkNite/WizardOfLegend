@@ -182,7 +182,6 @@ bool MAP::getObjectPos(vector<vector<int>>& _vvTileIndex, TILE::OBJECT object)
 				vPos[0] = _vvMap[j][i]->getRectTile().left + (_vvMap[j][i]->getRectTile().right - _vvMap[j][i]->getRectTile().left) / 2;
 				vPos[1] = _vvMap[j][i]->getRectTile().top + (_vvMap[j][i]->getRectTile().bottom - _vvMap[j][i]->getRectTile().top) / 2;
 				_vvTileIndex.push_back(vPos);
-				_vvMap[j][i]->setObject(TILE::OBJECT::NONE);
 				return true;
 			}
 		}

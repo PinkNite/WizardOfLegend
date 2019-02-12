@@ -28,6 +28,26 @@ void MAPEDIT::callBackMapLoad()
 	printf_s("Load버튼을 눌렀네요\n");
 }
 
+void MAPEDIT::callBackMapSizeUp()
+{
+	_pMapTool->mapResize(_pMapTool->getMapCountX(), _pMapTool->getMapCountY() - 1);
+}
+
+void MAPEDIT::callBackMapSizeDown()
+{
+	_pMapTool->mapResize(_pMapTool->getMapCountX(), _pMapTool->getMapCountY() + 1);
+}
+
+void MAPEDIT::callBackMapSizeLeft()
+{
+	_pMapTool->mapResize(_pMapTool->getMapCountX() - 1, _pMapTool->getMapCountY());
+}
+
+void MAPEDIT::callBackMapSizeRight()
+{
+	_pMapTool->mapResize(_pMapTool->getMapCountX() + 1, _pMapTool->getMapCountY());
+}
+
 MAPEDIT::MAPEDIT()
 {
 }
@@ -38,18 +58,34 @@ MAPEDIT::~MAPEDIT()
 
 HRESULT MAPEDIT::init()
 {
+	_pCamera = new CAMERA();
+	_pCamera->init((WINSIZEX) / 4, WINSIZEY / 2, (WINSIZEX) / 2, WINSIZEY);
+
+	_pMapTool = new MAPTOOL();
+	_pMapTool->init(25, 14, 64);
+	_pMapTool->setCamera(_pCamera);
+	
 	imgRelicUITypePageBG = IMAGEMANAGER->addImage("RelicUITypePageBG", "resource/UI/RelicUITypePageBG.bmp", 576, 600, true, RGB(255, 0, 255));
 	imgRelicUIDrawer = IMAGEMANAGER->addFrameImage("RelicUIDrawer", "resource/UI/RelicUIDrawer.bmp", 469, 520, 1, 5, true, RGB(255, 0, 255));
 	imgRelicUIBG = IMAGEMANAGER->addImage("UIBackGround", "resource/UI/RelicUIBG.bmp", 600, 900, true, RGB(255, 0, 255));
 	imgRelicUIBG2 = IMAGEMANAGER->addImage("UIBackGround2", "resource/UI/RelicUIBG2.bmp", 600, 900, true, RGB(255, 0, 255)); 
-	imgRelicUISelectPageBG = IMAGEMANAGER->addImage("RelicUISelectPageBG", "resource/UI/RelicUISelectPageBG.bmp", 571, 648, true, RGB(255, 0, 255));
+	imgRelicUISelectPageBG = IMAGEMANAGER->addImage("RelicUISelectPageBG", "resource/UI/RelicUISelectPageBG4.bmp", 490, 568, true, RGB(255, 0, 255)); // 53, 125
+	imgMapPalletIce1 = IMAGEMANAGER->addImage("MapPalletIce1", "resource/UI/icetileset3.bmp", 384, 384, true, RGB(255, 0, 255));
+	imgMapPalletCastle1 = IMAGEMANAGER->addImage("MapPalletIce1", "resource/UI/castletileset.bmp", 384, 384, true, RGB(255, 0, 255));
+	imgMapPalletEarth1 = IMAGEMANAGER->addImage("MapPalletIce1", "resource/UI/earthtileset.bmp", 384, 384, true, RGB(255, 0, 255));
+	imgMapPalletFire1 = IMAGEMANAGER->addImage("MapPalletIce1", "resource/UI/firetileset.bmp", 384, 384, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Wall", "resource/UI/WallUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Terrain", "resource/UI/TerrainUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Object", "resource/UI/ObjectUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Save", "resource/UI/SaveUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Load", "resource/UI/LoadUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
+
 	rcTypePage = RectMake(1015, 277, imgRelicUITypePageBG->GetWidth(), imgRelicUITypePageBG->GetHeight());
 	rcSelectPage = RectMake(1015, 277, imgRelicUISelectPageBG->GetWidth(), imgRelicUISelectPageBG->GetHeight());
+	rcMapPalletIce1 = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
+	rcMapPalletEarth1 = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
+	rcMapPalletFire1 = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
+	rcMapPalletCastle1 = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -102,11 +138,28 @@ void MAPEDIT::update()
 	{
 		updateObject();
 	}
+	if (KEYMANAGER->isStayKeyDown('1'))
+	{
+		callBackMapSizeDown();
+	}
+	else if (KEYMANAGER->isStayKeyDown('2'))
+	{
+		callBackMapSizeUp();
+	}
+	else if (KEYMANAGER->isStayKeyDown('3'))
+	{
+		callBackMapSizeLeft();
+	}
+	else if(KEYMANAGER->isStayKeyDown('4'))
+	{
+		callBackMapSizeRight();
+	}
+	_pMapTool->update();
 }
 
 void MAPEDIT::release()
 {
-	//_pMapTool->release();
+	_pMapTool->release();
 	if (_mapEditstate == MAPEDITSTATE::MAPEDITMENU)
 	{
 		_btnWall->release();
@@ -119,6 +172,10 @@ void MAPEDIT::release()
 
 void MAPEDIT::render()
 {
+	_pCamera->renderinit();
+	//_pMapTool->render(_pCamera->getMemDC());
+	_pCamera->render(getMemDC());
+
 	//imgRelicUIBG->render(getMemDC(), 1000, 0);
 	if (_mapEditstate == MAPEDITSTATE::MAPEDITMENU)
 	{
@@ -152,9 +209,10 @@ void MAPEDIT::updateMenu()
 
 	//왼쪽 위 모서리
 	rcTypePageVertex = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
-
-	//창 무브
 	
+	//창 무브
+	moveWindow();
+	/*
 	if(PtInRect(&rcTypePageVertex, _ptMouse))
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
@@ -178,6 +236,7 @@ void MAPEDIT::updateMenu()
 			_clickVertex = false;
 		}
 	}
+	*/
 
 	//서랍장 열리는 frameindex 설정
 	for (int i = 0; i < 5; i++)
@@ -246,6 +305,8 @@ void MAPEDIT::updateWall()
 {
 	//왼쪽 위 모서리
 	rcSelectPageVertex = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
+	moveWindow();
+	/*
 	//창 무브
 	if (PtInRect(&rcSelectPageVertex, _ptMouse))
 	{
@@ -275,47 +336,24 @@ void MAPEDIT::updateWall()
 			_clickVertex = false;
 		}
 	}
+	*/
 }
 
 void MAPEDIT::updateTerrain()
 {
 	//왼쪽 위 모서리
 	rcSelectPageVertex = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
-	//창 무브
-	if (PtInRect(&rcSelectPageVertex, _ptMouse))
-	{
-		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-		{
-			_clickVertex = true;
-		}
-	}
-
-	if (_clickVertex == true)
-	{
-		rcSelectPage.left = _ptMouse.x - _drawerVertexSize / 2;
-		rcSelectPage.top = _ptMouse.y - _drawerVertexSize / 2;
-		rcSelectPage.right = rcSelectPage.left + imgRelicUISelectPageBG->GetWidth();
-		rcSelectPage.bottom = rcSelectPage.top + imgRelicUISelectPageBG->GetHeight();
-		rcTypePage.left = _ptMouse.x - _drawerVertexSize / 2;
-		rcTypePage.top = _ptMouse.y - _drawerVertexSize / 2;
-		rcTypePage.right = rcTypePage.left + imgRelicUITypePageBG->GetWidth();
-		rcTypePage.bottom = rcTypePage.top + imgRelicUITypePageBG->GetHeight();
-		for (int i = 0; i < 5; i++)
-		{
-			rcRelicUIDrawer[i] = RectMake(53 + rcTypePage.left, rcTypePage.top + 61 + 96 * i, 470, 88);
-			rcBtnTitle[i] = RectMake(53 + rcTypePage.left, 61 + 96 * i, IMAGEMANAGER->findImage("Wall")->getFrameWidth(), IMAGEMANAGER->findImage("Wall")->getFrameHeight());
-		}
-		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-		{
-			_clickVertex = false;
-		}
-	}
+	
+	moveWindow();
 }
 
 void MAPEDIT::updateObject()
 {
 	//왼쪽 위 모서리
 	rcSelectPageVertex = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
+	
+	moveWindow();
+	/*
 	//창 무브
 	if (PtInRect(&rcSelectPageVertex, _ptMouse))
 	{
@@ -345,6 +383,7 @@ void MAPEDIT::updateObject()
 			_clickVertex = false;
 		}
 	}
+	*/
 }
 
 void MAPEDIT::renderMenu()
@@ -372,18 +411,19 @@ void MAPEDIT::renderMenu()
 void MAPEDIT::renderWall()
 {
 	imgRelicUISelectPageBG->render(getMemDC(), rcTypePage.left, rcTypePage.top);
-	IMAGEMANAGER->findImage("Wall")->frameRender(getMemDC(), rcTypePage.left + 179, rcTypePage.top + 40, 0, 0);
+	IMAGEMANAGER->findImage("Wall")->frameRender(getMemDC(), rcTypePage.left + 147, rcTypePage.top + 40, 0, 0);
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
 		RectangleMake(getMemDC(), rcSelectPageVertex.left, rcSelectPageVertex.top, rcSelectPageVertex.right - rcSelectPageVertex.left, rcSelectPageVertex.bottom - rcSelectPageVertex.top);
-		
 	}
 }
 
 void MAPEDIT::renderTerrain()
 {
 	imgRelicUISelectPageBG->render(getMemDC(), rcTypePage.left, rcTypePage.top);
-	IMAGEMANAGER->findImage("Terrain")->frameRender(getMemDC(), rcTypePage.left + 179, rcTypePage.top + 40, 0, 0);
+	IMAGEMANAGER->findImage("Terrain")->frameRender(getMemDC(), rcTypePage.left + 147, rcTypePage.top + 40, 0, 0);
+	IMAGEMANAGER->findImage("MapPalletIce1")->render(getMemDC(), rcMapPalletIce1.left, rcMapPalletIce1.top);
+		
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
 		RectangleMake(getMemDC(), rcSelectPageVertex.left, rcSelectPageVertex.top, rcSelectPageVertex.right - rcSelectPageVertex.left, rcSelectPageVertex.bottom - rcSelectPageVertex.top);
@@ -394,10 +434,60 @@ void MAPEDIT::renderTerrain()
 void MAPEDIT::renderObject()
 {
 	imgRelicUISelectPageBG->render(getMemDC(), rcTypePage.left, rcTypePage.top);
-	IMAGEMANAGER->findImage("Object")->frameRender(getMemDC(), rcTypePage.left + 179, rcTypePage.top + 40, 0, 0);
+	IMAGEMANAGER->findImage("Object")->frameRender(getMemDC(), rcTypePage.left + 147, rcTypePage.top + 40, 0, 0);
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
 		RectangleMake(getMemDC(), rcSelectPageVertex.left, rcSelectPageVertex.top, rcSelectPageVertex.right - rcSelectPageVertex.left, rcSelectPageVertex.bottom - rcSelectPageVertex.top);
 
+	}
+}
+
+void MAPEDIT::moveWindow()
+{
+	if (_mapEditstate == MAPEDITSTATE::MAPEDITMENU)
+	{
+		//창 무브
+		if (PtInRect(&rcTypePageVertex, _ptMouse))
+		{
+			if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+			{
+				_clickVertex = true;
+			}
+		}
+	}
+	else
+	{
+		if (PtInRect(&rcSelectPageVertex, _ptMouse))
+		{
+			if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+			{
+				_clickVertex = true;
+			}
+		}
+	}
+
+	if (_clickVertex == true)
+	{
+		rcSelectPage.left = _ptMouse.x - _drawerVertexSize / 2;
+		rcSelectPage.top = _ptMouse.y - _drawerVertexSize / 2;
+		rcSelectPage.right = rcSelectPage.left + imgRelicUISelectPageBG->GetWidth();
+		rcSelectPage.bottom = rcSelectPage.top + imgRelicUISelectPageBG->GetHeight();
+		rcTypePage.left = _ptMouse.x - _drawerVertexSize / 2;
+		rcTypePage.top = _ptMouse.y - _drawerVertexSize / 2;
+		rcTypePage.right = rcTypePage.left + imgRelicUITypePageBG->GetWidth();
+		rcTypePage.bottom = rcTypePage.top + imgRelicUITypePageBG->GetHeight();
+		for (int i = 0; i < 5; i++)
+		{
+			rcRelicUIDrawer[i] = RectMake(53 + rcTypePage.left, rcTypePage.top + 61 + 96 * i, 470, 88);
+			rcBtnTitle[i] = RectMake(53 + rcTypePage.left, 61 + 96 * i, IMAGEMANAGER->findImage("Wall")->getFrameWidth(), IMAGEMANAGER->findImage("Wall")->getFrameHeight());
+			rcMapPalletIce1 = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
+			rcMapPalletEarth1 = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
+			rcMapPalletFire1 = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
+			rcMapPalletCastle1 = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_clickVertex = false;
+		}
 	}
 }

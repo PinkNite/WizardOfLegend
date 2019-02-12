@@ -86,7 +86,6 @@ void MAPTOOL::release()
 		}
 		_vvMap.pop_back();
 	}
-
 }
 
 void MAPTOOL::render(HDC hdc)
@@ -98,18 +97,7 @@ void MAPTOOL::render(HDC hdc)
 		{
 			_vvMap[j][i]->render(hdc);
 		}
-	}
-	//for (int j = 0; j < _nTileCountY; j++)
-	//{
-	//	for (int i = 0; i < _nTileCountX; i++)
-	//	{
-	//		char str[32];
-	//		sprintf_s(str, "%d,%d", i, j);
-	//		TextOut(hdc, _vvMap[j][i]->getRectTile().left , _vvMap[j][i]->getRectTile().top , str, strlen(str));
-	//	}
-	//}
-
-	
+	}	
 }
 
 void MAPTOOL::update()
@@ -117,25 +105,21 @@ void MAPTOOL::update()
 	_nVertical = 0;
 	_nHorizontal = 0;
 
-	if (KEYMANAGER->isStayKeyDown(VK_UP))	
+	if (KEYMANAGER->isStayKeyDown('W'))	
 	{
-		//_pCamera->moveUp(10);
 		_nVertical += 10;
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN))	
+	if (KEYMANAGER->isStayKeyDown('S'))	
 	{
-		//_pCamera->moveDown(10);
 		_nVertical -= 10;
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))	
+	if (KEYMANAGER->isStayKeyDown('A'))	
 	{
-		//_pCamera->moveLeft(10);
 		_nHorizontal += 10;
 
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	if (KEYMANAGER->isStayKeyDown('D'))
 	{
-		//_pCamera->moveRight(10);
 		_nHorizontal -= 10;
 	}
 

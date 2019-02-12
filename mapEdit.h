@@ -24,7 +24,15 @@ private:
 	image* imgRelicUITypePageBG;
 	image* imgRelicUIDrawer;
 	image* imgRelicUISelectPageBG;
+	image* imgMapPalletIce1;
+	image* imgMapPalletEarth1;
+	image* imgMapPalletFire1;
+	image* imgMapPalletCastle1;
 
+	RECT rcMapPalletIce1;
+	RECT rcMapPalletEarth1;
+	RECT rcMapPalletFire1;
+	RECT rcMapPalletCastle1;
 	RECT rcRelicUIDrawer[5];
 	RECT rcBtnTitle[5];
 	RECT rcTypePageVertex;
@@ -49,7 +57,9 @@ private:
 	bool _ptInbtn[5];
 	bool _clickVertex;
 	MAPTOOL* _pMapTool;
+	CAMERA*	 _pCamera;
 	MAPEDITSTATE _mapEditstate;
+	vector<RECT> _vPageTerrain;
 
 public:
 	MAPEDIT();
@@ -60,6 +70,10 @@ public:
 	void	callBackMapObject();
 	void	callBackMapSave();
 	void	callBackMapLoad();
+	void	callBackMapSizeUp();
+	void	callBackMapSizeDown();
+	void	callBackMapSizeLeft();
+	void	callBackMapSizeRight();
 
 	HRESULT init() override;
 	void update() override;
@@ -73,4 +87,5 @@ public:
 	void renderWall();
 	void renderTerrain();
 	void renderObject();
+	void moveWindow();
 };

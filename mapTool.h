@@ -11,10 +11,10 @@ public:
 	MAPTOOL();
 	~MAPTOOL();
 private:
-	//한 타일의 사이즈는 32로 한다. 32 X 32
+	//한 타일의 사이즈는 64로 한다. 64 X 64
 	int		_nTileSize;
 
-	//타일 갯수는 가로 20 / 세로 20
+	//타일 갯수는 가로 25 / 세로 14
 	int		_nTileCountX;
 	int		_nTileCountY;
 
@@ -31,6 +31,7 @@ private:
 	int		_nCurrentTileY;	//현재 선택되어있는 타일y
 	//맵
 	vector<vector<TILE*>>	_vvMap;
+	
 	//맵 frame
 	image*	_pImgMap;
 	image*	_pObjectImg;

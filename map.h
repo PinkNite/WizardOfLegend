@@ -37,7 +37,6 @@ private:
 
 	string	_strMapName;
 
-
 private:
 	void	createMap();
 	
