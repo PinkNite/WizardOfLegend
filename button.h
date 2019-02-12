@@ -25,7 +25,8 @@ enum BUTTONDIRECTION
 {
 	BUTTONDIRECTION_NULL,
 	BUTTONDIRECTION_UP,
-	BUTTONDIRECTION_DOWN
+	BUTTONDIRECTION_DOWN,
+	BUTTONDIRECTION_COLLISION
 };
 
 class button 
@@ -38,8 +39,11 @@ private:
 	RECT _rc;
 
 	float _x, _y;		//À§Ä¡ ÁÂÇ¥
+	POINT _btnCollisionFramePoint;
 	POINT _btnDownFramePoint;
 	POINT _btnUpFramePoint;
+	int _intervalX;
+	int _intervalY;
 
 	function<void(void)> _callbackFunction;
 public:
@@ -50,9 +54,14 @@ public:
 		POINT btnDownFramePoint, POINT btnUpFramePoint,
 		function<void(void)> cbFunction);
 
+	HRESULT initRc(const char* imageName, RECT rc, int intervalX, int intervalY, POINT btnCollisionFramePoint,
+		POINT btnDownFramePoint, POINT btnUpFramePoint,
+		function<void(void)> cbFunction);
 
 	void release();
 	void update();
+	void update(RECT rc);
 	void render(HDC hdc);
+	void render(HDC hdc, int moveY);
 };
 

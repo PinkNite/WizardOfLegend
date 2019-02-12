@@ -34,6 +34,13 @@ inline RECT RectMakeCenter(int x, int y, int width, int height)
 	return rc;
 }
 
+inline RECT RectMakeCenter(float x, float y, int width, int height)
+{
+	RECT rc = { static_cast<int>(x) - (width / 2), static_cast<int>(y) - (height / 2), static_cast<int>(x) + (width / 2), static_cast<int>(y) + (height / 2) };
+
+	return rc;
+}
+
 //================= 사각형 관련 함수 ======================
 //          사각형 생성함수(뿌려줄DC, left, top, 가로크기, 세로크기
 inline void RectangleMake(HDC hdc, int x, int y, int width, int height)

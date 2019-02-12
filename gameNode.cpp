@@ -81,7 +81,6 @@ void gameNode::update()
 {
 	SOUNDMANAGER->update();
 	KEYMANAGER->update();
-	
 }
 
 void gameNode::render()
@@ -103,7 +102,6 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 			this->render();
 		}
 		break;
-
 
 		case WM_MOUSEMOVE:
 			_ptMouse.x = static_cast<LONG>(LOWORD(lParam));

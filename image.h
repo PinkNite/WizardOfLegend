@@ -105,10 +105,17 @@ public:
 	void render(HDC hdc, int destX, int destY,
 		int sourX, int sourY, int sourWidth, int sourHeight);
 
+	//이미지 렌더 중심x,y를 기준으로 그려준다
+	void renderCenter(HDC hdc, int dstX, int dstY);
+
 	//이미지 프레임 렌더(뿌려줄 DC, 뿌려줄 X(Left), Y(Top))
 	void frameRender(HDC hdc, int destX, int destY);
 	//이미지 프레임 렌더(뿌려줄 DC, 뿌려줄 Left, 뿌려줄 Top, 프레임X번호, 프레임Y번호)
 	void frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
+
+	//이미지 프레임 렌더 중심x,y를 기준으로 그려준다
+	void frameRenderCenter(HDC hdc, int dstX, int dstY);
+	void frameRenderCenter(HDC hdc, int dstX, int dstY, int currentFrameX, int currentFrameY);
 
 	//이미지 한 장으로 루프렌더링하기(뿌려줄DC, 뿌려줄영역(렉트), 루프방향X, 루프방향Y)
 	void loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY);
@@ -116,12 +123,11 @@ public:
 	void alphaRender(HDC hdc, BYTE alpha);
 
 	void alphaRender(HDC hdc, int destX, int destY, BYTE alpha);
-	
-	void alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY,BYTE alpha);
 
 	void aniRender(HDC hdc, int destX, int destY, animation* ani);
 
 	void aniRenderCenter(HDC hdc, int destX, int destY, animation* ani);
+
 
 	inline HDC getMemDC() { return _imageInfo->hMemDC; }
 

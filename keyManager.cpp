@@ -190,6 +190,19 @@ bool keyManager::isToggleKey(int key)
 	return false;
 }
 
+bool keyManager::isKeyDown(int key)
+{
+	if (_arKey[key] == KEYINPUT::KEY_DOWN)
+	{
+		return true;
+	}
+	if (_arKey[key] == KEYINPUT::KEY_STAY_DOWN)
+	{
+		return true;
+	}
+	return false;
+}
+
 bool keyManager::isDBClickLButton()
 {
 	if (_isDBCLbutton  == true)

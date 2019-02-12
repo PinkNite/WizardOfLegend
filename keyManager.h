@@ -51,6 +51,8 @@ public:
 	//토글이면은 계속 체크되고있는 상태 아닌가요? ㅎㅎㅎㅎㅎ
 	bool isToggleKey(int key);
 
+	bool isKeyDown(int key);
+
 	bitset<KEYMAX> getKeyUp() { return _keyUp; }
 	bitset<KEYMAX> getKeyDown() { return _keyDown; }
 
