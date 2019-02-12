@@ -8,7 +8,7 @@ class LEETEST :public gameNode
 private:
 	ITEMMANAGER* _pItemManager;
 	UI* _pUI;
-	image* _pMouse;
+
 public:
 	LEETEST();
 	~LEETEST();

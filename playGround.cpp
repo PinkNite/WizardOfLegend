@@ -35,7 +35,7 @@ HRESULT playGround::init()
 	//SCENEMANAGER->changeScene("MinTest");
 	//SCENEMANAGER->changeScene("bossStage");
 	//SCENEMANAGER->changeScene("intro");
-	SCENEMANAGER->changeScene("leeTest");
+	//SCENEMANAGER->changeScene("leeTest");
 
 	return S_OK;
 }

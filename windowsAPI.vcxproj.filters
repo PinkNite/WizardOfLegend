@@ -333,9 +333,6 @@
     <ClInclude Include="BossStateSkill03.h">
       <Filter>PlayGround\enemy\boss</Filter>
     </ClInclude>
-    <ClInclude Include="explainUse.h">
-      <Filter>PlayGround\UI</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -541,9 +538,6 @@
     </ClCompile>
     <ClCompile Include="BossStateSkill03.cpp">
       <Filter>PlayGround\enemy\boss</Filter>
-    </ClCompile>
-    <ClCompile Include="explainUse.cpp">
-      <Filter>PlayGround\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

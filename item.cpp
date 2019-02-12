@@ -1521,7 +1521,7 @@ void ITEM::render(HDC hdc)
 		fontRender(getMemDC(), _mItem.find(i)->second[i].info, 800, 600, 30, RGB(255, 50, 50));
 	}*/
 
-	//OBJECT::getImage()->frameRender(hdc, _x, _y, _mItem.find(_num)->second[_num].frameX, _mItem.find(_num)->second[_num].frameY);
+	//OBJECT::getImage()->frameRender(hdc, 300, 100, _mItem.find(_num)->second[_num].frameX, _mItem.find(_num)->second[_num].frameY);
 	/*fontRender(hdc, _mItem.find(_num)->second[_num].name,"±¼¸²Ã¼", 300, 200, 30, RGB(250, 50, 50));
 	fontRender(hdc, _mItem.find(_num)->second[_num].info,"±¼¸²Ã¼", 300, 250, 15, RGB(50, 50, 50));
 	sprintf_s(str, "ºí·ç:%d", _mItem.find(_num)->second[_num].costA);

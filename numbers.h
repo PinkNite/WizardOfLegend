@@ -7,7 +7,7 @@ private:
 public:
 	NUMBERS();
 	~NUMBERS();
-	HRESULT init(int x, int y);
+	HRESULT init();
 	void release();
 	void update();
 	void render(HDC hdc);
