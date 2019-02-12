@@ -24,5 +24,5 @@ void BossStateRun::enter(BOSS * boss)
 
 void BossStateRun::update(BOSS * boss)
 {
-	boss->moveBoss();
+	//boss->moveBoss();
 }

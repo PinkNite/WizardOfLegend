@@ -14,6 +14,10 @@ public:
 		RIGHT,
 		UP,
 		DOWN,
+		L_UP,
+		L_DOWN,
+		R_UP,
+		R_DOWN,
 		MAX
 	};
 	//
@@ -66,8 +70,8 @@ private:
 	const int BOSS_IMAGE_HEIGHT = 1080;
 	const int BOSS_MAX_FRAME_X = 11;
 	const int BOSS_MAX_FRAME_Y = 9;
-	const int BOSS_RECT_WIDTH = 90;
-	const int BOSS_RECT_HEIGHT = 100; // FrameSize: 90, 120
+	const int BOSS_RECT_WIDTH = 40;
+	const int BOSS_RECT_HEIGHT = 75; // FrameSize: 90, 120
 
 	float _fMaxHP;
 	float _fCurrentHP;

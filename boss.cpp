@@ -28,7 +28,7 @@ BOSS::~BOSS()
 
 void BOSS::init()
 {
-	OBJECT::init(100, 100, 48, 48);
+	OBJECT::init(300, 200, BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
 	OBJECT::_pImg = IMAGEMANAGER->addFrameImage("iceBossImg", "resource/boss/ice/IceBoss.bmp",
 		BOSS_IMAGE_WIDTH, BOSS_IMAGE_HEIGHT, BOSS_MAX_FRAME_X, BOSS_MAX_FRAME_Y, true, RGB(255, 0, 255));
 
@@ -195,11 +195,13 @@ void BOSS::initState()
 
 void BOSS::handleInputKey()
 {
+	float speed = _fSpeed * TIMEMANAGER->getElapsedTime();
 
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
 		setState(BOSS_STATE::RUN);
 		setDirection(DIRECTION::UP);
+		moveUp(speed);
 	}
 	else if (KEYMANAGER->isOnceKeyUp(VK_UP))
 	{
@@ -210,7 +212,8 @@ void BOSS::handleInputKey()
 	{
 		setState(BOSS_STATE::RUN);
 		setDirection(DIRECTION::LEFT);
-	}
+		moveLeft(speed);
+	} 
 	else if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
 	{
 		setState(BOSS_STATE::IDLE);
@@ -220,6 +223,7 @@ void BOSS::handleInputKey()
 	{
 		setState(BOSS_STATE::RUN);
 		setDirection(DIRECTION::RIGHT);
+		moveRight(speed);
 	}
 	else if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
 	{
@@ -230,11 +234,13 @@ void BOSS::handleInputKey()
 	{
 		setState(BOSS_STATE::RUN);
 		setDirection(DIRECTION::DOWN);
+		moveDown(speed);
 	}
 	else if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
 	{
 		setState(BOSS_STATE::IDLE);
 	}
+
 }
 
 void BOSS::moveUp(float speed)
@@ -291,6 +297,22 @@ void BOSS::moveBoss()
 			moveUp(speed);
 			break;
 		case BOSS::DIRECTION::DOWN:
+			moveDown(speed);
+			break;
+		case BOSS::DIRECTION::L_UP:
+			moveLeft(speed);
+			moveUp(speed);
+			break;
+		case BOSS::DIRECTION::L_DOWN:
+			moveLeft(speed);
+			moveDown(speed);
+			break;
+		case BOSS::DIRECTION::R_UP:
+			moveRight(speed);
+			moveUp(speed);
+			break;
+		case BOSS::DIRECTION::R_DOWN:
+			moveRight(speed);
 			moveDown(speed);
 			break;
 		}
