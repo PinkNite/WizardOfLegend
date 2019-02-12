@@ -12,8 +12,10 @@ NUMBERS::~NUMBERS()
 {
 }
 
-HRESULT NUMBERS::init()
+HRESULT NUMBERS::init(int x, int y)
 {
+	_x = x;
+	_y = y;
 	OBJECT::setImage(IMAGEMANAGER->addFrameImage("numbers", "resource/UI/numbers.bmp", 220, 29, 10, 1, true, RGB(255, 0, 255)));
 	return S_OK;
 }

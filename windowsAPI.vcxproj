@@ -165,6 +165,7 @@
     <ClInclude Include="circleEffect.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
+    <ClInclude Include="explainUse.h" />
     <ClInclude Include="fireDash.h" />
     <ClInclude Include="FrameWork.h" />
     <ClInclude Include="gameNode.h" />
@@ -241,6 +242,7 @@
     <ClCompile Include="circleEffect.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
+    <ClCompile Include="explainUse.cpp" />
     <ClCompile Include="fireDash.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="goldHD.cpp" />

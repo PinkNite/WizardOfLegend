@@ -15,10 +15,14 @@ LEETEST::~LEETEST()
 
 HRESULT LEETEST::init()
 {
+	_pMouse = new image;
+	_pMouse = IMAGEMANAGER->addImage("mouse", "resource/intro/mouseCursor.bmp", 64, 64, true, RGB(255, 0, 255));
+
 	_pUI = new UI;
 	_pUI->init();
 	_pItemManager = new ITEMMANAGER;
 	_pItemManager->init();
+	ShowCursor(false);
 
 	return S_OK;
 }
@@ -38,5 +42,6 @@ void LEETEST::render()
 {
 	_pUI->render(getMemDC());
 	_pItemManager->render(getMemDC());
+	_pMouse->render(getMemDC(), _ptMouse.x-32, _ptMouse.y-32);
 
 }
