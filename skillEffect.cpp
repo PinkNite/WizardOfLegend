@@ -44,6 +44,7 @@ void SKILL_EFFECT::update()
 	{
 		_bIsActive = false;
 	}
+	_pAni->frameUpdate(TIMEMANAGER->getElapsedTime());
 }
 
 void SKILL_EFFECT::release()

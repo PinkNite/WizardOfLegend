@@ -261,6 +261,12 @@
     <ClInclude Include="magicMgr.h">
       <Filter>PlayGround\magic</Filter>
     </ClInclude>
+    <ClInclude Include="skill.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="fireDash.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -406,6 +412,12 @@
     </ClCompile>
     <ClCompile Include="magicMgr.cpp">
       <Filter>PlayGround\magic</Filter>
+    </ClCompile>
+    <ClCompile Include="skill.cpp">
+      <Filter>PlayGround\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="fireDash.cpp">
+      <Filter>PlayGround\skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

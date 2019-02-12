@@ -82,9 +82,9 @@ void MAGICMGR::render(HDC hdc)
 	}
 }
 
-void MAGICMGR::useMagic(string& strKey, float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer)
+void MAGICMGR::useMagic(const string& strKey, float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer)
 {
-	if (_mqMagicPool.find(strKey) != _mqMagicPool.end())
+	if (_mqMagicPool.find(strKey) == _mqMagicPool.end())
 	{
 		return;
 	}
@@ -96,7 +96,7 @@ void MAGICMGR::useMagic(string& strKey, float fPosX, float fPosY, float fMoveAng
 	pMagic = nullptr;
 }
 
-void MAGICMGR::addObject(string& strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime)
+void MAGICMGR::addObject(const string& strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime)
 {
 	if (_mqMagicPool.find(strKey) != _mqMagicPool.end())
 	{

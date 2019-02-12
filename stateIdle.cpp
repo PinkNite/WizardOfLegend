@@ -63,6 +63,8 @@ void STATE_IDLE::onBtnSpace(PLAYER* pPlayer)
 	pPlayer->setState(PLAYER::PLAYER_STATE::DASH);
 	pPlayer->setAction(PLAYER::ACTION::DASH);
 	pPlayer->settingAni();
+
+	pPlayer->getSkill()->init();
 }
 
 void STATE_IDLE::onBtnLB(PLAYER* pPlayer)

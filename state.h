@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "player.h"
+#include "skill.h"
 
 class STATE abstract {
 public:
@@ -14,5 +15,5 @@ public:
 	virtual void onBtnLB(PLAYER* pPlayer)		abstract;
 	virtual void onBtnRB(PLAYER* pPlayer)		abstract;
 	virtual void onBtnR(PLAYER* pPlayer)		abstract;
-	virtual void update(PLAYER* pPlayer)		abstract;
+	virtual void update(PLAYER * pPlayer)		abstract;
 };

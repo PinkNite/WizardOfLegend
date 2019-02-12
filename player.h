@@ -6,6 +6,10 @@
 #include "circleEffect.h"
 
 class STATE;
+class SKILL;
+class MAGICMGR;
+class SKILL_EFFECT_MGR;
+
 
 class PLAYER : public OBJECT
 {
@@ -125,6 +129,11 @@ private:
 	
 	float		_fAttackDirAngle;
 
+	MAGICMGR*			_pMagicMgr;
+	SKILL_EFFECT_MGR*	_pSkillEffectMgr;
+
+	//임시
+	SKILL*		_pFireDash;
 public:
 	PLAYER();
 	~PLAYER();
@@ -193,4 +202,11 @@ public:
 	inline PLAYER::DIRECTION getDrection() { return _direction; }
 	inline animation* getAni() { return _pAnimation; }
 
+
+
+	void setLink(MAGICMGR* pMagicMgr, SKILL_EFFECT_MGR* pSkillEffectMgr);
+
+
+	//임시
+	SKILL*	getSkill() { return _pFireDash; }
 };

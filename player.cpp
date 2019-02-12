@@ -11,6 +11,9 @@
 #include "stateSkillTwo.h"
 #include "stateDeath.h"
 
+#include "fireDash.h"
+
+
 PLAYER::PLAYER() :
 	_fMaxHealthPoint(0.0f),
 	_fCurrentHealthPoint(0.0f),
@@ -74,6 +77,12 @@ void PLAYER::init()
 	_pCirEffect = new CIRCLEEFFECT();
 	_pCirEffect->init();
 	_fAttackDirAngle = PI + PI / 2.0f;
+
+
+
+	//юс╫ц
+	_pFireDash = new FIREDASH();
+	_pFireDash->init();
 }
 
 void PLAYER::update()
@@ -403,6 +412,16 @@ void PLAYER::setDirectionRight()
 	{
 		_eMoveDirection = PLAYER::MOVE_DIRECTION::RIGHT;
 	}
+}
+
+void PLAYER::setLink(MAGICMGR * pMagicMgr, SKILL_EFFECT_MGR * pSkillEffectMgr)
+{
+	_pMagicMgr = pMagicMgr;
+	_pSkillEffectMgr = pSkillEffectMgr;
+
+	_pFireDash->setMagicMgr(_pMagicMgr);
+	_pFireDash->setPlayer(this);
+	_pFireDash->setSkillEffectMgr(_pSkillEffectMgr);
 }
 
 void PLAYER::input()

@@ -57,6 +57,7 @@ void STATE_DASH::update(PLAYER * pPlayer)
 		if (pPlayer->getDashTime() < 0.2f)
 		{
 			pPlayer->getAni()->stop();
+			pPlayer->getSkill()->update();
 		}
 		else {
 			if (!pPlayer->getAni()->isPlay()) {
@@ -69,8 +70,7 @@ void STATE_DASH::update(PLAYER * pPlayer)
 		}
 		pPlayer->dash(fOffset);
 		pPlayer->addDashTime();
-		
-		
+		pPlayer->getSkill()->update();
 	}
 	else
 	{

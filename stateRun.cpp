@@ -70,6 +70,8 @@ void STATE_RUN::onBtnSpace(PLAYER* pPlayer)
 	pPlayer->setDashTime(0.0f);
 	pPlayer->setAction(PLAYER::ACTION::DASH);
 	pPlayer->settingAni();
+
+	pPlayer->getSkill()->init();
 }
 
 void STATE_RUN::onBtnLB(PLAYER* pPlayer)

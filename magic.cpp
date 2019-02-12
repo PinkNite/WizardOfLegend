@@ -9,7 +9,7 @@ MAGIC::~MAGIC()
 {
 }
 
-void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, string& strKey)
+void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime,const string& strKey)
 {
 	_fPosX = -2000.0f;
 	_fPosY = -2000.0f;
@@ -52,7 +52,10 @@ void MAGIC::update()
 		
 
 		_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);
+
 	}
+	_pEffectAni->frameUpdate(TIMEMANAGER->getElapsedTime());
+
 }
 
 void MAGIC::render(HDC hdc)
