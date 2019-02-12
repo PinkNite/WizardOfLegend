@@ -43,7 +43,6 @@ public:
 	inline void setWidth(int width) { _width = width; }
 	inline void setHeight(int height) { _height = height; }
 	
-	
 
 };
 

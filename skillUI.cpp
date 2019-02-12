@@ -122,10 +122,7 @@ void SKILLUI::render(HDC hdc)
 		fontRender(hdc, "]", "Aharoni",_rcText.right, 520, 40, RGB(183, 192, 195));
 		fontRender(hdc, _pItem[0]->getVItem()[_numA].info, "Aharoni", 214, 560, 20, RGB(183, 192, 195));
 		
-		fontRender(hdc, "bc", "Aharoni", 900, 70, 20, RGB(183, 192, 195));
-		char str3[100];
-		sprintf_s(str3, "%2d", count);
-		TextOut(hdc, 700, 200, str3, strlen(str3));
+
 }
 
 void SKILLUI::fontRender(HDC hdc, const char * str, const char * str2, int x, int y, int num, COLORREF color)
