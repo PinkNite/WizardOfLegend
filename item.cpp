@@ -4,7 +4,7 @@
 
 
 ITEM::ITEM()
-	:_x(0),_y(0)
+	:_x(0),_y(0),_alpha(255)
 {
 }
 
@@ -1538,7 +1538,7 @@ void ITEM::render(HDC hdc)
 	sprintf_s(str, "번호: %d", _num);
 	TextOut(hdc, 400, 500, str, strlen(str));*/
 	//위에꺼는 느림 맵이라
-	OBJECT::getImage()->frameRender(hdc, _x, _y, _vItem[_num].frameX, _vItem[_num].frameY);
+	OBJECT::getImage()->alphaFrameRender(hdc, _x, _y, _vItem[_num].frameX, _vItem[_num].frameY,_alpha);
 
 	//렐릭스쪽에 쓸것////////
 /*

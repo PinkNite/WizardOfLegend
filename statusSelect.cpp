@@ -37,7 +37,7 @@ void STATUSSELECT::update()
 	if (_isCollision)
 	{
 		//충돌이다
-		_alpha += 2;
+		_alpha += 4;
 		if (_alpha > 250)
 		{
 			_alpha = 100;
@@ -59,24 +59,26 @@ void STATUSSELECT::render(HDC hdc)
 
 void STATUSSELECT::keySetting()
 {
-	if (KEYMANAGER->isOnceKeyDown('A'))
+	if (KEYMANAGER->isOnceKeyDown('A')&&_y==148)
 	{
 		_x -= 66;
 	}
-	if (KEYMANAGER->isOnceKeyDown('D'))
+	if (KEYMANAGER->isOnceKeyDown('D') && _y == 148)
 	{
 		_x += 66;
 
 
 	}
-	if (KEYMANAGER->isStayKeyDown('W'))
+	if (KEYMANAGER->isStayKeyDown('W') )
 	{
-		_y -= 2;
+		_y = 148;
+		_x = 211;
 
 	}
 	if (KEYMANAGER->isStayKeyDown('S'))
 	{
-		_y += 2;
+		_y =330;
+		_x = 211;
 
 	}
 	if (_x > 541)//오른쪽 을 넘어가면 왼쪽으로

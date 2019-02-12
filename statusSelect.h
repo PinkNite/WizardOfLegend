@@ -20,7 +20,8 @@ public:
 	RECT getRC()const { return _rc; }
 	//불값 충돌
 	void setIsCollision(bool num) { _isCollision = num; }
-
+	//와이값에 따라 나오는 이미지
+	float getY() { return _y; }
 	
 };
 

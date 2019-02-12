@@ -31,5 +31,5 @@ void ITEMMANAGER::update()
 
 void ITEMMANAGER::render(HDC hdc)
 {
-	//_pItem->render(hdc);
+	_pItem->render(hdc);
 }

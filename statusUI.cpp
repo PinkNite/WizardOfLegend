@@ -26,6 +26,8 @@ HRESULT STATUSUI::init()
 		_pStatusBox[i]->init(214 + i * 66, 150);
 		
 	}
+	_pStatusBox[6] = new STATUSBOX;
+	_pStatusBox[6]->init(214 ,333);
 	return S_OK;
 }
 
@@ -84,13 +86,13 @@ void STATUSUI::render(HDC hdc)
 
 	OBJECT::getImage()->render(hdc,OBJECT::getPosX(),  OBJECT::getPosY());
 	_pStatusSelect->render(hdc);
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 7; i++)
 	{
 
 	_pStatusBox[i]->render(hdc);
 	}
 	char str[222];
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 7; i++)
 	{
 
 	sprintf_s(str, "%d", _pStatusBox[i]->dd());

@@ -34,7 +34,7 @@ void UI::update()
 
 void UI::render(HDC hdc)
 {
-	_pSkillUI->render(hdc);
 	_pStatusUI->render(hdc);
+	_pSkillUI->render(hdc);
 	
 }

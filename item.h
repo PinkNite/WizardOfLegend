@@ -31,6 +31,7 @@ private:
 	int _num;
 	image* _pImage;
 	int _x, _y;
+	int _alpha;
 public:
 	ITEM();
 	~ITEM();
@@ -49,5 +50,7 @@ public:
 	
 	void setVItemFrameX(int arrNum, int x) { _vItem[arrNum].frameX = x; }
 	void setVItemFrameY(int arrNum, int y) { _vItem[arrNum].frameY = y; }
+
+	void setAlpha(int alpha) { _alpha = alpha; }
 	
 };
