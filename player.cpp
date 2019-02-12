@@ -432,10 +432,55 @@ void PLAYER::input()
 	{
 		_pCurrentState->onBtnSpace(this);
 	}
+	if (KEYMANAGER->isKeyDown(VK_LBUTTON))
+	{
+		_pCurrentState->onBtnLB(this);
+	}
+	if (KEYMANAGER->isKeyDown(VK_RBUTTON))
+	{
+		_pCurrentState->onBtnRB(this);
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
+	{
+		//발동
+		//버튼업도 상태에 넣어야하나?
+		_pCurrentState->onBtnRB(this);
+	}
+	if (KEYMANAGER->isKeyDown('Q'))
+	{
+		_pCurrentState->onBtnQ(this);
 
+	}
+	if (KEYMANAGER->isOnceKeyUp('Q'))
+	{
+		//발동
+		//버튼업도 상태에 넣어야하나?
+		//내부에서 처리하자 걍
+		_pCurrentState->onBtnQ(this);
 
+	}
+	if (KEYMANAGER->isKeyDown('E'))
+	{
+		_pCurrentState->onBtnE(this);
+	}
+	if (KEYMANAGER->isOnceKeyUp('E'))
+	{
+		//발동
+		//버튼업도 상태에 넣어야하나?
+		_pCurrentState->onBtnE(this);
+	}
+	if (KEYMANAGER->isKeyDown('R'))
+	{
+		_pCurrentState->onBtnR(this);
 
+	}
+	if (KEYMANAGER->isOnceKeyUp('R'))
+	{
+		//발동
+		//버튼업도 상태에 넣어야하나?
+		_pCurrentState->onBtnR(this);
 
+	}
 }
 
 void PLAYER::initState()
