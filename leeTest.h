@@ -1,13 +1,13 @@
 #pragma once
 #include "gameNode.h"
 #include "itemManager.h"
-#include "UImanager.h"
+#include "UI.h"
 
 class LEETEST:public gameNode
 {
 private:
 	ITEMMANAGER* _pItemManager;
-	UIMANAGER* _pUI;
+	UI* _pUI;
 	
 public:
 	LEETEST();

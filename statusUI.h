@@ -11,6 +11,9 @@ private:
 	STATUSBOX* _pStatusBox[6];
 	STATUSSELECT* _pStatusSelect;
 	int _num;//º¯È­°ª
+
+	int _count;
+	
 public:
 	STATUSUI();
 	~STATUSUI();
@@ -18,5 +21,7 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
+	void collision();
+	void spaceKeyAndLButton();
 };
 

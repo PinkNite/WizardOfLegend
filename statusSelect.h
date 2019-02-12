@@ -6,6 +6,7 @@ class STATUSSELECT:public OBJECT
 	float _x, _y;
 	int _alpha;
 	RECT _rc;
+	bool _isCollision;
 public:
 	STATUSSELECT();
 	~STATUSSELECT();
@@ -13,7 +14,13 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
+	void keySetting();
 public:
-	RECT getRC() { return _rc; }
+	//접근자 참조자
+	RECT getRC()const { return _rc; }
+	//불값 충돌
+	void setIsCollision(bool num) { _isCollision = num; }
+
+	
 };
 
