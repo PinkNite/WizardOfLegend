@@ -16,7 +16,8 @@ private:
 	int _x;
 	int _y;
 
-	
+	int count;
+	RECT _rcText;
 
 public:
 	SKILLUI();
@@ -25,6 +26,7 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
+	void fontRender(HDC hdc, const char * str, const char* str2, int x, int y, int num, COLORREF color);
 	
 public:
 	//void setLinkUI(ITEM* item) { _pItem = item; }

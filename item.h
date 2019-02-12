@@ -39,7 +39,7 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
-	void fontRender(HDC hdc, const char * str, const char* str2, int x, int y, int num, COLORREF color);
+	void fontRender(HDC hdc, const char * str, const char* str2, int x, int y, int num, COLORREF color);//hdc, ³»¿ë, ±Û¾¾Ã¼,ÁÂÇ¥,ÁÂÇ¥,±Û¾¾ Å©±â, »ö±ò
 	void setX(int x) { _x = x; }
 	void setY(int y) { _y = y; }
 	void setNum(int num) { _num = num; }

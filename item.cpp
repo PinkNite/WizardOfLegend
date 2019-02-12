@@ -1520,14 +1520,7 @@ void ITEM::render(HDC hdc)
 		fontRender(getMemDC(), _mItem.find(i)->second[i].info, 600, 600, 30,RGB(50,50,50));
 		fontRender(getMemDC(), _mItem.find(i)->second[i].info, 800, 600, 30, RGB(255, 50, 50));
 	}*/
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-	{
-		//num--;
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_UP))
-	{
-		//num++;
-	}
+	
 	//OBJECT::getImage()->frameRender(hdc, 300, 100, _mItem.find(_num)->second[_num].frameX, _mItem.find(_num)->second[_num].frameY);
 	/*fontRender(hdc, _mItem.find(_num)->second[_num].name,"±¼¸²Ã¼", 300, 200, 30, RGB(250, 50, 50));
 	fontRender(hdc, _mItem.find(_num)->second[_num].info,"±¼¸²Ã¼", 300, 250, 15, RGB(50, 50, 50));
@@ -1566,4 +1559,6 @@ void ITEM::fontRender(HDC hdc, const char * str, const char* str2, int x, int y,
 	sprintf_s(str1, str);
 	TextOut(hdc, x, y, str, strlen(str));
 	DeleteObject(font);
+	DeleteObject(oldfont);
+
 }

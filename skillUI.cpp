@@ -57,7 +57,7 @@ HRESULT SKILLUI::init()
 		
 		}
 	}
-	
+
 	return S_OK;
 }
 
@@ -111,11 +111,53 @@ void SKILLUI::render(HDC hdc)
 	}
 
 		_pItem[0]->setNum(_numA);
+
+
 	for (int i = 0; i < 2; i++)
 	{
 	_pItem[i]->render(hdc);
 	}
+	    fontRender(hdc, "[", "Aharoni", 214, 520, 40, RGB(183, 192, 195));
+		fontRender(hdc, _pItem[0]->getVItem()[_numA].name, "Aharoni", 240, 530,20, RGB(255, 204, 0));
+		fontRender(hdc, "]", "Aharoni",_rcText.right, 520, 40, RGB(183, 192, 195));
+		fontRender(hdc, _pItem[0]->getVItem()[_numA].info, "Aharoni", 214, 560, 20, RGB(183, 192, 195));
+		
+		fontRender(hdc, "bc", "Aharoni", 900, 70, 20, RGB(183, 192, 195));
+		char str3[100];
+		sprintf_s(str3, "%2d", count);
+		TextOut(hdc, 700, 200, str3, strlen(str3));
+}
 
+void SKILLUI::fontRender(HDC hdc, const char * str, const char * str2, int x, int y, int num, COLORREF color)
+{
 
+	char str1[120]="";
+	int count = 0;
+	strcmp(str1, str);//복사함
 
+		for (int i = 0; i < strlen(str)-1; i++)//마지막은 알아볼 필요없으니까 -1
+		{
+			
+			if (str1[i] == NULL)//널이 몇개인지 알아보자
+			{
+				count++;
+			}
+		}
+
+	_rcText = RectMake(x, y, (strlen(str))*(num-7), num);
+	
+	//Rectangle(hdc, _rcText);
+
+	SetTextColor(hdc, color);
+	HFONT font, oldfont;
+	SetBkMode(hdc, TRANSPARENT);
+	font = CreateFont(num, 0, 0, 0, 300, 0, 0, 0, DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, DEFAULT_PITCH / FF_SWISS, TEXT(str2));
+	oldfont = (HFONT)SelectObject(hdc, font);
+
+	DrawText(hdc, TEXT(str), strlen(str), &_rcText, DT_CENTER);
+	SelectObject(hdc, oldfont);
+
+	DeleteObject(font);
+
+	
 }
