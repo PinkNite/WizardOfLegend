@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "statusUI.h"
+#include "item.h"
 
 STATUSUI::STATUSUI()
-	:_num(0), _count(0)
+	:_num(0),_numA(0), _count(0),_alpha(200),_isClick(0)
 {
 }
 
@@ -29,6 +30,28 @@ HRESULT STATUSUI::init()
 	_pStatusBox[6] = new STATUSBOX;
 	_pStatusBox[6]->init(214, 333);
 
+	for (int i = 0; i < 2; i++)
+	{
+		_pItem[i] = new ITEM;
+		_pItem[i]->init();
+
+		_pItem[i]->update();
+
+		_pItem[i]->setX(214);
+		_pItem[i]->setY(333);
+		_pItem[i]->setNum(1);
+		switch (i)
+		{
+		case 1:
+			_pItem[i]->setX(_x + (55));
+			_pItem[i]->setY(_y);
+			_pItem[i]->setNum(188);
+			_pItem[i]->setAlpha(60);
+			break;
+
+
+		}
+	}
 	return S_OK;
 }
 
@@ -80,18 +103,40 @@ void STATUSUI::update()
 
 	collision();
 	spaceKeyAndLButton();
+
+
+	if (KEYMANAGER->isOnceKeyDown(VK_UP))
+	{
+		_numA++;
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	{
+		_numA--;
+	}
 }
 
 void STATUSUI::render(HDC hdc)
 {
 
-	OBJECT::getImage()->render(hdc, OBJECT::getPosX(), OBJECT::getPosY());
+	OBJECT::getImage()->alphaRender(hdc, OBJECT::getPosX(), OBJECT::getPosY(),_alpha);
 	_pStatusSelect->render(hdc);
 	for (int i = 0; i < 7; i++)
 	{
 
 		_pStatusBox[i]->render(hdc);
 	}
+	_pItem[0]->setNum(_numA);
+
+
+	for (int i = 0; i < 2; i++)
+	{
+		_pItem[i]->render(hdc);
+	}
+	fontRender(hdc, "[", "Aharoni", 214, 520, 40, RGB(183, 192, 195));
+	fontRender(hdc, _pItem[0]->getVItem()[_numA].name, "Aharoni", 240, 530, 20, RGB(255, 204, 0));
+	fontRender(hdc, "]", "Aharoni", _rcText.right, 520, 40, RGB(183, 192, 195));
+	fontRender2(hdc, _pItem[0]->getVItem()[_numA].info, "Aharoni", 214, 560, 20, RGB(183, 192, 195));
+
 
 	//char str[222];
 	//for (int i = 0; i < 7; i++)
@@ -129,9 +174,45 @@ void STATUSUI::collision()
 
 void STATUSUI::spaceKeyAndLButton()
 {
-	if (KEYMANAGER->isToggleKey(VK_SPACE))//스페이스키가 눌리면
+	for (int i = 0; i < 6; i++)
 	{
-		for (int i = 0; i < 6; i++)
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusBox[i]->getIsCollision())//스페이스키가 눌리면
+		{
+			if (_isClick)
+			{
+				_isClick = false;
+
+			}
+			else
+			{
+				_isClick = true;
+			}
+
+			break;
+
+		}
+		else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && _pStatusBox[i]->getIsCollision()&&PtInRect(&_pStatusBox[i]->getRC(),_ptMouse))
+		{
+			if (_isClick)
+			{
+				_isClick = false;
+
+			}
+			else
+			{
+				_isClick = true;
+			}
+
+			break;
+		}
+		
+		
+	}
+	for (int i = 0; i < 6; i++)
+	{
+
+
+		if (_isClick)
 		{
 			if (_pStatusBox[i]->getIsCollision() && _count == 0)//한번만 들어오게하자
 			{
@@ -142,11 +223,7 @@ void STATUSUI::spaceKeyAndLButton()
 				break;
 			}
 		}
-
-	}
-	else
-	{
-		for (int i = 0; i < 6; i++)
+		else
 		{
 			if (_count == 1 && _pStatusBox[i]->getFrameX())
 			{
@@ -157,4 +234,45 @@ void STATUSUI::spaceKeyAndLButton()
 			}
 		}
 	}
+}
+void STATUSUI::fontRender(HDC hdc, const char * str, const char * str2, int x, int y, int num, COLORREF color)
+{
+
+
+
+	_rcText = RectMake(x, y, (strlen(str))*(num - 7), num);
+
+	//Rectangle(hdc, _rcText);
+
+	SetTextColor(hdc, color);
+	HFONT font, oldfont;
+	SetBkMode(hdc, TRANSPARENT);
+	font = CreateFont(num, 0, 0, 0, 300, 0, 0, 0, DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, DEFAULT_PITCH / FF_SWISS, TEXT(str2));
+	oldfont = (HFONT)SelectObject(hdc, font);
+
+	DrawText(hdc, TEXT(str), -1, &_rcText, DT_CENTER);
+	SelectObject(hdc, oldfont);
+
+	DeleteObject(font);
+
+
+}
+
+void STATUSUI::fontRender2(HDC hdc, const char * str, const char * str2, int x, int y, int num, COLORREF color)
+{
+
+	_rcText = RectMake(x, y, 360, 100);
+
+	//Rectangle(hdc, _rcText);
+
+	SetTextColor(hdc, color);
+	HFONT font, oldfont;
+	SetBkMode(hdc, TRANSPARENT);
+	font = CreateFont(num, 0, 0, 0, 300, 0, 0, 0, DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, DEFAULT_PITCH / FF_SWISS, TEXT(str2));
+	oldfont = (HFONT)SelectObject(hdc, font);
+
+	DrawText(hdc, TEXT(str), -1, &_rcText, DT_LEFT | DT_WORDBREAK);
+	SelectObject(hdc, oldfont);
+
+	DeleteObject(font);
 }
