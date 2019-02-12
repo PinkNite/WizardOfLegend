@@ -94,6 +94,18 @@
     <Filter Include="PlayGround\magic">
       <UniqueIdentifier>{b34edd63-2f23-4fcf-82e5-f722c6935497}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\item">
+      <UniqueIdentifier>{19a9c94b-48b2-4653-a09a-c9122d756382}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\Scene\intro">
+      <UniqueIdentifier>{c8dd5b90-c637-4313-8c08-c27f7c022fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\Scene\leeTest">
+      <UniqueIdentifier>{889bf8fe-39d9-4116-9994-4444611314ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\UI">
+      <UniqueIdentifier>{50e06987-9122-424b-8dab-23717715bd09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -267,6 +279,42 @@
     <ClInclude Include="fireDash.h">
       <Filter>PlayGround\skill</Filter>
     </ClInclude>
+    <ClInclude Include="itemManager.h">
+      <Filter>PlayGround\item</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>PlayGround\item</Filter>
+    </ClInclude>
+    <ClInclude Include="introScene.h">
+      <Filter>PlayGround\Scene\intro</Filter>
+    </ClInclude>
+    <ClInclude Include="leeTest.h">
+      <Filter>PlayGround\Scene\leeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="statusUI.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="statusSelect.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="statusBox.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="skillUI.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="relics.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="goldHD.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="numbers.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -418,6 +466,42 @@
     </ClCompile>
     <ClCompile Include="fireDash.cpp">
       <Filter>PlayGround\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="itemManager.cpp">
+      <Filter>PlayGround\item</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>PlayGround\item</Filter>
+    </ClCompile>
+    <ClCompile Include="introScene.cpp">
+      <Filter>PlayGround\Scene\intro</Filter>
+    </ClCompile>
+    <ClCompile Include="leeTest.cpp">
+      <Filter>PlayGround\Scene\leeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="statusUI.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="statusSelect.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="statusBox.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="skillUI.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="relics.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="goldHD.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="numbers.cpp">
+      <Filter>PlayGround\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

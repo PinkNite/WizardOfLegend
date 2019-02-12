@@ -123,6 +123,9 @@ public:
 	void alphaRender(HDC hdc, BYTE alpha);
 
 	void alphaRender(HDC hdc, int destX, int destY, BYTE alpha);
+	
+	//추가된 알파프레임렌더
+	void alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 
 	void aniRender(HDC hdc, int destX, int destY, animation* ani);
 

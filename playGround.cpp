@@ -21,14 +21,20 @@ HRESULT playGround::init()
 	_pstageScene = new STAGESCENE();
 	_pMinTest = new MINTESTSCENE();
 	_pBossStageScene = new BossStageScene();
+	_pLeeTest = new LEETEST();
+	_pIntroScene = new INTROSCENE();
 
 	SCENEMANAGER->addScene("mapEditScene", _pMapEditScene);
 	SCENEMANAGER->addScene("stageScene", _pstageScene);
 	SCENEMANAGER->addScene("bossStage", _pBossStageScene);
 	SCENEMANAGER->addScene("MinTest", _pMinTest);
+	SCENEMANAGER->addScene("leeTest", _pLeeTest);
+	SCENEMANAGER->addScene("intro", _pIntroScene);
 	
 	SCENEMANAGER->changeScene("MinTest");
 	//SCENEMANAGER->changeScene("bossStage");
+	SCENEMANAGER->changeScene("intro");
+	SCENEMANAGER->changeScene("leeTest");
 
 	return S_OK;
 }

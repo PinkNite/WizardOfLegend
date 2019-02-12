@@ -4,6 +4,8 @@
 #include "stageScene.h"
 #include "minTest.h"
 #include "BossStageScene.h"
+#include "leeTest.h"
+#include "introScene.h"
 
 class playGround : public gameNode
 {
@@ -12,6 +14,8 @@ private:
 	gameNode*	_pstageScene;
 	gameNode*	_pMinTest;
 	gameNode*	_pBossStageScene;
+	gameNode*   _pLeeTest;
+	gameNode*   _pIntroScene;
 
 public:
 	virtual HRESULT init();

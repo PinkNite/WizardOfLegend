@@ -162,28 +162,36 @@
     <ClInclude Include="fireDash.h" />
     <ClInclude Include="FrameWork.h" />
     <ClInclude Include="gameNode.h" />
+    <ClInclude Include="goldHD.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="iniDataManager.h" />
+    <ClInclude Include="introScene.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="itemManager.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
+    <ClInclude Include="leeTest.h" />
     <ClInclude Include="magic.h" />
     <ClInclude Include="magicMgr.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="mapEdit.h" />
     <ClInclude Include="mapTool.h" />
     <ClInclude Include="minTest.h" />
+    <ClInclude Include="numbers.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
+    <ClInclude Include="relics.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skill.h" />
     <ClInclude Include="skillEffect.h" />
     <ClInclude Include="skillEffectMgr.h" />
+    <ClInclude Include="skillUI.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="stageScene.h" />
     <ClInclude Include="state.h" />
@@ -196,6 +204,9 @@
     <ClInclude Include="stateSkillOne.h" />
     <ClInclude Include="stateSkillThree.h" />
     <ClInclude Include="stateSkillTwo.h" />
+    <ClInclude Include="statusBox.h" />
+    <ClInclude Include="statusSelect.h" />
+    <ClInclude Include="statusUI.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="commonMacroFunction.h" />
@@ -203,6 +214,7 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="txtData.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -219,25 +231,33 @@
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="fireDash.cpp" />
     <ClCompile Include="gameNode.cpp" />
+    <ClCompile Include="goldHD.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
+    <ClCompile Include="introScene.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="itemManager.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="leeTest.cpp" />
     <ClCompile Include="magic.cpp" />
     <ClCompile Include="magicMgr.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapEdit.cpp" />
     <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="minTest.cpp" />
+    <ClCompile Include="numbers.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="progressBar.cpp" />
+    <ClCompile Include="relics.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="skillEffect.cpp" />
     <ClCompile Include="skillEffectMgr.cpp" />
+    <ClCompile Include="skillUI.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="stageScene.cpp" />
     <ClCompile Include="stateDamage.cpp" />
@@ -249,6 +269,9 @@
     <ClCompile Include="stateSkillOne.cpp" />
     <ClCompile Include="stateSkillThree.cpp" />
     <ClCompile Include="stateSkillTwo.cpp" />
+    <ClCompile Include="statusBox.cpp" />
+    <ClCompile Include="statusSelect.cpp" />
+    <ClCompile Include="statusUI.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -259,6 +282,7 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="txtData.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="windowsAPI.cpp" />
   </ItemGroup>
