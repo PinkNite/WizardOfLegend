@@ -38,4 +38,6 @@ public:
 	void	returnPool();
 	bool	getActive() { return _bIsActive; }
 	const string&	getKey() { return _strKey; }
+
+	RECT*	getRect() { return &_rcCollision; }
 };
