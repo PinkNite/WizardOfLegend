@@ -69,7 +69,7 @@ void STATUSUI::update()
 
 		_pStatusBox[i]->update();
 		//0,1,3알파값이 다름 원작
-		if (_pStatusBox[i]->getFrameX() != 2 && _count != 1)
+		if (_pStatusBox[i]->getFrameX() != 2 && _pStatusSelect->getSelectState() != SWAP_STATE)
 		{
 			switch (i)
 			{
@@ -85,7 +85,7 @@ void STATUSUI::update()
 				break;
 			}
 		}
-		else if (_count == 1)
+		else if (_pStatusSelect->getSelectState() == SWAP_STATE)
 		{
 			switch (i)
 			{
@@ -107,11 +107,11 @@ void STATUSUI::update()
 	spaceKeyAndLButton();
 	swapSetting();
 
-	if (KEYMANAGER->isOnceKeyDown(VK_UP))
+	if (KEYMANAGER->isOnceKeyDown('O'))
 	{
 		_numA++;
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	if (KEYMANAGER->isOnceKeyDown('P'))
 	{
 		_numA--;
 	}
@@ -124,10 +124,14 @@ void STATUSUI::render(HDC hdc)
 
 	OBJECT::getImage()->alphaRender(hdc, OBJECT::getPosX(), OBJECT::getPosY(), _alpha);
 	_pStatusSelect->render(hdc);
-	for (int i = 0; i < 7; i++)
+	for (int i = 0; i < 6; i++)
 	{
 
 		_pStatusBox[i]->render(hdc);
+	}
+	if (_pStatusSelect->getSelectState() == ITEM_STATE)
+	{
+		_pStatusBox[6]->render(hdc);//이게 화면에
 	}
 	_pItem[0]->setNum(_numA);
 
@@ -218,22 +222,22 @@ void STATUSUI::spaceKeyAndLButton()
 
 		if (_isClick)
 		{
-			if (_pStatusBox[i]->getIsCollision() && _count == 0)//한번만 들어오게하자
+			if (_pStatusBox[i]->getIsCollision() && _pStatusSelect->getSelectState() != SWAP_STATE)//한번만 들어오게하자
 			{
 				//충돌상태인데 눌리면 해당 박스값만 변화
 				_pStatusBox[i]->setFrameX(2);//2번으로 변화하고
-				_count = 1;
+				_pStatusSelect->setSelectState(SWAP_STATE);
 
 				break;
 			}
 		}
 		else
 		{
-			if (_count == 1 && _pStatusBox[i]->getFrameX())
+			if (_pStatusSelect->getSelectState() == SWAP_STATE && _pStatusBox[i]->getFrameX())
 			{
 				//충돌상태인데 눌리면 해당 박스값만 변화 
 				_pStatusBox[i]->setFrameX(0);//반대는 0
-				_count = 0;
+				_pStatusSelect->setSelectState(SKILL_STATE);
 				break;
 			}
 		}
@@ -283,13 +287,16 @@ void STATUSUI::fontRender2(HDC hdc, const char * str, const char * str2, int x, 
 
 void STATUSUI::swapSetting()
 {
-	switch (_count)
+	switch (_pStatusSelect->getSelectState())
 	{
-	case 0:
-		_pExplainUse->setFrameX(0);
-		break;
-	case 1:
+	case SWAP_STATE:
 		_pExplainUse->setFrameX(1);
+		break;
+	case ITEM_STATE:
+		_pExplainUse->setFrameX(2);
+		break;
+	default:
+		_pExplainUse->setFrameX(0);
 		break;
 	}
 

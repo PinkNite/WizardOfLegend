@@ -21,7 +21,7 @@ HRESULT STATUSSELECT::init()
 	_y = OBJECT::getPosY();
 	//렉트만들어서 충돌처리
 	_rc = RectMake(_x, _y, OBJECT::getWidth(), OBJECT::getHeight());
-
+	_selectState = SKILL_STATE;
 	return S_OK;
 }
 
@@ -44,6 +44,7 @@ void STATUSSELECT::update()
 		}
 	}
 	keySetting();
+	selectStateChange();
 	_rc = RectMake(_x, _y, OBJECT::getWidth(), OBJECT::getHeight());
 }
 
@@ -59,23 +60,23 @@ void STATUSSELECT::render(HDC hdc)
 
 void STATUSSELECT::keySetting()
 {
-	if (KEYMANAGER->isOnceKeyDown('A') && _y == 148)
+	if ((KEYMANAGER->isOnceKeyDown('A')|| KEYMANAGER->isOnceKeyDown(VK_LEFT)) && _y == 148)
 	{
 		_x -= 66;
 	}
-	if (KEYMANAGER->isOnceKeyDown('D') && _y == 148)
+	if ((KEYMANAGER->isOnceKeyDown('D') || KEYMANAGER->isOnceKeyDown(VK_RIGHT)) && _y == 148)
 	{
 		_x += 66;
 
 
 	}
-	if (KEYMANAGER->isStayKeyDown('W'))
+	if (KEYMANAGER->isStayKeyDown('W') || KEYMANAGER->isOnceKeyDown(VK_UP))
 	{
 		_y = 148;
 		_x = 211;
 
 	}
-	if (KEYMANAGER->isStayKeyDown('S'))
+	if (KEYMANAGER->isStayKeyDown('S') || KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
 		_y = 330;
 		_x = 211;
@@ -90,4 +91,16 @@ void STATUSSELECT::keySetting()
 		_x = 541;
 	}
 
+}
+
+void STATUSSELECT::selectStateChange()
+{
+	if (_y > 148)
+	{
+		_selectState = ITEM_STATE;
+	}
+	else
+	{
+		_selectState = SKILL_STATE;
+	}
 }

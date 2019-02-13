@@ -18,7 +18,7 @@ private:
 	EXPLAINUSE* _pExplainUse;
 	int _num;//변화값
 
-	int _count;
+	int _count;//스왑?
 
 	int _numA;//아이템 번호
 	
