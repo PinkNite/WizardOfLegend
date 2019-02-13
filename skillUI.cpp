@@ -40,13 +40,15 @@ HRESULT SKILLUI::init()
 	_pSkillButton[i] = new SKILLBUTTON;
 	_pSkillButton[i]->setFrameX(i);
 	_pSkillButton[i]->init(OBJECT::getImage()->getFrameWidth() + (i* OBJECT::getImage()->getFrameWidth() + 2 * i)+10, WINSIZEY - OBJECT::getImage()->getFrameHeight() - OBJECT::getImage()->getFrameHeight() / 2-45);
-	switch (i)
+	switch (i)//알파값도 조정해야됨
 	{
 	case 6:
 		_pSkillButton[i]->init(WINSIZEX / 2 - 338, WINSIZEY - 130);
+		_pSkillButton[i]->setAlpha(100);
 		break;
 	case 7:
 		_pSkillButton[i]->init(WINSIZEX/2 -282 , WINSIZEY - 130);
+		_pSkillButton[i]->setAlpha(50);
 		break;
 	}
 	}

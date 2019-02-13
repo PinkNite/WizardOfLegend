@@ -3,7 +3,7 @@
 
 
 SKILLBUTTON::SKILLBUTTON()
-	:_frameX(0),_x(0),_y(0)
+	:_frameX(0),_x(0),_y(0),_alpha(255)
 {
 }
 
@@ -32,5 +32,5 @@ void SKILLBUTTON::update()
 
 void SKILLBUTTON::render(HDC hdc)
 {
-	OBJECT::getImage()->frameRender(hdc, _x, _y, _frameX, 0);
+	OBJECT::getImage()->alphaFrameRender(hdc, _x, _y, _frameX, 0,_alpha);
 }

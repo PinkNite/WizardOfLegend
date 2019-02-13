@@ -6,6 +6,7 @@ class SKILLBUTTON:public OBJECT
 private:
 	int _x, _y;
 	int _frameX;
+	int _alpha;
 public:
 	SKILLBUTTON();
 	~SKILLBUTTON();
@@ -15,5 +16,6 @@ public:
 	void render(HDC hdc);
 public:
 	void setFrameX(int num) { _frameX = num; }
+	void setAlpha(int num) { _alpha = num; }
 };
 
