@@ -28,7 +28,7 @@ void SKILLICON::update()
 
 void SKILLICON::render(HDC hdc)
 {
-	OBJECT::getImage()->alphaFrameRender(hdc, OBJECT::getPosX(), OBJECT::getPosX(),,0,_alpha);
+	//OBJECT::getImage()->alphaFrameRender(hdc, OBJECT::getPosX(), OBJECT::getPosX(),,0,_alpha);
 }
 
 void SKILLICON::setSkillIcon()
