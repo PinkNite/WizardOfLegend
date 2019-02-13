@@ -77,6 +77,13 @@ void STATE_RUN::onBtnSpace(PLAYER* pPlayer)
 void STATE_RUN::onBtnLB(PLAYER* pPlayer)
 {
 	pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_01);
+	pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_03);
+	pPlayer->setAttactDir();
+	pPlayer->settingAni();
+
+	pPlayer->setSkill(PLAYER::SKILL_NAME::FIRE_STRIKE);
+	pPlayer->getSkill()->init();
+	pPlayer->getSkill()->useMagic(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
 }
 
 void STATE_RUN::onBtnRB(PLAYER* pPlayer)

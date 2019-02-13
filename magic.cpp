@@ -52,9 +52,9 @@ void MAGIC::update()
 		
 
 		_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);
+		_pEffectAni->frameUpdate(TIMEMANAGER->getElapsedTime());
 
 	}
-	_pEffectAni->frameUpdate(TIMEMANAGER->getElapsedTime());
 
 }
 
@@ -63,6 +63,7 @@ void MAGIC::render(HDC hdc)
 	if (!_bIsActive)
 		return;
 	_pImg->aniRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY), _pEffectAni);
+	//Rectangle(hdc, _rcCollision);
 }
 
 void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer)

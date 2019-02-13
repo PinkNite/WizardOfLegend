@@ -558,7 +558,7 @@ void PLAYER::input()
 	{
 		_pCurrentState->onBtnSpace(this);
 	}
-	if (KEYMANAGER->isKeyDown(VK_LBUTTON))
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		_pCurrentState->onBtnLB(this);
 	}

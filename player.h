@@ -240,4 +240,8 @@ public:
 
 	float	getAttactPosX() { return _fAttackPosX; }
 	float	getAttactPosY() { return _fAttackPosY; }
+
+
+	float	getMaxHp() { return _fMaxHealthPoint; }
+	float	getCurrentHp() { return _fCurrentHealthPoint; }
 };

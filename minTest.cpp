@@ -25,7 +25,7 @@ HRESULT MINTESTSCENE::init()
 	
 	IMAGEMANAGER->addFrameImage("fireStrike", "resource/skill/fireStrike.bmp", 1280, 128, 10, 1, true, RGB(255, 0, 255));
 
-	_pMagicMgr->addObject("fireStrike", 100, 128, 128, IMAGEMANAGER->findImage("fireStrike"), 10, 128, 128, 1.0f);
+	_pMagicMgr->addObject("fireStrike", 100, 128, 128, IMAGEMANAGER->findImage("fireStrike"), 20, 128, 128, 0.5f);
 
 
 	_pPlayer->setLink(_pMagicMgr, _pSkillEffectMgr);
@@ -54,5 +54,7 @@ void MINTESTSCENE::render()
 	_pSkillEffectMgr->render(getMemDC());
 	_pPlayer->render(getMemDC());
 	_pMagicMgr->render(getMemDC());
+
+
 
 }
