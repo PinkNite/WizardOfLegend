@@ -19,7 +19,7 @@ SKILLUI::~SKILLUI()
 
 HRESULT SKILLUI::init()
 {
-	IMAGEMANAGER->addFrameImage("skillUI", "resource/UI/skillUI.bmp", 120, 60, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("skillUI", "resource/UI/skillUI.bmp", 180, 60, 3, 1, true, RGB(255, 0, 255));
 	OBJECT::setImage(IMAGEMANAGER->findImage("skillUI"));
 	
 
@@ -110,7 +110,18 @@ void SKILLUI::render(HDC hdc)
 
 	for (int i = 0; i < 8; i++)
 	{
-		_pSkillButton[i]->render(hdc);
+		switch (i)
+		{
+		case 4:
+			break;
+		case 5:
+			break;
+	
+		default:
+			_pSkillButton[i]->render(hdc);
+			break;
+		}
+		
 	}
 	for (int i = 0; i < 2; i++)
 	{

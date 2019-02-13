@@ -3,6 +3,7 @@
 
 
 SKILLICON::SKILLICON()
+	:_num(0),_alpha(255)
 {
 }
 
@@ -28,7 +29,7 @@ void SKILLICON::update()
 
 void SKILLICON::render(HDC hdc)
 {
-	//OBJECT::getImage()->alphaFrameRender(hdc, OBJECT::getPosX(), OBJECT::getPosX(),,0,_alpha);
+	OBJECT::getImage()->alphaFrameRender(hdc, OBJECT::getPosX(), OBJECT::getPosY(),_vSkillIcon[_num].frameX,_vSkillIcon[_num].frameY,_alpha);
 }
 
 void SKILLICON::setSkillIcon()
@@ -39,7 +40,7 @@ void SKILLICON::setSkillIcon()
 		switch (i)
 		{
 		case 0:
-			_skillIcon.name = "Flame Strike";    //6
+			_str=_skillIcon.name = "Flame Strike";    //6
 			_skillIcon.info = "Blast enemies away with plumes of flames!";
 			_skillIcon.element = FIRE;
 			_skillIcon.skillType = BASIC;
@@ -63,7 +64,7 @@ void SKILLICON::setSkillIcon()
 			break;
 		case 1:
 		
-			_skillIcon.name = "Flare Rush";    //6
+			_str=_skillIcon.name = "Flare Rush";    //6
 			_skillIcon.info = "Rush forward and conjure a volley of accompanying flares!";
 			_skillIcon.element = FIRE;
 			_skillIcon.skillType = DASH;
@@ -87,7 +88,7 @@ void SKILLICON::setSkillIcon()
 			break;
 		case 2:
 				
-			_skillIcon.name = "Magsphere";    //6
+			_str=_skillIcon.name = "Magsphere";    //6
 			_skillIcon.info = "Designed by Virtuoso David Gottsegen, this arcana allows you to pull all nearby projectiles into an orbit around you!";
 			_skillIcon.element = LIGHTNING;
 			_skillIcon.skillType = STANDARD;
@@ -111,7 +112,7 @@ void SKILLICON::setSkillIcon()
 			break;
 		case 3:
 
-			_skillIcon.name = "Thundering Chain";    //6
+			_str = _skillIcon.name = "Thundering Chain";    //6
 			_skillIcon.info = "Generate a series of lightning strikes that shock foes!";
 			_skillIcon.element = LIGHTNING;
 			_skillIcon.skillType = STANDARD;
@@ -135,7 +136,7 @@ void SKILLICON::setSkillIcon()
 			break;
 		case 4:
 
-			_skillIcon.name = "Stone Shot";    //6
+			_str = _skillIcon.name = "Stone Shot";    //6
 			_skillIcon.info = "Rapidly fire stones!";
 			_skillIcon.element = EARTH;
 			_skillIcon.skillType = BASIC;
@@ -160,7 +161,7 @@ void SKILLICON::setSkillIcon()
 
 		case 5:
 
-			_skillIcon.name = "Glacial Cross";    //6
+			_str = _skillIcon.name = "Glacial Cross";    //6
 			_skillIcon.info = "Dash forward and conjure a colossal frozen fist to strike foes!";
 			_skillIcon.element = WATER;
 			_skillIcon.skillType = SIGNATURE;
@@ -184,7 +185,7 @@ void SKILLICON::setSkillIcon()
 			break;
 		case 6:
 
-			_skillIcon.name = "Rebounding Icicles";    //6
+			_str = _skillIcon.name = "Rebounding Icicles";    //6
 			_skillIcon.info = "Conjure a series of icicles that cascade out and return to you!";
 			_skillIcon.element = WATER;
 			_skillIcon.skillType = SIGNATURE;
@@ -208,7 +209,7 @@ void SKILLICON::setSkillIcon()
 			break;
 		case 7:
 
-			_skillIcon.name = "Shattering Strike";    //6
+			_str = _skillIcon.name = "Shattering Strike";    //6
 			_skillIcon.info = "Strike a boulder to shatter it into a ring of shrapnel!";
 			_skillIcon.element = EARTH;
 			_skillIcon.skillType = SIGNATURE;
@@ -232,7 +233,7 @@ void SKILLICON::setSkillIcon()
 			break;
 		case 8:
 	
-			_skillIcon.name = "Tearing Whirlwind";    //6
+			_str = _skillIcon.name = "Tearing Whirlwind";    //6
 			_skillIcon.info = "Rapidly spin forward and pull nearby enemies into your wake!";
 			_skillIcon.element = AIR;
 			_skillIcon.skillType = STANDARD;
@@ -256,7 +257,7 @@ void SKILLICON::setSkillIcon()
 			break;
 		case 9:
 
-			_skillIcon.name = "Terra Ring";    //6
+			_str = _skillIcon.name = "Terra Ring";    //6
 			_skillIcon.info = "Pulverize the ground to summon cascading rings of earth spikes!";
 			_skillIcon.element = EARTH;
 			_skillIcon.skillType = SIGNATURE;

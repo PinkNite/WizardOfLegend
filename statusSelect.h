@@ -6,6 +6,7 @@ enum SELECTSTATE
 	SKILL_STATE,//스킬설명 나오게
 	SWAP_STATE //스왑용
 };
+
 class STATUSSELECT :public OBJECT
 {
 private:

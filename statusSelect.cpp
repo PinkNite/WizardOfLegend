@@ -46,6 +46,19 @@ void STATUSSELECT::update()
 	keySetting();
 	selectStateChange();
 	_rc = RectMake(_x, _y, OBJECT::getWidth(), OBJECT::getHeight());
+
+	/*switch (((int)_x-211)%66)
+	{
+	case 0:
+		break;
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+
+	}*/
 }
 
 void STATUSSELECT::render(HDC hdc)
@@ -99,7 +112,7 @@ void STATUSSELECT::selectStateChange()
 	{
 		_selectState = ITEM_STATE;
 	}
-	else
+	else if(_y<=148&&_selectState!=SWAP_STATE)
 	{
 		_selectState = SKILL_STATE;
 	}

@@ -52,6 +52,7 @@ private:
 	int _num;
 	string _str;
 	TAGSKILLICON _skillIcon;
+	
 public:
 	SKILLICON();
 	~SKILLICON();
@@ -63,6 +64,6 @@ public:
 public:
 	int getAlpha() { return _alpha;}
 	void setAlpha(int num) { _alpha = num; }
-
+	void setNum(int num) { _num = num; }
 };
 

@@ -4,7 +4,7 @@
 
 
 STATUSBOX::STATUSBOX()
-	:_alpha(255), _frameX(0), _frameY(0), _isCollision(0)
+	:_alpha(255), _frameX(0), _frameY(0), _isCollision(0),_isClick(0)
 {
 }
 
@@ -19,6 +19,8 @@ HRESULT STATUSBOX::init(int x, int y)
 	_rc = RectMake(x, y, OBJECT::getImage()->getFrameWidth(), OBJECT::getImage()->getFrameHeight());
 	_x = x;
 	_y = y;
+	_skillNumber = SKILL_EMPTY;
+	
 	return S_OK;
 }
 

@@ -3,8 +3,10 @@
 #include "statusSelect.h"
 #include "statusBox.h"
 #include "explainUse.h"	
-class ITEM;
+#include "skillIcon.h"
 
+
+class ITEM;
 class STATUSUI :public OBJECT
 {
 private:
@@ -13,9 +15,12 @@ private:
 	//셀렉트 박스 따로 그리고 
 	//골드창 따로
 	STATUSBOX* _pStatusBox[7];
+	STATUSBOX* _pTempBox;
 	STATUSSELECT* _pStatusSelect;
 	ITEM* _pItem[2];//2번은 맵이미지
 	EXPLAINUSE* _pExplainUse;
+	SKILLICON* _pSkillIcon[6];
+	
 	int _num;//변화값
 
 	int _count;//스왑?
@@ -28,6 +33,9 @@ private:
 	RECT _rcText;
 
 	bool _isClick;
+	//스왑용 템프
+	int _temp;
+	
 public:
 	STATUSUI();
 	~STATUSUI();
