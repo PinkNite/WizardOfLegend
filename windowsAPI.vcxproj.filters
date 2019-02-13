@@ -336,6 +336,9 @@
     <ClInclude Include="explainUse.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
+    <ClInclude Include="skillButton.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -543,6 +546,9 @@
       <Filter>PlayGround\enemy\boss</Filter>
     </ClCompile>
     <ClCompile Include="explainUse.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="skillButton.cpp">
       <Filter>PlayGround\UI</Filter>
     </ClCompile>
   </ItemGroup>

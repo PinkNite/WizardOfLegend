@@ -3,7 +3,7 @@
 #include "item.h"
 
 STATUSUI::STATUSUI()
-	:_num(0),_numA(0), _count(0),_alpha(200),_isClick(0)
+	:_num(0), _numA(0), _count(0), _alpha(200), _isClick(0)
 {
 }
 
@@ -52,6 +52,8 @@ HRESULT STATUSUI::init()
 
 		}
 	}
+	_pExplainUse = new EXPLAINUSE;
+	_pExplainUse->init(214, 200);
 	return S_OK;
 }
 
@@ -103,7 +105,7 @@ void STATUSUI::update()
 
 	collision();
 	spaceKeyAndLButton();
-
+	swapSetting();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_UP))
 	{
@@ -113,12 +115,14 @@ void STATUSUI::update()
 	{
 		_numA--;
 	}
+	_pExplainUse->alphaPlus(_pStatusSelect->getAlpha());
+
 }
 
 void STATUSUI::render(HDC hdc)
 {
 
-	OBJECT::getImage()->alphaRender(hdc, OBJECT::getPosX(), OBJECT::getPosY(),_alpha);
+	OBJECT::getImage()->alphaRender(hdc, OBJECT::getPosX(), OBJECT::getPosY(), _alpha);
 	_pStatusSelect->render(hdc);
 	for (int i = 0; i < 7; i++)
 	{
@@ -137,7 +141,7 @@ void STATUSUI::render(HDC hdc)
 	fontRender(hdc, "]", "Aharoni", _rcText.right, 520, 40, RGB(183, 192, 195));
 	fontRender2(hdc, _pItem[0]->getVItem()[_numA].info, "Aharoni", 214, 560, 20, RGB(183, 192, 195));
 
-
+	_pExplainUse->render(hdc);
 	//char str[222];
 	//for (int i = 0; i < 7; i++)
 	//{
@@ -191,7 +195,7 @@ void STATUSUI::spaceKeyAndLButton()
 			break;
 
 		}
-		else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && _pStatusBox[i]->getIsCollision()&&PtInRect(&_pStatusBox[i]->getRC(),_ptMouse))
+		else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && _pStatusBox[i]->getIsCollision() && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse))
 		{
 			if (_isClick)
 			{
@@ -205,8 +209,8 @@ void STATUSUI::spaceKeyAndLButton()
 
 			break;
 		}
-		
-		
+
+
 	}
 	for (int i = 0; i < 6; i++)
 	{
@@ -275,4 +279,18 @@ void STATUSUI::fontRender2(HDC hdc, const char * str, const char * str2, int x, 
 	SelectObject(hdc, oldfont);
 
 	DeleteObject(font);
+}
+
+void STATUSUI::swapSetting()
+{
+	switch (_count)
+	{
+	case 0:
+		_pExplainUse->setFrameX(0);
+		break;
+	case 1:
+		_pExplainUse->setFrameX(1);
+		break;
+	}
+
 }

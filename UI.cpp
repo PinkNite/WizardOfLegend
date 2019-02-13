@@ -60,11 +60,11 @@ void UI::update()
 
 void UI::render(HDC hdc)
 {
+	_pSkillUI->render(hdc);
 	if (_isClick)
 	{
 		_pStatusUI->render(hdc);
 	}
-	_pSkillUI->render(hdc);
 	for (int i = 0; i < 2; i++)
 	{
 

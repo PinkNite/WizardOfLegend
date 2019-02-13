@@ -196,6 +196,7 @@
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skill.h" />
+    <ClInclude Include="skillButton.h" />
     <ClInclude Include="skillEffect.h" />
     <ClInclude Include="skillEffectMgr.h" />
     <ClInclude Include="skillUI.h" />
@@ -269,6 +270,7 @@
     <ClCompile Include="relics.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="skill.cpp" />
+    <ClCompile Include="skillButton.cpp" />
     <ClCompile Include="skillEffect.cpp" />
     <ClCompile Include="skillEffectMgr.cpp" />
     <ClCompile Include="skillUI.cpp" />

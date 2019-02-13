@@ -22,6 +22,6 @@ public:
 	void setIsCollision(bool num) { _isCollision = num; }
 	//와이값에 따라 나오는 이미지
 	float getY() { return _y; }
-
+	int getAlpha() { return _alpha; }
 };
 
