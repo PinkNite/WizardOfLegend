@@ -1,6 +1,6 @@
 #pragma once
 #include "object.h"
-
+class FONT;
 class SKILLBUTTON;
 class ITEMMANAGER;
 class STATUSBOX;
@@ -11,6 +11,7 @@ private:
 	image* _pItemImage;
 	STATUSBOX* _pStatusBox[2];
 	SKILLBUTTON* _pSkillButton[8];
+	FONT* _pFont[2];
 	int _frameX;
 	int _frameY;
 	int _x;

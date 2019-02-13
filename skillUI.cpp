@@ -3,6 +3,7 @@
 #include "itemManager.h"
 #include "statusBox.h"
 #include "skillButton.h"
+#include "font.h"
 
 
 
@@ -52,7 +53,15 @@ HRESULT SKILLUI::init()
 		break;
 	}
 	}
+	//ÆùÆ®
+	for (int i = 0; i < 2; i++)
+	{
+	_pFont[i] = new FONT;
 	
+
+	_pFont[i]->init(WINSIZEX/2-332+i*54,WINSIZEY-20);
+	}
+	_pFont[1]->setFrameX(1);
 
 	return S_OK;
 }
@@ -103,7 +112,10 @@ void SKILLUI::render(HDC hdc)
 	{
 		_pSkillButton[i]->render(hdc);
 	}
-
+	for (int i = 0; i < 2; i++)
+	{
+		_pFont[i]->render(hdc);
+	}
 }
 
 
