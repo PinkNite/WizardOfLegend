@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "minTest.h"
 
+
 MINTESTSCENE::MINTESTSCENE()
 {
 }
@@ -11,11 +12,14 @@ MINTESTSCENE::~MINTESTSCENE()
 
 HRESULT MINTESTSCENE::init()
 {
+
+
+
 	_pPlayer = new PLAYER();
 	_pPlayer->init();
-
+	
 	_pMagicMgr			= new MAGICMGR();
-	_pSkillEffectMgr = new SKILL_EFFECT_MGR();
+	_pSkillEffectMgr	= new SKILL_EFFECT_MGR();
 
 	_pMagicMgr->addObject("dashFlame", 100, 64, 64,
 		IMAGEMANAGER->addFrameImage("dashFlame", "resource/skill/flame.bmp", 1408, 384, 11, 3, true, RGB(255, 0, 255)),
@@ -47,6 +51,13 @@ void MINTESTSCENE::release()
 	_pSkillEffectMgr->release();
 	_pMagicMgr->release();
 
+	delete _pPlayer;
+	delete _pSkillEffectMgr;
+	delete _pMagicMgr;
+
+	_pPlayer = nullptr;
+	_pSkillEffectMgr = nullptr;
+	_pMagicMgr = nullptr;
 }
 
 void MINTESTSCENE::render()
