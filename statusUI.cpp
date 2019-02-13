@@ -131,7 +131,7 @@ void STATUSUI::render(HDC hdc)
 	}
 	if (_pStatusSelect->getSelectState() == ITEM_STATE)
 	{
-		_pStatusBox[6]->render(hdc);//이게 화면에
+		_pStatusBox[6]->render(hdc);//이게 화면에 //여기에 스킬 이미지 배열로 
 	}
 	_pItem[0]->setNum(_numA);
 
@@ -146,6 +146,9 @@ void STATUSUI::render(HDC hdc)
 	fontRender2(hdc, _pItem[0]->getVItem()[_numA].info, "Aharoni", 214, 560, 20, RGB(183, 192, 195));
 
 	_pExplainUse->render(hdc);
+
+
+
 	//char str[222];
 	//for (int i = 0; i < 7; i++)
 	//{

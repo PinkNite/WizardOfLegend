@@ -1,0 +1,47 @@
+1개일때는 위아래만 움직임 2개면 왼쪽 오른쪽 움직여짐 
+
+
+불꽃강타     //6
+Flame Strike	Blast enemies away with plumes of flames!	Fire	Basic	8, 10, 14, 18	0	5, 6, 12, 12		10 Chaos gem.png
+100 Gold.png	1
+
+불꽃돌진  //21
+
+Flare Rush	Rush forward and conjure a volley of accompanying flares!	Fire	Dash	10	6	20		20 Chaos gem.png
+125 Gold.png	4
+
+감전 신성 //105
+Magsphere	Designed by Virtuoso David Gottsegen, this arcana allows you to pull all nearby projectiles into an orbit around you!	Lightning	Standard		12		5	12 Chaos gem.png
+175 Gold.png	2
+
+연쇄천둥 //101
+
+Thundering Chain	Generate a series of lightning strikes that shock foes!	Lightning	Standard	10	6			10 Chaos gem.png
+125 Gold.png	1
+
+돌무더기 발사 //47
+Stone Shot	Rapidly fire stones!	Earth	Basic	12, 12, 15, 15	0	10, 10, 16, 16		14 Chaos gem.png
+100 Gold.png	3
+
+빙하횡단 //36
+
+Dash forward and conjure a colossal frozen fist to strike foes!	Water	Signature	50, 10, 30	7	70, 10, 5		17 Chaos gem.png
+175 Gold.png	3
+
+반사 고드름 //32
+
+Rebounding Icicles	Conjure a series of icicles that cascade out and return to you!	Water	Signature	5, 7	5	25		Chaos gem.png
+150 Gold.png	5
+
+분쇄의 일격//41
+
+Strike a boulder to shatter it into a ring of shrapnel!	Earth	Signature	25, 5, 5	5	10, 20, 0		75 Chaos gem.png
+175 Gold.png	3
+파열 회오리 // 85
+Tearing Whirlwind	Rapidly spin forward and pull nearby enemies into your wake!	Air	Standard	4, 5	5	-20, -22		16 Chaos gem.png
+150 Gold.png	3
+
+대지의 고리//42
+
+Terra Ring	Pulverize the ground to summon cascading rings of earth spikes!	Earth	Signature	15, 50, 25	5	7, 12, 1		75 Chaos gem.png
+150 Gold.png	5
