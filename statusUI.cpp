@@ -76,8 +76,13 @@ HRESULT STATUSUI::init()
 
 	//스왑용 템프박스
 	_pTempBox = new STATUSBOX;
-	
+	for (int i = 0; i < 6; i++)
+	{
 
+		_pStatusButton[i] = new STATUSBUTTON;
+		_pStatusButton[i]->init(220 + i * 66, 118);
+		_pStatusButton[i]->setFrameX(i);
+	}
 
 	return S_OK;
 }
@@ -183,7 +188,12 @@ void STATUSUI::render(HDC hdc)
 
 	_pExplainUse->render(hdc);
 
+	for (int i = 0; i < 6; i++)
+	{
 
+		
+		_pStatusButton[i]->render(hdc);
+	}
 	
 	char str[222];
 	

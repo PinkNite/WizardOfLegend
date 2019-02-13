@@ -354,6 +354,9 @@
     <ClInclude Include="fireStrike.h">
       <Filter>PlayGround\skill</Filter>
     </ClInclude>
+    <ClInclude Include="statusButton.h">
+      <Filter>PlayGround\UI\status</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -574,6 +577,9 @@
     </ClCompile>
     <ClCompile Include="fireStrike.cpp">
       <Filter>PlayGround\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="statusButton.cpp">
+      <Filter>PlayGround\UI\status</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

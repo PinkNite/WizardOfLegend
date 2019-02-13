@@ -4,6 +4,7 @@
 #include "statusBox.h"
 #include "explainUse.h"	
 #include "skillIcon.h"
+#include "statusButton.h"
 
 
 class ITEM;
@@ -20,6 +21,7 @@ private:
 	ITEM* _pItem[2];//2번은 맵이미지
 	EXPLAINUSE* _pExplainUse;
 	SKILLICON* _pSkillIcon[6];
+	STATUSBUTTON* _pStatusButton[6];
 	
 	int _num;//변화값
 

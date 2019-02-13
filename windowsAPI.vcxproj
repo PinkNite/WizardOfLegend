@@ -216,6 +216,7 @@
     <ClInclude Include="stateSkillThree.h" />
     <ClInclude Include="stateSkillTwo.h" />
     <ClInclude Include="statusBox.h" />
+    <ClInclude Include="statusButton.h" />
     <ClInclude Include="statusSelect.h" />
     <ClInclude Include="statusUI.h" />
     <ClInclude Include="stdafx.h" />
@@ -292,6 +293,7 @@
     <ClCompile Include="stateSkillThree.cpp" />
     <ClCompile Include="stateSkillTwo.cpp" />
     <ClCompile Include="statusBox.cpp" />
+    <ClCompile Include="statusButton.cpp" />
     <ClCompile Include="statusSelect.cpp" />
     <ClCompile Include="statusUI.cpp" />
     <ClCompile Include="stdafx.cpp">
