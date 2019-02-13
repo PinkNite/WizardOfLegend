@@ -69,6 +69,13 @@ public:
 		MAX
 	};
 
+	//스킬용
+	enum class SKILL_NAME 
+	{
+		NONE = 0,
+		FIRE_DASH,
+		FIRE_STRIKE
+	};
 
 	enum { WIZARD_SPRITE_WIDTH = 2688 };
 	enum { WIZARD_SPRITE_HEIGHT = 3072 };
@@ -132,8 +139,19 @@ private:
 	MAGICMGR*			_pMagicMgr;
 	SKILL_EFFECT_MGR*	_pSkillEffectMgr;
 
+	float		_arStandardAngle[4];
+
+	SKILL*		_pCurrentSkill;
+	
+	float		_fAttackPosX;
+	float		_fAttackPosY;
+	
 	//임시
 	SKILL*		_pFireDash;
+	SKILL*		_pFireStrike;
+	
+
+
 public:
 	PLAYER();
 	~PLAYER();
@@ -175,6 +193,7 @@ public:
 	void setDirection(PLAYER::DIRECTION eDirection);
 	void settingAni();
 	void setAction(PLAYER::ACTION eAction);
+	void changeAttactMotion();
 	void input();
 	void initState();
 public:
@@ -198,6 +217,8 @@ public:
 	void setDirectionLeft();
 	void setDirectionRight();
 
+	void moveAttack();
+	void setAttactDir();
 public:
 	inline void setDashTime(float fDashTime) { _fDashTime = fDashTime; }
 	inline float getDashTime() { return _fDashTime; }
@@ -213,5 +234,10 @@ public:
 
 
 	//임시
-	SKILL*	getSkill() { return _pFireDash; }
+	SKILL*	getSkill() { return _pCurrentSkill; }
+	void	setSkill(PLAYER::SKILL_NAME eSkillName);
+	
+
+	float	getAttactPosX() { return _fAttackPosX; }
+	float	getAttactPosY() { return _fAttackPosY; }
 };

@@ -12,6 +12,10 @@ SKILL::~SKILL()
 {
 }
 
+void SKILL::useMagic(float fPosX, float fPosY)
+{
+}
+
 void SKILL::setMagicMgr(MAGICMGR * pMagicMgr)
 {
 	_pMagicMgr = pMagicMgr;

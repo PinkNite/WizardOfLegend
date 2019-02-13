@@ -22,6 +22,11 @@ HRESULT MINTESTSCENE::init()
 		6, 128, 128, 2.0f);
 	_pSkillEffectMgr->addEffect(IMAGEMANAGER->addFrameImage("flameBurn", "resource/skill/flameBurnMark.bmp", 192, 48, 4, 1, true, RGB(255, 0, 255)),
 		1, 48, 48, 1000, "flameBurn");
+	
+	IMAGEMANAGER->addFrameImage("fireStrike", "resource/skill/fireStrike.bmp", 1280, 128, 10, 1, true, RGB(255, 0, 255));
+
+	_pMagicMgr->addObject("fireStrike", 100, 128, 128, IMAGEMANAGER->findImage("fireStrike"), 10, 128, 128, 1.0f);
+
 
 	_pPlayer->setLink(_pMagicMgr, _pSkillEffectMgr);
 	return S_OK;

@@ -17,20 +17,20 @@ public:
 	};
 
 protected:
-	MAGICMGR*		_pMagicMgr;
+	MAGICMGR*			_pMagicMgr;
 	SKILL_EFFECT_MGR*	_pSkillEffectMgr;
-	PLAYER*			_pPlayer;
-	int				_nSkillType;
+	PLAYER*				_pPlayer;
+	int					_nSkillType;
 
 public:
 	SKILL();
-	~SKILL();
+	virtual ~SKILL();
 
 	virtual	void	init()			abstract;
 	virtual	void	update()		abstract;
 	virtual	void	release()		abstract;
 	virtual	void	render(HDC hdc)	abstract;
-
+	virtual void	useMagic(float fPosX,float fPosY);		//스킬 하나 쓰는 애들 위해
 
 public:
 	void setMagicMgr(MAGICMGR* pMagicMgr);

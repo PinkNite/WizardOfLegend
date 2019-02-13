@@ -5,8 +5,10 @@
 
 class STATE_SKILL_ONE : public STATE {
 private:
-
-
+	float _fCoolTime;
+	float _fWaitTime;
+	int		_nCount;
+	bool	_bIsUse;
 public:
 	STATE_SKILL_ONE();
 	~STATE_SKILL_ONE();

@@ -12,7 +12,7 @@
 #include "stateDeath.h"
 
 #include "fireDash.h"
-
+#include "fireStrike.h"
 
 PLAYER::PLAYER() :
 	_fMaxHealthPoint(0.0f),
@@ -36,7 +36,10 @@ PLAYER::PLAYER() :
 	_arState{},
 	_eMoveDirection(PLAYER::MOVE_DIRECTION::NONE),
 	_pCirEffect(nullptr),
-	_fAttackDirAngle(0.0f)
+	_fAttackDirAngle(0.0f),
+	_arStandardAngle{},
+	_fAttackPosX(0.0f),
+	_fAttackPosY(0.0f)
 {
 }
 
@@ -78,11 +81,21 @@ void PLAYER::init()
 	_pCirEffect->init();
 	_fAttackDirAngle = PI + PI / 2.0f;
 
-
+	float fTmpAngle = PI / 4.0f;
+	for (int i = 0; i < 4; i++)
+	{
+		_arStandardAngle[i] = fTmpAngle;
+		fTmpAngle += PI / 2.0f;
+	}
 
 	//юс╫ц
 	_pFireDash = new FIREDASH();
 	_pFireDash->init();
+	_pFireStrike = new FIRESTRIKE();
+	_pFireStrike->init();
+
+	_fAttackPosX = 0.0f;
+	_fAttackPosY = 0.0f;
 }
 
 void PLAYER::update()
@@ -90,6 +103,9 @@ void PLAYER::update()
 
 	_fAttackDirAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY() + WIZARD_MOVING_RECT_SIZE / 2.0f, static_cast<float>(_ptMouse.x), static_cast<float>(_ptMouse.y));
 	_pCirEffect->update(OBJECT::getPosX(), OBJECT::getPosY() + WIZARD_MOVING_RECT_SIZE / 2.0f, _fAttackDirAngle);
+
+	_fAttackPosX = OBJECT::getPosX() + Mins::presentPowerX(_fAttackDirAngle, 64.0f);
+	_fAttackPosY = OBJECT::getPosY() + Mins::presentPowerY(_fAttackDirAngle, 64.0f);
 
 	input();
 	_pCurrentState->update(this);
@@ -162,15 +178,15 @@ void PLAYER::setAnimation()
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 94, 103, 10, false);
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 94, 103, 10, false);
 
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)], 104, 112, 9, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)], 113, 121, 9, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)], 130, 122, 9, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)], 131, 141, 11, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)], 104, 112, 18, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)], 113, 121, 18, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)], 130, 122, 18, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)], 131, 141, 22, false);
 
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_04)], 142, 150, 9, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_04)], 151, 158, 8, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_04)], 166, 159, 8, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_04)], 167, 178, 12, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_04)], 142, 150, 18, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_04)], 151, 158, 16, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_04)], 166, 159, 16, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_04)], 167, 178, 24, false);
 
 	for (int i = 0; i < static_cast<int>(PLAYER::DIRECTION::MAX); i++)
 	{
@@ -239,6 +255,18 @@ void PLAYER::settingAni()
 void PLAYER::setAction(PLAYER::ACTION eAction)
 {
 	_action = eAction;
+}
+
+void PLAYER::changeAttactMotion()
+{
+	if (_action == PLAYER::ACTION::ATTACK_MOTION_03)
+	{
+		_action = PLAYER::ACTION::ATTACK_MOTION_04;
+	}
+	else if (_action == PLAYER::ACTION::ATTACK_MOTION_04) {
+		_action = PLAYER::ACTION::ATTACK_MOTION_03;
+
+	}
 }
 
 void PLAYER::moveUp(float fSpeed)
@@ -435,6 +463,43 @@ void PLAYER::setDirectionRight()
 	}
 }
 
+void PLAYER::moveAttack()
+{
+	float fSpeed = 500.0f * TIMEMANAGER->getElapsedTime();
+	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_fAttackDirAngle, fSpeed));
+	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fAttackDirAngle, fSpeed));
+	settingPos();
+}
+
+void PLAYER::setAttactDir()
+{
+	//_direction
+	//0~1 -> up
+	//1~2 -> left
+	//2~3 -> down
+	//3~0 ->right
+	if (_arStandardAngle[0] <= _fAttackDirAngle &&
+		_arStandardAngle[1] > _fAttackDirAngle)
+	{
+		_direction = PLAYER::DIRECTION::BACK;
+	}
+	else if (_arStandardAngle[1] <= _fAttackDirAngle &&
+		_arStandardAngle[2] > _fAttackDirAngle)
+	{
+		_direction = PLAYER::DIRECTION::LEFT;
+	}
+	else if (_arStandardAngle[2] <= _fAttackDirAngle &&
+		_arStandardAngle[3] > _fAttackDirAngle)
+	{
+		_direction = PLAYER::DIRECTION::FORWARD;
+	}
+	else if (_arStandardAngle[3] >= _fAttackDirAngle ||
+		_arStandardAngle[1] < _fAttackDirAngle)
+	{
+		_direction = PLAYER::DIRECTION::RIGHT;
+	}
+}
+
 void PLAYER::setLink(MAGICMGR * pMagicMgr, SKILL_EFFECT_MGR * pSkillEffectMgr)
 {
 	_pMagicMgr = pMagicMgr;
@@ -443,6 +508,27 @@ void PLAYER::setLink(MAGICMGR * pMagicMgr, SKILL_EFFECT_MGR * pSkillEffectMgr)
 	_pFireDash->setMagicMgr(_pMagicMgr);
 	_pFireDash->setPlayer(this);
 	_pFireDash->setSkillEffectMgr(_pSkillEffectMgr);
+	
+	_pFireStrike->setMagicMgr(_pMagicMgr);
+	_pFireStrike->setPlayer(this);
+	_pFireStrike->setSkillEffectMgr(_pSkillEffectMgr);
+
+
+}
+
+void PLAYER::setSkill(PLAYER::SKILL_NAME eSkillName)
+{
+	switch (eSkillName)
+	{
+	case PLAYER::SKILL_NAME::NONE:
+		break;
+	case PLAYER::SKILL_NAME::FIRE_DASH:
+		_pCurrentSkill = _pFireDash;
+		break;
+	case PLAYER::SKILL_NAME::FIRE_STRIKE:
+		_pCurrentSkill = _pFireStrike;
+		break;
+	}
 }
 
 void PLAYER::input()

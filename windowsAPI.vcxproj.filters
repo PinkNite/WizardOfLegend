@@ -351,6 +351,9 @@
     <ClInclude Include="skillIcon.h">
       <Filter>PlayGround\UI\skill</Filter>
     </ClInclude>
+    <ClInclude Include="fireStrike.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -568,6 +571,9 @@
     </ClCompile>
     <ClCompile Include="skillIcon.cpp">
       <Filter>PlayGround\UI\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="fireStrike.cpp">
+      <Filter>PlayGround\skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

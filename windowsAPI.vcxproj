@@ -167,6 +167,7 @@
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="explainUse.h" />
     <ClInclude Include="fireDash.h" />
+    <ClInclude Include="fireStrike.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="FrameWork.h" />
     <ClInclude Include="gameNode.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="explainUse.cpp" />
     <ClCompile Include="fireDash.cpp" />
+    <ClCompile Include="fireStrike.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="goldHD.cpp" />
