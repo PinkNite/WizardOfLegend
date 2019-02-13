@@ -35,7 +35,9 @@ public:
 		SKILL_02,
 		SKILL_03,
 
-		ICED_IN,
+		ENTRANCE,
+		MINIMIZE,
+		MAXNIZE,
 		ICED_OUT,
 		DAMAGE,
 		DEATH,
@@ -59,11 +61,11 @@ public:
 		SKILL_01,
 		SKILL_02,
 		SKILL_03,
+		ENTRANCE,
 		DAMAGE,
 		DEATH,
 		MAX
 	};
-
 
 private:
 	const int BOSS_IMAGE_WIDTH = 990;
@@ -80,10 +82,17 @@ private:
 	map<ACTION, string> _mAction;
 	map<DIRECTION, string> _mDirection;
 
+	image* _pWingImage;
+	image* _pEffectImage;
+	image* _pBlastImage;
 	animation* _pAnimation;
+	animation* _pWingsAnimation;
+	animation* _pEffectAnimation;
+	animation* _pIceblastAnimation;
 
 	// «¡∑π¿”
 	int _arFrame[20];
+	float _timeSet;
 
 	DIRECTION	_direction;
 	ACTION		_action;
@@ -118,6 +127,9 @@ private:
 	void addBossKeyAni(const string& strDir, const string& strActoin, int startFrame, int endFrame, int fps, bool isLoop);
 
 public:
+	void showBoss();
+	void setBattle();
+
 	// state pattern
 	void initState();
 	void setState(BOSS_STATE bossState);
@@ -136,7 +148,7 @@ public:
 	void dash(float offset);
 	void setRect();
 	void moveBoss();
-
+	void setWings(bool isMax);
 	void setDirectUp();
 	void setDirectDown();
 	void setDirectLeft();
@@ -147,6 +159,10 @@ public:
 	inline float getDashTime() { return _fDashTime; }
 	inline DIRECTION getDiretion() { return _direction; }
 	inline animation* getAni() { return _pAnimation; }
+
+	static void callbackSetBattle(void * obj);
+	static void callbackMinWingIdle(void * obj);
+	static void callbackMaxWingIdle(void * obj);
 
 };
 

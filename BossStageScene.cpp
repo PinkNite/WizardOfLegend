@@ -13,6 +13,9 @@ BossStageScene::~BossStageScene()
 
 HRESULT BossStageScene::init()
 {
+	_frameCount = 0;
+	_isShow = false;
+
 	_boss= new BOSS();
 	_boss->init();
 
@@ -21,7 +24,17 @@ HRESULT BossStageScene::init()
 
 void BossStageScene::update()
 {
-	_boss->update();
+	_frameCount++;
+	if (_frameCount % 200 == 0 && _isShow == false)
+	{
+		_isShow = true;
+		_boss->showBoss();
+	}
+
+	if (_isShow)
+	{
+		_boss->update();
+	}
 }
 
 void BossStageScene::release()
@@ -31,5 +44,8 @@ void BossStageScene::release()
 
 void BossStageScene::render()
 {
-	_boss->render(getMemDC());
+	if (_isShow)
+	{
+		_boss->render(getMemDC());
+	}
 }

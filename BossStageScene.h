@@ -7,6 +7,9 @@ class BossStageScene :	public gameNode
 private:
 	BOSS* _boss;
 
+	int _frameCount;
+	bool _isShow;
+
 public:
 	BossStageScene();
 	~BossStageScene();
