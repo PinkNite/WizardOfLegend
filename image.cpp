@@ -134,7 +134,7 @@ HRESULT image::init(const char * fileName, int width, int height, BOOL trans, CO
 	_imageInfo->width = width;
 	_imageInfo->height = height;
 
-	int len = strlen(fileName);
+	int len = (int)strlen(fileName);
 
 	//파일경로 및 이름을 받아온다
 	_fileName = new CHAR[len + 1];
@@ -192,7 +192,7 @@ HRESULT image::init(const char * fileName, float x, float y, int width, int heig
 	_imageInfo->width = width;
 	_imageInfo->height = height;
 
-	int len = strlen(fileName);
+	int len = (int)strlen(fileName);
 
 	//파일경로 및 이름을 받아온다
 	_fileName = new CHAR[len + 1];
@@ -256,7 +256,7 @@ HRESULT image::init(const char * fileName, float x, float y, int width, int heig
 	_imageInfo->maxFrameX = frameX - 1;
 	_imageInfo->maxFrameY = frameY - 1;
 
-	int len = strlen(fileName);
+	int len = (int)strlen(fileName);
 
 	//파일경로 및 이름을 받아온다
 	_fileName = new CHAR[len + 1];
@@ -318,7 +318,7 @@ HRESULT image::init(const char * fileName, int width, int height, int frameX, in
 	_imageInfo->maxFrameX = frameX - 1;
 	_imageInfo->maxFrameY = frameY - 1;
 
-	int len = strlen(fileName);
+	int len = (int)strlen(fileName);
 
 	//파일경로 및 이름을 받아온다
 	_fileName = new CHAR[len + 1];
@@ -708,13 +708,13 @@ void image::alphaRender(HDC hdc, BYTE alpha)
 			_transColor				//복사때 제외할 칼라(뺄 칼라)
 		);
 
-		AlphaBlend(hdc, _imageInfo->x, _imageInfo->y, _imageInfo->width,
+		AlphaBlend(hdc, (int)_imageInfo->x, (int)_imageInfo->y, _imageInfo->width,
 			_imageInfo->height, _blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
 			_blendFunc);
 	}
 	else
 	{
-		AlphaBlend(hdc, _imageInfo->x, _imageInfo->y, _imageInfo->width,
+		AlphaBlend(hdc, (int)_imageInfo->x, (int)_imageInfo->y, _imageInfo->width,
 			_imageInfo->height, _imageInfo->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
 			_blendFunc);
 	}

@@ -182,8 +182,13 @@ public:
 	void moveDown(float fSpeed);
 	void moveLeft(float fSpeed);
 	void moveRight(float fSpeed);
+	void moveUpLeft(float fSpeed);
+	void moveUpRight(float fSpeed);
+	void moveDownLeft(float fSpeed);
+	void moveDownRight(float fSpeed);
 
-	
+
+
 	inline float getSpeed() { return _fSpeed; }
 	void dash(float fOffset);
 	void movePlayer();

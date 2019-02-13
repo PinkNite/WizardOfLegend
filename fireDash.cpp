@@ -17,7 +17,7 @@ FIREDASH::~FIREDASH()
 void FIREDASH::init()
 {
 	SKILL::_nSkillType = static_cast<int>(SKILL::SKILL_TYPE::NONE);
-	_fOffsetTime = 0.05f;
+	_fOffsetTime = 0.04f;
 	_fTimer = 0.0f;
 }
 
