@@ -24,8 +24,13 @@ HRESULT BossStageScene::init()
 
 void BossStageScene::update()
 {
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		_boss->spell01();
+	}
+
 	_frameCount++;
-	if (_frameCount % 200 == 0 && _isShow == false)
+	if (_frameCount % 100 == 0 && _isShow == false)
 	{
 		_isShow = true;
 		_boss->showBoss();

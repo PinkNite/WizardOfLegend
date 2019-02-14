@@ -30,7 +30,9 @@ void BOSS::init()
 {
 	_pBlastImage = IMAGEMANAGER->addFrameImage("IceBlast", "resource/boss/ice/IceBlast.bmp", 256, 256, 1, 1, true, RGB(255, 0, 255));
 	_pEffectImage = IMAGEMANAGER->addFrameImage("IceCrystals", "resource/boss/ice/IceCrystals.bmp", 550, 300, 5, 2, true, RGB(255, 0, 255));
-	_pWingImage = IMAGEMANAGER->addFrameImage("IceWings", "resource/boss/ice/IceWings.bmp", 840, 360, 7, 4, true, RGB(255, 0, 255));
+	_pWingImage = IMAGEMANAGER->addFrameImage("IceWings", "resource/boss/ice/IceWings.bmp", 933, 400, 7, 4, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("WaterBounce", "resource/boss/ice/WaterBounce.bmp", 600, 480, 5, 4, true, RGB(255, 0, 255));
 
 	OBJECT::init(300, 200, BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
 	OBJECT::_pImg = IMAGEMANAGER->addFrameImage("iceBossImg", "resource/boss/ice/IceBoss.bmp",
@@ -43,6 +45,7 @@ void BOSS::init()
 	_fSpeed = 200.0f;
 	_objectName = "IceBoss";
 	_timeSet = 0.0f;
+	_skillType = SKILL_TYPE::NONE;
 
 	setEnumName();
 	setAnimation();
@@ -57,15 +60,53 @@ void BOSS::init()
 	_pWingsAnimation->start();
 
 	initState();
+
 }
 
 void BOSS::update()
 {
-	_timeSet += TIMEMANAGER->getElapsedTime();
+	if (ACTION::ENTRANCE == _action)
+	{
+		_timeSet += TIMEMANAGER->getElapsedTime();
+	}
+
 
 	if (_pCurrentState != nullptr)
 	{
 		_pCurrentState->update(this);
+	}
+
+	if (SKILL_TYPE::BUBBLE == _skillType)
+	{
+		_timeSet += TIMEMANAGER->getElapsedTime();
+
+		if (_timeSet > 3.0f)
+		{
+			// 적의 앵글각도에 맞으면 발사로 변경
+			skillFire(float(_ptMouse.x), float(_ptMouse.y));
+		}
+
+		//  rolling circle
+		for (int i = 0; i < _bulletSize; i++)
+		{
+			if (_bullet[i]->isFire) continue;
+
+			_bullet[i]->angle += PI32;
+			//Mins::presentPowerX()
+			_bullet[i]->x = _posX + cos(_bullet[i]->angle) * _bullet[i]->distance;
+			_bullet[i]->y = _posY + -sin(_bullet[i]->angle) * _bullet[i]->distance;
+		}
+
+		// moving was fired bullet.
+		for (int i = 0; i < _bulletSize; i++)
+		{
+			if (_bullet[i]->isFire == false) continue;
+
+			//Mins::presentPowerX()
+			_bullet[i]->x += cosf(_bullet[i]->angle) + _bullet[i]->speed;
+			_bullet[i]->y += -sinf(_bullet[i]->angle) + _bullet[i]->speed;
+		}
+
 	}
 
 	handleInputKey();
@@ -79,9 +120,13 @@ void BOSS::release()
 	OBJECT::setImage(nullptr);
 	_pWingImage = nullptr;
 	_pEffectImage = nullptr;
+	_pBlastImage = nullptr;
+
 	_pAnimation = nullptr;
 	_pWingsAnimation = nullptr;
 	_pEffectAnimation = nullptr;
+	_pIceblastAnimation = nullptr;
+	_pIceBulletAnimation = nullptr;
 }
 
 void BOSS::render(HDC hdc)
@@ -111,6 +156,18 @@ void BOSS::render(HDC hdc)
 		// boss charater
 		OBJECT::getImage()->aniRenderCenter(hdc, x, y, _pAnimation);
 	}
+
+
+	if (SKILL_TYPE::BUBBLE == _skillType)
+	{
+		for (int i = 0; i < _bulletSize; i++)
+		{
+			int x = static_cast<int>(_bullet[i]->x);
+			int y = static_cast<int>(_bullet[i]->y);
+			_bullet[i]->iceImage->aniRenderCenter(hdc, x, y, _pIceBulletAnimation);
+		}
+	}
+
 
 }
 
@@ -145,28 +202,31 @@ void BOSS::setAnimation()
 
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::ENTRANCE], 62, 64, 8, false);
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::IDLE], 88, 97, 4, true);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01], 22, 42, 6, false);
 
 	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::RUN], 0, 0, 1, true);
 	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::RUN], 1, 1, 1, true);
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::RUN], 2, 2, 1, true);
 	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::RUN], 3, 3, 1, true);
 
-	//IMAGEMANAGER->addFrameImage("IceBlast", "resource/boss/ice/IceBlast.bmp", 256, 256, 1, 1, true, RGB(255, 0, 255));
+	int effectFrame[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "Entrance", "IceCrystals", effectFrame, 8, 5, false, callbackSetBattle, this);
 
-	int effectFrame[10] = { 0, 1, 2, 3, 4, 5, 6, 7 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "Entrance", "IceCrystals", effectFrame, 8, 4, false, callbackSetBattle, this);
-
-	int idlMaxFrame[10] = { 0, 1, 2, 3, 4, 5, 6 };
+	int idlMaxFrame[7] = { 0, 1, 2, 3, 4, 5, 6 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMaxIdle", "IceWings", idlMaxFrame, 7, 4, true);
 
 	int idlMinFrame[1] = { 14 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMinIdle", "IceWings", idlMinFrame, 1, 2, true);
 
-	int minimize[10] = { 7, 8, 9, 10, 11, 12, 13 };
+	int minimize[7] = { 7, 8, 9, 10, 11, 12, 13 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMin", "IceWings", minimize, 7, 4, false, callbackMinWingIdle, this);
 
-	int maximize[10] = { 14, 15, 16, 17, 18, 19, 20 };
+	int maximize[7] = { 14, 15, 16, 17, 18, 19, 20 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMax", "IceWings", maximize, 7, 4, false, callbackMaxWingIdle, this);
+
+	// bubble
+	int waterBall[10] = { 0, 1, 2, 3, 4 };
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WaterBalls", "WaterBounce", waterBall, 5, 4, true);
 
 }
 
@@ -330,6 +390,50 @@ void BOSS::dash(float offset)
 {
 }
 
+void BOSS::spell01()
+{
+	_timeSet = 0;
+	_bulletSize = 10;
+
+	_action = ACTION::SKILL_01;
+	_direction = DIRECTION::DOWN;
+	_skillType = SKILL_TYPE::BUBBLE;
+
+	for (int i = 0; i < _bulletSize; i++)
+	{
+		_bullet[i] = new tagBullet();
+		_bullet[i]->iceImage = IMAGEMANAGER->findImage("WaterBounce");
+		_bullet[i]->distance = 128.0f;
+		_bullet[i]->angle = PI2/10.0f * i;
+		_bullet[i]->radius = 7;
+		_bullet[i]->x = OBJECT::_posX;
+		_bullet[i]->y = OBJECT::_posY;
+		_bullet[i]->isFire = false;
+	}
+
+	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, getAnimationKey(_mDirection[_direction], _mAction[_action]));
+	_pAnimation->start();
+
+	_pIceBulletAnimation = KEYANIMANAGER->findAnimation(_objectName, "WaterBalls");
+	_pIceBulletAnimation->start();
+}
+
+void BOSS::skillFire(float x, float y)
+{
+	_timeSet -= 0.15f;
+
+	for (int i = 0; i < _bulletSize; i++)
+	{
+		if (_bullet[i]->isFire) continue;
+
+		_bullet[i]->angle = getAngle(_bullet[i]->x, _bullet[i]->y, x, y);
+		_bullet[i]->speed = 10.0f;
+		_bullet[i]->isFire = true;
+		break;
+	}
+
+}
+
 void BOSS::setRect()
 {
 	OBJECT::_rc = RectMakeCenter(
@@ -378,21 +482,6 @@ void BOSS::moveBoss()
 	}
 }
 
-void BOSS::setDirectUp()
-{
-}
-
-void BOSS::setDirectDown()
-{
-}
-
-void BOSS::setDirectLeft()
-{
-}
-
-void BOSS::setDirectRight()
-{
-}
 
 void BOSS::showBoss()
 {

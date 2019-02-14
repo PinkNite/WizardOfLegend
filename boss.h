@@ -46,6 +46,7 @@ public:
 
 	enum class SKILL_TYPE
 	{
+		NONE,
 		CHAKRAM,
 		LANCE,
 		DAGGER,
@@ -67,13 +68,24 @@ public:
 		MAX
 	};
 
+	struct tagBullet {
+		image* iceImage;
+		float distance;
+		float angle;
+		float speed;
+		float x;
+		float y;
+		int radius;
+		bool isFire;
+	};
+
 private:
-	const int BOSS_IMAGE_WIDTH = 990;
-	const int BOSS_IMAGE_HEIGHT = 1080;
+	const int BOSS_IMAGE_WIDTH = 1650;
+	const int BOSS_IMAGE_HEIGHT = 2000;
 	const int BOSS_MAX_FRAME_X = 11;
-	const int BOSS_MAX_FRAME_Y = 9;
+	const int BOSS_MAX_FRAME_Y = 10;
 	const int BOSS_RECT_WIDTH = 40;
-	const int BOSS_RECT_HEIGHT = 75; // FrameSize: 90, 120
+	const int BOSS_RECT_HEIGHT = 75; // FrameSize: 150, 200
 
 	float _fMaxHP;
 	float _fCurrentHP;
@@ -85,10 +97,17 @@ private:
 	image* _pWingImage;
 	image* _pEffectImage;
 	image* _pBlastImage;
+
 	animation* _pAnimation;
 	animation* _pWingsAnimation;
 	animation* _pEffectAnimation;
 	animation* _pIceblastAnimation;
+	animation* _pIceBulletAnimation;
+
+	// bullet
+	int _bulletSize;
+	tagBullet* _bullet[18];
+	SKILL_TYPE _skillType;
 
 	// «¡∑π¿”
 	int _arFrame[20];
@@ -146,13 +165,11 @@ public:
 	void moveRight(float speed);
 
 	void dash(float offset);
+	void skillFire(float x, float y);
+	void spell01();
 	void setRect();
 	void moveBoss();
 	void setWings(bool isMax);
-	void setDirectUp();
-	void setDirectDown();
-	void setDirectLeft();
-	void setDirectRight();
 
 	inline void setDashTime(float dashTime) { _fDashTime = dashTime; }
 	inline float getSpeed() { return _fSpeed; }
