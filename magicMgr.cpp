@@ -114,3 +114,22 @@ void MAGICMGR::addObject(const string& strKey, int nMagicCount, int nWidth, int 
 
 	_mqMagicPool.insert(pair<string, queue<MAGIC*>>(strKey, qMagic));
 }
+
+void MAGICMGR::addObject(animation * pAni, const string & strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime)
+{
+	if (_mqMagicPool.find(strKey) != _mqMagicPool.end())
+	{
+		return;
+	}
+
+	queue<MAGIC*> qMagic;
+
+	for (int i = 0; i < nMagicCount; i++)
+	{
+		MAGIC* pMagic = new MAGIC();
+		pMagic->init(nWidth, nHeight, pImg, pAni, fTotalTime, strKey);
+		qMagic.push(pMagic);
+	}
+
+	_mqMagicPool.insert(pair<string, queue<MAGIC*>>(strKey, qMagic));
+}

@@ -27,6 +27,10 @@ void STATE_SKILL_THREE::onBtnD(PLAYER* pPlayer)
 
 void STATE_SKILL_THREE::onBtnQ(PLAYER* pPlayer)
 {
+	if (KEYMANAGER->isKeyDown('Q'))
+	{
+
+	}
 }
 
 void STATE_SKILL_THREE::onBtnE(PLAYER* pPlayer)

@@ -199,6 +199,7 @@
     <ClInclude Include="relics.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
+    <ClInclude Include="shokeNova.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skill.h" />
     <ClInclude Include="skillButton.h" />

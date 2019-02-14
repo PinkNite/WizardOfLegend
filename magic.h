@@ -30,6 +30,7 @@ public:
 
 
 	void	init(int nWidth, int nHeight,image* pImg, int nFps, int nFrameMaxX, int nFrameMaxY,float fTotalTime, const string& strKey);
+	void	init(int nWidth, int nHeight, image* pImg, animation* pAni, float fTotalTime, const string& strkey);
 	void	release();
 	void	update();
 	void	render(HDC hdc);

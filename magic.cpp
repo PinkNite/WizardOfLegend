@@ -27,6 +27,22 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	_strKey = strKey;
 }
 
+void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float fTotalTime, const string & strkey)
+{
+	_fPosX = -2000.0f;
+	_fPosY = -2000.0f;
+	_nWidth = nWidth;
+	_nHeight = nHeight;
+	_pImg = pImg;
+	_pEffectAni = pAni;
+
+	_fActiveTime = 0.0f;
+	_fTotalTime = fTotalTime;
+	_bIsActive = false;
+	_bIsPlayer = false;
+	_strKey = strkey;
+}
+
 void MAGIC::release()
 {
 	delete _pEffectAni;
