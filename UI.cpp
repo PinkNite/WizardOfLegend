@@ -160,6 +160,6 @@ void UI::render(HDC hdc)
 
 
 	char str[12];
-	sprintf_s(str, " %.2lf", _pHpBar[1]->getTempHP());
+	sprintf_s(str, " %.2lf", _pHpBar[1]->getHP());
 	TextOut(hdc, 400, 400, str, strlen(str));
 }

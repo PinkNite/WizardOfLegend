@@ -63,51 +63,51 @@ void SKILLICON::setSkillIcon()
 
 			break;
 		case 1:
-		
-			_str=_skillIcon.name = "Flare Rush";    //6
-			_skillIcon.info = "Rush forward and conjure a volley of accompanying flares!";
+			
+			_str=_skillIcon.name = "Searing Rush";    //6
+			_skillIcon.info = "Rush forward and leave flames in your wake!";
 			_skillIcon.element = FIRE;
 			_skillIcon.skillType = DASH;
+			_skillIcon.damage = 4;
+			_skillIcon.damage2 = 0;
+			_skillIcon.damage3 = 0;
+			_skillIcon.damage4 = 0;
+			_skillIcon.damage5 = 0;
+			_skillIcon.coolDown = 6;
+			_skillIcon.knockBack = 10;
+			_skillIcon.knockBack2 = 0;
+			_skillIcon.knockBack3 = 0;
+			_skillIcon.knockBack4 = 0;
+			_skillIcon.duration = NULL;
+			_skillIcon.platinum = 10;
+			_skillIcon.gold = 125;
+			_skillIcon.pool = 2;
+			_skillIcon.frameX = 4 % 16;
+			_skillIcon.frameY = 4 / 16;
+
+			break;
+		case 2:
+
+			_str=_skillIcon.name = "Shock Nova";    //6
+			_skillIcon.info = "Hold to charge up and release an explosion of electricity that shocks all foes in the area at maximum charge!";
+			_skillIcon.element = LIGHTNING;
+			_skillIcon.skillType = SIGNATURE;
 			_skillIcon.damage = 10;
 			_skillIcon.damage2 = 0;
 			_skillIcon.damage3 = 0;
 			_skillIcon.damage4 = 0;
 			_skillIcon.damage5 = 0;
 			_skillIcon.coolDown = 6;
-			_skillIcon.knockBack = 20;
-			_skillIcon.knockBack2 = 0;
-			_skillIcon.knockBack3 = 0;
-			_skillIcon.knockBack4 = 0;
-			_skillIcon.duration = NULL;
-			_skillIcon.platinum = 20;
-			_skillIcon.gold = 125;
-			_skillIcon.pool = 4;
-			_skillIcon.frameX = 21 % 16;
-			_skillIcon.frameY = 21 / 16;
-
-			break;
-		case 2:
-				
-			_str=_skillIcon.name = "Magsphere";    //6
-			_skillIcon.info = "Designed by Virtuoso David Gottsegen, this arcana allows you to pull all nearby projectiles into an orbit around you!";
-			_skillIcon.element = LIGHTNING;
-			_skillIcon.skillType = STANDARD;
-			_skillIcon.damage = 0;
-			_skillIcon.damage2 = 0;
-			_skillIcon.damage3 = 0;
-			_skillIcon.damage4 = 0;
-			_skillIcon.damage5 = 0;
-			_skillIcon.coolDown = 12;
 			_skillIcon.knockBack = 0;
 			_skillIcon.knockBack2 = 0;
 			_skillIcon.knockBack3 = 0;
 			_skillIcon.knockBack4 = 0;
-			_skillIcon.duration = 5;
-			_skillIcon.platinum = 12;
-			_skillIcon.gold = 175;
-			_skillIcon.pool = 2;
-			_skillIcon.frameX = 105 % 16;
-			_skillIcon.frameY = 105 / 16;
+			_skillIcon.duration = 0;
+			_skillIcon.platinum = 75;
+			_skillIcon.gold = 150;
+			_skillIcon.pool = 4;
+			_skillIcon.frameX = 107 % 16;
+			_skillIcon.frameY = 107 / 16;
 
 			break;
 		case 3:
@@ -154,8 +154,8 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.platinum = 14;
 			_skillIcon.gold = 100;
 			_skillIcon.pool = 3;
-			_skillIcon.frameX = 47 % 16;
-			_skillIcon.frameY = 47 / 16;
+			_skillIcon.frameX = 147 % 16;
+			_skillIcon.frameY = 147 / 16;
 
 			break;
 
@@ -227,8 +227,8 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.platinum = 75;
 			_skillIcon.gold = 175;
 			_skillIcon.pool = 3;
-			_skillIcon.frameX = 41 % 16;
-			_skillIcon.frameY = 41 / 16;
+			_skillIcon.frameX = 141 % 16;
+			_skillIcon.frameY = 141 / 16;
 
 			break;
 		case 8:
@@ -275,8 +275,8 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.platinum =75;
 			_skillIcon.gold = 150;
 			_skillIcon.pool = 5;
-			_skillIcon.frameX = 42 % 16;
-			_skillIcon.frameY = 42 / 16;
+			_skillIcon.frameX = 142 % 16;
+			_skillIcon.frameY = 142 / 16;
 
 			break;
 		}

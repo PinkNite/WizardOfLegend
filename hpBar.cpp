@@ -46,24 +46,23 @@ void HPBAR::render(HDC hdc)
 
 void HPBAR::setGauge(float currentHp, float maxHP)
 {
-	float hp= currentHp;
+	 hp= currentHp;
 	
 	if (hp >= maxHP)
 	{
 		hp = maxHP;
-		_tempHp = (hp / maxHP)*OBJECT::getImage()->GetWidth();//비율값 넓이
+		
 
 	}
 	else if (hp <= 0)
 	{
 
 		hp = 0;
-		_tempHp = (hp / maxHP)*OBJECT::getImage()->GetWidth();//비율값 넓이
+		
 	}
-	else
-	{
+	
 		_tempHp = (hp / maxHP)*OBJECT::getImage()->GetWidth();//비율값 넓이
-	}
+	
 	if (_tempHp < _width)//현재 체력 넓이가 그려지는 hp보다 높으면 현재 체력비율넓이까지 줄임 
 	{
 		

@@ -13,7 +13,7 @@ private:
 	int _count;
 	int _count2;
 	int _tempHp;
-	
+	float hp;
 
 public:
 	HPBAR();
@@ -37,5 +37,6 @@ public:
 	float getDamageWidth() { return _damageWidth; }
 	float getHpWidth() { return _hpWidth; }
 	float getTempHP() { return _tempHp; }
+	float getHP() { return hp; }
 };
 
