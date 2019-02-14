@@ -42,6 +42,11 @@ private:
 	POINT pt[3];
 	POINT movingWindow;
 
+	//°ÝÀÚ
+	RECT* _rcTileCountX;
+	RECT* _rcTileCountY;
+	char str[128];
+
 	button* _btnWall;
 	button* _btnTerrain;
 	button* _btnObject;
@@ -56,10 +61,16 @@ private:
 	int _moveY[5];
 	bool _ptInbtn[5];
 	bool _clickVertex;
+	bool _clickMap;
+	POINT _clickDownStart;
+	POINT _clickDownEnd;
 	MAPTOOL* _pMapTool;
 	CAMERA*	 _pCamera;
 	MAPEDITSTATE _mapEditstate;
-	vector<RECT> _vPageTerrain;
+	vector<image *>				 _vTerrainPage;
+	vector<image *>::iterator	 _viTerrainPage;
+	int _terrainPageIndex;
+	char _pageIndex[128];
 
 public:
 	MAPEDIT();

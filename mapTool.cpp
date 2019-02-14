@@ -35,6 +35,19 @@ void MAPTOOL::createMap()
 	}
 }
 
+void MAPTOOL::passCreateMap()
+{
+	_vvMap.resize(_nTileCountY);
+	for (int i = 0; i < _nTileCountY; i++)
+	{
+		for (int j = 0; j < _nTileCountX; j++)
+		{
+			_vvMap[i].push_back(new TILE());
+			_vvMap[i][j]->passInit(j * _nTileSize, i * _nTileSize, _nTileSize, _pImgMap);
+		}
+	}
+}
+
 void MAPTOOL::setResizeNodeIndex()
 {
 	int nIndex(0);
@@ -66,8 +79,25 @@ void MAPTOOL::init(int nTileCountX, int nTileCountY, int nTileSize)
 
 	_pImgMap = IMAGEMANAGER->addFrameImage("map", "image/mapFrame.bmp", 928, 32, 29, 1, true, RGB(255, 0, 255));
 	_pObjectImg = IMAGEMANAGER->findImage("mapTiles");
-	
+
 	createMap();
+}
+
+void MAPTOOL::passInit(int nTileCountX, int nTileCountY, int nTileSize)
+{
+	_nTileCountX = nTileCountX;
+	_nTileCountY = nTileCountY;
+	_nTileSize = nTileSize;
+
+	_nMapWidth = _nTileCountX * _nTileSize;
+	_nMapHeight = _nTileCountY * _nTileSize;
+
+	_bIsWall = true;
+	_object = TILE::OBJECT::NONE;
+	
+	_pImgMap = IMAGEMANAGER->addFrameImage("MapSample", "resource/UI/sampleTile.bmp", 32, 32, 1, 1, true, RGB(255, 0, 255));
+
+	passCreateMap();
 }
 
 void MAPTOOL::release()
@@ -90,7 +120,6 @@ void MAPTOOL::release()
 
 void MAPTOOL::render(HDC hdc)
 {
-
 	for (int j = 0; j < _nTileCountY; j++)
 	{
 		for (int i = 0; i < _nTileCountX; i++)
@@ -105,24 +134,24 @@ void MAPTOOL::update()
 	_nVertical = 0;
 	_nHorizontal = 0;
 
-	if (KEYMANAGER->isStayKeyDown('W'))	
+	if (KEYMANAGER->isStayKeyDown('W'))
 	{
-		_nVertical += 10;
+		_nVertical -= 10;
+
 	}
 	if (KEYMANAGER->isStayKeyDown('S'))	
 	{
-		_nVertical -= 10;
+		_nVertical += 10;
 	}
 	if (KEYMANAGER->isStayKeyDown('A'))	
 	{
-		_nHorizontal += 10;
+		_nHorizontal -= 10;
 
 	}
 	if (KEYMANAGER->isStayKeyDown('D'))
 	{
-		_nHorizontal -= 10;
+		_nHorizontal += 10;
 	}
-
 
 	for (int j = 0; j < _nTileCountY; j++)
 	{
@@ -230,7 +259,8 @@ void MAPTOOL::mapResize(int nTileCountX, int nTileCountY)
 				int nTop = _vvMap[j].back()->getRectTile().top;
 				_vvMap[j].push_back(new TILE());
 				TILE* pTile = _vvMap[j].back();
-				pTile->init((i+1)*nLeft, nTop, _nTileSize, _pImgMap, 0);
+				//박범기
+				pTile->passInit((i+1)*nLeft, nTop, _nTileSize, _pImgMap);
 				pTile = nullptr;
 			}
 		}
@@ -271,7 +301,8 @@ void MAPTOOL::mapResize(int nTileCountX, int nTileCountY)
 			{
 				vMapLine.push_back(new TILE());
 				TILE* pTile = vMapLine.back();
-				pTile->init((i )*_nTileSize + nLeft,(j+1)* nTop, _nTileSize, _pImgMap, 0);
+				//박범기
+				pTile->passInit((i )*_nTileSize + nLeft,(j+1)* nTop, _nTileSize, _pImgMap);
 				pTile = nullptr;
 			}
 			_vvMap.push_back(vMapLine);

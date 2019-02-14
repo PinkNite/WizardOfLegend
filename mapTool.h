@@ -22,6 +22,10 @@ private:
 	int		_nMapWidth;
 	int		_nMapHeight;
 
+	//타일 격자
+	RECT	_rcTileCountX;
+	RECT	_rcTileCountY;
+
 	//타일셋 범위(타일을 찍어올 팔레트 같은 역할)
 	int		_nPalletSellCount = 2;
 
@@ -46,6 +50,7 @@ private:
 
 private:
 	void	createMap();
+	void	passCreateMap();
 	void	setResizeNodeIndex();
 	void	initFrameBit();
 
@@ -54,6 +59,7 @@ private:
 public:
 	//기본 셋
 	void	init(int nTileCountX,int nTileCountY,int nTileSize);
+	void	passInit(int nTileCountX, int nTileCountY, int nTileSize);
 	void	release();
 	void	render(HDC hdc);
 	void	update();
@@ -84,6 +90,12 @@ public:
 
 	inline	TILE*	getTile(int nX, int nY) { return _vvMap[nY][nX]; }
 	
+	int		getVertical() { return _nVertical; }
+	int		getHorizontal() { return _nHorizontal; }
+	void	setVertical(int nVertical) { _nVertical = nVertical; }
+	void	setHorizontal(int nHorizontal) { _nHorizontal = nHorizontal; }
 	int		getEnemyPosX(TILE::OBJECT enemy);
 	int		getEnemyPosY(TILE::OBJECT enemy);
+
+	vector<vector<TILE*>>	getVvMap() { return _vvMap; }
 };

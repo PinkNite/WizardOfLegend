@@ -60,6 +60,20 @@ void TILE::init(int nTileLeft, int nTileTop, int nTileSize, image* pImg, int nNo
 	setLimitRect(RectMake(0, 0, WINSIZEX, WINSIZEY));
 }
 
+void TILE::passInit(int nTileLeft, int nTileTop, int nTileSize, image* pImg)
+{
+	//setAroundWall(PASS);
+	//setIsWall(true);
+	setTerrian(TILE::TERRIAN::WALL);
+	setImg(nullptr);
+	setFrameX(0);
+	setFrameY(0);
+	setRectTile(nTileLeft, nTileTop, nTileSize, nTileSize);
+	setImg(pImg);
+	_object = OBJECT::NONE;
+	setLimitRect(RectMake(0, 0, WINSIZEX, WINSIZEY));
+}
+
 void TILE::render(HDC hdc)
 {
 	if (_rcTile.right > _rcCameraLimit.left
@@ -71,7 +85,7 @@ void TILE::render(HDC hdc)
 		_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
 		if (_object != OBJECT::NONE)
 		{
-			_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, 0, 0);
+			_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, getFrameX(), setFrameY());
 		}
 	}
 

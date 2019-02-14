@@ -9,6 +9,7 @@ enum {PASS = 139};
 class TILE 
 {
 public:
+
 	enum OBJECT
 	{
 		NONE = 0,
@@ -29,6 +30,16 @@ public:
 		MAX
 	};
 
+	struct tagTile
+	{
+		TERRIAN terrain;		//지형
+		OBJECT obj;				//오브젝트
+		RECT rc;				//렉트
+		int terrainFrameX;		//터레인 번호
+		int terrainFrameY;		//터레인 번호
+		int objFrameX;			//ㅇㅂㅈㅌ 번호
+		int objFrameY;			//ㅇㅂㅈㅌ 번호
+	};
 
 public:
 	TILE();
@@ -56,7 +67,8 @@ public:
 public:
 	//초기 초기화
 	void	init(int nTileLeft, int nTileTop, int nTileSize,image* pImg,int nNodeIndex);
-	
+	void	passInit(int nTileLeft, int nTileTop, int nTileSize, image* pImg);
+
 	//그려주는 함수
 	void	render(HDC hdc);
 

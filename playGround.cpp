@@ -31,8 +31,8 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("leeTest", _pLeeTest);
 	SCENEMANAGER->addScene("intro", _pIntroScene);
 	
-	//SCENEMANAGER->changeScene("mapEditScene");
-	SCENEMANAGER->changeScene("MinTest");
+	SCENEMANAGER->changeScene("mapEditScene");
+	//SCENEMANAGER->changeScene("MinTest");
 	//SCENEMANAGER->changeScene("bossStage");
 	//SCENEMANAGER->changeScene("intro");
 	//SCENEMANAGER->changeScene("leeTest");
@@ -65,7 +65,7 @@ void playGround::render()
 	SCENEMANAGER->render();
 
 
-	TIMEMANAGER->render(getMemDC());
+	//TIMEMANAGER->render(getMemDC());
 	//===========================================================
 	this->getBackBuffer()->render(getHDC(), 0, 0);
 }
