@@ -761,6 +761,48 @@ void image::alphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 	}
 }
 
+void image::alphaRender(HDC hdc, int destX, int destY, int width, int height, BYTE alpha)
+{
+	//순서에 주의합시다
+	//BYTE는 알파블렌드 수치값이다. 0 ~ 255의 범위를 가진다
+	//값이 작을수록 투명도가 높다
+
+	//이것을 해야 알파값이 적용됨!!!
+	_blendFunc.SourceConstantAlpha = alpha;
+	_imageInfo->width = width;
+	_imageInfo->height = height;
+	if (_trans)
+	{
+		BitBlt(_blendImage->hMemDC, 0, 0,
+			_imageInfo->width, _imageInfo->height,
+			hdc, destX, destY, SRCCOPY);
+
+		//특정칼라를 제외하고 DC -> DC 사이로 고속복사 해주는 함수
+		GdiTransparentBlt(
+			_blendImage->hMemDC,	//복사될 DC
+			0,						//이미지 그려줄 시작X좌표(left)
+			0,						//이미지 그려줄 시작Y좌표(top)
+			_imageInfo->width,		//복사될 가로크기
+			_imageInfo->height,		//복사될 세로크기
+			_imageInfo->hMemDC,
+			0, 0,					//복사시작할 XY좌표
+			_imageInfo->width,		//복사할 가로/세로크기
+			_imageInfo->height,
+			_transColor				//복사때 제외할 칼라(뺄 칼라)
+		);
+
+		AlphaBlend(hdc, destX, destY, _imageInfo->width,
+			_imageInfo->height, _blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
+			_blendFunc);
+	}
+	else
+	{
+		AlphaBlend(hdc, destX, destY, _imageInfo->width,
+			_imageInfo->height, _imageInfo->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
+			_blendFunc);
+	}
+}
+
 void image::alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
 {
 

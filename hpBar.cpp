@@ -3,7 +3,7 @@
 
 
 HPBAR::HPBAR()
-	:_x(0), _y(0), _frameY(0), _alpha(255), _width(0), _hpWidth(0), _damageWidth(0), _count(0)
+	:_x(0), _y(0), _frameY(0), _alpha(255), _width(0), _hpWidth(0), _count(0),_count2(0)
 {
 }
 
@@ -44,42 +44,75 @@ void HPBAR::render(HDC hdc)
 
 
 
-void HPBAR::setGauge(float hp, float maxHP)
+void HPBAR::setGauge(float currentHp, float maxHP)
 {
-
-	if (hp >= 0)
+	float hp= currentHp;
+	
+	if (hp >= maxHP)
 	{
-		hp = hp;
-		_width = (hp / maxHP)*OBJECT::getImage()->GetWidth();
+		hp = maxHP;
+		_tempHp = (hp / maxHP)*OBJECT::getImage()->GetWidth();//비율값 넓이
+
+	}
+	else if (hp <= 0)
+	{
+
+		hp = 0;
+		_tempHp = (hp / maxHP)*OBJECT::getImage()->GetWidth();//비율값 넓이
 	}
 	else
 	{
-		if (_width > 0)
+		_tempHp = (hp / maxHP)*OBJECT::getImage()->GetWidth();//비율값 넓이
+	}
+	if (_tempHp < _width)//현재 체력 넓이가 그려지는 hp보다 높으면 현재 체력비율넓이까지 줄임 
+	{
+		
+			_width--;
+		
+	}
+
+	else if (_tempHp > _width)//현재 체력 넓이가 높아지면 현제 체력 비율넓이를 올림 현재 체력 넓이까지
+	{
+		
+			_width++;
+		
+	}
+	
+		
+	
+
+}
+
+void HPBAR::setDamage(float currentHp, float maxHP)
+{
+	float hp = currentHp;
+	if (hp >= maxHP)
+	{
+		hp = maxHP;
+	}
+	if (hp <= 0)
+	{
+		hp = 0;
+	}
+	_count2++;
+	_hpWidth = (hp / maxHP)*OBJECT::getImage()->GetWidth();
+	
+	if (_count2 % 5 == 0)
+	{
+
+		if (_hpWidth < _width)
 		{
 			_width--;
 		}
-
-	}
-}
-
-void HPBAR::setDamage(int hp)
-{
-
-	if (_count % 200 == 0)
-	{
-		if (_hpWidth > 0)
+		if (_hpWidth > _width+1)
 		{
-			//현재 hp와 변동 hp를 구해서 간격을 구함 //변동조건?
-
-			if (_hpWidth > _width)
-			{
-				_hpWidth--;
-			}
-
+			_width++;
 		}
 
-		_count = 0;
+		_count2 = 0;
 	}
+
+
 
 }
 

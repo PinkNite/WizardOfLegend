@@ -11,6 +11,9 @@ private:
 	float _hpWidth;
 	float _damageWidth;
 	int _count;
+	int _count2;
+	int _tempHp;
+	
 
 public:
 	HPBAR();
@@ -19,8 +22,8 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
-	void setGauge(float hp, float maxHP);
-	void setDamage(int hp);
+	void setGauge(float currentHp, float maxHP);
+	void setDamage(float currentHp,float maxHP);
 
 public:
 	void setFrameY(int num) { _frameY = num; }
@@ -33,5 +36,6 @@ public:
 	int getRcWidth() { return _width; }
 	float getDamageWidth() { return _damageWidth; }
 	float getHpWidth() { return _hpWidth; }
+	float getTempHP() { return _tempHp; }
 };
 

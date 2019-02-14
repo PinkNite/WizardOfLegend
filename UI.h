@@ -7,19 +7,25 @@
 #include "numbers.h"
 #include "hpBar.h"
 #include "playerFace.h"
+#include "mpbar.h"
+#include "player.h"
 class UI
 {
+private:
 	SKILLUI* _pSkillUI;//¹Ø¿¡ ½ºÅ³
 	GOLDHD* _pGoldHD[2];//°ñµå
 	NUMBERS* _pNumbers[2];
 	HPBAR* _pHpBar[2];
 	STATUSUI* _pStatusUI;//½ºÅÈ
 	PLAYERFACE* _pPlayerFace[3];
+	MPBAR* _pMpBar;
+	PLAYER* _pPlayer;
 	bool _isClick;
 
 	//Å×½ºÆ®¿ë
 	int _damage;
-	int _HP;
+	float _HP;
+	float _MP;
 
 public:
 	UI();

@@ -4,7 +4,7 @@
 
 
 UI::UI()
-	:_isClick(0)
+	:_isClick(0),_HP(0),_MP(0)
 {
 }
 
@@ -52,9 +52,14 @@ HRESULT UI::init()
 		_pHpBar[i]->setFrameY(i);
 
 	}
-
-	_HP = 500;
-	_damage = 400;
+	_pMpBar = new MPBAR;
+	_pMpBar->init(40+65,50+33);
+	_pMpBar->setRcWidth(0);
+	_pPlayer = new PLAYER;
+	_pPlayer->init();
+	
+	_HP = 500;//아직 안받는 값
+	_damage = 100;
 	return S_OK;
 }
 
@@ -64,6 +69,9 @@ void UI::release()
 
 void UI::update()
 {
+	//_HP = _pPlayer->getCurrentHp();
+	
+	
 	_pSkillUI->update();
 	//키를 누르면 작동되게
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB))
@@ -84,7 +92,7 @@ void UI::update()
 		_pStatusUI->update();
 	}
 
-	if (KEYMANAGER->isStayKeyDown('U'))
+	if (KEYMANAGER->isOnceKeyDown('U'))
 	{
 		_HP += _damage;
 	}
@@ -92,13 +100,19 @@ void UI::update()
 	{
 		_HP -= _damage;
 	}
-	_pHpBar[1]->setGauge(_HP, 500);
+	if (KEYMANAGER->isOnceKeyDown('K'))
+	{
+		_MP +=10;
+	}
+	if (KEYMANAGER->isOnceKeyDown('L'))
+	{
+		_MP -= 10;
+	}
 
+	_pHpBar[1]->setGauge(_HP, _pPlayer->getMaxHp());
+	_pHpBar[0]->setDamage(_HP, _pPlayer->getMaxHp());
 
-	//_pHpBar[0]->setX(_pHpBar[1]->getRC().right);
-	//_pHpBar[0]->setY(_pHpBar[1]->getRC().top);
-	_pHpBar[1]->setDamage(_HP);
-	_pHpBar[0]->setRcWidth(_pHpBar[1]->getHpWidth());
+	_pMpBar->setGauge(_MP, 100);
 
 
 	for (int i = 0; i < 2; i++)
@@ -106,11 +120,30 @@ void UI::update()
 
 		_pHpBar[i]->update();
 	}
+	_pMpBar->update();
 }
 
 void UI::render(HDC hdc)
 {
 	_pSkillUI->render(hdc);
+
+	for (int i = 0; i < 3; i++)
+	{
+
+		_pPlayerFace[i]->render(hdc);
+	}
+	RECT tt;
+	tt = _pHpBar[1]->getRC();
+	for (int i = 0; i < 2; i++)
+	{
+		_pHpBar[i]->render(hdc);
+
+	}
+	//Rectangle(hdc, tt);
+	_pMpBar->render(hdc);
+
+
+
 	if (_isClick)
 	{
 		_pStatusUI->render(hdc);
@@ -123,22 +156,10 @@ void UI::render(HDC hdc)
 		_pNumbers[i]->render(hdc);
 	}
 
-	for (int i = 0; i < 3; i++)
-	{
+	
 
-		_pPlayerFace[i]->render(hdc);
-	}
-
-	RECT temp = _pHpBar[1]->getRC();
-	//Rectangle(hdc, temp);
-
-	for (int i = 0; i < 2; i++)
-	{
-		_pHpBar[i]->render(hdc);
-
-	}
 
 	char str[12];
-	sprintf_s(str, "%lf", _pHpBar[1]->getDamageWidth());
+	sprintf_s(str, " %.2lf", _pHpBar[1]->getTempHP());
 	TextOut(hdc, 400, 400, str, strlen(str));
 }
