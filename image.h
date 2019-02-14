@@ -127,6 +127,8 @@ public:
 	//추가된 알파프레임렌더
 	void alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 
+	void alphaFrameRender(HDC hdc, int destX, int destY, int width, int height, int currentFrameX, int currentFrameY, BYTE alpha);
+
 	void aniRender(HDC hdc, int destX, int destY, animation* ani);
 
 	void aniRenderCenter(HDC hdc, int destX, int destY, animation* ani);

@@ -815,6 +815,59 @@ void image::alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, i
 	}
 }
 
+void image::alphaFrameRender(HDC hdc, int destX, int destY, int width, int height, int currentFrameX, int currentFrameY, BYTE alpha)
+{
+	//이것을 해야 알파값이 적용됨!!!
+	_blendFunc.SourceConstantAlpha = alpha;
+	_imageInfo->currentFrameX = currentFrameX;
+	_imageInfo->currentFrameY = currentFrameY;
+	_imageInfo->frameWidth = width;
+	_imageInfo->frameHeight = height;
+
+	if (_trans)
+	{
+		BitBlt(_blendImage->hMemDC
+			, 0, 0
+			, _imageInfo->frameWidth, _imageInfo->frameHeight
+			, hdc
+			, destX, destY
+			, SRCCOPY);
+
+		//특정칼라를 제외하고 DC -> DC 사이로 고속복사 해주는 함수
+		GdiTransparentBlt(
+			_blendImage->hMemDC,								//복사될 DC
+			0,												//이미지 그려줄 시작X좌표(left)
+			0,												//이미지 그려줄 시작Y좌표(top)
+			_imageInfo->frameWidth,								//복사될 가로크기
+			_imageInfo->frameHeight,							//복사될 세로크기
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,//복사시작할 XY좌표
+			_imageInfo->frameWidth,								//복사할 가로/세로크기
+			_imageInfo->frameHeight,
+			_transColor											//복사때 제외할 칼라(뺄 칼라)
+		);
+
+		AlphaBlend(hdc
+			, destX, destY
+			, _imageInfo->frameWidth, _imageInfo->frameHeight
+			, _blendImage->hMemDC
+			, 0, 0
+			, _imageInfo->frameWidth, _imageInfo->frameHeight
+			, _blendFunc);
+	}
+	else
+	{
+		AlphaBlend(hdc
+			, destX, destY
+			, _imageInfo->frameWidth, _imageInfo->frameHeight
+			, _blendImage->hMemDC
+			, 0, 0
+			, _imageInfo->frameWidth, _imageInfo->frameHeight
+			, _blendFunc);
+	}
+}
+
 void image::aniRender(HDC hdc, int destX, int destY, animation* ani)
 {
 	render(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
