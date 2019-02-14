@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "skillnone.h"
+#include "player.h"
+
 
 NONESKILL::NONESKILL()
 {
@@ -9,9 +11,7 @@ NONESKILL::~NONESKILL()
 {
 }
 
-void NONESKILL::init()
-{
-}
+
 
 void NONESKILL::update()
 {

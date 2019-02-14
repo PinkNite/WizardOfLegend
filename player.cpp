@@ -101,6 +101,15 @@ void PLAYER::init()
 
 void PLAYER::update()
 {
+	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
+	{
+		if (_arCurrentDelayTime[i] < _arSkillDelayTime[i])
+		{
+			_arCurrentDelayTime[i] += TIMEMANAGER->getElapsedTime();
+		}
+	}
+
+
 
 	_fAttackDirAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY() + WIZARD_MOVING_RECT_SIZE / 2.0f, static_cast<float>(_ptMouse.x), static_cast<float>(_ptMouse.y));
 	_pCirEffect->update(OBJECT::getPosX(), OBJECT::getPosY() + WIZARD_MOVING_RECT_SIZE / 2.0f, _fAttackDirAngle);
@@ -255,7 +264,7 @@ void PLAYER::settingSkill()
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
-		_arSkill[i]->init();
+		_arSkill[i]->init(static_cast<PLAYER::SKILL_NAME>(i));
 		_arCurrentDelayTime[i] = 0.0f;
 		
 	}
@@ -295,7 +304,6 @@ void PLAYER::changeAttactMotion()
 	}
 	else if (_action == PLAYER::ACTION::ATTACK_MOTION_04) {
 		_action = PLAYER::ACTION::ATTACK_MOTION_03;
-
 	}
 }
 

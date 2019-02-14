@@ -11,7 +11,6 @@ public:
 	NONESKILL();
 	~NONESKILL();
 
-	virtual	void	init()			override;
 	virtual	void	update()		override;
 	virtual	void	release()		override;
 	virtual	void	render(HDC hdc)	override;

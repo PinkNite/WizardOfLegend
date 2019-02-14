@@ -12,8 +12,9 @@ FIRESTRIKE::~FIRESTRIKE()
 {
 }
 
-void FIRESTRIKE::init()
+void FIRESTRIKE::init(PLAYER::SKILL_NAME eSkillName)
 {
+	SKILL::_eSkillName = eSkillName;
 	SKILL::_nSkillType = 0;
 	SKILL::_nSkillType += static_cast<int>(SKILL::SKILL_TYPE::NORMAL);
 	

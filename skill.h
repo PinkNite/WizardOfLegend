@@ -1,9 +1,11 @@
 #pragma once
 #include "stdafx.h"
+#include "player.h"
 
 class MAGICMGR;
 class SKILL_EFFECT_MGR;
 class PLAYER;
+
 class SKILL
 {
 public:
@@ -21,12 +23,12 @@ protected:
 	SKILL_EFFECT_MGR*	_pSkillEffectMgr;
 	PLAYER*				_pPlayer;
 	int					_nSkillType;
-
+	PLAYER::SKILL_NAME	_eSkillName;
 public:
 	SKILL();
 	virtual ~SKILL();
 
-	virtual	void	init()			abstract;
+	virtual	void	init(PLAYER::SKILL_NAME eSkillName);
 	virtual	void	update()		abstract;
 	virtual	void	release()		abstract;
 	virtual	void	render(HDC hdc)	abstract;
@@ -36,4 +38,6 @@ public:
 	void setMagicMgr(MAGICMGR* pMagicMgr);
 	void setSkillEffectMgr(SKILL_EFFECT_MGR* pSkillEffectMgr);
 	void setPlayer(PLAYER* pPlayer);
+
+
 };

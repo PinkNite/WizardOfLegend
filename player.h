@@ -260,5 +260,5 @@ public:
 	//
 	float	getDeleyTime(PLAYER::SKILL_NAME eSkillName) { return _arSkillDelayTime[static_cast<int>(eSkillName)]; }
 	float	getCurrentDeleyTime(PLAYER::SKILL_NAME eSkillName) { return _arCurrentDelayTime[static_cast<int>(eSkillName)]; }
-
+	void	setZeroDeleyTime(PLAYER::SKILL_NAME eSkillName) { _arCurrentDelayTime[static_cast<int>(eSkillName)] = 0.0f; }
 };

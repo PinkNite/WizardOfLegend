@@ -65,7 +65,6 @@ void STATE_IDLE::onBtnSpace(PLAYER* pPlayer)
 	pPlayer->settingAni();
 
 	pPlayer->setSkill(PLAYER::SKILL_NAME::FIRE_DASH);
-	pPlayer->getSkill()->init();
 }
 
 void STATE_IDLE::onBtnLB(PLAYER* pPlayer)
@@ -76,7 +75,6 @@ void STATE_IDLE::onBtnLB(PLAYER* pPlayer)
 	pPlayer->settingAni();
 
 	pPlayer->setSkill(PLAYER::SKILL_NAME::FIRE_STRIKE);
-	pPlayer->getSkill()->init();
 	pPlayer->getSkill()->useMagic(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
 
 }

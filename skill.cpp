@@ -2,7 +2,6 @@
 #include "skill.h"
 #include "magicMgr.h"
 #include "skillEffectMgr.h"
-#include "player.h"
 
 SKILL::SKILL()
 {
@@ -10,6 +9,11 @@ SKILL::SKILL()
 
 SKILL::~SKILL()
 {
+}
+
+void SKILL::init(PLAYER::SKILL_NAME eSkillName)
+{
+	SKILL::_eSkillName = eSkillName;
 }
 
 void SKILL::useMagic(float fPosX, float fPosY)
@@ -30,3 +34,4 @@ void SKILL::setPlayer(PLAYER * pPlayer)
 {
 	_pPlayer = pPlayer;
 }
+
