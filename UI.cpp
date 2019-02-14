@@ -47,6 +47,7 @@ HRESULT UI::init()
 		case 1:
 			_pHpBar[i]->init(40 + 65, 40 + 10);
 			break;
+	
 		}
 		_pHpBar[i]->setFrameY(i);
 

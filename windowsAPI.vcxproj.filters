@@ -112,6 +112,9 @@
     <Filter Include="PlayGround\UI\skill">
       <UniqueIdentifier>{8a2909f1-b4ae-47cd-8a71-1c5515efc017}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\UI\hpBar">
+      <UniqueIdentifier>{79cacc1d-5ce5-4566-b249-673327ff0b92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -360,11 +363,14 @@
     <ClInclude Include="skillnone.h">
       <Filter>PlayGround\skill</Filter>
     </ClInclude>
-    <ClInclude Include="hpBar.h">
-      <Filter>PlayGround\UI</Filter>
-    </ClInclude>
     <ClInclude Include="playerFace.h">
       <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="hpBar.h">
+      <Filter>PlayGround\UI\hpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="mpbar.h">
+      <Filter>PlayGround\UI\hpBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -597,7 +603,10 @@
       <Filter>PlayGround\UI</Filter>
     </ClCompile>
     <ClCompile Include="hpBar.cpp">
-      <Filter>PlayGround\UI</Filter>
+      <Filter>PlayGround\UI\hpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="mpbar.cpp">
+      <Filter>PlayGround\UI\hpBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

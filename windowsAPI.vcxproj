@@ -188,6 +188,7 @@
     <ClInclude Include="mapEdit.h" />
     <ClInclude Include="mapTool.h" />
     <ClInclude Include="minTest.h" />
+    <ClInclude Include="mpbar.h" />
     <ClInclude Include="numbers.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="player.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="mapEdit.cpp" />
     <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="minTest.cpp" />
+    <ClCompile Include="mpbar.cpp" />
     <ClCompile Include="numbers.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="player.cpp" />
