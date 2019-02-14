@@ -74,7 +74,19 @@ public:
 	{
 		NONE = 0,
 		FIRE_DASH,
-		FIRE_STRIKE
+		FIRE_STRIKE,
+		MAX
+	};
+
+	enum class SKILL_KEY 
+	{
+		LBUTTON = 0,
+		RBUTTON,
+		BTN_Q,
+		BTN_E,
+		BTN_R,
+		BTN_SPACE,
+		MAX
 	};
 
 	enum { WIZARD_SPRITE_WIDTH = 2688 };
@@ -100,7 +112,6 @@ private:
 	//위자드오브레전드는 이동 타일을 확인하는 용의 사각형과 중앙값을 따로 가지고 있어야한다.
 	//플레이어를 가볍게 상하로 구분하고 아래 사각형을 이동시 충돌 렉트로 한다
 
-	float _fSkillDelayTime[6];			//스킬 딜레이 시간//스킬 세팅된것이 6개 있다고 치자...
 
 	// 방향과 액션의 이름
 	string _arDirection[static_cast<const int>(DIRECTION::MAX)];
@@ -146,12 +157,12 @@ private:
 	float		_fAttackPosX;
 	float		_fAttackPosY;
 	
-	//임시
-	SKILL*		_pFireDash;
-	SKILL*		_pFireStrike;
+
 	
-
-
+	SKILL*		_arSkill[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];
+	float		_arSkillDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];			//스킬 딜레이 시간//스킬 세팅된것이 6개 있다고 치자...
+	float		_arCurrentDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];
+	SKILL_NAME	_arSettingSkill[static_cast<const int>(PLAYER::SKILL_KEY::MAX)];
 public:
 	PLAYER();
 	~PLAYER();
@@ -182,7 +193,7 @@ private:
 
 	void settingPos();
 	
-
+	void settingSkill();
 
 public:
 //state pattern용
@@ -244,4 +255,10 @@ public:
 
 	float	getMaxHp() { return _fMaxHealthPoint; }
 	float	getCurrentHp() { return _fCurrentHealthPoint; }
+
+
+	//
+	float	getDeleyTime(PLAYER::SKILL_NAME eSkillName) { return _arSkillDelayTime[static_cast<int>(eSkillName)]; }
+	float	getCurrentDeleyTime(PLAYER::SKILL_NAME eSkillName) { return _arCurrentDelayTime[static_cast<int>(eSkillName)]; }
+
 };

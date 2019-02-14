@@ -202,6 +202,7 @@
     <ClInclude Include="skillEffect.h" />
     <ClInclude Include="skillEffectMgr.h" />
     <ClInclude Include="skillIcon.h" />
+    <ClInclude Include="skillnone.h" />
     <ClInclude Include="skillUI.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="stageScene.h" />
@@ -280,6 +281,7 @@
     <ClCompile Include="skillEffect.cpp" />
     <ClCompile Include="skillEffectMgr.cpp" />
     <ClCompile Include="skillIcon.cpp" />
+    <ClCompile Include="skillnone.cpp" />
     <ClCompile Include="skillUI.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="stageScene.cpp" />

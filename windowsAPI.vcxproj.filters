@@ -357,6 +357,9 @@
     <ClInclude Include="statusButton.h">
       <Filter>PlayGround\UI\status</Filter>
     </ClInclude>
+    <ClInclude Include="skillnone.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -580,6 +583,9 @@
     </ClCompile>
     <ClCompile Include="statusButton.cpp">
       <Filter>PlayGround\UI\status</Filter>
+    </ClCompile>
+    <ClCompile Include="skillnone.cpp">
+      <Filter>PlayGround\skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

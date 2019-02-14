@@ -13,6 +13,7 @@
 
 #include "fireDash.h"
 #include "fireStrike.h"
+#include "skillnone.h"
 
 PLAYER::PLAYER() :
 	_fMaxHealthPoint(0.0f),
@@ -21,7 +22,7 @@ PLAYER::PLAYER() :
 	_fArmor(0.0f),
 	_fEvasion(0.0f),
 	_fCriticalHit(0.0f),
-	_fSkillDelayTime{},
+	_arSkillDelayTime{},
 	_arDirection{},
 	_arAction{},
 	_rcMovingCollision{},
@@ -89,10 +90,10 @@ void PLAYER::init()
 	}
 
 	//юс╫ц
-	_pFireDash = new FIREDASH();
-	_pFireDash->init();
-	_pFireStrike = new FIRESTRIKE();
-	_pFireStrike->init();
+	
+	settingSkill();
+
+
 
 	_fAttackPosX = 0.0f;
 	_fAttackPosY = 0.0f;
@@ -244,6 +245,35 @@ void PLAYER::settingPos()
 
 	_rcMovingCollision = RectMakeCenter(static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()) + WIZARD_MOVING_RECT_SIZE / 2,
 		WIZARD_MOVING_RECT_SIZE, WIZARD_MOVING_RECT_SIZE);
+}
+
+void PLAYER::settingSkill()
+{
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::NONE)] = new NONESKILL();
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::FIRE_DASH)] = new FIREDASH();
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::FIRE_STRIKE)] = new FIRESTRIKE();
+
+	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
+	{
+		_arSkill[i]->init();
+		_arCurrentDelayTime[i] = 0.0f;
+		
+	}
+	_pCurrentSkill = _arSkill[static_cast<int>(PLAYER::SKILL_NAME::NONE)];
+
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::NONE)] = 0.0f;
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_DASH)] = 5.0f;
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_STRIKE)] = 0.5f;
+
+
+	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_KEY::MAX); i++)
+	{
+		_arSettingSkill[i] = PLAYER::SKILL_NAME::NONE;
+	}
+
+	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_SPACE)] = PLAYER::SKILL_NAME::FIRE_DASH;
+	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)] = PLAYER::SKILL_NAME::FIRE_STRIKE;
+
 }
 
 void PLAYER::settingAni()
@@ -505,30 +535,17 @@ void PLAYER::setLink(MAGICMGR * pMagicMgr, SKILL_EFFECT_MGR * pSkillEffectMgr)
 	_pMagicMgr = pMagicMgr;
 	_pSkillEffectMgr = pSkillEffectMgr;
 
-	_pFireDash->setMagicMgr(_pMagicMgr);
-	_pFireDash->setPlayer(this);
-	_pFireDash->setSkillEffectMgr(_pSkillEffectMgr);
-	
-	_pFireStrike->setMagicMgr(_pMagicMgr);
-	_pFireStrike->setPlayer(this);
-	_pFireStrike->setSkillEffectMgr(_pSkillEffectMgr);
-
-
+	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
+	{
+		_arSkill[i]->setMagicMgr(_pMagicMgr);
+		_arSkill[i]->setPlayer(this);
+		_arSkill[i]->setSkillEffectMgr(_pSkillEffectMgr);
+	}
 }
 
 void PLAYER::setSkill(PLAYER::SKILL_NAME eSkillName)
 {
-	switch (eSkillName)
-	{
-	case PLAYER::SKILL_NAME::NONE:
-		break;
-	case PLAYER::SKILL_NAME::FIRE_DASH:
-		_pCurrentSkill = _pFireDash;
-		break;
-	case PLAYER::SKILL_NAME::FIRE_STRIKE:
-		_pCurrentSkill = _pFireStrike;
-		break;
-	}
+	_pCurrentSkill = _arSkill[static_cast<int>(eSkillName)];
 }
 
 void PLAYER::input()
@@ -624,8 +641,6 @@ void PLAYER::initState()
 	_arState[static_cast<int>(PLAYER::PLAYER_STATE::SKILL_05)] = new STATE_SKILL_FOUR();
 
 	_pCurrentState = _arState[static_cast<int>(PLAYER::PLAYER_STATE::IDLE)];
-
-
 }
 
 
