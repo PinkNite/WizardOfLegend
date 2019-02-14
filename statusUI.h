@@ -22,13 +22,13 @@ private:
 	EXPLAINUSE* _pExplainUse;
 	SKILLICON* _pSkillIcon[6];
 	STATUSBUTTON* _pStatusButton[6];
-	
+
 	int _num;//변화값
 
 	int _count;//스왑?
 
 	int _numA;//아이템 번호
-	
+
 	int _x;
 	int _y;
 	int _alpha;
@@ -37,7 +37,7 @@ private:
 	bool _isClick;
 	//스왑용 템프
 	int _temp;
-	
+
 public:
 	STATUSUI();
 	~STATUSUI();
@@ -50,7 +50,8 @@ public:
 	void fontRender(HDC hdc, const char * str, const char* str2, int x, int y, int num, COLORREF color);
 	void fontRender2(HDC hdc, const char * str, const char* str2, int x, int y, int num, COLORREF color);
 	void swapSetting();//스왑을 하여라
-public :
+	void skillSetting();//스킬 몇개를 가지고 있을 것이냐? 스킬이 사용 가능해지는 것들을 처리하자 
+public:
 	//접근자
 	bool getIsClick() { return _isClick; }
 	void setIsClick(bool num) { _isClick = num; }

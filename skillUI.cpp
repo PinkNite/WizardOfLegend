@@ -4,6 +4,7 @@
 #include "statusBox.h"
 #include "skillButton.h"
 #include "font.h"
+#include "item.h"
 
 
 
@@ -21,7 +22,7 @@ HRESULT SKILLUI::init()
 {
 	IMAGEMANAGER->addFrameImage("skillUI", "resource/UI/skillUI.bmp", 180, 60, 3, 1, true, RGB(255, 0, 255));
 	OBJECT::setImage(IMAGEMANAGER->findImage("skillUI"));
-	
+
 
 	//스탯박스 추가해서 그림
 	_x = OBJECT::getImage()->getFrameWidth() + (6 * OBJECT::getImage()->getFrameWidth() + 12 + 36);
@@ -38,30 +39,41 @@ HRESULT SKILLUI::init()
 
 	for (int i = 0; i < 8; i++)
 	{
-	_pSkillButton[i] = new SKILLBUTTON;
-	_pSkillButton[i]->setFrameX(i);
-	_pSkillButton[i]->init(OBJECT::getImage()->getFrameWidth() + (i* OBJECT::getImage()->getFrameWidth() + 2 * i)+10, WINSIZEY - OBJECT::getImage()->getFrameHeight() - OBJECT::getImage()->getFrameHeight() / 2-45);
-	switch (i)//알파값도 조정해야됨
-	{
-	case 6:
-		_pSkillButton[i]->init(WINSIZEX / 2 - 338, WINSIZEY - 130);
-		_pSkillButton[i]->setAlpha(100);
-		break;
-	case 7:
-		_pSkillButton[i]->init(WINSIZEX/2 -282 , WINSIZEY - 130);
-		_pSkillButton[i]->setAlpha(50);
-		break;
-	}
+		_pSkillButton[i] = new SKILLBUTTON;
+		_pSkillButton[i]->setFrameX(i);
+		_pSkillButton[i]->init(OBJECT::getImage()->getFrameWidth() + (i* OBJECT::getImage()->getFrameWidth() + 2 * i) + 10, WINSIZEY - OBJECT::getImage()->getFrameHeight() - OBJECT::getImage()->getFrameHeight() / 2 - 45);
+		switch (i)//알파값도 조정해야됨
+		{
+		case 6:
+			_pSkillButton[i]->init(WINSIZEX / 2 - 338, WINSIZEY - 130);
+			_pSkillButton[i]->setAlpha(100);
+			break;
+		case 7:
+			_pSkillButton[i]->init(WINSIZEX / 2 - 282, WINSIZEY - 130);
+			_pSkillButton[i]->setAlpha(50);
+			break;
+		}
 	}
 	//폰트
 	for (int i = 0; i < 2; i++)
 	{
-	_pFont[i] = new FONT;
-	
+		_pFont[i] = new FONT;
 
-	_pFont[i]->init(WINSIZEX/2-332+i*54,WINSIZEY-20);
+
+		_pFont[i]->init(WINSIZEX / 2 - 332 + i * 54, WINSIZEY - 20);
 	}
 	_pFont[1]->setFrameX(1);
+
+
+	_pItem = new ITEM;
+	_pItem->init();
+
+	_pItem->setX(_x + 55);
+	_pItem->setY(_y);
+	_pItem->setNum(188);
+	_pItem->setAlpha(60);
+
+
 
 	return S_OK;
 }
@@ -73,7 +85,7 @@ void SKILLUI::release()
 
 void SKILLUI::update()
 {
-	
+
 
 
 }
@@ -116,17 +128,18 @@ void SKILLUI::render(HDC hdc)
 			break;
 		case 5:
 			break;
-	
+
 		default:
 			_pSkillButton[i]->render(hdc);
 			break;
 		}
-		
+
 	}
 	for (int i = 0; i < 2; i++)
 	{
 		_pFont[i]->render(hdc);
 	}
+	_pItem->render(hdc);
 }
 
 

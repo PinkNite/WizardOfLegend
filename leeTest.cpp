@@ -24,6 +24,8 @@ HRESULT LEETEST::init()
 	_pItemManager->init();
 	ShowCursor(false);
 
+
+
 	return S_OK;
 }
 
@@ -36,12 +38,14 @@ void LEETEST::update()
 	_pUI->update();
 	_pItemManager->update();
 
+
+
 }
 
 void LEETEST::render()
 {
 	_pUI->render(getMemDC());
 	_pItemManager->render(getMemDC());
-	_pMouse->render(getMemDC(), _ptMouse.x-32, _ptMouse.y-32);
+	_pMouse->render(getMemDC(), _ptMouse.x - 32, _ptMouse.y - 32);
 
 }

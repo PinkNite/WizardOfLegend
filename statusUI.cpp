@@ -3,7 +3,7 @@
 #include "item.h"
 
 STATUSUI::STATUSUI()
-	:_num(0), _numA(0), _count(0), _alpha(200), _isClick(0),_temp(0)
+	:_num(0), _numA(0), _count(0), _alpha(200), _isClick(0), _temp(0)
 {
 }
 
@@ -32,7 +32,7 @@ HRESULT STATUSUI::init()
 		case 5:
 			break;
 		default:
-		_pStatusBox[i]->setSkillNumber(static_cast <SKILLNUMBER>(i));
+			_pStatusBox[i]->setSkillNumber(static_cast <SKILLNUMBER>(i));
 			break;
 		}
 
@@ -50,17 +50,7 @@ HRESULT STATUSUI::init()
 		_pItem[i]->setX(214);
 		_pItem[i]->setY(333);
 		_pItem[i]->setNum(1);
-		switch (i)
-		{
-		case 1:
-			_pItem[i]->setX(_x + (55));
-			_pItem[i]->setY(_y);
-			_pItem[i]->setNum(188);
-			_pItem[i]->setAlpha(60);
-			break;
 
-
-		}
 	}
 	_pExplainUse = new EXPLAINUSE;
 	_pExplainUse->init(214, 200);
@@ -69,9 +59,9 @@ HRESULT STATUSUI::init()
 	{
 		_pSkillIcon[i] = new SKILLICON;
 		//_pSkillIcon[i]->init(212 + i * 66, 150);
-		_pSkillIcon[i]->init(_pStatusBox[i]->getPosX(),_pStatusBox[i]->getPosY());
-		_pSkillIcon[i]->setNum(i);	
-		
+		_pSkillIcon[i]->init(_pStatusBox[i]->getPosX(), _pStatusBox[i]->getPosY());
+		_pSkillIcon[i]->setNum(i);
+
 	}
 
 	//스왑용 템프박스
@@ -96,9 +86,9 @@ void STATUSUI::update()
 	for (int i = 0; i < 6; i++)
 	{
 
-		_pSkillIcon[i]->setPosX(_pStatusBox[i]->getPosX()-2);
+		_pSkillIcon[i]->setPosX(_pStatusBox[i]->getPosX() - 2);
 		_pSkillIcon[i]->setPosY(_pStatusBox[i]->getPosY());
-	
+
 	}
 
 	_pStatusSelect->update();
@@ -166,9 +156,9 @@ void STATUSUI::render(HDC hdc)
 	{
 
 		_pStatusBox[i]->render(hdc);
-	
+
 		_pSkillIcon[i]->render(hdc);//이게 화면에 //여기에 스킬 이미지 배열로 
-		
+
 	}
 	if (_pStatusSelect->getSelectState() == ITEM_STATE)
 	{
@@ -177,7 +167,7 @@ void STATUSUI::render(HDC hdc)
 	_pItem[0]->setNum(_numA);
 
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		_pItem[i]->render(hdc);
 	}
@@ -191,20 +181,20 @@ void STATUSUI::render(HDC hdc)
 	for (int i = 0; i < 6; i++)
 	{
 
-		
+
 		_pStatusButton[i]->render(hdc);
 	}
-	
+
 	char str[222];
-	
+
 	for (int i = 0; i < 6; i++)
 	{
 
-	sprintf_s(str, "  %d ", _pStatusBox[i]->getSkillNumber(), _pStatusBox[i]->getIsCollision());
-	TextOut(hdc, _pStatusBox[i]->getPosX(), _pStatusBox[i]->getPosY(), str, strlen(str));
+		sprintf_s(str, "  %d ", _pStatusBox[i]->getSkillNumber(), _pStatusBox[i]->getIsCollision());
+		TextOut(hdc, _pStatusBox[i]->getPosX(), _pStatusBox[i]->getPosY(), str, strlen(str));
 	}
 	sprintf_s(str, "선택엑스좌표:%d,선택상태값:%d", (int)_pStatusSelect->getPosX(), _pStatusSelect->getSelectState());
-	TextOut(hdc, 700 , 400, str, strlen(str));
+	TextOut(hdc, 700, 400, str, strlen(str));
 	sprintf_s(str, "count :%d temp:%d frame: %d", _count, _temp, _pStatusBox[_temp]->getFrameX());
 	TextOut(hdc, 700, 100, str, strlen(str));
 }
@@ -220,7 +210,7 @@ void STATUSUI::collision()
 
 			_pStatusSelect->setIsCollision(true);//트루값
 			_pStatusBox[i]->setIsCollision(true);
-			
+
 
 
 		}
@@ -228,20 +218,20 @@ void STATUSUI::collision()
 		{
 
 			_pStatusBox[i]->setIsCollision(false);
-			
+
 
 		}
-		
+
 	}
 }
 
 void STATUSUI::spaceKeyAndLButton()
 {
-	
+
 	for (int i = 0; i < 6; i++)
 	{
 		//스왑모드가 아닐때 충돌상태이고 해당박스와 키가 눌렸다 //카운트가 0일때만 들어오세요
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE)&&_pStatusSelect->getSelectState()!=SWAP_STATE&&_pStatusBox[i]->getIsCollision()&&_count==0)
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusSelect->getSelectState() != SWAP_STATE && _pStatusBox[i]->getIsCollision() && _count == 0)
 		{
 			_pStatusSelect->setSelectState(SWAP_STATE);//스왑모드가 되고
 			_pStatusBox[i]->setIsClick(true);//클릭상태만들어주고
@@ -250,14 +240,14 @@ void STATUSUI::spaceKeyAndLButton()
 			_temp = i;
 			break;//나옴
 		}
-		else if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusSelect->getSelectState() == SWAP_STATE && _pStatusBox[i]->getIsCollision() && _count == 1&&_pStatusBox[i]->getFrameX()==2)
+		else if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusSelect->getSelectState() == SWAP_STATE && _pStatusBox[i]->getIsCollision() && _count == 1 && _pStatusBox[i]->getFrameX() == 2)
 		{
 			// 녹색이미지이면 해당박스랑 충돌일때
 			_pStatusSelect->setSelectState(SKILL_STATE);//스왑모드가 되고
 			_pStatusBox[i]->setIsClick(false);//클릭상태만들어주고
 			_pStatusBox[i]->setFrameX(0);//프레임 녹색으로 해주고 
 			_count = 0;//0
-			
+
 			break;//나옴
 		}
 		else if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusSelect->getSelectState() == SWAP_STATE && _pStatusBox[i]->getIsCollision() && _count == 1 && _pStatusBox[_temp]->getFrameX() == 2 && _temp != i)
@@ -339,4 +329,8 @@ void STATUSUI::swapSetting()
 	default:
 		break;
 	}
+}
+
+void STATUSUI::skillSetting()
+{
 }

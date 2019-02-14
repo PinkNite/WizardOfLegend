@@ -9,6 +9,7 @@ private:
 	ITEMMANAGER* _pItemManager;
 	UI* _pUI;
 	image* _pMouse;
+
 public:
 	LEETEST();
 	~LEETEST();
@@ -16,5 +17,6 @@ public:
 	void release();
 	void update();
 	void render();
+
 };
 

@@ -172,6 +172,7 @@
     <ClInclude Include="FrameWork.h" />
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="goldHD.h" />
+    <ClInclude Include="hpBar.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="iniDataManager.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="numbers.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="playerFace.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
@@ -254,6 +256,7 @@
     <ClCompile Include="font.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="goldHD.cpp" />
+    <ClCompile Include="hpBar.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
@@ -272,6 +275,7 @@
     <ClCompile Include="numbers.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="playerFace.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="relics.cpp" />

@@ -360,6 +360,12 @@
     <ClInclude Include="skillnone.h">
       <Filter>PlayGround\skill</Filter>
     </ClInclude>
+    <ClInclude Include="hpBar.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="playerFace.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -586,6 +592,12 @@
     </ClCompile>
     <ClCompile Include="skillnone.cpp">
       <Filter>PlayGround\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="playerFace.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="hpBar.cpp">
+      <Filter>PlayGround\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
