@@ -50,7 +50,7 @@ void STATE_SKILL_ONE::onBtnLB(PLAYER* pPlayer)
 		pPlayer->settingAni();
 
 
-		pPlayer->getSkill()->useMagic(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
+		//pPlayer->getSkill()->useMagic(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
 		
 		
 		_fWaitTime = 0.0f;
@@ -82,6 +82,7 @@ void STATE_SKILL_ONE::update(PLAYER * pPlayer)
 		_fWaitTime = 0.0f;
 		_nCount = 1;
 		_bIsUse = true;
+		pPlayer->setZeroNormalCount();
 	}
 	if (_nCount  == 3 && _fWaitTime >= 0.5f)
 	{
@@ -92,6 +93,8 @@ void STATE_SKILL_ONE::update(PLAYER * pPlayer)
 		_nCount = 1;
 
 		_bIsUse = true;
+		pPlayer->setZeroNormalCount();
+
 	}
 	
 }

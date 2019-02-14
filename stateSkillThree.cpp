@@ -29,7 +29,14 @@ void STATE_SKILL_THREE::onBtnQ(PLAYER* pPlayer)
 {
 	if (KEYMANAGER->isKeyDown('Q'))
 	{
-
+		//대기
+		//나와야하는 것들
+		//프로그래스바
+		//주변 전기
+	}
+	else
+	{
+		//발사
 	}
 }
 

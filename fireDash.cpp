@@ -21,25 +21,48 @@ void FIREDASH::init(PLAYER::SKILL_NAME eSkillName)
 	SKILL::_nSkillType += static_cast<int>(SKILL::SKILL_TYPE::DASH);
 	_fOffsetTime = 0.04f;
 	_fTimer = 0.0f;
+	_bIsOk = false;
 }
 
 void FIREDASH::update()
 {
-	if (_pPlayer->getCurrentDeleyTime(SKILL::_eSkillName) >= _pPlayer->getDeleyTime(SKILL::_eSkillName))
+
+
+	if (_pPlayer->getDashTime() < 0.5f)
 	{
-		_fTimer += TIMEMANAGER->getElapsedTime();
-
-
-		if (_fTimer >= _fOffsetTime)
+		if (_pPlayer->getCurrentDeleyTime(SKILL::_eSkillName) >= _pPlayer->getDeleyTime(SKILL::_eSkillName))
 		{
-			//阂积己
-			SKILL::_pMagicMgr->useMagic("dashFlame", SKILL::_pPlayer->getPosX(), _pPlayer->getPosY() + 32.0f, 0.0f, 0.0f, true);
-			SKILL::_pSkillEffectMgr->activityEffect("flameBurn", SKILL::_pPlayer->getPosX(), _pPlayer->getPosY() + 48.0f);
+			if (!_bIsOk && _pPlayer->getDashTime() == 0)
+			{
+				_bIsOk = true;
+			}
 
-			_fTimer = 0.0f;
+			if (!_bIsOk)
+			{
+				return;
+			}
+
+			_fTimer += TIMEMANAGER->getElapsedTime();
+
+
+			if (_fTimer >= _fOffsetTime)
+			{
+				//阂积己
+				SKILL::_pMagicMgr->useMagic("dashFlame", SKILL::_pPlayer->getPosX(), _pPlayer->getPosY() + 32.0f, 0.0f, 0.0f, true);
+				SKILL::_pSkillEffectMgr->activityEffect("flameBurn", SKILL::_pPlayer->getPosX(), _pPlayer->getPosY() + 48.0f);
+
+				_fTimer = 0.0f;
+			}
 		}
 	}
-
+	else
+	{
+		if (_pPlayer->getCurrentDeleyTime(SKILL::_eSkillName) >= _pPlayer->getDeleyTime(SKILL::_eSkillName) && _bIsOk) {
+			_pPlayer->setZeroDeleyTime(SKILL::_eSkillName);
+			_bIsOk = false;
+		}
+		
+	}
 }
 
 void FIREDASH::release()

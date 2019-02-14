@@ -17,7 +17,8 @@ void FIRESTRIKE::init(PLAYER::SKILL_NAME eSkillName)
 	SKILL::_eSkillName = eSkillName;
 	SKILL::_nSkillType = 0;
 	SKILL::_nSkillType += static_cast<int>(SKILL::SKILL_TYPE::NORMAL);
-	
+	_nCount = 1;
+	_bIsOk = true;
 }
 
 void FIRESTRIKE::update()
@@ -38,5 +39,15 @@ void FIRESTRIKE::render(HDC hdc)
 
 void FIRESTRIKE::useMagic(float fPosX, float fPosY)
 {
-	SKILL::_pMagicMgr->useMagic("fireStrike", fPosX, fPosY, 0.0f, 0.0f, true);
+	if (_bIsOk  && _pPlayer->getNormalSkillCount() < 3)
+	{
+		SKILL::_pMagicMgr->useMagic("fireStrike", fPosX, fPosY, 0.0f, 0.0f, true);
+		_pPlayer->addNormalSkillCount(1);
+		_bIsOk = false;
+	}
+}
+
+void FIRESTRIKE::keyUp()
+{
+	_bIsOk = true;
 }

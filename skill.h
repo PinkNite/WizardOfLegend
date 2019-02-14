@@ -33,7 +33,7 @@ public:
 	virtual	void	release()		abstract;
 	virtual	void	render(HDC hdc)	abstract;
 	virtual void	useMagic(float fPosX,float fPosY);		//스킬 하나 쓰는 애들 위해
-
+	virtual void	keyUp();
 public:
 	void setMagicMgr(MAGICMGR* pMagicMgr);
 	void setSkillEffectMgr(SKILL_EFFECT_MGR* pSkillEffectMgr);

@@ -81,8 +81,8 @@ void STATE_RUN::onBtnLB(PLAYER* pPlayer)
 	pPlayer->setAttactDir();
 	pPlayer->settingAni();
 
-	pPlayer->setSkill(PLAYER::SKILL_NAME::FIRE_STRIKE);
-	pPlayer->getSkill()->useMagic(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
+	//pPlayer->setSkill(PLAYER::SKILL_NAME::FIRE_STRIKE);
+	//pPlayer->getSkill()->useMagic(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
 }
 
 void STATE_RUN::onBtnRB(PLAYER* pPlayer)

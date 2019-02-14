@@ -20,6 +20,10 @@ void SKILL::useMagic(float fPosX, float fPosY)
 {
 }
 
+void SKILL::keyUp()
+{
+}
+
 void SKILL::setMagicMgr(MAGICMGR * pMagicMgr)
 {
 	_pMagicMgr = pMagicMgr;

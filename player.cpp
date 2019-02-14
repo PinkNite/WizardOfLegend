@@ -40,7 +40,8 @@ PLAYER::PLAYER() :
 	_fAttackDirAngle(0.0f),
 	_arStandardAngle{},
 	_fAttackPosX(0.0f),
-	_fAttackPosY(0.0f)
+	_fAttackPosY(0.0f),
+	_nNormalSkillCoount(0)
 {
 }
 
@@ -93,7 +94,7 @@ void PLAYER::init()
 	
 	settingSkill();
 
-
+	_nNormalSkillCoount = 0;
 
 	_fAttackPosX = 0.0f;
 	_fAttackPosY = 0.0f;
@@ -118,6 +119,7 @@ void PLAYER::update()
 	_fAttackPosY = OBJECT::getPosY() + Mins::presentPowerY(_fAttackDirAngle, 64.0f);
 
 	input();
+	_pCurrentSkill->update();
 	_pCurrentState->update(this);
 
 	KEYANIMANAGER->update();
@@ -270,9 +272,17 @@ void PLAYER::settingSkill()
 	}
 	_pCurrentSkill = _arSkill[static_cast<int>(PLAYER::SKILL_NAME::NONE)];
 
+
+
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::NONE)] = 0.0f;
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_DASH)] = 5.0f;
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_STRIKE)] = 0.5f;
+
+	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
+	{
+		_arSkill[i]->init(static_cast<PLAYER::SKILL_NAME>(i));
+		_arCurrentDelayTime[i] = _arSkillDelayTime[i];
+	}
 
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_KEY::MAX); i++)
@@ -586,6 +596,12 @@ void PLAYER::input()
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		_pCurrentState->onBtnLB(this);
+		setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)]);
+		_pCurrentSkill->useMagic(getAttactPosX(), getAttactPosY());
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+		_pCurrentSkill->keyUp();
 	}
 	if (KEYMANAGER->isKeyDown(VK_RBUTTON))
 	{

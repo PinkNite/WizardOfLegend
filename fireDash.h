@@ -6,7 +6,7 @@ class FIREDASH : public SKILL {
 private:
 	float	_fOffsetTime;
 	float	_fTimer;
-
+	bool	_bIsOk;
 public:
 	FIREDASH();
 	~FIREDASH();

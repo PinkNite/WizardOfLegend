@@ -5,8 +5,8 @@
 class FIRESTRIKE: public SKILL
 {
 private:
-
-
+	bool	_bIsOk;
+	int		_nCount;
 public:
 	FIRESTRIKE();
 	~FIRESTRIKE();
@@ -16,6 +16,7 @@ public:
 	virtual	void	release()		override;
 	virtual	void	render(HDC hdc)	override;
 	virtual void	useMagic(float fPosX, float fPosY)		override;
+	virtual void	keyUp();
 
 	
 };

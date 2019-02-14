@@ -52,6 +52,8 @@ void STATE_DASH::onBtnR(PLAYER * pPlayer)
 
 void STATE_DASH::update(PLAYER * pPlayer)
 {
+	//pPlayer->getSkill()->update();
+
 	if (pPlayer->getDashTime() < 0.5f)
 	{
 		if (pPlayer->getDashTime() < 0.2f)
@@ -76,10 +78,8 @@ void STATE_DASH::update(PLAYER * pPlayer)
 		pPlayer->setAction(PLAYER::ACTION::RUN);
 		pPlayer->settingAni();
 		fOffset = 2.5f;
-
-		//pPlayer->setZeroDeleyTime(pPlayer->getSkill()->getSKillName());
 	}
 
-	pPlayer->getSkill()->update();
+	
 
 }

@@ -163,6 +163,9 @@ private:
 	float		_arSkillDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];			//스킬 딜레이 시간//스킬 세팅된것이 6개 있다고 치자...
 	float		_arCurrentDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];
 	SKILL_NAME	_arSettingSkill[static_cast<const int>(PLAYER::SKILL_KEY::MAX)];
+
+	int			_nNormalSkillCoount;
+
 public:
 	PLAYER();
 	~PLAYER();
@@ -261,4 +264,8 @@ public:
 	float	getDeleyTime(PLAYER::SKILL_NAME eSkillName) { return _arSkillDelayTime[static_cast<int>(eSkillName)]; }
 	float	getCurrentDeleyTime(PLAYER::SKILL_NAME eSkillName) { return _arCurrentDelayTime[static_cast<int>(eSkillName)]; }
 	void	setZeroDeleyTime(PLAYER::SKILL_NAME eSkillName) { _arCurrentDelayTime[static_cast<int>(eSkillName)] = 0.0f; }
+
+	void	setZeroNormalCount() { _nNormalSkillCoount = 0; }
+	int		getNormalSkillCount() { return _nNormalSkillCoount; }
+	void	addNormalSkillCount(int nOffset) { _nNormalSkillCoount += nOffset; }
 };
