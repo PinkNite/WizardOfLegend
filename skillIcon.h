@@ -65,5 +65,7 @@ public:
 	int getAlpha() { return _alpha;}
 	void setAlpha(int num) { _alpha = num; }
 	void setNum(int num) { _num = num; }
+	int getNum() { return _num; }
+	vector<TAGSKILLICON> getVSkillIcon() { return _vSkillIcon; }
 };
 

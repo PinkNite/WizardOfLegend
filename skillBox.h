@@ -1,5 +1,11 @@
 #pragma once
 #include "object.h"
+#include "skillIcon.h"
+//#pragma warning(disable:4996)
+struct TAGFONT
+{
+	const char* str;
+};
 enum SKILLUSE
 {
 	USE,
@@ -20,25 +26,35 @@ private:
 	int _frameX;
 	int _x, _y;
 	int _alpha;
-
+	int _alphaBlack;
+	string _imageName;
 	//쿨타임용
-	TAGPOLY _poly[6];
-	int _testX, _testY;
+
 	RECT _rc;
-	//테스트용
+	TAGPOLY _poly;
+	float _skillCool;
+	
 public:
+	SKILLICON* _pSkillIcon;
 	SKILLBOX();
 	~SKILLBOX();
-	HRESULT init(int x, int y);
+	HRESULT init(int x, int y,string imageName,float cool);
 	void release();
 	void update();
 	void render(HDC hdc);
 	void coolDownSetting();
 	void coolDownUpdate();
 	void coolDownRender(HDC hdc);
+	void fontSetting(float cool);
+	void fontUpdate();
+	void fontRender(HDC hdc);
+	void fontRender(HDC hdc, float coolTime, const char* str2, int x, int y, int num, COLORREF color);
 public:
 	void setFrameX(int num) { _frameX = num; }
 	void setAlpha(int num) { _alpha = num; }
 	int getAlpha() { return _alpha; }
+	void setSkillUse(SKILLUSE num) { _poly.isUse = num; }
+	SKILLUSE getSkillUse() { return _poly.isUse; }
+	void setImageName(string name) { _imageName = name; }
 };
 

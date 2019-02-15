@@ -60,7 +60,7 @@ HRESULT STATUSUI::init()
 		_pSkillIcon[i] = new SKILLICON;
 		//_pSkillIcon[i]->init(212 + i * 66, 150);
 		_pSkillIcon[i]->init(_pStatusBox[i]->getPosX()-2, _pStatusBox[i]->getPosY()-2);
-		_pSkillIcon[i]->setNum(i+4);
+		_pSkillIcon[i]->setNum(i);
 
 	}
 
