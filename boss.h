@@ -107,7 +107,7 @@ private:
 
 	// bullet
 	int _bulletSize;
-	bool _isAllFired;
+	bool _isEndSkill;
 	tagBullet* _bullet[18];
 	SKILL_TYPE _skillType;
 
@@ -141,7 +141,7 @@ public:
 
 private:
 	void setEnumName();
-	void setAnimation();
+	void createAnimation();
 
 	const string getAnimationKey(const string& strDir, const string& strAction);
 
@@ -168,12 +168,15 @@ public:
 
 	void dash(float offset);
 	void skillFire(float x, float y);
-	void spell01();
+	void spell01(SKILL_TYPE type);
 	void bulletMove();
+	void bulletRender(HDC hdc);
 	void setRect();
 	void moveBoss();
 	void setWings(bool isMax);
 	void setBossIdle();
+	void setDamage(float damage);
+	void setDeath();
 
 	inline void setDashTime(float dashTime) { _fDashTime = dashTime; }
 	inline float getSpeed() { return _fSpeed; }

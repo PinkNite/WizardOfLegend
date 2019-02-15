@@ -25,10 +25,26 @@ void BossStageScene::update()
 {
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
-		_boss->spell01();
+		_boss->spell01(BOSS::SKILL_TYPE::CHAKRAM);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_boss->spell01(BOSS::SKILL_TYPE::BUBBLE);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('9'))
+	{
+		_boss->setDamage(50.0f);
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('0'))
+	{
+		_boss->setDeath();
+	}
+
+	//Å°ÆÐµå 0
+	if (KEYMANAGER->isOnceKeyDown('`'))
 	{
 		_isShow = true;
 		_boss->showBoss();

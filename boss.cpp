@@ -33,6 +33,8 @@ void BOSS::init()
 	_pWingImage = IMAGEMANAGER->addFrameImage("IceWings", "resource/boss/ice/IceWings.bmp", 933, 400, 7, 4, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("WaterBounce", "resource/boss/ice/WaterBounce.bmp", 600, 480, 5, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("IceChakram", "resource/boss/ice/IceChakram.bmp", 50, 50, true, RGB(255, 0, 255));
+
 
 	OBJECT::init(300, 200, BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
 	OBJECT::_pImg = IMAGEMANAGER->addFrameImage("iceBossImg", "resource/boss/ice/IceBoss.bmp",
@@ -40,7 +42,7 @@ void BOSS::init()
 
 	_pAnimation = new animation();
 	_pAnimation->init(BOSS_IMAGE_WIDTH, BOSS_IMAGE_HEIGHT, BOSS_MAX_FRAME_X, BOSS_MAX_FRAME_Y);
-	
+
 	_fMaxHP = 1000.0f;
 	_fCurrentHP = 1000.0f;
 	_fSpeed = 200.0f;
@@ -49,7 +51,7 @@ void BOSS::init()
 	_skillType = SKILL_TYPE::NONE;
 
 	setEnumName();
-	setAnimation();
+	createAnimation();
 
 	_direction = DIRECTION::DOWN;
 	_action = ACTION::IDLE;
@@ -71,12 +73,16 @@ void BOSS::update()
 		_pCurrentState->update(this);
 	}
 
+	if (_fCurrentHP < 0)
+	{
+		setDeath();
+	}
+
 	bulletMove();
 
 	handleInputKey();
 
 	KEYANIMANAGER->update();
-
 }
 
 void BOSS::release()
@@ -96,42 +102,40 @@ void BOSS::release()
 void BOSS::render(HDC hdc)
 {
 	//Rectangle(hdc, OBJECT::_rc);
-	int x = static_cast<int>(OBJECT::getPosX());
-	int y = static_cast<int>(OBJECT::getPosY());
+	int renderX = static_cast<int>(OBJECT::getPosX());
+	int renderY = static_cast<int>(OBJECT::getPosY());
 
-	// ice wing
-	_pWingImage->aniRenderCenter(hdc, x, y, _pWingsAnimation);
 
 	// 보스 등장 씬
 	if (ACTION::ENTRANCE == _action)
 	{
+		// ice wing
+		_pWingImage->aniRenderCenter(hdc, renderX, renderY, _pWingsAnimation);
+
 		if (_timeSet > 1.0f)
 		{
-			_pBlastImage->renderCenter(hdc, x, y);
+			_pBlastImage->renderCenter(hdc, renderX, renderY);
 			// boss charater
-			OBJECT::getImage()->aniRenderCenter(hdc, x, y, _pAnimation);
+			OBJECT::getImage()->aniRenderCenter(hdc, renderX, renderY, _pAnimation);
 		}
-		_pEffectImage->aniRenderCenter(hdc, x, y, _pEffectAnimation);
+		_pEffectImage->aniRenderCenter(hdc, renderX, renderY, _pEffectAnimation);
+	}
+	// 보스 다이
+	else if (ACTION::DEATH == _action)
+	{
+		// boss charater
+		OBJECT::getImage()->aniRenderCenter(hdc, renderX, renderY, _pAnimation);
+		_pEffectImage->aniRenderCenter(hdc, renderX, renderY, _pEffectAnimation);
 	}
 	else
 	{
 		// ice wing
-		_pWingImage->aniRenderCenter(hdc, x, y, _pWingsAnimation);
+		_pWingImage->aniRenderCenter(hdc, renderX, renderY, _pWingsAnimation);
 		// boss charater
-		OBJECT::getImage()->aniRenderCenter(hdc, x, y, _pAnimation);
+		OBJECT::getImage()->aniRenderCenter(hdc, renderX, renderY, _pAnimation);
 	}
 
-
-	if (SKILL_TYPE::BUBBLE == _skillType)
-	{
-		for (int i = 0; i < _bulletSize; i++)
-		{
-			int x = static_cast<int>(_bullet[i]->x);
-			int y = static_cast<int>(_bullet[i]->y);
-			_bullet[i]->iceImage->aniRenderCenter(hdc, x, y, _pIceBulletAnimation);
-		}
-	}
-
+	bulletRender(hdc);
 
 }
 
@@ -160,21 +164,24 @@ void BOSS::setEnumName()
 
 }
 
-void BOSS::setAnimation()
+void BOSS::createAnimation()
 {
 	KEYANIMANAGER->addObject(_objectName);
 
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::ENTRANCE], 62, 64, 8, false, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01], 22, 42, 6, false, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_02], 22, 42, 6, false, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_03], 22, 42, 6, false, nullptr);
 
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DAMAGE], 66, 68, 8, false, callbackIdle);
+	
 	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::RUN], 0, 0, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::RUN], 1, 1, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::RUN], 2, 2, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::RUN], 3, 3, 1, true, nullptr);
 
 	int effectFrame[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "Entrance", "IceCrystals", effectFrame, 8, 5, false, callbackSetBattle, this);
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "Entrance", "IceCrystals", effectFrame, 8, 4, false, callbackSetBattle, this);
 
 	int idlMaxFrame[7] = { 0, 1, 2, 3, 4, 5, 6 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMaxIdle", "IceWings", idlMaxFrame, 7, 4, true);
@@ -191,6 +198,16 @@ void BOSS::setAnimation()
 	// bubble
 	int waterBall[10] = { 0, 1, 2, 3, 4 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WaterBalls", "WaterBounce", waterBall, 5, 4, true);
+
+	int skill01[23] = { 22, 22, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42 };
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01]), "iceBossImg", skill01, 23, 8, false);
+
+	int death[4] = { 69, 69, 69, 69 };
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DEATH]), "iceBossImg", death, 3, 4, false);
+	//addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DEATH], 69, 69, 1, true, nullptr);
+
+	int bossEndFrame[5] = { 0, 1, 2, 3, 4 };
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "BossEnding", "IceCrystals", bossEndFrame, 5, 2, false);
 
 }
 
@@ -239,7 +256,6 @@ void BOSS::addBossKeyAni(const string & strDir, const string & strAction, int st
 			"iceBossImg", _arFrame, nFrameCount, fps, isLoop, cbFunction, this);
 	}
 
-
 }
 
 void BOSS::setState(BOSS_STATE bossState)
@@ -284,8 +300,8 @@ void BOSS::initState()
 	_arState[int(BOSS_STATE::IDLE)] = new BossStateIdle();
 	_arState[int(BOSS_STATE::RUN)] = new BossStateRun();
 	_arState[int(BOSS_STATE::SKILL_01)] = new BossStateSkill01();
-	//_arState[int(BOSS_STATE::SKILL_02)] = new BossStateSkill02();
-	//_arState[int(BOSS_STATE::SKILL_03)] = new BossStateSkill03();
+	_arState[int(BOSS_STATE::SKILL_02)] = new BossStateSkill01();
+	_arState[int(BOSS_STATE::SKILL_03)] = new BossStateSkill01();
 }
 
 void BOSS::handleInputKey()
@@ -366,55 +382,75 @@ void BOSS::dash(float offset)
 {
 }
 
-void BOSS::spell01()
+void BOSS::spell01(SKILL_TYPE type)
 {
-	_timeSet = 0;
-	_bulletSize = 10;
-	_isAllFired = false;
+	if (ACTION::ENTRANCE == _action) return;
 
+	_timeSet = 0;
+	_isEndSkill = false;
+	float positionAngle = 10.0f;
 	setState(BOSS_STATE::SKILL_01);
 	setWings(false);
 
 	_direction = DIRECTION::DOWN;
-	_skillType = SKILL_TYPE::BUBBLE;
+	_skillType = type;
+	string imageName = "";
+	if (SKILL_TYPE::BUBBLE == type)
+	{
+		_bulletSize = 10;
+		imageName = "WaterBounce";
+		_pIceBulletAnimation = KEYANIMANAGER->findAnimation(_objectName, "WaterBalls");
+		_pIceBulletAnimation->start();
+	}
+	if (SKILL_TYPE::CHAKRAM == type)
+	{
+		_bulletSize = 18;
+		imageName = "IceChakram";
+	}
+
+	positionAngle = float(_bulletSize);
 
 	for (int i = 0; i < _bulletSize; i++)
 	{
 		_bullet[i] = new tagBullet();
-		_bullet[i]->iceImage = IMAGEMANAGER->findImage("WaterBounce");
+		_bullet[i]->iceImage = IMAGEMANAGER->findImage(imageName);
 		_bullet[i]->distance = 128.0f;
-		_bullet[i]->angle = PI2/10.0f * i;
+		_bullet[i]->angle = PI2 / positionAngle * i;
 		_bullet[i]->radius = 7;
 		_bullet[i]->x = OBJECT::_posX;
 		_bullet[i]->y = OBJECT::_posY;
 		_bullet[i]->isFire = false;
 	}
-
-	_pIceBulletAnimation = KEYANIMANAGER->findAnimation(_objectName, "WaterBalls");
-	_pIceBulletAnimation->start();
 }
 
 void BOSS::skillFire(float x, float y)
 {
-	int fireCount = 0;
-	for (int i = 0; i < _bulletSize; i++)
+	_timeSet += TIMEMANAGER->getElapsedTime();
+
+	if (_timeSet > 0.1f)
 	{
-		if (_bullet[i]->isFire) 
+		int fireCount = 0;
+		for (int i = _bulletSize - 1; i >= 0; i--)
 		{
-			fireCount++;
-			continue;
+			if (_bullet[i]->isFire)
+			{
+				fireCount++;
+				continue;
+			}
+
+			_bullet[i]->fireAngle = getAngle(_bullet[i]->x, _bullet[i]->y, x, y);;
+			_bullet[i]->speed = 18.0f;
+			_bullet[i]->isFire = true;
+			break;
 		}
 
-		_bullet[i]->fireAngle = getAngle(_bullet[i]->x, _bullet[i]->y, x, y);;
-		_bullet[i]->speed = 10.0f;
-		_bullet[i]->isFire = true;
-		break;
-	}
+		if (_bulletSize == fireCount)
+		{
+			_isEndSkill = true;
+			setBossIdle();
+		}
 
-	if (_bulletSize == fireCount)
-	{
-		_isAllFired = true;
-		setBossIdle();
+		_timeSet = 0;
 	}
 }
 
@@ -438,6 +474,29 @@ void BOSS::bulletMove()
 
 		_bullet[i]->x += cos(_bullet[i]->fireAngle) * _bullet[i]->speed;
 		_bullet[i]->y += -sin(_bullet[i]->fireAngle) * _bullet[i]->speed;
+	}
+}
+
+void BOSS::bulletRender(HDC hdc)
+{
+	if (SKILL_TYPE::BUBBLE == _skillType && ACTION::IDLE != _action)
+	{
+		for (int i = 0; i < _bulletSize; i++)
+		{
+			int x = static_cast<int>(_bullet[i]->x);
+			int y = static_cast<int>(_bullet[i]->y);
+			_bullet[i]->iceImage->aniRenderCenter(hdc, x, y, _pIceBulletAnimation);
+		}
+	}
+
+	if (SKILL_TYPE::CHAKRAM == _skillType && ACTION::IDLE != _action)
+	{
+		for (int i = 0; i < _bulletSize; i++)
+		{
+			int x = static_cast<int>(_bullet[i]->x);
+			int y = static_cast<int>(_bullet[i]->y);
+			_bullet[i]->iceImage->renderCenter(hdc, x, y);
+		}
 	}
 }
 
@@ -523,9 +582,45 @@ void BOSS::setBattle()
 
 void BOSS::setBossIdle()
 {
-	setState(BOSS_STATE::IDLE);
-	setAction(ACTION::IDLE);
-	setWings(true);
+	if (ACTION::DEATH == _action) return;
+
+	// 스킬 시전중에는 Idle 상태 변하지 않음.
+	if (ACTION::SKILL_01 == _action || ACTION::SKILL_02 == _action || ACTION::SKILL_02 == _action)
+	{
+		if (_isEndSkill == true)
+		{
+			setState(BOSS_STATE::IDLE);
+			setAction(ACTION::IDLE);
+			setWings(true);
+			_isEndSkill = false;
+		}
+	}
+	else
+	{
+		setState(BOSS_STATE::IDLE);
+		setAction(ACTION::IDLE);
+		setWings(true);
+	}
+}
+
+void BOSS::setDamage(float damage)
+{
+	_fCurrentHP -= damage;
+	if (!(ACTION::SKILL_01 == _action || ACTION::SKILL_02 == _action || ACTION::SKILL_02 == _action))
+	{
+		setAction(ACTION::DAMAGE);
+		setWings(false);
+	}
+}
+
+void BOSS::setDeath()
+{
+	//setState(BOSS_STATE::DEATH);
+	setAction(ACTION::DEATH);
+	startBossAnimation();
+
+	_pEffectAnimation = KEYANIMANAGER->findAnimation(_objectName, "BossEnding");
+	_pEffectAnimation->start();
 }
 
 void BOSS::setWings(bool isMax)
