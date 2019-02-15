@@ -29,7 +29,7 @@ struct TAGSKILLICON
 	int damage3;
 	int damage4;
 	int damage5;
-	int coolDown;//Äð´Ù¿î
+	float coolDown;//Äð´Ù¿î
 	int knockBack;//³Ë¹é½Ã°£
 	int knockBack2;
 	int knockBack3;

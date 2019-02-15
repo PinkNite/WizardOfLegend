@@ -21,7 +21,7 @@ SKILLUI::~SKILLUI()
 HRESULT SKILLUI::init()
 {
 	
-
+	
 
 
 	//스탯박스 추가해서 그림
@@ -75,10 +75,12 @@ HRESULT SKILLUI::init()
 	_pItem->setY(_y);
 	_pItem->setNum(188);
 	_pItem->setAlpha(60);
-
+	_pSkillIcon = new SKILLICON;
+	_pSkillIcon->setSkillIcon();
 	for (int i = 0; i < 6; i++)
 	{
 		_pSkillBox[i] = new SKILLBOX;
+		
 		switch (i)
 		{
 		case 0:
@@ -101,7 +103,7 @@ HRESULT SKILLUI::init()
 			_name = "5";
 			break;
 		}
-		_pSkillBox[i]->init(60 + (i *60)+ 3, WINSIZEY - 90,_name,6.5f);//이쪽수정필요
+		_pSkillBox[i]->init(60 + (i *60)+ 3, WINSIZEY - 90,_name,_pSkillIcon->getVSkillIcon()[i].coolDown);//이쪽수정필요
 		if (i == 3)
 		{
 			_pSkillBox[i]->setFrameX(0);
@@ -204,7 +206,12 @@ void SKILLUI::render(HDC hdc)
 	
 	_pItem->render(hdc);
 
+	/*char str[200];
 	
+		sprintf_s(str, "%lf", _pSkillIcon->getVSkillIcon()[1].coolDown);
+		TextOut(hdc, 800, 400, str, strlen(str));*/
+	
+
 }
 
 
