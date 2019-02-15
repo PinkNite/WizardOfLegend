@@ -479,7 +479,7 @@ void BOSS::bulletMove()
 
 void BOSS::bulletRender(HDC hdc)
 {
-	if (SKILL_TYPE::BUBBLE == _skillType && ACTION::IDLE != _action)
+	if (SKILL_TYPE::BUBBLE == _skillType)
 	{
 		for (int i = 0; i < _bulletSize; i++)
 		{
@@ -489,7 +489,7 @@ void BOSS::bulletRender(HDC hdc)
 		}
 	}
 
-	if (SKILL_TYPE::CHAKRAM == _skillType && ACTION::IDLE != _action)
+	if (SKILL_TYPE::CHAKRAM == _skillType)
 	{
 		for (int i = 0; i < _bulletSize; i++)
 		{
