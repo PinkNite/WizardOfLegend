@@ -13,7 +13,6 @@ BossStageScene::~BossStageScene()
 
 HRESULT BossStageScene::init()
 {
-	_frameCount = 0;
 	_isShow = false;
 
 	_boss= new BOSS();
@@ -29,8 +28,7 @@ void BossStageScene::update()
 		_boss->spell01();
 	}
 
-	_frameCount++;
-	if (_frameCount % 100 == 0 && _isShow == false)
+	if (KEYMANAGER->isOnceKeyDown('0'))
 	{
 		_isShow = true;
 		_boss->showBoss();

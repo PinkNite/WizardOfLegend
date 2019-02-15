@@ -72,6 +72,7 @@ public:
 		image* iceImage;
 		float distance;
 		float angle;
+		float fireAngle;
 		float speed;
 		float x;
 		float y;
@@ -106,6 +107,7 @@ private:
 
 	// bullet
 	int _bulletSize;
+	bool _isAllFired;
 	tagBullet* _bullet[18];
 	SKILL_TYPE _skillType;
 
@@ -143,7 +145,7 @@ private:
 
 	const string getAnimationKey(const string& strDir, const string& strAction);
 
-	void addBossKeyAni(const string& strDir, const string& strActoin, int startFrame, int endFrame, int fps, bool isLoop);
+	void addBossKeyAni(const string& strDir, const string& strActoin, int startFrame, int endFrame, int fps, bool isLoop, void * cbFunction);
 
 public:
 	void showBoss();
@@ -156,7 +158,7 @@ public:
 	void setDirection(DIRECTION direction);
 	void handleState(BOSS_STATE bossState);
 
-	void startAnimation();
+	void startBossAnimation();
 
 	void handleInputKey();
 	void moveUp(float speed);
@@ -167,9 +169,11 @@ public:
 	void dash(float offset);
 	void skillFire(float x, float y);
 	void spell01();
+	void bulletMove();
 	void setRect();
 	void moveBoss();
 	void setWings(bool isMax);
+	void setBossIdle();
 
 	inline void setDashTime(float dashTime) { _fDashTime = dashTime; }
 	inline float getSpeed() { return _fSpeed; }
@@ -180,6 +184,6 @@ public:
 	static void callbackSetBattle(void * obj);
 	static void callbackMinWingIdle(void * obj);
 	static void callbackMaxWingIdle(void * obj);
-
+	static void callbackIdle(void * obj);
 };
 

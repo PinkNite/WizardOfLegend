@@ -40,6 +40,7 @@ void BOSS::init()
 
 	_pAnimation = new animation();
 	_pAnimation->init(BOSS_IMAGE_WIDTH, BOSS_IMAGE_HEIGHT, BOSS_MAX_FRAME_X, BOSS_MAX_FRAME_Y);
+	
 	_fMaxHP = 1000.0f;
 	_fCurrentHP = 1000.0f;
 	_fSpeed = 200.0f;
@@ -53,12 +54,7 @@ void BOSS::init()
 	_direction = DIRECTION::DOWN;
 	_action = ACTION::IDLE;
 
-	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, getAnimationKey(_mDirection[_direction], _mAction[_action]));
-	_pAnimation->start();
-
-	_pWingsAnimation = KEYANIMANAGER->findAnimation(_objectName, "WingsMin");
-	_pWingsAnimation->start();
-
+	startBossAnimation();
 	initState();
 
 }
@@ -70,44 +66,12 @@ void BOSS::update()
 		_timeSet += TIMEMANAGER->getElapsedTime();
 	}
 
-
 	if (_pCurrentState != nullptr)
 	{
 		_pCurrentState->update(this);
 	}
 
-	if (SKILL_TYPE::BUBBLE == _skillType)
-	{
-		_timeSet += TIMEMANAGER->getElapsedTime();
-
-		if (_timeSet > 3.0f)
-		{
-			// 적의 앵글각도에 맞으면 발사로 변경
-			skillFire(float(_ptMouse.x), float(_ptMouse.y));
-		}
-
-		//  rolling circle
-		for (int i = 0; i < _bulletSize; i++)
-		{
-			if (_bullet[i]->isFire) continue;
-
-			_bullet[i]->angle += PI32;
-			//Mins::presentPowerX()
-			_bullet[i]->x = _posX + cos(_bullet[i]->angle) * _bullet[i]->distance;
-			_bullet[i]->y = _posY + -sin(_bullet[i]->angle) * _bullet[i]->distance;
-		}
-
-		// moving was fired bullet.
-		for (int i = 0; i < _bulletSize; i++)
-		{
-			if (_bullet[i]->isFire == false) continue;
-
-			//Mins::presentPowerX()
-			_bullet[i]->x += cosf(_bullet[i]->angle) + _bullet[i]->speed;
-			_bullet[i]->y += -sinf(_bullet[i]->angle) + _bullet[i]->speed;
-		}
-
-	}
+	bulletMove();
 
 	handleInputKey();
 
@@ -200,14 +164,14 @@ void BOSS::setAnimation()
 {
 	KEYANIMANAGER->addObject(_objectName);
 
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::ENTRANCE], 62, 64, 8, false);
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::IDLE], 88, 97, 4, true);
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01], 22, 42, 6, false);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::ENTRANCE], 62, 64, 8, false, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01], 22, 42, 6, false, nullptr);
 
-	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::RUN], 0, 0, 1, true);
-	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::RUN], 1, 1, 1, true);
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::RUN], 2, 2, 1, true);
-	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::RUN], 3, 3, 1, true);
+	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::RUN], 0, 0, 1, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::RUN], 1, 1, 1, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::RUN], 2, 2, 1, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::RUN], 3, 3, 1, true, nullptr);
 
 	int effectFrame[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "Entrance", "IceCrystals", effectFrame, 8, 5, false, callbackSetBattle, this);
@@ -239,7 +203,7 @@ const string BOSS::getAnimationKey(const string & strDir, const string & strActi
 	return temp;
 }
 
-void BOSS::addBossKeyAni(const string & strDir, const string & strAction, int startFrame, int endFrame, int fps, bool isLoop)
+void BOSS::addBossKeyAni(const string & strDir, const string & strAction, int startFrame, int endFrame, int fps, bool isLoop, void * cbFunction)
 {
 	int nFrameCount(0);
 	int nFrameTmp(0);
@@ -264,23 +228,32 @@ void BOSS::addBossKeyAni(const string & strDir, const string & strAction, int st
 		}
 	}
 
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(strDir, strAction),
-		"iceBossImg", _arFrame, nFrameCount, fps, isLoop);
+	if (cbFunction == nullptr)
+	{
+		KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(strDir, strAction),
+			"iceBossImg", _arFrame, nFrameCount, fps, isLoop);
+	}
+	else
+	{
+		KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(strDir, strAction),
+			"iceBossImg", _arFrame, nFrameCount, fps, isLoop, cbFunction, this);
+	}
+
 
 }
 
 void BOSS::setState(BOSS_STATE bossState)
 {
-	if (_pCurrentState == _arState[static_cast<int>(bossState)])  return;
+	if (_pCurrentState == _arState[int(bossState)])  return;
 
-	_pCurrentState = _arState[static_cast<int>(bossState)];
-	//this->handleState(bossState);
+	_pCurrentState = _arState[int(bossState)];
+	this->handleState(bossState);
 }
 
 void BOSS::setAction(ACTION action)
 {
 	_action = action;
-	startAnimation();
+	startBossAnimation();
 }
 
 void BOSS::setDirection(DIRECTION direction)
@@ -288,7 +261,7 @@ void BOSS::setDirection(DIRECTION direction)
 	_direction = direction;
 }
 
-void BOSS::startAnimation()
+void BOSS::startBossAnimation()
 {
 	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, getAnimationKey(_mDirection[_direction], _mAction[_action]));
 	_pAnimation->start();
@@ -299,7 +272,7 @@ void BOSS::handleState(BOSS_STATE bossState)
 	BossState* state = _pCurrentState->handleState(this, bossState);
 	if (state != nullptr)
 	{
-		delete _pCurrentState;
+		_pCurrentState = nullptr;
 		_pCurrentState = state;
 
 		_pCurrentState->enter(this);
@@ -310,6 +283,9 @@ void BOSS::initState()
 {
 	_arState[int(BOSS_STATE::IDLE)] = new BossStateIdle();
 	_arState[int(BOSS_STATE::RUN)] = new BossStateRun();
+	_arState[int(BOSS_STATE::SKILL_01)] = new BossStateSkill01();
+	//_arState[int(BOSS_STATE::SKILL_02)] = new BossStateSkill02();
+	//_arState[int(BOSS_STATE::SKILL_03)] = new BossStateSkill03();
 }
 
 void BOSS::handleInputKey()
@@ -394,8 +370,11 @@ void BOSS::spell01()
 {
 	_timeSet = 0;
 	_bulletSize = 10;
+	_isAllFired = false;
 
-	_action = ACTION::SKILL_01;
+	setState(BOSS_STATE::SKILL_01);
+	setWings(false);
+
 	_direction = DIRECTION::DOWN;
 	_skillType = SKILL_TYPE::BUBBLE;
 
@@ -411,27 +390,55 @@ void BOSS::spell01()
 		_bullet[i]->isFire = false;
 	}
 
-	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, getAnimationKey(_mDirection[_direction], _mAction[_action]));
-	_pAnimation->start();
-
 	_pIceBulletAnimation = KEYANIMANAGER->findAnimation(_objectName, "WaterBalls");
 	_pIceBulletAnimation->start();
 }
 
 void BOSS::skillFire(float x, float y)
 {
-	_timeSet -= 0.15f;
-
+	int fireCount = 0;
 	for (int i = 0; i < _bulletSize; i++)
 	{
-		if (_bullet[i]->isFire) continue;
+		if (_bullet[i]->isFire) 
+		{
+			fireCount++;
+			continue;
+		}
 
-		_bullet[i]->angle = getAngle(_bullet[i]->x, _bullet[i]->y, x, y);
+		_bullet[i]->fireAngle = getAngle(_bullet[i]->x, _bullet[i]->y, x, y);;
 		_bullet[i]->speed = 10.0f;
 		_bullet[i]->isFire = true;
 		break;
 	}
 
+	if (_bulletSize == fireCount)
+	{
+		_isAllFired = true;
+		setBossIdle();
+	}
+}
+
+void BOSS::bulletMove()
+{
+	//  rolling circle
+	for (int i = 0; i < _bulletSize; i++)
+	{
+		if (_bullet[i]->isFire) continue;
+
+		_bullet[i]->angle += PI32;
+		//Mins::presentPowerX()
+		_bullet[i]->x = _posX + cos(_bullet[i]->angle) * _bullet[i]->distance;
+		_bullet[i]->y = _posY + -sin(_bullet[i]->angle) * _bullet[i]->distance;
+	}
+
+	// moving was fired bullet.
+	for (int i = 0; i < _bulletSize; i++)
+	{
+		if (_bullet[i]->isFire == false) continue;
+
+		_bullet[i]->x += cos(_bullet[i]->fireAngle) * _bullet[i]->speed;
+		_bullet[i]->y += -sin(_bullet[i]->fireAngle) * _bullet[i]->speed;
+	}
 }
 
 void BOSS::setRect()
@@ -514,6 +521,13 @@ void BOSS::setBattle()
 
 }
 
+void BOSS::setBossIdle()
+{
+	setState(BOSS_STATE::IDLE);
+	setAction(ACTION::IDLE);
+	setWings(true);
+}
+
 void BOSS::setWings(bool isMax)
 {
 	if (isMax)
@@ -540,4 +554,10 @@ void BOSS::callbackMaxWingIdle(void * obj)
 {
 	BOSS* pBoss = (BOSS*)obj;
 	pBoss->setWings(true);
+}
+
+void BOSS::callbackIdle(void * obj)
+{
+	BOSS* pBoss = (BOSS*)obj;
+	pBoss->setBossIdle();
 }
