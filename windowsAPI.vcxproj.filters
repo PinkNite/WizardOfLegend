@@ -375,6 +375,9 @@
     <ClInclude Include="shokeNova.h">
       <Filter>PlayGround\skill</Filter>
     </ClInclude>
+    <ClInclude Include="skillBox.h">
+      <Filter>PlayGround\UI\skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -610,6 +613,9 @@
     </ClCompile>
     <ClCompile Include="mpbar.cpp">
       <Filter>PlayGround\UI\hpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="skillBox.cpp">
+      <Filter>PlayGround\UI\skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -202,6 +202,7 @@
     <ClInclude Include="shokeNova.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skill.h" />
+    <ClInclude Include="skillBox.h" />
     <ClInclude Include="skillButton.h" />
     <ClInclude Include="skillEffect.h" />
     <ClInclude Include="skillEffectMgr.h" />
@@ -284,6 +285,7 @@
     <ClCompile Include="relics.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="skill.cpp" />
+    <ClCompile Include="skillBox.cpp" />
     <ClCompile Include="skillButton.cpp" />
     <ClCompile Include="skillEffect.cpp" />
     <ClCompile Include="skillEffectMgr.cpp" />
