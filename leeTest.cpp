@@ -49,3 +49,4 @@ void LEETEST::render()
 	_pMouse->render(getMemDC(), _ptMouse.x - 32, _ptMouse.y - 32);
 
 }
+

@@ -74,3 +74,4 @@ inline void Ellipse(HDC hdc, RECT& rc)
 {
 	Ellipse(hdc, rc.left, rc.top, rc.right, rc.bottom);
 }
+

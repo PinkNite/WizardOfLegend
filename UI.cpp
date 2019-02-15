@@ -83,7 +83,14 @@ void UI::update()
 		else
 		{
 			_isClick = false;
-			_pStatusUI->setIsClick(0);
+			//_pStatusUI->setIsClick(SKILL_STATE);
+			_pStatusUI->_pStatusSelect->setSelectState(SKILL_STATE);
+			for (int i = 0; i < 6; i++)
+			{
+
+				_pStatusUI->_pStatusBox[i]->setFrameX(0);
+			}
+			_pStatusUI->_count = 0;
 		}
 	}
 	if (_isClick)

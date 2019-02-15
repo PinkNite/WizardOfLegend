@@ -10,7 +10,7 @@
 class ITEM;
 class STATUSUI :public OBJECT
 {
-private:
+public:
 	//유아이는 메인 판 그림
 	//안에 박스는 따로 그리고
 	//셀렉트 박스 따로 그리고 
@@ -54,7 +54,7 @@ public:
 public:
 	//접근자
 	bool getIsClick() { return _isClick; }
-	void setIsClick(bool num) { _isClick = num; }
+	void setIsClick(SELECTSTATE num) { _pStatusSelect->setSelectState(num); }
 
 };
 
