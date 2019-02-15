@@ -5,7 +5,7 @@
 #include "skillButton.h"
 #include "font.h"
 #include "item.h"
-#include "skillIcon.h"
+
 
 
 
@@ -58,14 +58,14 @@ HRESULT SKILLUI::init()
 		}
 	}
 	//폰트
-	for (int i = 0; i < 2; i++)
+	/*for (int i = 0; i < 2; i++)
 	{
 		_pFont[i] = new FONT;
 
 
 		_pFont[i]->init(WINSIZEX / 2 - 332 + i * 54, WINSIZEY - 20);
-	}
-	_pFont[1]->setFrameX(1);
+	}*/
+	//_pFont[1]->setFrameX(1);
 
 
 	_pItem = new ITEM;
@@ -79,13 +79,39 @@ HRESULT SKILLUI::init()
 	for (int i = 0; i < 6; i++)
 	{
 		_pSkillBox[i] = new SKILLBOX;
-		_pSkillBox[i]->init(60 + (i *60)+ 3, WINSIZEY - 90);
-	_pSkillIcon[i] = new SKILLICON;
-	_pSkillIcon[i]->init(60 + (i * 60) +8,WINSIZEY- 90+8);
+		switch (i)
+		{
+		case 0:
+			
+			_name = "0";
+			break;
+		case 1:
+			_name = "1";
+			break;
+		case 2:
+			_name = "2";
+			break;
+		case 3:
+			_name = "3";
+			break;
+		case 4:
+			_name = "4";
+			break;
+		case 5:
+			_name = "5";
+			break;
+		}
+		_pSkillBox[i]->init(60 + (i *60)+ 3, WINSIZEY - 90,_name,6.5f);//이쪽수정필요
+		if (i == 3)
+		{
+			_pSkillBox[i]->setFrameX(0);
+		}
+		_pSkillBox[i]->_pSkillIcon->setNum(i);
+		
 
 	}
-
-
+	
+	
 	
 	
 	
@@ -99,8 +125,43 @@ void SKILLUI::release()
 
 void SKILLUI::update()
 {
-	
+	for (int i = 0; i < 6; i++)
+	{
+		_pSkillBox[i]->update();
+		
+	}
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		_pSkillBox[0]->setSkillUse(USE);
 
+	}
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_pSkillBox[1]->setSkillUse(USE);
+
+	}
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_pSkillBox[2]->setSkillUse(USE);
+
+	}
+	if (KEYMANAGER->isOnceKeyDown('4'))
+	{
+		_pSkillBox[3]->setSkillUse(USE);
+
+	}
+	if (KEYMANAGER->isOnceKeyDown('5'))
+	{
+		_pSkillBox[4]->setSkillUse(USE);
+
+	}
+	if (KEYMANAGER->isOnceKeyDown('6'))
+	{
+		_pSkillBox[5]->setSkillUse(USE);
+
+	}
+
+	
 
 }
 
@@ -112,10 +173,8 @@ void SKILLUI::render(HDC hdc)
 	{
 		
 		_pSkillBox[i]->render(hdc);
-		_pSkillIcon[i]->render(hdc);
 		
-		
-		
+
 	}
 
 	
@@ -142,16 +201,13 @@ void SKILLUI::render(HDC hdc)
 		}
 
 	}
-	for (int i = 0; i < 2; i++)
-	{
-		_pFont[i]->render(hdc);
-	}
+	
 	_pItem->render(hdc);
-	
-	
-	
+
 	
 }
+
+
 
 
 
