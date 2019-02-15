@@ -49,7 +49,7 @@ private:
 	int		_nAroundWall;		//주변벽값을 가진다.
 	
 	bool	_bIsWall;			//벽인지 아닌지 아직 2개 밖에 없어서 가능한 방식 나중에는 바꾸어야한다 테리안으로
-	TILE::TERRIAN	_terrian;	//2가지가 아니라면 terrian을 사용해서 찾아야 한다.
+	TERRIAN	_terrian;			//2가지가 아니라면 terrian을 사용해서 찾아야 한다.
 	
 	image*	_pImage;			//이미지를 담을 것이다.
 	int		_nFrameX;			//프레임 넘버 X
@@ -60,6 +60,7 @@ private:
 	image*	_pObjectImage;		//오브젝트 이미지 none이면 아무것도 안그림
 
 	RECT	_rcCameraLimit;
+	char	str[128];
 
 public:
 	void	setttingObject();
@@ -99,7 +100,7 @@ public:
 	inline	void	setRectTile(int nLeft, int nTop, int nWidth, int nHeight) { _rcTile = RectMake(nLeft, nTop, nWidth, nHeight); }
 	inline	void	setNodeIndex(int nIndex) { _nNodeIndex = nIndex; }
 	inline	void	setLimitRect(RECT rc) { _rcCameraLimit = rc; }
-	inline	void	setTerrian(TILE::TERRIAN terrian) { _terrian = terrian; }
+	inline	void	setTerrian(TERRIAN terrian) { _terrian = terrian; }
 
 
 	//getter

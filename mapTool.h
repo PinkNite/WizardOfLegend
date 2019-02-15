@@ -47,6 +47,7 @@ private:
 	int		_nHorizontal;
 	bool	_bIsWall;
 	TILE::OBJECT	_object;
+	TILE::TERRIAN   _terrain;
 
 private:
 	void	createMap();
@@ -84,8 +85,11 @@ public:
 	inline	int		getTileSize() { return _nTileSize; }
 	inline	void	setCurrentX(int nCurrentX) {_nCurrentTileX = nCurrentX;}
 	inline	void	setCurrentY(int nCurrentY){ _nCurrentTileY = nCurrentY; }
+	inline	int		getCurrentX() { return _nCurrentTileX; }
+	inline	int		getCurrentY() { return _nCurrentTileY; }
 	inline	void	setisWall(bool bIsWall) { _bIsWall = bIsWall; }
 	inline	void	setObject(TILE::OBJECT object) { _object = object; }
+	inline  void	setTerrain(TILE::TERRIAN terrain) { _terrain = terrain; }
 	inline	void	setCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 
 	inline	TILE*	getTile(int nX, int nY) { return _vvMap[nY][nX]; }

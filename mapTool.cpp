@@ -92,7 +92,7 @@ void MAPTOOL::passInit(int nTileCountX, int nTileCountY, int nTileSize)
 	_nMapWidth = _nTileCountX * _nTileSize;
 	_nMapHeight = _nTileCountY * _nTileSize;
 
-	_bIsWall = true;
+	_bIsWall = false;
 	_object = TILE::OBJECT::NONE;
 	
 	_pImgMap = IMAGEMANAGER->addFrameImage("MapSample", "resource/UI/sampleTile.bmp", 32, 32, 1, 1, true, RGB(255, 0, 255));
@@ -134,6 +134,8 @@ void MAPTOOL::update()
 	_nVertical = 0;
 	_nHorizontal = 0;
 
+	
+
 	if (KEYMANAGER->isStayKeyDown('W'))
 	{
 		_nVertical -= 10;
@@ -161,7 +163,7 @@ void MAPTOOL::update()
 		}
 	}
 
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && _ptMouse.x < 900) {
+	/*if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && _ptMouse.x < 900) {
 		for (int j = 0; j < _nTileCountY; j++)
 		{
 			for (int i = 0; i < _nTileCountX; i++)
@@ -174,7 +176,7 @@ void MAPTOOL::update()
 				}
 			}
 		}
-	}
+	}*/
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 	{
 		readjustMap();

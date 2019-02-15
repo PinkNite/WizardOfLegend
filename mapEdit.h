@@ -64,7 +64,11 @@ private:
 	bool _clickMap;
 	POINT _clickDownStart;
 	POINT _clickDownEnd;
+	POINT _currentIndex;
+
 	MAPTOOL* _pMapTool;
+	TILE::OBJECT _object;
+
 	CAMERA*	 _pCamera;
 	MAPEDITSTATE _mapEditstate;
 	vector<image *>				 _vTerrainPage;

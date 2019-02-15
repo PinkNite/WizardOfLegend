@@ -83,6 +83,16 @@ void TILE::render(HDC hdc)
 		)
 	{
 		_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+		if (_terrian == TERRIAN::WALL)
+		{
+			sprintf_s(str, "º®");
+			TextOut(hdc, _rcTile.left + 2, _rcTile.top + 2, str, strlen(str));
+		}
+		else if (_terrian == TERRIAN::PASS)
+		{
+			sprintf_s(str, "±æ");
+			TextOut(hdc, _rcTile.left + 2, _rcTile.top + 2, str, strlen(str));
+		}
 		if (_object != OBJECT::NONE)
 		{
 			_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, getFrameX(), setFrameY());

@@ -144,12 +144,86 @@ void MAPEDIT::update()
 	_rcTileCountX = new RECT[_pMapTool->getMapCountX()];
 	_rcTileCountY = new RECT[_pMapTool->getMapCountY()];
 
+	for (int i = 0; i < _pMapTool->getMapCountX(); i++)
+	{
+		_rcTileCountX[i] = RectMake(18 + _pMapTool->getVvMap()[0][i]->getRectTile().left , 0, imgMapPalletIce1->getFrameWidth(), imgMapPalletIce1->getFrameWidth() / 2 + 2);
+	}
+	for (int i = 0; i < _pMapTool->getMapCountY(); i++)
+	{
+		_rcTileCountY[i] = RectMake(0, 18 + _pMapTool->getVvMap()[i][0]->getRectTile().top, imgMapPalletIce1->getFrameHeight() / 2 + 2, imgMapPalletIce1->getFrameWidth());
+	}
+
+	//격자 그리기, 현재 인덱스
+	for (int i = 0; i < _pMapTool->getMapCountX(); i++)
+	{
+		if (_ptMouse.x >= _rcTileCountX[i].left && _ptMouse.x <= _rcTileCountX[i].right)
+		{
+			_currentIndex.x = i;
+		}
+	}
+	for (int i = 0; i < _pMapTool->getMapCountY(); i++)
+	{
+		if (_ptMouse.y >= _rcTileCountY[i].top && _ptMouse.y <= _rcTileCountY[i].bottom)
+		{
+			_currentIndex.y = i;
+		}
+	}
+
 	//타일 추가
 	if (!PtInRect(&rcTypePage, _ptMouse) || !PtInRect(&rcSelectPage, _ptMouse))
 	{
-		
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
+			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+			{
+
+				for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+				{
+					if (i >= _clickDownStart.x && i <= _clickDownEnd.x &&
+						j >= _clickDownStart.y && j <= _clickDownEnd.y)
+					{
+						if (_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2) >= 0 && _currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2) >= 0
+							&& _currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2) < _pMapTool->getMapCountY() && _currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2) < _pMapTool->getMapCountX())
+						{
+							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+								[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setImg(_vTerrainPage[_terrainPageIndex]);
+							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+								[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setFrameX(i);
+							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+								[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setFrameY(j);
+							if (i == 0 || i == 11)
+							{
+								i, j;
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
+								_pMapTool->setisWall(true);
+								_pMapTool->setObject(TILE::OBJECT::NONE);
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
+							}
+							else if ((j >= 0 && j <= 3) || j == 11)
+							{
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
+								_pMapTool->setisWall(true);
+								_pMapTool->setObject(TILE::OBJECT::NONE);
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
+							}
+							else
+							{
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::PASS);
+								_pMapTool->setisWall(false);
+								_pMapTool->setObject(TILE::OBJECT::NONE);
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
+							}
+						}
+						//else break;
+					}
+				}
+			}
 			/*
 			//마우스가 샘플의 시작인덱스, 끝인덱스를 가지고있다면,
 			//현재 마우스가 가리키는 맵의 idx를 알고있다면( mapidx)
@@ -161,12 +235,6 @@ void MAPEDIT::update()
 				}
 			*/
 
-
-
-
-
-			int fucking = 0;
-			fucking += 10;
 			//박범기
 			/*
 			for (int i = 0; i < _pMapTool->getMapCountX(); i++)
@@ -199,17 +267,8 @@ void MAPEDIT::update()
 			}
 			*/
 		}
-		
 	}
 
-	for (int i = 0; i < _pMapTool->getMapCountX(); i++)
-	{
-		_rcTileCountX[i] = RectMake(18 + _pMapTool->getVvMap()[0][i]->getRectTile().left , 0, imgMapPalletIce1->getFrameWidth(), imgMapPalletIce1->getFrameWidth() / 2 + 2);
-	}
-	for (int i = 0; i < _pMapTool->getMapCountY(); i++)
-	{
-		_rcTileCountY[i] = RectMake(0, 18 + _pMapTool->getVvMap()[i][0]->getRectTile().top, imgMapPalletIce1->getFrameHeight() / 2 + 2, imgMapPalletIce1->getFrameWidth());
-	}
 	if (_mapEditstate == MAPEDITSTATE::MAPEDITMENU)
 	{
 		updateMenu();
@@ -248,6 +307,7 @@ void MAPEDIT::update()
 	{
 		callBackMapSizeRight();
 	}
+
 	_pMapTool->update();
 }
 
@@ -276,7 +336,7 @@ void MAPEDIT::render()
 	//타일 격자 그리기
 	for (int i = 0; i < _pMapTool->getMapCountX(); i++)
 	{
-		if (_ptMouse.x >= _rcTileCountX[i].left && _ptMouse.x <= _rcTileCountX[i].right)
+		if (i == _currentIndex.x)
 		{
 			HBRUSH Brush = CreateSolidBrush(RGB(0, 0, 0));
 			HBRUSH oBrush = (HBRUSH)SelectObject(getMemDC(), Brush);
@@ -299,7 +359,7 @@ void MAPEDIT::render()
 	}
 	for (int i = 0; i < _pMapTool->getMapCountY(); i++)
 	{
-		if (_ptMouse.y >= _rcTileCountY[i].top && _ptMouse.y <= _rcTileCountY[i].bottom)
+		if (i == _currentIndex.y)
 		{
 			HBRUSH Brush = CreateSolidBrush(RGB(0, 0, 0));
 			HBRUSH oBrush = (HBRUSH)SelectObject(getMemDC(), Brush);
@@ -342,7 +402,6 @@ void MAPEDIT::render()
 	{
 		_mapEditstate = MAPEDITSTATE::MAPEDITMENU;
 	}
-
 }
 
 void MAPEDIT::updateMenu()
