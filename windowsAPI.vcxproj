@@ -284,6 +284,7 @@
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="relics.cpp" />
     <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="shokeNova.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="skillBox.cpp" />
     <ClCompile Include="skillButton.cpp" />

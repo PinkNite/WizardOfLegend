@@ -71,7 +71,7 @@ void STATE_RUN::onBtnSpace(PLAYER* pPlayer)
 	pPlayer->setAction(PLAYER::ACTION::DASH);
 	pPlayer->settingAni();
 
-	pPlayer->setSkill(PLAYER::SKILL_NAME::FIRE_DASH);
+	//pPlayer->setSkill(PLAYER::SKILL_NAME::FIRE_DASH);
 }
 
 void STATE_RUN::onBtnLB(PLAYER* pPlayer)
@@ -82,12 +82,25 @@ void STATE_RUN::onBtnLB(PLAYER* pPlayer)
 	pPlayer->settingAni();
 
 	//pPlayer->setSkill(PLAYER::SKILL_NAME::FIRE_STRIKE);
-	//pPlayer->getSkill()->useMagic(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
+	//pPlayer->getSkill()->pushMagicKey(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
 }
 
 void STATE_RUN::onBtnRB(PLAYER* pPlayer)
 {
-	pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_02);
+	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON))
+	{
+	case PLAYER::SKILL_NAME::SHOKE_NOVA:
+		if (pPlayer->getIsUsingSkill(PLAYER::SKILL_KEY::RBUTTON))
+		{
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_02);
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_02);
+			pPlayer->settingAni();
+
+		}
+
+		break;
+	}
+
 }
 
 void STATE_RUN::onBtnR(PLAYER * pPlayer)

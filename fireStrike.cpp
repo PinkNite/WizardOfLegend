@@ -37,17 +37,17 @@ void FIRESTRIKE::render(HDC hdc)
 {
 }
 
-void FIRESTRIKE::useMagic(float fPosX, float fPosY)
+void FIRESTRIKE::pushMagicKey(float fPosX, float fPosY)
 {
 	if (_bIsOk  && _pPlayer->getNormalSkillCount() < 3)
 	{
-		SKILL::_pMagicMgr->useMagic("fireStrike", fPosX, fPosY, 0.0f, 0.0f, true);
+		SKILL::_pMagicMgr->pushMagicKey("fireStrike", fPosX, fPosY, 0.0f, 0.0f, true);
 		_pPlayer->addNormalSkillCount(1);
 		_bIsOk = false;
 	}
 }
 
-void FIRESTRIKE::keyUp()
+void FIRESTRIKE::pullMagicKey(float fPosX, float fPosY)
 {
 	_bIsOk = true;
 }

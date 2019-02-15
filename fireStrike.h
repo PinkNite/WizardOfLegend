@@ -15,8 +15,8 @@ public:
 	virtual	void	update()		override;
 	virtual	void	release()		override;
 	virtual	void	render(HDC hdc)	override;
-	virtual void	useMagic(float fPosX, float fPosY)		override;
-	virtual void	keyUp();
+	virtual void	pushMagicKey(float fPosX, float fPosY)		override;
+	virtual void	pullMagicKey(float fPosX,float fPosY);
 
 	
 };

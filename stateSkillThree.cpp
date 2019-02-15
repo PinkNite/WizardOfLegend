@@ -27,17 +27,21 @@ void STATE_SKILL_THREE::onBtnD(PLAYER* pPlayer)
 
 void STATE_SKILL_THREE::onBtnQ(PLAYER* pPlayer)
 {
-	if (KEYMANAGER->isKeyDown('Q'))
+
+	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON))
 	{
-		//대기
-		//나와야하는 것들
-		//프로그래스바
-		//주변 전기
+	case PLAYER::SKILL_NAME::SHOKE_NOVA:
+		if (KEYMANAGER->isKeyDown('Q'))
+		{
+			pPlayer->getAni()->stop();
+		}
+		else
+		{
+			pPlayer->getAni()->start();
+		}
+		break;
 	}
-	else
-	{
-		//발사
-	}
+
 }
 
 void STATE_SKILL_THREE::onBtnE(PLAYER* pPlayer)
@@ -62,4 +66,19 @@ void STATE_SKILL_THREE::onBtnR(PLAYER * pPlayer)
 
 void STATE_SKILL_THREE::update(PLAYER * pPlayer)
 {
+
+	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON))
+	{
+	case PLAYER::SKILL_NAME::SHOKE_NOVA:
+		if (!KEYMANAGER->isKeyDown('Q'))
+		{
+			if (!pPlayer->getAni()->isPlay())
+			{
+				pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
+				pPlayer->setAction(PLAYER::ACTION::IDLE);
+				pPlayer->settingAni();
+			}
+		}
+		break;
+	}
 }

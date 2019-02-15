@@ -617,6 +617,9 @@
     <ClCompile Include="skillBox.cpp">
       <Filter>PlayGround\UI\skill</Filter>
     </ClCompile>
+    <ClCompile Include="shokeNova.cpp">
+      <Filter>PlayGround\skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="windowsAPI.rc">

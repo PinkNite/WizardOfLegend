@@ -16,13 +16,14 @@ void SKILL::init(PLAYER::SKILL_NAME eSkillName)
 	SKILL::_eSkillName = eSkillName;
 }
 
-void SKILL::useMagic(float fPosX, float fPosY)
+void SKILL::pushMagicKey(float fPosX, float fPosY)
 {
 }
 
-void SKILL::keyUp()
+void SKILL::pullMagicKey(float fPosX, float fPosY)
 {
 }
+
 
 void SKILL::setMagicMgr(MAGICMGR * pMagicMgr)
 {

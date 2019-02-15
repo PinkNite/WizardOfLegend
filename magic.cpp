@@ -45,7 +45,8 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float 
 
 void MAGIC::release()
 {
-	delete _pEffectAni;
+
+	//delete _pEffectAni;
 	_pEffectAni = nullptr;
 	_pImg = nullptr;
 }

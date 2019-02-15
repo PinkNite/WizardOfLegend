@@ -79,7 +79,4 @@ void STATE_DASH::update(PLAYER * pPlayer)
 		pPlayer->settingAni();
 		fOffset = 2.5f;
 	}
-
-	
-
 }

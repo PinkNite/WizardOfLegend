@@ -70,15 +70,16 @@ public:
 	};
 
 	//스킬용
-	enum class SKILL_NAME 
+	enum class SKILL_NAME
 	{
 		NONE = 0,
 		FIRE_DASH,
 		FIRE_STRIKE,
+		SHOKE_NOVA,
 		MAX
 	};
 
-	enum class SKILL_KEY 
+	enum class SKILL_KEY
 	{
 		LBUTTON = 0,
 		RBUTTON,
@@ -94,12 +95,12 @@ public:
 	enum { WIZARD_SPRITE_MAXFRAMEX = 14 };
 	enum { WIZARD_SPRITE_MAXFRAMEY = 16 };
 
-	enum { WIZARD_MOVING_RECT_SIZE = 64};
+	enum { WIZARD_MOVING_RECT_SIZE = 64 };
 
-	enum { WIZARD_COLLISION_RECT_WIDTH = 64};
+	enum { WIZARD_COLLISION_RECT_WIDTH = 64 };
 	enum { WIZARD_COLLISION_RECT_HEIGHT = 128 };
 
-	
+
 private:
 	float _fMaxHealthPoint;			//최대 생명력
 	float _fCurrentHealthPoint;		//현재 생명력
@@ -123,7 +124,7 @@ private:
 	//이미지 사이즈가 오브젝트에 비해 월등이 크기 때문이다.
 
 	animation* _pAnimation;
-	
+
 	//프레임
 	int _arFrame[12];
 
@@ -144,7 +145,7 @@ private:
 
 	MOVE_DIRECTION			_eMoveDirection;
 	CIRCLEEFFECT*		_pCirEffect;
-	
+
 	float		_fAttackDirAngle;
 
 	MAGICMGR*			_pMagicMgr;
@@ -153,16 +154,18 @@ private:
 	float		_arStandardAngle[4];
 
 	SKILL*		_pCurrentSkill;
-	
+
 	float		_fAttackPosX;
 	float		_fAttackPosY;
-	
 
-	
+
+
 	SKILL*		_arSkill[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];
 	float		_arSkillDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];			//스킬 딜레이 시간//스킬 세팅된것이 6개 있다고 치자...
-	float		_arCurrentDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];
-	SKILL_NAME	_arSettingSkill[static_cast<const int>(PLAYER::SKILL_KEY::MAX)];
+	float		_arCurrentDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];		//스킬 쿨 차면 쓸수 있다
+	SKILL_NAME	_arSettingSkill[static_cast<const int>(PLAYER::SKILL_KEY::MAX)];			//무슨키에 무슨 스킬이 세팅되어있는지
+
+
 
 	int			_nNormalSkillCoount;
 
@@ -190,18 +193,18 @@ private:
 
 	const string addAniString(const string& strDir, const string& strAction);
 
-	void addPlayerKeyAni(const string & strDir, const string & strAction, int nStartFrame,int nEndFrame, int nFPS, bool bIsLoop);
+	void addPlayerKeyAni(const string & strDir, const string & strAction, int nStartFrame, int nEndFrame, int nFPS, bool bIsLoop);
 
 	//스킬마다 스킬 시전 시간을 가지고 그 시간이 지나면 애니메이션을 바꾸고 하자
 
 	void settingPos();
-	
+
 	void settingSkill();
 
 public:
-//state pattern용
-//skill은 좀더 생각할 필요가 있다.
-//스킬이 뭔지 알아야한다.
+	//state pattern용
+	//skill은 좀더 생각할 필요가 있다.
+	//스킬이 뭔지 알아야한다.
 
 	void setState(PLAYER::PLAYER_STATE ePlayerState);
 	void setDirection(PLAYER::DIRECTION eDirection);
@@ -250,7 +253,7 @@ public:
 	//임시
 	SKILL*	getSkill() { return _pCurrentSkill; }
 	void	setSkill(PLAYER::SKILL_NAME eSkillName);
-	
+
 
 	float	getAttactPosX() { return _fAttackPosX; }
 	float	getAttactPosY() { return _fAttackPosY; }
@@ -268,4 +271,12 @@ public:
 	void	setZeroNormalCount() { _nNormalSkillCoount = 0; }
 	int		getNormalSkillCount() { return _nNormalSkillCoount; }
 	void	addNormalSkillCount(int nOffset) { _nNormalSkillCoount += nOffset; }
+
+	SKILL_NAME	getCurrentSkill(PLAYER::SKILL_KEY skillKey) { return _arSettingSkill[static_cast<int>(skillKey)]; }
+
+
+	bool	getIsUsingSkill(PLAYER::SKILL_KEY eSkillKey) {
+		return _arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(eSkillKey)])] >= _arSkillDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(eSkillKey)])];
+	}
+
 };

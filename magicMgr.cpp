@@ -82,7 +82,7 @@ void MAGICMGR::render(HDC hdc)
 	}
 }
 
-void MAGICMGR::useMagic(const string& strKey, float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer)
+void MAGICMGR::pushMagicKey(const string& strKey, float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer)
 {
 	if (_mqMagicPool.find(strKey) == _mqMagicPool.end())
 	{

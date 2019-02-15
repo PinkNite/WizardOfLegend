@@ -50,7 +50,7 @@ void STATE_SKILL_ONE::onBtnLB(PLAYER* pPlayer)
 		pPlayer->settingAni();
 
 
-		//pPlayer->getSkill()->useMagic(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
+		//pPlayer->getSkill()->pushMagicKey(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
 		
 		
 		_fWaitTime = 0.0f;
@@ -76,7 +76,7 @@ void STATE_SKILL_ONE::update(PLAYER * pPlayer)
 
 	if (_fWaitTime >= 0.5f && !KEYMANAGER->isKeyDown(VK_LBUTTON))
 	{	
-		pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
+ 		pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
 		pPlayer->setAction(PLAYER::ACTION::IDLE);
 		pPlayer->settingAni();
 		_fWaitTime = 0.0f;

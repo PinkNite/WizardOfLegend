@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "stateSkillTwo.h"
 
-STATE_SKILL_TWO::STATE_SKILL_TWO()
+STATE_SKILL_TWO::STATE_SKILL_TWO():
+	_fTimer(0.0f)
 {
 }
 
@@ -43,6 +44,20 @@ void STATE_SKILL_TWO::onBtnLB(PLAYER* pPlayer)
 
 void STATE_SKILL_TWO::onBtnRB(PLAYER* pPlayer)
 {
+	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON))
+	{
+	case PLAYER::SKILL_NAME::SHOKE_NOVA:
+		if (KEYMANAGER->isKeyDown(VK_RBUTTON))
+		{
+			pPlayer->getAni()->stop();
+		}
+		else
+		{
+			pPlayer->getAni()->start();
+		}
+		break;
+	}
+
 }
 
 void STATE_SKILL_TWO::onBtnR(PLAYER * pPlayer)
@@ -51,4 +66,28 @@ void STATE_SKILL_TWO::onBtnR(PLAYER * pPlayer)
 
 void STATE_SKILL_TWO::update(PLAYER * pPlayer)
 {
+
+
+	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON))
+	{
+	case PLAYER::SKILL_NAME::SHOKE_NOVA:
+		if (!KEYMANAGER->isKeyDown(VK_RBUTTON))
+		{
+			if (!pPlayer->getAni()->isPlay())
+			{
+				pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
+				pPlayer->setAction(PLAYER::ACTION::IDLE);
+				pPlayer->settingAni();
+				_fTimer = 0.0f;
+			}
+		}
+		else if(KEYMANAGER->isKeyDown(VK_RBUTTON))
+		{
+			pPlayer->getAni()->stop();
+		}
+
+		break;
+	}
+
+
 }

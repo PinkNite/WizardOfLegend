@@ -5,7 +5,7 @@
 
 class STATE_SKILL_TWO : public STATE {
 private:
-
+	float	_fTimer;
 
 public:
 	STATE_SKILL_TWO();

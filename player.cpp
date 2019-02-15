@@ -14,6 +14,8 @@
 #include "fireDash.h"
 #include "fireStrike.h"
 #include "skillnone.h"
+#include "shokeNova.h"
+
 
 PLAYER::PLAYER() :
 	_fMaxHealthPoint(0.0f),
@@ -122,7 +124,7 @@ void PLAYER::update()
 	_pCurrentSkill->update();
 	_pCurrentState->update(this);
 
-	KEYANIMANAGER->update();
+	//KEYANIMANAGER->update();
 
 }
 
@@ -185,10 +187,10 @@ void PLAYER::setAnimation()
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_01)], 202, 191, 12, false);
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_01)], 72, 82, 11, false);
 
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 83, 93, 11, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 94, 103, 10, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 94, 103, 10, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 94, 103, 10, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 83, 93, 22, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 94, 103, 20, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 94, 103, 20, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 94, 103, 20, false);
 
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)], 104, 112, 18, false);
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)], 113, 121, 18, false);
@@ -263,7 +265,7 @@ void PLAYER::settingSkill()
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::NONE)] = new NONESKILL();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::FIRE_DASH)] = new FIREDASH();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::FIRE_STRIKE)] = new FIRESTRIKE();
-
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::SHOKE_NOVA)] = new SHOKENOVA();
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
 		_arSkill[i]->init(static_cast<PLAYER::SKILL_NAME>(i));
@@ -278,9 +280,10 @@ void PLAYER::settingSkill()
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_DASH)] = 5.0f;
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_STRIKE)] = 0.5f;
 
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::SHOKE_NOVA)] = 5.0f;
+
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
-		_arSkill[i]->init(static_cast<PLAYER::SKILL_NAME>(i));
 		_arCurrentDelayTime[i] = _arSkillDelayTime[i];
 	}
 
@@ -290,9 +293,10 @@ void PLAYER::settingSkill()
 		_arSettingSkill[i] = PLAYER::SKILL_NAME::NONE;
 	}
 
+	//임시적으로 쓰는것 이제 유아이랑도 엮어서 처리해야함
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_SPACE)] = PLAYER::SKILL_NAME::FIRE_DASH;
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)] = PLAYER::SKILL_NAME::FIRE_STRIKE;
-
+	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)] = PLAYER::SKILL_NAME::SHOKE_NOVA;
 }
 
 void PLAYER::settingAni()
@@ -592,27 +596,37 @@ void PLAYER::input()
 	if (KEYMANAGER->isKeyDown(VK_SPACE))
 	{
 		_pCurrentState->onBtnSpace(this);
+		setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_SPACE)]);
+
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		_pCurrentState->onBtnLB(this);
 		setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)]);
-		_pCurrentSkill->useMagic(getAttactPosX(), getAttactPosY());
+		_pCurrentSkill->pushMagicKey(getAttactPosX(), getAttactPosY());
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 	{
-		_pCurrentSkill->keyUp();
+		_pCurrentSkill->pullMagicKey();
 	}
 	if (KEYMANAGER->isKeyDown(VK_RBUTTON))
 	{
 		_pCurrentState->onBtnRB(this);
+		if (_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)])] >= _arSkillDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)])])
+		{
+			setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)]);
+			_pCurrentSkill->pushMagicKey(getAttactPosX(), getAttactPosY());
+			_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)])] = 0;
+		}
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
 	{
 		//발동
 		//버튼업도 상태에 넣어야하나?
 		_pCurrentState->onBtnRB(this);
+		_pCurrentSkill->pullMagicKey();
 	}
+
 	if (KEYMANAGER->isKeyDown('Q'))
 	{
 		_pCurrentState->onBtnQ(this);

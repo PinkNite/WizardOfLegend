@@ -22,27 +22,57 @@ HRESULT MINTESTSCENE::init()
 	_pSkillEffectMgr	= new SKILL_EFFECT_MGR();
 
 	_pMagicMgr->addObject("dashFlame", 100, 64, 64,
-		IMAGEMANAGER->addFrameImage("dashFlame", "resource/skill/flame.bmp", 1408, 384, 11, 3, true, RGB(255, 0, 255)),
+		IMAGEMANAGER->addFrameImage("dashFlame", "resource/skill/flame.bmp", 1408, 384, 11, 3, true, Mins::getMazenta()),
 		6, 128, 128, 2.0f);
 	_pSkillEffectMgr->addEffect(IMAGEMANAGER->addFrameImage("flameBurn", "resource/skill/flameBurnMark.bmp", 192, 48, 4, 1, true, RGB(255, 0, 255)),
 		1, 48, 48, 1000, "flameBurn");
 	
-	IMAGEMANAGER->addFrameImage("fireStrike", "resource/skill/fireStrike.bmp", 1280, 128, 10, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("fireStrike", "resource/skill/fireStrike.bmp", 1280, 128, 10, 1, true, Mins::getMazenta());
 
 	_pMagicMgr->addObject("fireStrike", 100, 128, 128, IMAGEMANAGER->findImage("fireStrike"), 20, 128, 128, 0.5f);
 
 
+	//¼îÅ©³ë¹Ù
+	IMAGEMANAGER->addFrameImage("lightEffect01", "resource/skill/lightEffect01.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("lightEffect02", "resource/skill/lightEffect02.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("lightEffect03", "resource/skill/lightEffect03.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("lightEffect04", "resource/skill/lightEffect04.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
+
+	IMAGEMANAGER->addFrameImage("shokeNova", "resource/skill/SaintThunder.bmp", 1536, 512, 3, 1, true, Mins::getMazenta());
+	
+	KEYANIMANAGER->addObject("shokeNova");
+	int arr[] = { 0,1,2 };
+	KEYANIMANAGER->addArrayCoordinateFrameAnimation("shokeNova", "shokeNova", "shokeNova", arr, 3, 12, true, 3);
+
+	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("shokeNova", "shokeNova"), "shokeNova", 3, 512, 512, IMAGEMANAGER->findImage("shokeNova"), 6, 512, 512, 1.0f);
+	
+
+	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("lightEffect01"), 6, 64, 64, 100, "lightEffect01");
+	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("lightEffect02"), 6, 64, 64, 100, "lightEffect02");
+	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("lightEffect03"), 6, 64, 64, 100, "lightEffect03");
+	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("lightEffect04"), 6, 64, 64, 100, "lightEffect04");
+
+
+
+	IMAGEMANAGER->addFrameImage("thunder", "resource/skill/thunder.bmp", 307, 1024, 4, 2, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("thunderGround", "resource/skill/thunderGround.bmp", 135, 32, 3,1,true, Mins::getMazenta());
+
+	IMAGEMANAGER->addImage("upRock", "resource/skill/upRock.bmp", 121, 128, true, Mins::getMazenta());
+
+	
+	_pMagicMgr->addObject("thunder", 100, 76, 512, IMAGEMANAGER->findImage("thunder"), 16, 76, 512, 0.5f);
+	
 	_pPlayer->setLink(_pMagicMgr, _pSkillEffectMgr);
 	return S_OK;
 }
 
 void MINTESTSCENE::update()
 {
-	
+	KEYANIMANAGER->update();
+
 	_pPlayer->update();
 	_pMagicMgr->update();
 	_pSkillEffectMgr->update();
-
 }
 
 void MINTESTSCENE::release()
@@ -66,6 +96,6 @@ void MINTESTSCENE::render()
 	_pPlayer->render(getMemDC());
 	_pMagicMgr->render(getMemDC());
 
-
+	KEYANIMANAGER->render();
 
 }
