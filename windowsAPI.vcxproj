@@ -166,6 +166,7 @@
     <ClInclude Include="circleEffect.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="explainUse.h" />
     <ClInclude Include="fireDash.h" />
     <ClInclude Include="fireStrike.h" />
@@ -256,6 +257,7 @@
     <ClCompile Include="circleEffect.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="explainUse.cpp" />
     <ClCompile Include="fireDash.cpp" />
     <ClCompile Include="fireStrike.cpp" />
