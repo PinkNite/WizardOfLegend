@@ -33,6 +33,7 @@ public:
 		ATTACK_MOTION_02,
 		ATTACK_MOTION_03,
 		ATTACK_MOTION_04,
+		ATTACK_MOTION_05,
 		DAMAGE,
 		DEATH,
 		MAX
@@ -77,6 +78,7 @@ public:
 		FIRE_STRIKE,
 		SHOKE_NOVA,
 		CHAIN_LIGHTNING,
+		STONE_SHOT,
 		MAX
 	};
 
@@ -92,9 +94,9 @@ public:
 	};
 
 	enum { WIZARD_SPRITE_WIDTH = 2688 };
-	enum { WIZARD_SPRITE_HEIGHT = 3072 };
+	enum { WIZARD_SPRITE_HEIGHT = 3648 };
 	enum { WIZARD_SPRITE_MAXFRAMEX = 14 };
-	enum { WIZARD_SPRITE_MAXFRAMEY = 16 };
+	enum { WIZARD_SPRITE_MAXFRAMEY = 19 };
 
 	enum { WIZARD_MOVING_RECT_SIZE = 64 };
 
@@ -250,18 +252,17 @@ public:
 
 	void setLink(MAGICMGR* pMagicMgr, SKILL_EFFECT_MGR* pSkillEffectMgr);
 
-
-	//임시
-	SKILL*	getSkill() { return _pCurrentSkill; }
-	void	setSkill(PLAYER::SKILL_NAME eSkillName);
-
-
 	float	getAttactPosX() { return _fAttackPosX; }
 	float	getAttactPosY() { return _fAttackPosY; }
 
 
 	float	getMaxHp() { return _fMaxHealthPoint; }
 	float	getCurrentHp() { return _fCurrentHealthPoint; }
+
+
+	//임시
+	SKILL*	getSkill() { return _pCurrentSkill; }
+	void	setSkill(PLAYER::SKILL_NAME eSkillName);
 
 
 	//

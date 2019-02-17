@@ -64,8 +64,8 @@ void MAGIC::update()
 			return;
 		}
 
-		_fPosX += Mins::presentPowerX(_fMoveAngle, _fMoveSpeed);
-		_fPosY += Mins::presentPowerY(_fMoveAngle, _fMoveSpeed);
+		_fPosX += Mins::presentPowerX(_fMoveAngle, _fMoveSpeed * TIMEMANAGER->getElapsedTime());
+		_fPosY += Mins::presentPowerY(_fMoveAngle, _fMoveSpeed * TIMEMANAGER->getElapsedTime());
 		
 
 		_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);

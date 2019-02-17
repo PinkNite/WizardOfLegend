@@ -16,6 +16,8 @@
 #include "skillnone.h"
 #include "shokeNova.h"
 #include "chainLightning.h"
+#include "stoneShot.h"
+
 
 PLAYER::PLAYER() :
 	_fMaxHealthPoint(0.0f),
@@ -63,7 +65,7 @@ void PLAYER::init()
 {
 	//초기 위치 중앙값
 	OBJECT::init(200, 200, 100, 100);
-	OBJECT::setImage(IMAGEMANAGER->addFrameImage("wizardSprites", "resource/player/wizardSprites.bmp", WIZARD_SPRITE_WIDTH, WIZARD_SPRITE_HEIGHT, WIZARD_SPRITE_MAXFRAMEX, WIZARD_SPRITE_MAXFRAMEY, true, RGB(255, 0, 255)));
+	OBJECT::setImage(IMAGEMANAGER->addFrameImage("wizardSprites", "resource/player/wizardSprite.bmp", WIZARD_SPRITE_WIDTH, WIZARD_SPRITE_HEIGHT, WIZARD_SPRITE_MAXFRAMEX, WIZARD_SPRITE_MAXFRAMEY, true, RGB(255, 0, 255)));
 	setEnumName();
 	_pAnimation = new animation();
 	_pAnimation->init(WIZARD_SPRITE_WIDTH, WIZARD_SPRITE_HEIGHT, WIZARD_SPRITE_MAXFRAMEX, WIZARD_SPRITE_MAXFRAMEY);
@@ -165,6 +167,7 @@ void PLAYER::setEnumName()
 	_arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)] = "ATTACK_MOTION_02";
 	_arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_03)] = "ATTACK_MOTION_03";
 	_arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_04)] = "ATTACK_MOTION_04";
+	_arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_05)] = "ATTACK_MOTION_05";
 	_arAction[static_cast<int>(PLAYER::ACTION::DAMAGE)] = "DAMAGE";
 	_arAction[static_cast<int>(PLAYER::ACTION::DEATH)] = "DEATH";
 }
@@ -216,6 +219,12 @@ void PLAYER::setAnimation()
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::DEATH)], 207, 216, 10, false);
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::DEATH)], 207, 216, 10, false);
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::DEATH)], 207, 216, 10, false);
+
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_05)],	217, 227, 22, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_05)],	228, 236, 18, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_05)],		245, 237, 18, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_05)],		246, 253, 16, false);
+
 }
 
 const string PLAYER::addAniString(const string & strDir, const string & strAction)
@@ -272,6 +281,9 @@ void PLAYER::settingSkill()
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::FIRE_STRIKE)] = new FIRESTRIKE();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::SHOKE_NOVA)] = new SHOKENOVA();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)] = new CHAINLIGHTNING();
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::STONE_SHOT)] = new STONESHOT();
+
+
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
@@ -290,6 +302,8 @@ void PLAYER::settingSkill()
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::SHOKE_NOVA)] = 5.0f;
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)] = 5.0f;
 
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::STONE_SHOT)] = 0.5f;
+
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
@@ -307,6 +321,10 @@ void PLAYER::settingSkill()
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)] = PLAYER::SKILL_NAME::FIRE_STRIKE;
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_Q)] = PLAYER::SKILL_NAME::SHOKE_NOVA;
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)] = PLAYER::SKILL_NAME::CHAIN_LIGHTNING;
+
+	//
+	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)] = PLAYER::SKILL_NAME::STONE_SHOT;
+
 }
 
 void PLAYER::settingAni()

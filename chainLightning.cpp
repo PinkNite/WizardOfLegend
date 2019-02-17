@@ -35,6 +35,10 @@ void CHAINLIGHTNING::update()
 		if (_fOffsetTimer >= 0.2f)
 		{
 			SKILL::_pMagicMgr->pushMagicKey("thunder", _fStartPosX, _fStartPosY - 216.0f, 0.0f, 0.0f, true);
+			SKILL::_pSkillEffectMgr->activityEffect("thunderGround", _fStartPosX, _fStartPosY + 34.0f);
+			SKILL::_pSkillEffectMgr->activityEffect("electricBurnMark", _fStartPosX, _fStartPosY + 34.0f);
+
+			
 			_fStartPosX += Mins::presentPowerX(_fAngle, _fSpeed);
 			_fStartPosY += Mins::presentPowerY(_fAngle, _fSpeed);
 			_fOffsetTimer = 0.0f;
@@ -45,6 +49,9 @@ void CHAINLIGHTNING::update()
 
 void CHAINLIGHTNING::release()
 {
+	SKILL::_pMagicMgr = nullptr;
+	SKILL::_pSkillEffectMgr = nullptr;
+	SKILL::_pPlayer = nullptr;
 }
 
 void CHAINLIGHTNING::render(HDC hdc)

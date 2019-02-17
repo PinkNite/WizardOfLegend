@@ -54,6 +54,9 @@ void SHOKENOVA::update()
 
 void SHOKENOVA::release()
 {
+	SKILL::_pMagicMgr = nullptr;
+	SKILL::_pSkillEffectMgr = nullptr;
+	SKILL::_pPlayer = nullptr;
 }
 
 void SHOKENOVA::render(HDC hdc)
