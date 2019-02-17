@@ -26,11 +26,6 @@ public:
 		IDLE = 0,
 		RUN,
 		DASH,
-		// 마법 시전 준비
-		SPELL_01,
-		SPELL_02,
-		SPELL_03,
-		// 마법 모션
 		SKILL_01,
 		SKILL_02,
 		SKILL_03,
@@ -123,8 +118,6 @@ private:
 	float		_fAngleX;
 	float		_fAngleY;
 
-	float		_fDashTime;
-
 	BossState*		_pCurrentState;
 	BossState*		_arState[static_cast<const int>(BOSS_STATE::MAX)];
 
@@ -166,7 +159,7 @@ public:
 	void moveLeft(float speed);
 	void moveRight(float speed);
 
-	void dash(float offset);
+	void dash(float targetX, float targetY);
 	void skillFire(float x, float y);
 	void spell01(SKILL_TYPE type);
 	void bulletMove();
@@ -178,9 +171,7 @@ public:
 	void setDamage(float damage);
 	void setDeath();
 
-	inline void setDashTime(float dashTime) { _fDashTime = dashTime; }
 	inline float getSpeed() { return _fSpeed; }
-	inline float getDashTime() { return _fDashTime; }
 	inline DIRECTION getDiretion() { return _direction; }
 	inline animation* getAni() { return _pAnimation; }
 

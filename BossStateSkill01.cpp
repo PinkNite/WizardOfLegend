@@ -15,7 +15,7 @@ BossState * BossStateSkill01::handleState(BOSS * boss, BOSS::BOSS_STATE state)
 {
 	if (BOSS::BOSS_STATE::SKILL_01 == state)
 	{
-		return new BossStateSkill01();
+		//return new BossStateSkill01();
 	}
 
 	return nullptr;

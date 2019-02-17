@@ -150,10 +150,6 @@ void BOSS::setEnumName()
 	_mAction.insert(make_pair(ACTION::RUN, "RUN"));
 	_mAction.insert(make_pair(ACTION::DASH, "DASH"));
 
-	_mAction.insert(make_pair(ACTION::SPELL_01, "SPELL_01"));
-	_mAction.insert(make_pair(ACTION::SPELL_02, "SPELL_02"));
-	_mAction.insert(make_pair(ACTION::SPELL_03, "SPELL_03"));
-
 	_mAction.insert(make_pair(ACTION::SKILL_01, "SKILL_01"));
 	_mAction.insert(make_pair(ACTION::SKILL_02, "SKILL_02"));
 	_mAction.insert(make_pair(ACTION::SKILL_03, "SKILL_03"));
@@ -174,11 +170,16 @@ void BOSS::createAnimation()
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_03], 22, 42, 6, false, nullptr);
 
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DAMAGE], 66, 68, 8, false, callbackIdle);
-	
+
 	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::RUN], 0, 0, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::RUN], 1, 1, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::RUN], 2, 2, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::RUN], 3, 3, 1, true, nullptr);
+
+	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::DASH], 0, 0, 1, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::DASH], 1, 1, 1, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DASH], 2, 2, 1, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::DASH], 3, 3, 1, true, nullptr);
 
 	int effectFrame[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "Entrance", "IceCrystals", effectFrame, 8, 4, false, callbackSetBattle, this);
@@ -199,12 +200,11 @@ void BOSS::createAnimation()
 	int waterBall[10] = { 0, 1, 2, 3, 4 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WaterBalls", "WaterBounce", waterBall, 5, 4, true);
 
-	int skill01[23] = { 22, 22, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01]), "iceBossImg", skill01, 23, 8, false);
+	int skill01[24] = { 22, 22, 22, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42 };
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01]), "iceBossImg", skill01, 24, 8, false);
 
 	int death[4] = { 69, 69, 69, 69 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DEATH]), "iceBossImg", death, 3, 4, false);
-	//addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DEATH], 69, 69, 1, true, nullptr);
 
 	int bossEndFrame[5] = { 0, 1, 2, 3, 4 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "BossEnding", "IceCrystals", bossEndFrame, 5, 2, false);
@@ -266,6 +266,19 @@ void BOSS::setState(BOSS_STATE bossState)
 	this->handleState(bossState);
 }
 
+void BOSS::handleState(BOSS_STATE bossState)
+{
+	BossState* state = _pCurrentState->handleState(this, bossState);
+	if (state != nullptr)
+	{
+		//_pCurrentState = nullptr;
+		//_pCurrentState = state;
+
+		//_pCurrentState->enter(this);
+	}
+	_pCurrentState->enter(this);
+}
+
 void BOSS::setAction(ACTION action)
 {
 	_action = action;
@@ -281,18 +294,6 @@ void BOSS::startBossAnimation()
 {
 	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, getAnimationKey(_mDirection[_direction], _mAction[_action]));
 	_pAnimation->start();
-}
-
-void BOSS::handleState(BOSS_STATE bossState)
-{
-	BossState* state = _pCurrentState->handleState(this, bossState);
-	if (state != nullptr)
-	{
-		_pCurrentState = nullptr;
-		_pCurrentState = state;
-
-		_pCurrentState->enter(this);
-	}
 }
 
 void BOSS::initState()
@@ -378,8 +379,32 @@ void BOSS::moveRight(float speed)
 	setRect();
 }
 
-void BOSS::dash(float offset)
+void BOSS::dash(float targetX, float targetY)
 {
+
+	float dashSpeed = 10.0f;
+	float targetAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY(), targetX, targetY);
+
+	if (0.78f < targetAngle && targetAngle <= 2.35) _direction = DIRECTION::UP;
+	if (2.35f < targetAngle && targetAngle <= 3.92) _direction = DIRECTION::LEFT;
+	if (3.92f < targetAngle && targetAngle <= 4.95) _direction = DIRECTION::DOWN;
+	if (4.95f < targetAngle && targetAngle <= 6.28) _direction = DIRECTION::RIGHT;
+	if (0.0f < targetAngle && targetAngle <= 0.78) _direction = DIRECTION::RIGHT;
+
+	setAction(ACTION::DASH);
+
+	float distance;
+	for (size_t i = 0; i < 100; i++)
+	{
+		distance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), targetX, targetY);
+		if (distance < 200.0f) break;
+
+		OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(targetAngle, dashSpeed) * dashSpeed);
+		OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(targetAngle, dashSpeed) * dashSpeed);
+		setRect();
+	}
+
+	// TODO: 칼질 키 애니메이션 및 랜서  
 }
 
 void BOSS::spell01(SKILL_TYPE type)
@@ -427,6 +452,7 @@ void BOSS::skillFire(float x, float y)
 {
 	_timeSet += TIMEMANAGER->getElapsedTime();
 
+	// 탄이 발사되는 간격 
 	if (_timeSet > 0.1f)
 	{
 		int fireCount = 0;
@@ -467,7 +493,7 @@ void BOSS::bulletMove()
 		_bullet[i]->y = _posY + -sin(_bullet[i]->angle) * _bullet[i]->distance;
 	}
 
-	// moving was fired bullet.
+	// moving fired bullet.
 	for (int i = 0; i < _bulletSize; i++)
 	{
 		if (_bullet[i]->isFire == false) continue;

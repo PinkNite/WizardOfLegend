@@ -33,6 +33,11 @@ void BossStageScene::update()
 		_boss->spell01(BOSS::SKILL_TYPE::BUBBLE);
 	}
 
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_boss->dash(float(_ptMouse.x), float(_ptMouse.y));
+	}
+
 	if (KEYMANAGER->isOnceKeyDown('9'))
 	{
 		_boss->setDamage(50.0f);
@@ -44,7 +49,7 @@ void BossStageScene::update()
 	}
 
 	//Å°ÆÐµå 0
-	if (KEYMANAGER->isOnceKeyDown('`'))
+	if (KEYMANAGER->isOnceKeyDown(VK_SHIFT))
 	{
 		_isShow = true;
 		_boss->showBoss();
