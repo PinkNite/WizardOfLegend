@@ -222,6 +222,7 @@
     <ClInclude Include="stateDeath.h" />
     <ClInclude Include="stateIdle.h" />
     <ClInclude Include="stateRun.h" />
+    <ClInclude Include="stateSkillFive.h" />
     <ClInclude Include="stateSkillFour.h" />
     <ClInclude Include="stateSkillOne.h" />
     <ClInclude Include="stateSkillThree.h" />
@@ -311,6 +312,7 @@
     <ClCompile Include="stateDeath.cpp" />
     <ClCompile Include="stateIdle.cpp" />
     <ClCompile Include="stateRun.cpp" />
+    <ClCompile Include="stateSkillFive.cpp" />
     <ClCompile Include="stateSkillFour.cpp" />
     <ClCompile Include="stateSkillOne.cpp" />
     <ClCompile Include="stateSkillThree.cpp" />

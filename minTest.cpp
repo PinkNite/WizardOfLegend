@@ -51,6 +51,9 @@ HRESULT MINTESTSCENE::init()
 
 	IMAGEMANAGER->addImage("upRock", "resource/skill/upRock.bmp", 121, 128, true, Mins::getMazenta());
 
+	IMAGEMANAGER->addFrameImage("iceCrystal", "resource/skill/iceCrystal.bmp", 700, 199, 5, 1, true, Mins::getMazenta());
+
+
 	KEYANIMANAGER->addObject("shokeNova");
 	int arr[] = { 0,1,2,3 };
 	KEYANIMANAGER->addArrayCoordinateFrameAnimation("shokeNova", "shokeNova", "shokeNova", arr, 4, 16, true, 3);
@@ -78,6 +81,8 @@ HRESULT MINTESTSCENE::init()
 	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "smallRock"), "smallRock", 100, 64, 64, IMAGEMANAGER->findImage("smallRock"), 16, 64, 64, 1.0f);
 
 	_pMagicMgr->addObject("upRock", 10, 121, 128, IMAGEMANAGER->findImage("upRock"), 1, 121, 128, 0.3f);
+
+	_pMagicMgr->addObject("iceCrystal", 100, 140, 199, IMAGEMANAGER->findImage("iceCrystal"), 15, 140, 199, 0.3f);
 
 	_pPlayer->setLink(_pMagicMgr, _pSkillEffectMgr);
 	return S_OK;

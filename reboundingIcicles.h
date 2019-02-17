@@ -12,6 +12,7 @@ private:
 	float	_fAngle;
 	float	_fOffsetTimer;
 	float	_fSpeed;
+	bool	_bIsReturn;
 public:
 	REBOUNDINGICICLES();
 	~REBOUNDINGICICLES();

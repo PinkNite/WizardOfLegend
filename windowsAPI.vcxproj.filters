@@ -396,6 +396,9 @@
     <ClInclude Include="glacialCross.h">
       <Filter>PlayGround\skill</Filter>
     </ClInclude>
+    <ClInclude Include="stateSkillFive.h">
+      <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -655,6 +658,9 @@
     </ClCompile>
     <ClCompile Include="glacialCross.cpp">
       <Filter>PlayGround\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="stateSkillFive.cpp">
+      <Filter>PlayGround\player\state\statecpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

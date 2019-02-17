@@ -75,7 +75,13 @@ void STATE_RUN::onBtnQ(PLAYER* pPlayer)
 			pPlayer->setAttactDir();
 			pPlayer->settingAni();
 			break;
-		
+		case PLAYER::SKILL_NAME::REBOUNDINGICICLES:
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_03);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+
+			break;
 		}
 	}
 	
@@ -83,13 +89,14 @@ void STATE_RUN::onBtnQ(PLAYER* pPlayer)
 
 void STATE_RUN::onBtnE(PLAYER* pPlayer)
 {
-	pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_04);
 	if (pPlayer->getIsUsingSkill(PLAYER::SKILL_KEY::BTN_E))
 	{
 		switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E))
 		{
 		case PLAYER::SKILL_NAME::SHOKE_NOVA:
 		{
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_04);
+
 			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_02);
 			pPlayer->settingAni();
 		}
@@ -97,12 +104,21 @@ void STATE_RUN::onBtnE(PLAYER* pPlayer)
 		break;
 
 		case PLAYER::SKILL_NAME::SHATTERINGSTRIKE:
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_04);
 
 			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_04);
 			pPlayer->setAttactDir();
 			pPlayer->settingAni();
 			break;
 
+		case PLAYER::SKILL_NAME::REBOUNDINGICICLES:
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_04);
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_03);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+
+			break;
 		}
 	}
 }
@@ -161,13 +177,52 @@ void STATE_RUN::onBtnRB(PLAYER* pPlayer)
 			pPlayer->settingAni();
 			break;
 
+		case PLAYER::SKILL_NAME::REBOUNDINGICICLES:
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_03);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+
+			break;
 		}
+
 	}
 }
 
 void STATE_RUN::onBtnR(PLAYER * pPlayer)
 {
-	pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_05);
+	if (pPlayer->getIsUsingSkill(PLAYER::SKILL_KEY::BTN_R))
+	{
+		switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_R))
+		{
+		case PLAYER::SKILL_NAME::SHOKE_NOVA:
+		{
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_05);
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_02);
+			pPlayer->settingAni();
+		}
+
+		break;
+
+		case PLAYER::SKILL_NAME::SHATTERINGSTRIKE:
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_05);
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_03);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+			break;
+
+		case PLAYER::SKILL_NAME::REBOUNDINGICICLES:
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_05);
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_03);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+
+			break;
+		}
+	}
 }
 
 void STATE_RUN::update(PLAYER * pPlayer)

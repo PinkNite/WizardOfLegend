@@ -32,8 +32,8 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("intro", _pIntroScene);
 	
 	//SCENEMANAGER->changeScene("mapEditScene");
-	//SCENEMANAGER->changeScene("MinTest");
-	SCENEMANAGER->changeScene("bossStage");
+	SCENEMANAGER->changeScene("MinTest");
+	//SCENEMANAGER->changeScene("bossStage");
 	//SCENEMANAGER->changeScene("intro");
 	//SCENEMANAGER->changeScene("leeTest");
 

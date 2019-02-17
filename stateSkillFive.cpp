@@ -1,41 +1,53 @@
 #include "stdafx.h"
-#include "stateSkillFour.h"
+#include "stateSkillFive.h"
 
-STATE_SKILL_FOUR::STATE_SKILL_FOUR():
+STATE_SKILL_FIVE::STATE_SKILL_FIVE():
 	_fTimer(0.0f)
 {
 }
 
-STATE_SKILL_FOUR::~STATE_SKILL_FOUR()
+STATE_SKILL_FIVE::~STATE_SKILL_FIVE()
 {
 }
 
-void STATE_SKILL_FOUR::onBtnW(PLAYER* pPlayer)
+void STATE_SKILL_FIVE::onBtnW(PLAYER * pPlayer)
 {
 }
 
-void STATE_SKILL_FOUR::onBtnA(PLAYER* pPlayer)
+void STATE_SKILL_FIVE::onBtnA(PLAYER * pPlayer)
 {
 }
 
-void STATE_SKILL_FOUR::onBtnS(PLAYER* pPlayer)
+void STATE_SKILL_FIVE::onBtnS(PLAYER * pPlayer)
 {
 }
 
-void STATE_SKILL_FOUR::onBtnD(PLAYER* pPlayer)
+void STATE_SKILL_FIVE::onBtnD(PLAYER * pPlayer)
 {
 }
 
-void STATE_SKILL_FOUR::onBtnQ(PLAYER* pPlayer)
+void STATE_SKILL_FIVE::onBtnQ(PLAYER * pPlayer)
 {
 }
 
-void STATE_SKILL_FOUR::onBtnE(PLAYER* pPlayer)
+void STATE_SKILL_FIVE::onBtnE(PLAYER * pPlayer)
 {
-	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E))
+}
+
+void STATE_SKILL_FIVE::onBtnLB(PLAYER * pPlayer)
+{
+}
+
+void STATE_SKILL_FIVE::onBtnRB(PLAYER * pPlayer)
+{
+}
+
+void STATE_SKILL_FIVE::onBtnR(PLAYER * pPlayer)
+{
+	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_R))
 	{
 	case PLAYER::SKILL_NAME::SHOKE_NOVA:
-		if (KEYMANAGER->isKeyDown('E'))
+		if (KEYMANAGER->isKeyDown('R'))
 		{
 			pPlayer->getAni()->stop();
 		}
@@ -45,33 +57,20 @@ void STATE_SKILL_FOUR::onBtnE(PLAYER* pPlayer)
 		}
 		break;
 	}
-
 }
 
-void STATE_SKILL_FOUR::onBtnSpace(PLAYER* pPlayer)
+void STATE_SKILL_FIVE::onBtnSpace(PLAYER * pPlayer)
 {
 }
 
-void STATE_SKILL_FOUR::onBtnLB(PLAYER* pPlayer)
-{
-}
-
-void STATE_SKILL_FOUR::onBtnRB(PLAYER* pPlayer)
-{
-}
-
-void STATE_SKILL_FOUR::onBtnR(PLAYER * pPlayer)
-{
-}
-
-void STATE_SKILL_FOUR::update(PLAYER * pPlayer)
+void STATE_SKILL_FIVE::update(PLAYER * pPlayer)
 {
 	_fTimer += TIMEMANAGER->getElapsedTime();
 
-	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E))
+	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_R))
 	{
 	case PLAYER::SKILL_NAME::SHOKE_NOVA:
-		if (!KEYMANAGER->isKeyDown('E'))
+		if (!KEYMANAGER->isKeyDown('R'))
 		{
 			if (!pPlayer->getAni()->isPlay())
 			{
@@ -81,7 +80,7 @@ void STATE_SKILL_FOUR::update(PLAYER * pPlayer)
 				_fTimer = 0.0f;
 			}
 		}
-		else if (KEYMANAGER->isKeyDown('E'))
+		else if (KEYMANAGER->isKeyDown('R'))
 		{
 			pPlayer->getAni()->stop();
 		}
@@ -89,7 +88,7 @@ void STATE_SKILL_FOUR::update(PLAYER * pPlayer)
 		break;
 
 	case PLAYER::SKILL_NAME::SHATTERINGSTRIKE:
-		if (_fTimer >= 0.3f && 
+		if (_fTimer >= 0.3f &&
 			_fTimer < 5.0f)
 		{
 			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_05);
@@ -105,6 +104,7 @@ void STATE_SKILL_FOUR::update(PLAYER * pPlayer)
 			_fTimer = 0.0f;
 		}
 		break;
+
 	case PLAYER::SKILL_NAME::REBOUNDINGICICLES:
 		if (!pPlayer->getAni()->isPlay())
 		{

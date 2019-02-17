@@ -10,6 +10,8 @@
 #include "stateSkillThree.h"
 #include "stateSkillTwo.h"
 #include "stateDeath.h"
+#include "stateSkillFive.h"
+
 
 #include "fireDash.h"
 #include "fireStrike.h"
@@ -18,6 +20,9 @@
 #include "chainLightning.h"
 #include "stoneShot.h"
 #include "shatteringStrike.h"
+#include "reboundingIcicles.h"
+#include "glacialCross.h"
+
 
 PLAYER::PLAYER() :
 	_fMaxHealthPoint(0.0f),
@@ -129,7 +134,7 @@ void PLAYER::update()
 
 	//땜방 ㅋㅋㅋ
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)]->update();
-	
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::REBOUNDINGICICLES)]->update();
 
 	//KEYANIMANAGER->update();
 
@@ -283,7 +288,7 @@ void PLAYER::settingSkill()
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)] = new CHAINLIGHTNING();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::STONE_SHOT)] = new STONESHOT();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::SHATTERINGSTRIKE)] = new SHATTERINGSTRIKE();
-
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::REBOUNDINGICICLES)] = new REBOUNDINGICICLES();
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
@@ -304,7 +309,7 @@ void PLAYER::settingSkill()
 
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::STONE_SHOT)] = 0.5f;
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::SHATTERINGSTRIKE)] = 5.0f;
-
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::REBOUNDINGICICLES)] = 4.0f;
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
@@ -323,6 +328,7 @@ void PLAYER::settingSkill()
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_Q)] = PLAYER::SKILL_NAME::SHOKE_NOVA;
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)] = PLAYER::SKILL_NAME::CHAIN_LIGHTNING;
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_E)] = PLAYER::SKILL_NAME::SHATTERINGSTRIKE;
+	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_R)] = PLAYER::SKILL_NAME::REBOUNDINGICICLES;
 
 	//
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)] = PLAYER::SKILL_NAME::STONE_SHOT;
@@ -701,6 +707,12 @@ void PLAYER::input()
 		if (KEYMANAGER->isKeyDown('R'))
 		{
 			_pCurrentState->onBtnR(this);
+			if (_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_R)])] >= _arSkillDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_R)])])
+			{
+				setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_R)]);
+				_pCurrentSkill->pushMagicKey(getAttactPosX(), getAttactPosY());
+				_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_R)])] = 0;
+			}
 
 		}
 		if (KEYMANAGER->isOnceKeyUp('R'))
@@ -708,6 +720,7 @@ void PLAYER::input()
 			//발동
 			//버튼업도 상태에 넣어야하나?
 			_pCurrentState->onBtnR(this);
+			_pCurrentSkill->pullMagicKey();
 
 		}
 	}
@@ -726,7 +739,7 @@ void PLAYER::initState()
 	_arState[static_cast<int>(PLAYER::PLAYER_STATE::SKILL_03)] = new STATE_SKILL_THREE();
 	_arState[static_cast<int>(PLAYER::PLAYER_STATE::SKILL_04)] = new STATE_SKILL_FOUR();
 	//
-	_arState[static_cast<int>(PLAYER::PLAYER_STATE::SKILL_05)] = new STATE_SKILL_FOUR();
+	_arState[static_cast<int>(PLAYER::PLAYER_STATE::SKILL_05)] = new STATE_SKILL_FIVE();
 
 	_pCurrentState = _arState[static_cast<int>(PLAYER::PLAYER_STATE::IDLE)];
 }

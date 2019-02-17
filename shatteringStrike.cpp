@@ -43,6 +43,9 @@ void SHATTERINGSTRIKE::update()
 
 void SHATTERINGSTRIKE::release()
 {
+	SKILL::_pMagicMgr = nullptr;
+	SKILL::_pSkillEffectMgr = nullptr;
+	SKILL::_pPlayer = nullptr;
 }
 
 void SHATTERINGSTRIKE::render(HDC hdc)
