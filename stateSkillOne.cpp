@@ -44,19 +44,31 @@ void STATE_SKILL_ONE::onBtnLB(PLAYER* pPlayer)
 {
 	if (_fWaitTime >= 0.2f  && _nCount < 3)
 	{
-		pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_01);
-		pPlayer->changeAttactMotion();
-		pPlayer->setAttactDir();
-		pPlayer->settingAni();
+		if (pPlayer->getIsUsingSkill(PLAYER::SKILL_KEY::LBUTTON))
+		{
+			switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON))
+			{
+			case PLAYER::SKILL_NAME::FIRE_STRIKE:
+				pPlayer->changeAttactMotion();
+				break;
+			case PLAYER::SKILL_NAME::STONE_SHOT:
+				pPlayer->changeAttactMotion();
+				if (_nCount == 2)
+				{
+					pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_05);
+				}
+				break;
+			}
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+			_fWaitTime = 0.0f;
+			_nCount++;
 
-
-		//pPlayer->getSkill()->pushMagicKey(pPlayer->getAttactPosX(), pPlayer->getAttactPosY());
-		
-		
-		_fWaitTime = 0.0f;
-		//pPlayer->moveAttack();
-		_nCount++;
+		}
 	}
+
+
+	
 }
 
 void STATE_SKILL_ONE::onBtnRB(PLAYER* pPlayer)
