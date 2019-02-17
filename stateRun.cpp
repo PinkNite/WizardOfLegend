@@ -58,7 +58,7 @@ void STATE_RUN::onBtnQ(PLAYER* pPlayer)
 {
 	if (pPlayer->getIsUsingSkill(PLAYER::SKILL_KEY::BTN_Q))
 	{
-		switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON))
+		switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q))
 		{
 		case PLAYER::SKILL_NAME::SHOKE_NOVA:
 		{

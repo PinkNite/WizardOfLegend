@@ -643,6 +643,12 @@ void PLAYER::input()
 		if (KEYMANAGER->isKeyDown('Q'))
 		{
 			_pCurrentState->onBtnQ(this);
+			if (_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_Q)])] >= _arSkillDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_Q)])])
+			{
+				setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_Q)]);
+				_pCurrentSkill->pushMagicKey(getAttactPosX(), getAttactPosY());
+				_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_Q)])] = 0;
+			}
 
 		}
 		if (KEYMANAGER->isOnceKeyUp('Q'))
@@ -651,6 +657,7 @@ void PLAYER::input()
 			//버튼업도 상태에 넣어야하나?
 			//내부에서 처리하자 걍
 			_pCurrentState->onBtnQ(this);
+			_pCurrentSkill->pullMagicKey();
 
 		}
 		if (KEYMANAGER->isKeyDown('E'))

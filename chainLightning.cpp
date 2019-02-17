@@ -21,7 +21,7 @@ void CHAINLIGHTNING::init(PLAYER::SKILL_NAME eSkillName)
 	_fStartPosX = 0.0f;
 	_fStartPosY = 0.0f;
 	_fAngle = 0.0f;
-	_fSpeed = 40.0f;
+	_fSpeed = 60.0f;
 	_fOffsetTimer = 0.0f;
 }
 
@@ -34,7 +34,7 @@ void CHAINLIGHTNING::update()
 
 		if (_fOffsetTimer >= 0.2f)
 		{
-			SKILL::_pMagicMgr->pushMagicKey("thunder", _fStartPosX, _fStartPosY - 248.0f, 0.0f, 0.0f, true);
+			SKILL::_pMagicMgr->pushMagicKey("thunder", _fStartPosX, _fStartPosY - 216.0f, 0.0f, 0.0f, true);
 			_fStartPosX += Mins::presentPowerX(_fAngle, _fSpeed);
 			_fStartPosY += Mins::presentPowerY(_fAngle, _fSpeed);
 			_fOffsetTimer = 0.0f;
