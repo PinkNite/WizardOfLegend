@@ -15,7 +15,7 @@
 #include "fireStrike.h"
 #include "skillnone.h"
 #include "shokeNova.h"
-
+#include "chainLightning.h"
 
 PLAYER::PLAYER() :
 	_fMaxHealthPoint(0.0f),
@@ -123,6 +123,11 @@ void PLAYER::update()
 	input();
 	_pCurrentSkill->update();
 	_pCurrentState->update(this);
+
+
+	//땜방 ㅋㅋㅋ
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)]->update();
+	
 
 	//KEYANIMANAGER->update();
 
@@ -266,6 +271,8 @@ void PLAYER::settingSkill()
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::FIRE_DASH)] = new FIREDASH();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::FIRE_STRIKE)] = new FIRESTRIKE();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::SHOKE_NOVA)] = new SHOKENOVA();
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)] = new CHAINLIGHTNING();
+
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
 		_arSkill[i]->init(static_cast<PLAYER::SKILL_NAME>(i));
@@ -281,6 +288,8 @@ void PLAYER::settingSkill()
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_STRIKE)] = 0.5f;
 
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::SHOKE_NOVA)] = 5.0f;
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)] = 5.0f;
+
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
@@ -296,7 +305,8 @@ void PLAYER::settingSkill()
 	//임시적으로 쓰는것 이제 유아이랑도 엮어서 처리해야함
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_SPACE)] = PLAYER::SKILL_NAME::FIRE_DASH;
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)] = PLAYER::SKILL_NAME::FIRE_STRIKE;
-	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)] = PLAYER::SKILL_NAME::SHOKE_NOVA;
+	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_Q)] = PLAYER::SKILL_NAME::SHOKE_NOVA;
+	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)] = PLAYER::SKILL_NAME::CHAIN_LIGHTNING;
 }
 
 void PLAYER::settingAni()
@@ -599,69 +609,74 @@ void PLAYER::input()
 		setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_SPACE)]);
 
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	if (_pCurrentState != _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
 	{
-		_pCurrentState->onBtnLB(this);
-		setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)]);
-		_pCurrentSkill->pushMagicKey(getAttactPosX(), getAttactPosY());
-	}
-	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-	{
-		_pCurrentSkill->pullMagicKey();
-	}
-	if (KEYMANAGER->isKeyDown(VK_RBUTTON))
-	{
-		_pCurrentState->onBtnRB(this);
-		if (_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)])] >= _arSkillDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)])])
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)]);
+			_pCurrentState->onBtnLB(this);
+			setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)]);
 			_pCurrentSkill->pushMagicKey(getAttactPosX(), getAttactPosY());
-			_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)])] = 0;
+
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_pCurrentSkill->pullMagicKey();
+		}
+		if (KEYMANAGER->isKeyDown(VK_RBUTTON))
+		{
+			_pCurrentState->onBtnRB(this);
+			if (_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)])] >= _arSkillDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)])])
+			{
+				setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)]);
+				_pCurrentSkill->pushMagicKey(getAttactPosX(), getAttactPosY());
+				_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)])] = 0;
+			}
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
+		{
+			//발동
+			//버튼업도 상태에 넣어야하나?
+			_pCurrentState->onBtnRB(this);
+			_pCurrentSkill->pullMagicKey();
+		}
+
+		if (KEYMANAGER->isKeyDown('Q'))
+		{
+			_pCurrentState->onBtnQ(this);
+
+		}
+		if (KEYMANAGER->isOnceKeyUp('Q'))
+		{
+			//발동
+			//버튼업도 상태에 넣어야하나?
+			//내부에서 처리하자 걍
+			_pCurrentState->onBtnQ(this);
+
+		}
+		if (KEYMANAGER->isKeyDown('E'))
+		{
+			_pCurrentState->onBtnE(this);
+		}
+		if (KEYMANAGER->isOnceKeyUp('E'))
+		{
+			//발동
+			//버튼업도 상태에 넣어야하나?
+			_pCurrentState->onBtnE(this);
+		}
+		if (KEYMANAGER->isKeyDown('R'))
+		{
+			_pCurrentState->onBtnR(this);
+
+		}
+		if (KEYMANAGER->isOnceKeyUp('R'))
+		{
+			//발동
+			//버튼업도 상태에 넣어야하나?
+			_pCurrentState->onBtnR(this);
+
 		}
 	}
-	if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
-	{
-		//발동
-		//버튼업도 상태에 넣어야하나?
-		_pCurrentState->onBtnRB(this);
-		_pCurrentSkill->pullMagicKey();
-	}
 
-	if (KEYMANAGER->isKeyDown('Q'))
-	{
-		_pCurrentState->onBtnQ(this);
-
-	}
-	if (KEYMANAGER->isOnceKeyUp('Q'))
-	{
-		//발동
-		//버튼업도 상태에 넣어야하나?
-		//내부에서 처리하자 걍
-		_pCurrentState->onBtnQ(this);
-
-	}
-	if (KEYMANAGER->isKeyDown('E'))
-	{
-		_pCurrentState->onBtnE(this);
-	}
-	if (KEYMANAGER->isOnceKeyUp('E'))
-	{
-		//발동
-		//버튼업도 상태에 넣어야하나?
-		_pCurrentState->onBtnE(this);
-	}
-	if (KEYMANAGER->isKeyDown('R'))
-	{
-		_pCurrentState->onBtnR(this);
-
-	}
-	if (KEYMANAGER->isOnceKeyUp('R'))
-	{
-		//발동
-		//버튼업도 상태에 넣어야하나?
-		_pCurrentState->onBtnR(this);
-
-	}
 }
 
 void PLAYER::initState()

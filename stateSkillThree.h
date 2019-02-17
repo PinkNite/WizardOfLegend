@@ -5,7 +5,7 @@
 
 class STATE_SKILL_THREE : public STATE {
 private:
-
+	float _fTimer;
 
 public:
 	STATE_SKILL_THREE();

@@ -26,8 +26,6 @@ void FIREDASH::init(PLAYER::SKILL_NAME eSkillName)
 
 void FIREDASH::update()
 {
-
-
 	if (_pPlayer->getDashTime() < 0.5f)
 	{
 		if (_pPlayer->getCurrentDeleyTime(SKILL::_eSkillName) >= _pPlayer->getDeleyTime(SKILL::_eSkillName))
@@ -61,7 +59,6 @@ void FIREDASH::update()
 			_pPlayer->setZeroDeleyTime(SKILL::_eSkillName);
 			_bIsOk = false;
 		}
-		
 	}
 }
 

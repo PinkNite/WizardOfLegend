@@ -76,6 +76,7 @@ public:
 		FIRE_DASH,
 		FIRE_STRIKE,
 		SHOKE_NOVA,
+		CHAIN_LIGHTNING,
 		MAX
 	};
 
@@ -279,4 +280,6 @@ public:
 		return _arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(eSkillKey)])] >= _arSkillDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(eSkillKey)])];
 	}
 
+
+	float	getAttackAngle() {return _fAttackDirAngle;}
 };

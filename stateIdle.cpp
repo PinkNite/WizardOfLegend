@@ -50,7 +50,20 @@ void STATE_IDLE::onBtnD(PLAYER* pPlayer)
 
 void STATE_IDLE::onBtnQ(PLAYER* pPlayer)
 {
-	pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_03);
+	if (pPlayer->getIsUsingSkill(PLAYER::SKILL_KEY::BTN_Q))
+	{
+		switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON))
+		{
+		case PLAYER::SKILL_NAME::SHOKE_NOVA:
+		{
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_03);
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_02);
+			pPlayer->settingAni();
+		}
+
+		break;
+		}
+	}
 }
 
 void STATE_IDLE::onBtnE(PLAYER* pPlayer)
@@ -82,17 +95,30 @@ void STATE_IDLE::onBtnLB(PLAYER* pPlayer)
 
 void STATE_IDLE::onBtnRB(PLAYER* pPlayer)
 {
-	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON))
+	if (pPlayer->getIsUsingSkill(PLAYER::SKILL_KEY::RBUTTON))
 	{
-	case PLAYER::SKILL_NAME::SHOKE_NOVA:
-		if (pPlayer->getIsUsingSkill(PLAYER::SKILL_KEY::RBUTTON))
+		switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON))
+		{
+		case PLAYER::SKILL_NAME::SHOKE_NOVA:
 		{
 			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_02);
 			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_02);
 			pPlayer->settingAni();
+
 		}
-		
+
 		break;
+
+		case PLAYER::SKILL_NAME::CHAIN_LIGHTNING:
+		{
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_02);
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_03);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+		}
+
+		break;
+		}
 	}
 
 }

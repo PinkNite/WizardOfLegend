@@ -38,11 +38,11 @@ HRESULT MINTESTSCENE::init()
 	IMAGEMANAGER->addFrameImage("lightEffect03", "resource/skill/lightEffect03.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("lightEffect04", "resource/skill/lightEffect04.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
 
-	IMAGEMANAGER->addFrameImage("shokeNova", "resource/skill/SaintThunder.bmp", 1536, 512, 3, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("shokeNova", "resource/skill/shokeNova.bmp", 2048, 512, 4, 1, true, Mins::getMazenta());
 	
 	KEYANIMANAGER->addObject("shokeNova");
-	int arr[] = { 0,1,2 };
-	KEYANIMANAGER->addArrayCoordinateFrameAnimation("shokeNova", "shokeNova", "shokeNova", arr, 3, 12, true, 3);
+	int arr[] = { 0,1,2,3 };
+	KEYANIMANAGER->addArrayCoordinateFrameAnimation("shokeNova", "shokeNova", "shokeNova", arr, 4, 16, true, 3);
 
 	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("shokeNova", "shokeNova"), "shokeNova", 3, 512, 512, IMAGEMANAGER->findImage("shokeNova"), 6, 512, 512, 1.0f);
 	

@@ -162,6 +162,7 @@
     <ClInclude Include="BossStateSkill03.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="chainLightning.h" />
     <ClInclude Include="circleEffect.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="BossStateSkill03.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="chainLightning.cpp" />
     <ClCompile Include="circleEffect.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
