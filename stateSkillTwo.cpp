@@ -56,6 +56,8 @@ void STATE_SKILL_TWO::onBtnRB(PLAYER* pPlayer)
 			pPlayer->getAni()->start();
 		}
 		break;
+
+	
 	}
 
 }
@@ -66,7 +68,7 @@ void STATE_SKILL_TWO::onBtnR(PLAYER * pPlayer)
 
 void STATE_SKILL_TWO::update(PLAYER * pPlayer)
 {
-
+	_fTimer += TIMEMANAGER->getElapsedTime();
 
 	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON))
 	{
@@ -96,6 +98,24 @@ void STATE_SKILL_TWO::update(PLAYER * pPlayer)
 			pPlayer->settingAni();
 			_fTimer = 0.0f;
 		}
+		break;
+
+	case PLAYER::SKILL_NAME::SHATTERINGSTRIKE:
+		if (_fTimer >= 0.3f)
+		{
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_05);
+			pPlayer->settingAni();
+			
+
+			if (!pPlayer->getAni()->isPlay())
+			{
+				pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
+				pPlayer->setAction(PLAYER::ACTION::IDLE);
+				pPlayer->settingAni();
+				_fTimer = 0.0f;
+			}
+		}
+
 		break;
 	}
 

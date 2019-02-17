@@ -62,6 +62,13 @@ void STATE_IDLE::onBtnQ(PLAYER* pPlayer)
 		}
 
 		break;
+
+		case PLAYER::SKILL_NAME::SHATTERINGSTRIKE:
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_03);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+			break;
 		}
 	}
 }
@@ -69,6 +76,27 @@ void STATE_IDLE::onBtnQ(PLAYER* pPlayer)
 void STATE_IDLE::onBtnE(PLAYER* pPlayer)
 {
 	pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_04);
+	if (pPlayer->getIsUsingSkill(PLAYER::SKILL_KEY::BTN_E))
+	{
+		switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E))
+		{
+		case PLAYER::SKILL_NAME::SHOKE_NOVA:
+		{
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_02);
+			pPlayer->settingAni();
+		}
+
+		break;
+
+		case PLAYER::SKILL_NAME::SHATTERINGSTRIKE:
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_03);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+			break;
+
+		}
+	}
 }
 
 void STATE_IDLE::onBtnSpace(PLAYER* pPlayer)
@@ -118,6 +146,14 @@ void STATE_IDLE::onBtnRB(PLAYER* pPlayer)
 		}
 
 		break;
+
+		case PLAYER::SKILL_NAME::SHATTERINGSTRIKE:
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_03);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+			break;
+
 		}
 	}
 

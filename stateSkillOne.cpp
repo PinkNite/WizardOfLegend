@@ -59,12 +59,11 @@ void STATE_SKILL_ONE::onBtnLB(PLAYER* pPlayer)
 				}
 				break;
 			}
-			pPlayer->setAttactDir();
-			pPlayer->settingAni();
-			_fWaitTime = 0.0f;
-			_nCount++;
-
 		}
+		pPlayer->setAttactDir();
+		pPlayer->settingAni();
+		_fWaitTime = 0.0f;
+		_nCount++;
 	}
 
 

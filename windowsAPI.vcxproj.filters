@@ -387,6 +387,15 @@
     <ClInclude Include="Enemy.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="reboundingIcicles.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="shatteringStrike.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="glacialCross.h">
+      <Filter>PlayGround\skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -637,6 +646,15 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="reboundingIcicles.cpp">
+      <Filter>PlayGround\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="shatteringStrike.cpp">
+      <Filter>PlayGround\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="glacialCross.cpp">
+      <Filter>PlayGround\skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

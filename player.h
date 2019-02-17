@@ -79,6 +79,7 @@ public:
 		SHOKE_NOVA,
 		CHAIN_LIGHTNING,
 		STONE_SHOT,
+		SHATTERINGSTRIKE,
 		MAX
 	};
 
@@ -283,4 +284,7 @@ public:
 
 
 	float	getAttackAngle() {return _fAttackDirAngle;}
+
+
+
 };

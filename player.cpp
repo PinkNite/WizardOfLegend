@@ -17,7 +17,7 @@
 #include "shokeNova.h"
 #include "chainLightning.h"
 #include "stoneShot.h"
-
+#include "shatteringStrike.h"
 
 PLAYER::PLAYER() :
 	_fMaxHealthPoint(0.0f),
@@ -282,7 +282,7 @@ void PLAYER::settingSkill()
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::SHOKE_NOVA)] = new SHOKENOVA();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)] = new CHAINLIGHTNING();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::STONE_SHOT)] = new STONESHOT();
-
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::SHATTERINGSTRIKE)] = new SHATTERINGSTRIKE();
 
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
@@ -303,6 +303,7 @@ void PLAYER::settingSkill()
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)] = 5.0f;
 
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::STONE_SHOT)] = 0.5f;
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::SHATTERINGSTRIKE)] = 5.0f;
 
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
@@ -321,6 +322,7 @@ void PLAYER::settingSkill()
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)] = PLAYER::SKILL_NAME::FIRE_STRIKE;
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_Q)] = PLAYER::SKILL_NAME::SHOKE_NOVA;
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::RBUTTON)] = PLAYER::SKILL_NAME::CHAIN_LIGHTNING;
+	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_E)] = PLAYER::SKILL_NAME::SHATTERINGSTRIKE;
 
 	//
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)] = PLAYER::SKILL_NAME::STONE_SHOT;
@@ -681,12 +683,20 @@ void PLAYER::input()
 		if (KEYMANAGER->isKeyDown('E'))
 		{
 			_pCurrentState->onBtnE(this);
+			if (_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_E)])] >= _arSkillDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_E)])])
+			{
+				setSkill(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_E)]);
+				_pCurrentSkill->pushMagicKey(getAttactPosX(), getAttactPosY());
+				_arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_E)])] = 0;
+			}
 		}
 		if (KEYMANAGER->isOnceKeyUp('E'))
 		{
 			//발동
 			//버튼업도 상태에 넣어야하나?
 			_pCurrentState->onBtnE(this);
+			_pCurrentSkill->pullMagicKey();
+
 		}
 		if (KEYMANAGER->isKeyDown('R'))
 		{
