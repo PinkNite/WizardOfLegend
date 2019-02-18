@@ -172,9 +172,9 @@ void INTROSCENE::render()
 	{
 		_introPeople.image->alphaRender(getMemDC(), _introPeople.x, _introPeople.y, _introPeople.alpha);
 	}
-	char str[220];
+	/*char str[220];
 	sprintf_s(str, "%2lf", _saveTime);
-	TextOut(getMemDC(), 300, 300, str, strlen(str));
+	TextOut(getMemDC(), 300, 300, str, strlen(str));*/
 
 
 	if (_time < 20)

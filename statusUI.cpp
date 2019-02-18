@@ -24,7 +24,7 @@ HRESULT STATUSUI::init()
 		_pStatusBox[i] = new STATUSBOX;
 		_pStatusBox[i]->init(214 + i * 66, 150);
 		_pStatusBox[i]->setSkillXY(60 + (i * 60) + 3,WINSIZEY-90);
-		
+		_pStatusBox[i]->setPlayer(_pPlayer);
 		switch (i)
 		{
 		case 5:
@@ -35,7 +35,7 @@ HRESULT STATUSUI::init()
 			break;
 		}
 		
-		_pStatusBox[i]->setSkillNum(i);
+		_pStatusBox[i]->setSkillNum(static_cast<SKILLNUMBER> (i));
 		switch (i)
 		{
 		case 4:
@@ -51,6 +51,7 @@ HRESULT STATUSUI::init()
 	_pStatusBox[6] = new STATUSBOX;
 	_pStatusBox[6]->init(214, 333);
 	_pStatusBox[6]->_pSkillIcon->setNum(10);
+
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -81,6 +82,8 @@ HRESULT STATUSUI::init()
 	}
 	_pStatusSelect = new STATUSSELECT;
 	_pStatusSelect->init();
+	
+
 	
 	return S_OK;
 }

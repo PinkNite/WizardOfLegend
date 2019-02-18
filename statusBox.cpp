@@ -19,13 +19,11 @@ HRESULT STATUSBOX::init(int x, int y)
 	_rc = RectMake(x, y, OBJECT::getImage()->getFrameWidth(), OBJECT::getImage()->getFrameHeight());
 	_x = x;
 	_y = y;
-	
-		_pSkillIcon = new SKILLICON;
-		_pSkillIcon->init(_x-2, _y-2);
-		
-		//_pSkillIcon->setNum(i);
+	_pSkillIcon = new SKILLICON;
+	_pSkillIcon->init(_x-2, _y-2);
+	//_pSkillIcon->setNum(i);
 
-		
+	
 	
 	return S_OK;
 }
@@ -73,9 +71,10 @@ void STATUSBOX::render(HDC hdc)
 	OBJECT::getImage()->alphaFrameRender(hdc, _x, _y, _frameX, _frameY, _alpha);
 	
 		_pSkillIcon->render(hdc);
-		char str[200];
+
+		/*char str[200];
 		sprintf_s(str, "%d", _skillNum);
-		TextOut(hdc, _x, _y, str, strlen(str));
+		TextOut(hdc, _x, _y, str, strlen(str));*/
 
 }
 
@@ -85,7 +84,7 @@ void STATUSBOX::setSkillXY(int x, int y)
 	_skillY = y;
 }
 
-void STATUSBOX::setSkillNum(int num)
+void STATUSBOX::setSkillNum(SKILLNUMBER num)
 {
 	_skillNum = num;
 }

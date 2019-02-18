@@ -847,6 +847,12 @@ void image::alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, i
 	}
 	else
 	{
+		BitBlt(_blendImage->hMemDC
+			, 0, 0
+			, _imageInfo->frameWidth, _imageInfo->frameHeight
+			, hdc
+			, destX, destY
+			, SRCCOPY);
 		AlphaBlend(hdc
 			, destX, destY
 			, _imageInfo->frameWidth, _imageInfo->frameHeight
@@ -900,6 +906,12 @@ void image::alphaFrameRender(HDC hdc, int destX, int destY, int width, int heigh
 	}
 	else
 	{
+		BitBlt(_blendImage->hMemDC
+			, 0, 0
+			, _imageInfo->frameWidth, _imageInfo->frameHeight
+			, hdc
+			, destX, destY
+			, SRCCOPY);
 		AlphaBlend(hdc
 			, destX, destY
 			, _imageInfo->frameWidth, _imageInfo->frameHeight

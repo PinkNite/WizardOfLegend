@@ -61,6 +61,8 @@ HRESULT UI::init()
 	
 	_HP = 500;//아직 안받는 값
 	_damage = 100;
+
+	_pStatusUI->setPlayer(_pPlayer);
 	return S_OK;
 }
 
@@ -117,7 +119,7 @@ void UI::update()
 		_MP -= 10;
 	}
 
-	_pHpBar[1]->setGauge(_pPlayer->getCurrentHp(), _pPlayer->getMaxHp());
+	_pHpBar[1]->setGauge(_pPlayer->getCurrentHp(), _pPlayer->getMaxHp());//플레이어값받아온게 들어감
 	_pHpBar[0]->setDamage(_pPlayer->getCurrentHp(), _pPlayer->getMaxHp());
 
 	_pMpBar->setGauge(_MP, 100);

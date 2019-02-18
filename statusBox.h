@@ -1,16 +1,17 @@
 #pragma once
 #include "object.h"
 #include "skillIcon.h"
-//enum SKILLNUMBER
-//{
-//	SKILL_0,
-//	SKILL_1,
-//	SKILL_2,
-//	SKILL_3,
-//	SKILL_4,
-//	SKILL_5,
-//	SKILL_EMPTY
-//};
+#include "player.h"
+enum SKILLNUMBER
+{
+	SKILL_0,
+	SKILL_1,
+	SKILL_2,
+	SKILL_3,
+	SKILL_4,
+	SKILL_5,
+	SKILL_EMPTY
+};
 class STATUSBOX :public OBJECT
 {
 private:
@@ -23,9 +24,10 @@ private:
 
 	int _skillX;
 	int _skillY;
-	int _skillNum;
+	SKILLNUMBER _skillNum;
 	int _index;//템프 번호로 찾아야하기때문에
 
+	PLAYER* _pPlayer;
 public:
 	SKILLICON* _pSkillIcon;
 	STATUSBOX();
@@ -36,7 +38,7 @@ public:
 	void render(HDC hdc);
 	void setSkillXY(int x, int y);
 	//스킬 번호
-	void setSkillNum(int num);
+	void setSkillNum(SKILLNUMBER num);
 public:
 	//접근자 참조자
 	int getX(){return _x;}
@@ -63,7 +65,7 @@ public:
 	int getSkillY() { return _skillY; }
 	void setSkillY(int y) { _skillY = y; }
 	//스킬 번호
-	int getSkillNum() { return _skillNum; }
+	SKILLNUMBER getSkillNum() { return _skillNum; }
 	
 
 
@@ -75,5 +77,8 @@ public:
 	//테스트 확인용
 	float xx() { return _x; }
 	bool dd() { return _isCollision; }
+
+	//링크받을것
+	void setPlayer(PLAYER* p) { _pPlayer = p; }
 };
 

@@ -3,9 +3,10 @@
 #include "statusSelect.h"
 #include "statusBox.h"
 #include "explainUse.h"	
-//#include "skillIcon.h"
 #include "statusButton.h"
 #include "skillIcon.h"
+#include "player.h"
+
 
 
 class ITEM;
@@ -16,6 +17,8 @@ public:
 	//안에 박스는 따로 그리고
 	//셀렉트 박스 따로 그리고 
 	//골드창 따로
+	PLAYER* _pPlayer;
+
 	STATUSBOX* _pStatusBox[7];
 	STATUSBOX* _pTempBox;
 	STATUSSELECT* _pStatusSelect;
@@ -62,6 +65,6 @@ public:
 	void setIsClick(SELECTSTATE num) { _pStatusSelect->setSelectState(num); }
 	
 	
-
+	void setPlayer(PLAYER* p) { _pPlayer = p; }
 };
 

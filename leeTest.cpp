@@ -15,11 +15,16 @@ LEETEST::~LEETEST()
 
 HRESULT LEETEST::init()
 {
+	_pCamera = new CAMERA();
 	_pPlayer = new PLAYER();
 	_pPlayer->init();
+	_pCamera->init(_pPlayer->getPosX(), _pPlayer->getPosY(), 2048, 2048);
 
 	_pMagicMgr = new MAGICMGR();
 	_pSkillEffectMgr = new SKILL_EFFECT_MGR();
+
+	_pMagicMgr->setLink(_pCamera);
+
 
 	_pMagicMgr->addObject("dashFlame", 100, 64, 64,
 		IMAGEMANAGER->addFrameImage("dashFlame", "resource/skill/flame.bmp", 1408, 384, 11, 3, true, Mins::getMazenta()),
@@ -52,6 +57,14 @@ HRESULT LEETEST::init()
 	IMAGEMANAGER->addImage("upRock", "resource/skill/upRock.bmp", 121, 128, true, Mins::getMazenta());
 
 	IMAGEMANAGER->addFrameImage("iceCrystal", "resource/skill/iceCrystal.bmp", 700, 199, 5, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("dlbSmallRock", "resource/skill/dlbSmallRock.bmp", 128, 32, 4, 1, true, Mins::getMazenta());
+
+	IMAGEMANAGER->addFrameImage("icePunch", "resource/skill/icePunch.bmp", 1350, 600, 9, 4, true, Mins::getMazenta());
+
+	IMAGEMANAGER->addFrameImage("iceBullet", "resource/skill/iceBullet.bmp", 540, 240, 9, 4, true, Mins::getMazenta());
+
+	IMAGEMANAGER->addFrameImage("dropRock", "resource/skill/dropRock.bmp", 32, 32, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("dropRightRock", "resource/skill/dropRightRock.bmp", 32, 32, 1, 1, true, Mins::getMazenta());
 
 
 	KEYANIMANAGER->addObject("shokeNova");
@@ -61,7 +74,7 @@ HRESULT LEETEST::init()
 	KEYANIMANAGER->addObject("Rock");
 	KEYANIMANAGER->addArrayCoordinateFrameAnimation("Rock", "bicRock", "bicRock", arr, 4, 16, true, 16);
 	KEYANIMANAGER->addArrayCoordinateFrameAnimation("Rock", "smallRock", "smallRock", arr, 4, 16, true, 16);
-
+	KEYANIMANAGER->addArrayCoordinateFrameAnimation("Rock", "dlbSmallRock", "dlbSmallRock", arr, 4, 16, true, 16);
 
 
 	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("shokeNova", "shokeNova"), "shokeNova", 3, 512, 512, IMAGEMANAGER->findImage("shokeNova"), 6, 512, 512, 1.0f);
@@ -79,25 +92,42 @@ HRESULT LEETEST::init()
 
 	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "bicRock"), "bicRock", 100, 128, 128, IMAGEMANAGER->findImage("bicRock"), 16, 128, 128, 0.5f);
 	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "smallRock"), "smallRock", 100, 64, 64, IMAGEMANAGER->findImage("smallRock"), 16, 64, 64, 1.0f);
+	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "dlbSmallRock"), "dlbSmallRock", 100, 32, 32, IMAGEMANAGER->findImage("dlbSmallRock"), 16, 32, 32, 0.3f);
 
 	_pMagicMgr->addObject("upRock", 10, 121, 128, IMAGEMANAGER->findImage("upRock"), 1, 121, 128, 0.3f);
 
 	_pMagicMgr->addObject("iceCrystal", 100, 140, 199, IMAGEMANAGER->findImage("iceCrystal"), 15, 140, 199, 0.3f);
 
+	_pMagicMgr->addObject("icePunch", 10, 110, 110, IMAGEMANAGER->findImage("icePunch"), 0, 0, 0.3f);
+
+	_pMagicMgr->addObject("iceBullet", 100, 25, 25, IMAGEMANAGER->findImage("iceBullet"), 0, 0, 0.3f);
+
 	_pPlayer->setLink(_pMagicMgr, _pSkillEffectMgr);
+
+	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("dropRock"), 1, 32, 32, 1200, "dropRock");
+	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("dropRightRock"), 1, 32, 32, 1200, "dropRightRock");
+
+	_pMagicMgr->addObject("dropRock", 1200, 32, 32, IMAGEMANAGER->findImage("dropRock"), 0, 0, 0.3f);
+	_pMagicMgr->addObject("dropRightRock", 1200, 32, 32, IMAGEMANAGER->findImage("dropRightRock"), 0, 0, 0.3f);
+
+
+	_pCamera->setting(_pPlayer->getPosX(), _pPlayer->getPosY());
+	_pPlayer->setCameraLink(_pCamera);
+	
 	_pMouse = new image;
 	_pMouse = IMAGEMANAGER->addImage("mouse", "resource/intro/mouseCursor.bmp", 64, 64, true, RGB(255, 0, 255));
-
-	
 	_pUI = new UI;
 	_pUI->init();
 	_pUI->setLinkPlayer(_pPlayer);
 	_pItemManager = new ITEMMANAGER;
 	_pItemManager->init();
 	ShowCursor(false);
+	/*_iImage = new image;
+	_iImage=IMAGEMANAGER->addFrameImage("ac1", "resource/UI/TesthpBar.bmp", 54, 207, 2, 1, true, RGB(255, 0, 255));
 	
-	
-
+	height = 100;
+	rc = RectMake(600, 700, 10, height);
+	hp = 200;*/
 	return S_OK;
 }
 
@@ -114,33 +144,56 @@ void LEETEST::release()
 	_pPlayer = nullptr;
 	_pSkillEffectMgr = nullptr;
 	_pMagicMgr = nullptr;
+
+
+	_pMouse = nullptr;
 }
 
 void LEETEST::update()
 {
 	KEYANIMANAGER->update();
-
+	_pCamera->update();
 	_pPlayer->update();
 	_pMagicMgr->update();
 	_pSkillEffectMgr->update();
+
+	_pCamera->setting(_pPlayer->getPosX(), _pPlayer->getPosY());
+
+
 	_pUI->update();
 	_pItemManager->update();
 	
+	/*if (KEYMANAGER->isStayKeyDown('C'))
+	{
+		hp -= 1;
+	}
+	height = (hp / 100) * 100;
+	rc=RectMake(600, 700+100-height, 27, height);*/
 	
-
 }
 
 void LEETEST::render()
 {
-	_pSkillEffectMgr->render(getMemDC());
+	_pCamera->renderinit();
+
+	_pSkillEffectMgr->render(_pCamera->getMemDC());
 	_pPlayer->render(getMemDC());
 	_pMagicMgr->render(getMemDC());
+	_pCamera->render(getMemDC());
 
 	KEYANIMANAGER->render();
+
+
 	_pUI->render(getMemDC());
 	_pItemManager->render(getMemDC());
 	_pMouse->render(getMemDC(), _ptMouse.x - 32, _ptMouse.y - 32);
 
+	//Rectangle(getMemDC(), rc);
 	
+	/*
+	_iImage->alphaFrameRender(getMemDC(), rc.left, rc.top, IMAGEMANAGER->findImage("ac1")->getFrameWidth(), height, 0, 0, 255);
+	char str[200];
+	sprintf_s(str, "%lf", height);
+	TextOut(getMemDC(), 600, 600, str, strlen(str));*/
 }
 
