@@ -165,11 +165,11 @@ void BOSS::createAnimation()
 	KEYANIMANAGER->addObject(_objectName);
 
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::ENTRANCE], 62, 64, 8, false, nullptr);
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_02], 22, 42, 6, false, nullptr);
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_03], 22, 42, 6, false, nullptr);
 
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DAMAGE], 66, 68, 8, false, callbackIdle);
+	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
 
 	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::RUN], 0, 0, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::RUN], 1, 1, 1, true, nullptr);
@@ -180,6 +180,14 @@ void BOSS::createAnimation()
 	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::DASH], 1, 1, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DASH], 2, 2, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::DASH], 3, 3, 1, true, nullptr);
+
+	// TODO: 이미지 추가 
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_02], 22, 42, 6, false, nullptr);
+	// TODO: 이미지 추가 
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_03], 22, 42, 6, false, nullptr);
+
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DAMAGE], 66, 68, 8, false, callbackIdle);
+
 
 	int effectFrame[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "Entrance", "IceCrystals", effectFrame, 8, 4, false, callbackSetBattle, this);
@@ -269,19 +277,21 @@ void BOSS::setState(BOSS_STATE bossState)
 void BOSS::handleState(BOSS_STATE bossState)
 {
 	BossState* state = _pCurrentState->handleState(this, bossState);
+	/*
 	if (state != nullptr)
 	{
-		//_pCurrentState = nullptr;
-		//_pCurrentState = state;
+		_pCurrentState = nullptr;
+		_pCurrentState = state;
 
-		//_pCurrentState->enter(this);
-	}
+		_pCurrentState->enter(this);
+	}*/
 	_pCurrentState->enter(this);
 }
 
-void BOSS::setAction(ACTION action)
+void BOSS::setAction(ACTION action, DIRECTION direction)
 {
 	_action = action;
+	setDirection(direction);
 	startBossAnimation();
 }
 
@@ -311,45 +321,49 @@ void BOSS::handleInputKey()
 
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
-		setState(BOSS_STATE::RUN);
 		setDirection(DIRECTION::UP);
+		setState(BOSS_STATE::RUN);
 		moveUp(speed);
 	}
 	else if (KEYMANAGER->isOnceKeyUp(VK_UP))
 	{
+		//setDirection(DIRECTION::DOWN);
 		setState(BOSS_STATE::IDLE);
 	}
 
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
-		setState(BOSS_STATE::RUN);
 		setDirection(DIRECTION::LEFT);
+		setState(BOSS_STATE::RUN);
 		moveLeft(speed);
 	}
 	else if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
 	{
+		//setDirection(DIRECTION::DOWN);
 		setState(BOSS_STATE::IDLE);
 	}
 
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
-		setState(BOSS_STATE::RUN);
 		setDirection(DIRECTION::RIGHT);
+		setState(BOSS_STATE::RUN);
 		moveRight(speed);
 	}
 	else if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
 	{
+		//setDirection(DIRECTION::DOWN);
 		setState(BOSS_STATE::IDLE);
 	}
 
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
-		setState(BOSS_STATE::RUN);
 		setDirection(DIRECTION::DOWN);
+		setState(BOSS_STATE::RUN);
 		moveDown(speed);
 	}
 	else if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
 	{
+		//setDirection(DIRECTION::DOWN);
 		setState(BOSS_STATE::IDLE);
 	}
 
@@ -391,7 +405,7 @@ void BOSS::dash(float targetX, float targetY)
 	if (4.95f < targetAngle && targetAngle <= 6.28) _direction = DIRECTION::RIGHT;
 	if (0.0f < targetAngle && targetAngle <= 0.78) _direction = DIRECTION::RIGHT;
 
-	setAction(ACTION::DASH);
+	setAction(ACTION::DASH, _direction);
 
 	float distance;
 	for (size_t i = 0; i < 100; i++)
@@ -404,7 +418,12 @@ void BOSS::dash(float targetX, float targetY)
 		setRect();
 	}
 
+
+	setAction(ACTION::IDLE, _direction);
+
 	// TODO: 칼질 키 애니메이션 및 랜서  
+
+
 }
 
 void BOSS::spell01(SKILL_TYPE type)
@@ -414,10 +433,11 @@ void BOSS::spell01(SKILL_TYPE type)
 	_timeSet = 0;
 	_isEndSkill = false;
 	float positionAngle = 10.0f;
+
+	setDirection(DIRECTION::DOWN);
 	setState(BOSS_STATE::SKILL_01);
 	setWings(false);
 
-	_direction = DIRECTION::DOWN;
 	_skillType = type;
 	string imageName = "";
 	if (SKILL_TYPE::BUBBLE == type)
@@ -616,7 +636,7 @@ void BOSS::setBossIdle()
 		if (_isEndSkill == true)
 		{
 			setState(BOSS_STATE::IDLE);
-			setAction(ACTION::IDLE);
+			setAction(ACTION::IDLE, DIRECTION::DOWN);
 			setWings(true);
 			_isEndSkill = false;
 		}
@@ -624,7 +644,7 @@ void BOSS::setBossIdle()
 	else
 	{
 		setState(BOSS_STATE::IDLE);
-		setAction(ACTION::IDLE);
+		setAction(ACTION::IDLE, DIRECTION::DOWN);
 		setWings(true);
 	}
 }
@@ -634,15 +654,14 @@ void BOSS::setDamage(float damage)
 	_fCurrentHP -= damage;
 	if (!(ACTION::SKILL_01 == _action || ACTION::SKILL_02 == _action || ACTION::SKILL_02 == _action))
 	{
-		setAction(ACTION::DAMAGE);
+		setAction(ACTION::DAMAGE, DIRECTION::DOWN);
 		setWings(false);
 	}
 }
 
 void BOSS::setDeath()
 {
-	//setState(BOSS_STATE::DEATH);
-	setAction(ACTION::DEATH);
+	setAction(ACTION::DEATH, DIRECTION::DOWN);
 	startBossAnimation();
 
 	_pEffectAnimation = KEYANIMANAGER->findAnimation(_objectName, "BossEnding");

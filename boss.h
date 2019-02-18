@@ -147,7 +147,7 @@ public:
 	// state pattern
 	void initState();
 	void setState(BOSS_STATE bossState);
-	void setAction(ACTION action);
+	void setAction(ACTION action, DIRECTION direction);
 	void setDirection(DIRECTION direction);
 	void handleState(BOSS_STATE bossState);
 

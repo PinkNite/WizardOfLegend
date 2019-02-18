@@ -23,7 +23,7 @@ BossState * BossStateSkill01::handleState(BOSS * boss, BOSS::BOSS_STATE state)
 
 void BossStateSkill01::enter(BOSS * boss)
 {
-	boss->setAction(BOSS::ACTION::SKILL_01);
+	boss->setAction(BOSS::ACTION::SKILL_01, boss->getDiretion());
 	_timeInterval = 0.0f;
 }
 

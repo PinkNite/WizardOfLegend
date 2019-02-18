@@ -22,7 +22,7 @@ BossState* BossStateIdle::handleState(BOSS * boss, BOSS::BOSS_STATE state)
 
 void BossStateIdle::enter(BOSS * boss)
 {
-	boss->setAction(BOSS::ACTION::IDLE);
+	boss->setAction(BOSS::ACTION::IDLE, BOSS::DIRECTION::DOWN);
 }
 
 void BossStateIdle::update(BOSS * boss)

@@ -19,7 +19,7 @@ BossState * BossStateRun::handleState(BOSS * boss, BOSS::BOSS_STATE state)
 
 void BossStateRun::enter(BOSS * boss)
 {
-	boss->setAction(BOSS::ACTION::RUN);
+	boss->setAction(BOSS::ACTION::RUN, boss->getDiretion());
 }
 
 void BossStateRun::update(BOSS * boss)
