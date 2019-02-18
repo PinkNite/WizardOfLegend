@@ -1,13 +1,10 @@
 #pragma once
 #include "object.h"
-#include "relics_Type.h"
-class RELICS :public OBJECT
+class RELICS_RING : public OBJECT
 {
-private:
-
 public:
-	RELICS();
-	~RELICS();
+	RELICS_RING();
+	~RELICS_RING();
 	HRESULT init(int x, int y);
 	void release();
 	void update();

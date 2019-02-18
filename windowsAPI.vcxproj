@@ -202,6 +202,11 @@
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="reboundingIcicles.h" />
     <ClInclude Include="relics.h" />
+    <ClInclude Include="relics_Cover.h" />
+    <ClInclude Include="relics_Home.h" />
+    <ClInclude Include="relics_Ring.h" />
+    <ClInclude Include="relics_Select.h" />
+    <ClInclude Include="relics_Type.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="shatteringStrike.h" />
@@ -295,6 +300,11 @@
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="reboundingIcicles.cpp" />
     <ClCompile Include="relics.cpp" />
+    <ClCompile Include="relics_Cover.cpp" />
+    <ClCompile Include="relics_Home.cpp" />
+    <ClCompile Include="relics_Ring.cpp" />
+    <ClCompile Include="relics_Select.cpp" />
+    <ClCompile Include="relics_Type.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="shatteringStrike.cpp" />
     <ClCompile Include="shokeNova.cpp" />

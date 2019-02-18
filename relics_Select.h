@@ -1,13 +1,10 @@
 #pragma once
 #include "object.h"
-#include "relics_Type.h"
-class RELICS :public OBJECT
+class RELICS_SELECT :public OBJECT
 {
-private:
-
 public:
-	RELICS();
-	~RELICS();
+	RELICS_SELECT();
+	~RELICS_SELECT();
 	HRESULT init(int x, int y);
 	void release();
 	void update();

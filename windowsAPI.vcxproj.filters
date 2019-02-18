@@ -118,6 +118,9 @@
     <Filter Include="PlayGround\enemy\enemy">
       <UniqueIdentifier>{fb5e6b37-eea2-46fc-8351-1e68b60a225a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\UI\relicsUI">
+      <UniqueIdentifier>{ccc9390e-8a81-4716-bf5d-ccc506f6655f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -306,9 +309,6 @@
     <ClInclude Include="UI.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
-    <ClInclude Include="relics.h">
-      <Filter>PlayGround\UI</Filter>
-    </ClInclude>
     <ClInclude Include="goldHD.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
@@ -404,6 +404,24 @@
     </ClInclude>
     <ClInclude Include="EnemyState.h">
       <Filter>PlayGround\enemy\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="relics_Type.h">
+      <Filter>PlayGround\UI\relicsUI</Filter>
+    </ClInclude>
+    <ClInclude Include="relics_Cover.h">
+      <Filter>PlayGround\UI\relicsUI</Filter>
+    </ClInclude>
+    <ClInclude Include="relics_Home.h">
+      <Filter>PlayGround\UI\relicsUI</Filter>
+    </ClInclude>
+    <ClInclude Include="relics_Ring.h">
+      <Filter>PlayGround\UI\relicsUI</Filter>
+    </ClInclude>
+    <ClInclude Include="relics_Select.h">
+      <Filter>PlayGround\UI\relicsUI</Filter>
+    </ClInclude>
+    <ClInclude Include="relics.h">
+      <Filter>PlayGround\UI\relicsUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -572,9 +590,6 @@
     <ClCompile Include="UI.cpp">
       <Filter>PlayGround\UI</Filter>
     </ClCompile>
-    <ClCompile Include="relics.cpp">
-      <Filter>PlayGround\UI</Filter>
-    </ClCompile>
     <ClCompile Include="goldHD.cpp">
       <Filter>PlayGround\UI</Filter>
     </ClCompile>
@@ -667,6 +682,24 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>PlayGround\enemy\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="relics_Type.cpp">
+      <Filter>PlayGround\UI\relicsUI</Filter>
+    </ClCompile>
+    <ClCompile Include="relics_Select.cpp">
+      <Filter>PlayGround\UI\relicsUI</Filter>
+    </ClCompile>
+    <ClCompile Include="relics_Ring.cpp">
+      <Filter>PlayGround\UI\relicsUI</Filter>
+    </ClCompile>
+    <ClCompile Include="relics_Home.cpp">
+      <Filter>PlayGround\UI\relicsUI</Filter>
+    </ClCompile>
+    <ClCompile Include="relics_Cover.cpp">
+      <Filter>PlayGround\UI\relicsUI</Filter>
+    </ClCompile>
+    <ClCompile Include="relics.cpp">
+      <Filter>PlayGround\UI\relicsUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

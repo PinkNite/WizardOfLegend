@@ -1,13 +1,14 @@
 #pragma once
 #include "object.h"
-#include "relics_Type.h"
-class RELICS :public OBJECT
+#include "animation.h"
+class RELICS_TYPE :public OBJECT
 {
 private:
-
+	animation* _pAni;
+	int _frameY;
 public:
-	RELICS();
-	~RELICS();
+	RELICS_TYPE();
+	~RELICS_TYPE();
 	HRESULT init(int x, int y);
 	void release();
 	void update();
