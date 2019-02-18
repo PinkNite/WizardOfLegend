@@ -77,6 +77,13 @@ void STATE_IDLE::onBtnQ(PLAYER* pPlayer)
 			pPlayer->settingAni();
 
 			break;
+		case PLAYER::SKILL_NAME::GLACIALCROSS:
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_05);
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_01);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+			break;
 		}
 	}
 }
@@ -111,6 +118,13 @@ void STATE_IDLE::onBtnE(PLAYER* pPlayer)
 			pPlayer->setAttactDir();
 			pPlayer->settingAni();
 
+			break;
+		case PLAYER::SKILL_NAME::GLACIALCROSS:
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_05);
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_01);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
 			break;
 		}
 	}
@@ -181,6 +195,13 @@ void STATE_IDLE::onBtnRB(PLAYER* pPlayer)
 			pPlayer->settingAni();
 
 			break;
+		case PLAYER::SKILL_NAME::GLACIALCROSS:
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_05);
+
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_01);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
+			break;
 		}
 	}
 
@@ -217,6 +238,12 @@ void STATE_IDLE::onBtnR(PLAYER * pPlayer)
 			pPlayer->setAttactDir();
 			pPlayer->settingAni();
 
+			break;
+		case PLAYER::SKILL_NAME::GLACIALCROSS:
+			pPlayer->setState(PLAYER::PLAYER_STATE::SKILL_05);
+			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_01);
+			pPlayer->setAttactDir();
+			pPlayer->settingAni();
 			break;
 		}
 	}

@@ -81,6 +81,7 @@ public:
 		STONE_SHOT,
 		SHATTERINGSTRIKE,
 		REBOUNDINGICICLES,
+		GLACIALCROSS,
 		MAX
 	};
 
@@ -228,8 +229,7 @@ public:
 	void moveDownLeft(float fSpeed);
 	void moveDownRight(float fSpeed);
 
-
-
+	
 	inline float getSpeed() { return _fSpeed; }
 	void dash(float fOffset);
 	void movePlayer();
@@ -239,7 +239,7 @@ public:
 	void setDirectionLeft();
 	void setDirectionRight();
 
-	void moveAttack();
+	void moveAttack(float fSpeed);
 	void setAttactDir();
 public:
 	inline void setDashTime(float fDashTime) { _fDashTime = fDashTime; }

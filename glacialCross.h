@@ -9,9 +9,12 @@ private:
 
 	float	_fStartPosX;
 	float	_fStartPosY;
-	float	_fAngle;
 	float	_fOffsetTimer;
 	float	_fSpeed;
+
+	float	_arAngle[3];
+
+	bool	_bIsPunch;
 public:
 	GLACIALCROSS();
 	~GLACIALCROSS();

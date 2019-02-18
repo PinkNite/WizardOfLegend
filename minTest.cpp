@@ -54,8 +54,9 @@ HRESULT MINTESTSCENE::init()
 	IMAGEMANAGER->addFrameImage("iceCrystal", "resource/skill/iceCrystal.bmp", 700, 199, 5, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("dlbSmallRock", "resource/skill/dlbSmallRock.bmp", 128, 32, 4, 1, true, Mins::getMazenta());
 
-	IMAGEMANAGER->addFrameImage("icePunch", "resource/skill/icePunch.bmp", 900, 400, 9, 4, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("icePunch", "resource/skill/icePunch.bmp", 1350, 600, 9, 4, true, Mins::getMazenta());
 
+	IMAGEMANAGER->addFrameImage("iceBullet", "resource/skill/iceBullet.bmp", 540, 240, 9, 4, true, Mins::getMazenta());
 
 	KEYANIMANAGER->addObject("shokeNova");
 	int arr[] = { 0,1,2,3 };
@@ -88,8 +89,9 @@ HRESULT MINTESTSCENE::init()
 
 	_pMagicMgr->addObject("iceCrystal", 100, 140, 199, IMAGEMANAGER->findImage("iceCrystal"), 15, 140, 199, 0.3f);
 
-	_pMagicMgr->addObject("icePunch", 10, 100, 100, IMAGEMANAGER->findImage("icePunch"), 0, 0, 1.0f);
+	_pMagicMgr->addObject("icePunch", 10, 110, 110, IMAGEMANAGER->findImage("icePunch"), 0, 0, 0.3f);
 
+	_pMagicMgr->addObject("iceBullet", 100, 25, 25, IMAGEMANAGER->findImage("iceBullet"), 0, 0, 0.3f);
 
 	_pPlayer->setLink(_pMagicMgr, _pSkillEffectMgr);
 	return S_OK;

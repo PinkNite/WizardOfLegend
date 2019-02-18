@@ -26,6 +26,10 @@ private:
 	bool	_bIsAnimation;	//에니메이션이 있고 없고
 	
 	string	_strKey;
+
+	int		_nFrameX;			//프레임 렌더용
+	int		_nFrameY;			//프레임 렌더용
+
 public:
 	MAGIC();
 	~MAGIC();
@@ -47,4 +51,5 @@ public:
 	const string&	getKey() { return _strKey; }
 
 	RECT*	getRect() { return &_rcCollision; }
+	bool	getIsAni() { return _bIsAnimation; }
 };

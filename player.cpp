@@ -23,7 +23,6 @@
 #include "reboundingIcicles.h"
 #include "glacialCross.h"
 
-
 PLAYER::PLAYER() :
 	_fMaxHealthPoint(0.0f),
 	_fCurrentHealthPoint(0.0f),
@@ -201,10 +200,10 @@ void PLAYER::setAnimation()
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::DASH)], 59, 54, 12, false);
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::DASH)], 60, 62, 6, false);
 
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_01)], 63, 71, 9, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_01)], 179, 190, 12, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_01)], 202, 191, 12, false);
-	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_01)], 72, 82, 11, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_01)], 63, 71, 27, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_01)], 179, 190, 36, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_01)], 202, 191, 36, false);
+	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::BACK)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_01)], 72, 82, 33, false);
 
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 83, 93, 22, false);
 	addPlayerKeyAni(_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)], _arAction[static_cast<int>(PLAYER::ACTION::ATTACK_MOTION_02)], 94, 103, 20, false);
@@ -295,6 +294,7 @@ void PLAYER::settingSkill()
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::STONE_SHOT)] = new STONESHOT();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::SHATTERINGSTRIKE)] = new SHATTERINGSTRIKE();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::REBOUNDINGICICLES)] = new REBOUNDINGICICLES();
+	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::GLACIALCROSS)] = new GLACIALCROSS();
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
@@ -316,6 +316,7 @@ void PLAYER::settingSkill()
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::STONE_SHOT)] = 0.5f;
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::SHATTERINGSTRIKE)] = 5.0f;
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::REBOUNDINGICICLES)] = 4.0f;
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::GLACIALCROSS)] = 5.0f;
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)
 	{
@@ -338,7 +339,7 @@ void PLAYER::settingSkill()
 
 	//
 	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::LBUTTON)] = PLAYER::SKILL_NAME::STONE_SHOT;
-
+	_arSettingSkill[static_cast<int>(PLAYER::SKILL_KEY::BTN_R)] = PLAYER::SKILL_NAME::GLACIALCROSS;
 }
 
 void PLAYER::settingAni()
@@ -557,11 +558,13 @@ void PLAYER::setDirectionRight()
 	}
 }
 
-void PLAYER::moveAttack()
+
+
+void PLAYER::moveAttack(float fSpeed)
 {
-	float fSpeed = 500.0f * TIMEMANAGER->getElapsedTime();
-	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_fAttackDirAngle, fSpeed));
-	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fAttackDirAngle, fSpeed));
+	float fRealSpeed = fSpeed * TIMEMANAGER->getElapsedTime();
+	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_fAttackDirAngle, fRealSpeed));
+	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fAttackDirAngle, fRealSpeed));
 	settingPos();
 }
 

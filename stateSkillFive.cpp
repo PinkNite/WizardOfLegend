@@ -115,5 +115,19 @@ void STATE_SKILL_FIVE::update(PLAYER * pPlayer)
 		}
 
 		break;
+
+	case PLAYER::SKILL_NAME::GLACIALCROSS:
+		if (!pPlayer->getAni()->isPlay())
+		{
+			pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
+			pPlayer->setAction(PLAYER::ACTION::IDLE);
+			pPlayer->settingAni();
+			_fTimer = 0.0f;
+			
+		}
+		if (_fTimer <= 0.3f)
+		{
+			pPlayer->moveAttack(300.0f);
+		}		break;
 	}
 }

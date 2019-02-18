@@ -53,8 +53,8 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY
 	_nWidth = nWidth;
 	_nHeight = nHeight;
 	_pImg = pImg;
-	_pImg->SetFrameX(nFrameX);
-	_pImg->SetFrameY(nFrameY);
+	_nFrameX = nFrameX;
+	_nFrameY = nFrameY;
 	_fActiveTime = 0.0f;
 	_fTotalTime = fTotalTime;
 	_bIsActive = false;
@@ -90,7 +90,10 @@ void MAGIC::update()
 		
 
 		_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);
-		_pEffectAni->frameUpdate(TIMEMANAGER->getElapsedTime());
+		if (_bIsAnimation)
+		{
+			_pEffectAni->frameUpdate(TIMEMANAGER->getElapsedTime());
+		}
 
 	}
 
@@ -106,7 +109,7 @@ void MAGIC::render(HDC hdc)
 	}
 	else
 	{
-		_pImg->frameRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY), _pImg->getFrameX(), _pImg->getFrameY());
+		_pImg->frameRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY),_nFrameX, _nFrameY);
 	}
 	//Rectangle(hdc, _rcCollision);
 }
@@ -133,8 +136,8 @@ void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed,
 	_fMoveAngle = fMoveAngle;
 	_fMoveSpeed = fMoveSpeed;
 	_bIsPlayer = bIsPlayer;
-	_pImg->SetFrameX(nFrameX);
-	_pImg->SetFrameY(nFrameY);
+	_nFrameX = nFrameX;
+	_nFrameY = nFrameY;
 }
 
 void MAGIC::returnPool()
@@ -142,7 +145,10 @@ void MAGIC::returnPool()
 	_fActiveTime = 0.0f;
 	_fPosX = -2000;
 	_fPosY = -2000;
-	_pEffectAni->stop();
+	if (_bIsAnimation)
+	{
+		_pEffectAni->stop();
+	}
 	_fMoveAngle = 0.0f;
 	_fMoveSpeed = 0.0f;
 }
