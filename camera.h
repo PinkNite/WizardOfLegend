@@ -3,6 +3,11 @@
 #include "stdafx.h"
 #include "image.h"
 
+//렌더를 바꾸어야한다.
+//y축 순으로 정렬
+//1행------------------------------지형
+//1행//////////////////////////////오브젝트
+
 class CAMERA {
 private:
 	float _posX;
@@ -28,6 +33,7 @@ public:
 	void update();
 
 	void render(HDC hdc);
+
 	void renderinit();
 	void	setting(int nPosX,int nPosY);										//중점 좌표를 잡는다
 	void	settingCameraRange(int nLeft, int nTop, int nRight, int nBottom);	//카메라 그리는 영역을 설정
