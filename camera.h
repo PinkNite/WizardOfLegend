@@ -40,7 +40,7 @@ public:
 	void update();
 
 	void render(HDC hdc);
-
+	void release();
 	void renderinit();
 	void	setting(int nPosX,int nPosY);										//중점 좌표를 잡는다
 	void	settingCameraRange(int nLeft, int nTop, int nRight, int nBottom);	//카메라 그리는 영역을 설정

@@ -28,6 +28,15 @@ void SHATTERINGSTRIKE::update()
 	_fTimer += TIMEMANAGER->getElapsedTime();
 	if (_fTimer >= 0.3f && !_bIsUse)
 	{
+		for (int i = 0; i < 2; i++)
+		{
+			//_pSkillEffectMgr->activityEffect("dropRock", _fPosX+RND->getFromFloatTo(-32,32), _fPosY + RND->getFromFloatTo(-32, 32));
+			//_pSkillEffectMgr->activityEffect("dropRightRock", _fPosX + RND->getFromFloatTo(-32, 32), _fPosY + RND->getFromFloatTo(-32, 32));
+
+			_pMagicMgr->pushMagicKey("dropRock", _pPlayer->getAttactPosX() + RND->getFromFloatTo(-32, 32), _pPlayer->getAttactPosY() + RND->getFromFloatTo(-32, 32), PI2 - PI / 2.0f, 50.0f, true, 0, 0);
+			_pMagicMgr->pushMagicKey("dropRightRock", _pPlayer->getAttactPosX() + RND->getFromFloatTo(-32, 32), _pPlayer->getAttactPosY() + RND->getFromFloatTo(-32, 32), PI2 - PI / 2.0f, 50.0f, true,0,0);
+		}
+
 		float	fAngle = 0.0f;
 		for (int i = 0; i < 36; i++)
 		{
@@ -36,6 +45,7 @@ void SHATTERINGSTRIKE::update()
 		}
 		_bIsUse = true;
 	}
+	
 
 	_fPosX = Mins::presentPowerX(PI / 2.0f, 100.0f*TIMEMANAGER->getElapsedTime());
 	_fPosY = Mins::presentPowerY(PI / 2.0f, 100.0f*TIMEMANAGER->getElapsedTime());

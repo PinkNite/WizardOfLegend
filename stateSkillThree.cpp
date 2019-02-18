@@ -29,19 +29,19 @@ void STATE_SKILL_THREE::onBtnD(PLAYER* pPlayer)
 void STATE_SKILL_THREE::onBtnQ(PLAYER* pPlayer)
 {
 
-	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q))
-	{
-	case PLAYER::SKILL_NAME::SHOKE_NOVA:
-		if (KEYMANAGER->isKeyDown('Q'))
-		{
-			pPlayer->getAni()->stop();
-		}
-		else
-		{
-			pPlayer->getAni()->start();
-		}
-		break;
-	}
+	//switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q))
+	//{
+	//case PLAYER::SKILL_NAME::SHOKE_NOVA:
+	//	if (KEYMANAGER->isKeyDown('Q'))
+	//	{
+	//		pPlayer->getAni()->stop();
+	//	}
+	//	else
+	//	{
+	//		pPlayer->getAni()->start();
+	//	}
+	//	break;
+	//}
 
 }
 
@@ -72,6 +72,12 @@ void STATE_SKILL_THREE::update(PLAYER * pPlayer)
 	switch (pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q))
 	{
 	case PLAYER::SKILL_NAME::SHOKE_NOVA:
+		
+		if (_fTimer - TIMEMANAGER->getElapsedTime() <= FLT_EPSILON)
+		{
+			pPlayer->getAni()->start();
+
+		}
 
 		if (!KEYMANAGER->isKeyDown('Q'))
 		{
@@ -86,6 +92,7 @@ void STATE_SKILL_THREE::update(PLAYER * pPlayer)
 		else if (KEYMANAGER->isKeyDown('Q'))
 		{
 			pPlayer->getAni()->stop();
+			_fTimer = 0.0f;
 		}
 
 		return;

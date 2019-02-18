@@ -44,10 +44,15 @@ void CAMERA::render(HDC hdc)
 	_pCameraBuffer->render(hdc, 0, 0, _left, _top, _width, _height);
 }
 
+void CAMERA::release()
+{
+	_listRenderObject.clear();
+}
+
 void CAMERA::renderinit()
 {
 	PatBlt(_pCameraBuffer->getMemDC(), 0, 0, _width, _height, BLACKNESS);
-
+	
 }
 
 void CAMERA::setting(int nPosX, int nPosY)
@@ -139,7 +144,7 @@ void CAMERA::outOfRange()
 void CAMERA::pushRenderObject(OBJECT * pObject)
 {
 	//정렬도 되야한다
-	float fZorder = pObject->getPosY() + static_cast<float>(pObject->getPosZ());
+	float fZorder = pObject->getPosY();// +static_cast<float>(pObject->getPosZ());
 
 	list<OBJECT*>::iterator	iter = _listRenderObject.begin();
 	list<OBJECT*>::iterator	end = _listRenderObject.end();
@@ -148,7 +153,7 @@ void CAMERA::pushRenderObject(OBJECT * pObject)
 
 	while (iter != end)
 	{
-		float fTmp = (*iter)->getPosY() + static_cast<float>((*iter)->getPosZ());
+		float fTmp = (*iter)->getPosY();// +static_cast<float>((*iter)->getPosZ());
 		if (fTmp > fZorder)
 		{
 			_listRenderObject.insert(iter, pObject);

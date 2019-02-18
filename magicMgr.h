@@ -1,9 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "magic.h"
-
 class CAMERA;
-
 class MAGICMGR {
 private:
 	map<string,queue<MAGIC*>>		_mqMagicPool;
@@ -31,7 +29,6 @@ public:
 
 
 	void setLink(CAMERA* pCamera) { _pCamera = pCamera; }
-
 	//마법과 객체 충돌은 여기서 처리하자
 
 };

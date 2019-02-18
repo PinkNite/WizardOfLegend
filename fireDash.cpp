@@ -47,7 +47,7 @@ void FIREDASH::update()
 			{
 				//ºÒ»ý¼º
 				SKILL::_pMagicMgr->pushMagicKey("dashFlame", SKILL::_pPlayer->getPosX(), _pPlayer->getPosY() + 32.0f, 0.0f, 0.0f, true);
-				SKILL::_pSkillEffectMgr->activityEffect("flameBurn", SKILL::_pPlayer->getPosX(), _pPlayer->getPosY() + 48.0f);
+				SKILL::_pSkillEffectMgr->activityEffect("flameBurn", SKILL::_pPlayer->getPosX(), _pPlayer->getPosY() + 64.0f);
 
 				_fTimer = 0.0f;
 			}

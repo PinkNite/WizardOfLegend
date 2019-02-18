@@ -61,6 +61,10 @@ HRESULT MINTESTSCENE::init()
 
 	IMAGEMANAGER->addFrameImage("iceBullet", "resource/skill/iceBullet.bmp", 540, 240, 9, 4, true, Mins::getMazenta());
 
+	IMAGEMANAGER->addFrameImage("dropRock", "resource/skill/dropRock.bmp", 32, 32, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("dropRightRock", "resource/skill/dropRightRock.bmp", 32, 32, 1, 1, true, Mins::getMazenta());
+
+
 	KEYANIMANAGER->addObject("shokeNova");
 	int arr[] = { 0,1,2,3 };
 	KEYANIMANAGER->addArrayCoordinateFrameAnimation("shokeNova", "shokeNova", "shokeNova", arr, 4, 16, true, 3);
@@ -97,6 +101,12 @@ HRESULT MINTESTSCENE::init()
 	_pMagicMgr->addObject("iceBullet", 100, 25, 25, IMAGEMANAGER->findImage("iceBullet"), 0, 0, 0.3f);
 
 	_pPlayer->setLink(_pMagicMgr, _pSkillEffectMgr);
+
+	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("dropRock"), 1, 32, 32, 1200, "dropRock");
+	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("dropRightRock"), 1, 32, 32, 1200, "dropRightRock");
+
+	_pMagicMgr->addObject("dropRock", 1200, 32, 32, IMAGEMANAGER->findImage("dropRock"), 0, 0, 0.3f);
+	_pMagicMgr->addObject("dropRightRock", 1200, 32, 32, IMAGEMANAGER->findImage("dropRightRock"), 0, 0, 0.3f);
 
 
 	_pCamera->setting(_pPlayer->getPosX(), _pPlayer->getPosY());
@@ -136,9 +146,7 @@ void MINTESTSCENE::render()
 {
 	_pCamera->renderinit();
 
-
-
-	_pSkillEffectMgr->render(getMemDC());
+	_pSkillEffectMgr->render(_pCamera->getMemDC());
 	//_pPlayer->render(getMemDC());
 	//_pMagicMgr->render(getMemDC());
 	_pCamera->render(getMemDC());
