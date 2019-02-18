@@ -32,7 +32,7 @@ public:
 
 		ENTRANCE,
 		MINIMIZE,
-		MAXNIZE,
+		MAXIMIZE,
 		ICED_OUT,
 		DAMAGE,
 		DEATH,
@@ -138,7 +138,7 @@ private:
 
 	const string getAnimationKey(const string& strDir, const string& strAction);
 
-	void addBossKeyAni(const string& strDir, const string& strActoin, int startFrame, int endFrame, int fps, bool isLoop, void * cbFunction);
+	void addBossKeyAni(const string& strDir, const string& strAction, int startFrame, int endFrame, int fps, bool isLoop, void * cbFunction);
 
 public:
 	void showBoss();

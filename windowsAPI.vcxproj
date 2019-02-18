@@ -167,6 +167,7 @@
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyState.h" />
     <ClInclude Include="explainUse.h" />
     <ClInclude Include="fireDash.h" />
     <ClInclude Include="fireStrike.h" />

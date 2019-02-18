@@ -115,6 +115,9 @@
     <Filter Include="PlayGround\UI\statusUI">
       <UniqueIdentifier>{de1a2301-569c-4f79-9b3f-c7184b9b998a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\enemy\enemy">
+      <UniqueIdentifier>{fb5e6b37-eea2-46fc-8351-1e68b60a225a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -384,9 +387,6 @@
     <ClInclude Include="stoneShot.h">
       <Filter>PlayGround\skill</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="reboundingIcicles.h">
       <Filter>PlayGround\skill</Filter>
     </ClInclude>
@@ -398,6 +398,12 @@
     </ClInclude>
     <ClInclude Include="stateSkillFive.h">
       <Filter>PlayGround\player\state</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>PlayGround\enemy\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>PlayGround\enemy\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -647,9 +653,6 @@
     <ClCompile Include="stoneShot.cpp">
       <Filter>PlayGround\skill</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="reboundingIcicles.cpp">
       <Filter>PlayGround\skill</Filter>
     </ClCompile>
@@ -661,6 +664,9 @@
     </ClCompile>
     <ClCompile Include="stateSkillFive.cpp">
       <Filter>PlayGround\player\state\statecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>PlayGround\enemy\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
