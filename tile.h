@@ -1,24 +1,26 @@
 #pragma once
 #include "stdafx.h"
-
+#include "object.h"
 //0 이면 벽
 //139 이면 길
 
 enum {PASS = 139};
 
-class TILE 
+class TILE :public OBJECT
 {
 public:
 
 	enum OBJECT
 	{
 		NONE = 0,
-		PACMAN,
+		PLAYER,
 		ENEMY01,
 		ENEMY02,
 		ENEMY03,
 		ENEMY04,
+		BOSS,
 		ITEM,
+		NOMAL_OBJECT,
 		MAX
 	};
 
@@ -27,6 +29,7 @@ public:
 		NONE = 0,
 		WALL,
 		PASS,
+		DMAGE_PASS,
 		MAX
 	};
 
@@ -61,21 +64,23 @@ private:
 
 	RECT	_rcCameraLimit;
 	char	str[128];
+	int		_terrainPageIndex;
 
 public:
 	void	setttingObject();
-	
+	void	setttingTerrain();
+
 public:
 	//초기 초기화
 	void	init(int nTileLeft, int nTileTop, int nTileSize,image* pImg,int nNodeIndex);
 	void	passInit(int nTileLeft, int nTileTop, int nTileSize, image* pImg);
 
 	//그려주는 함수
-	void	render(HDC hdc);
+	virtual void	render(HDC hdc) override;
 
 	//메모리 해제
-	void	release();
-
+	virtual void	release() override;
+	virtual void	update() override;
 	//타일 세팅
 	void	settingTile(int nFrameX, int nFrameY, bool bIsWall,OBJECT object);
 	
@@ -94,6 +99,7 @@ public:
 	inline	void	setAroundWall(int nAroundWall) { _nAroundWall = nAroundWall; }
 	inline	void	setIsWall(bool isWall) { _bIsWall = isWall; }
 	inline	void	setImg(image* pImg) { _pImage = pImg; }
+	inline	void	setObjimg(image* pObjimg) { _pObjectImage = pObjimg; }
 	inline	void	setFrameX(int nFrameX) { _nFrameX = nFrameX; }
 	inline	void	setFrameY(int nFrameY) { _nFrameY = nFrameY; }
 	inline	void	setRectTile(RECT& rcTile) {	_rcTile = rcTile;}
@@ -101,7 +107,7 @@ public:
 	inline	void	setNodeIndex(int nIndex) { _nNodeIndex = nIndex; }
 	inline	void	setLimitRect(RECT rc) { _rcCameraLimit = rc; }
 	inline	void	setTerrian(TERRIAN terrian) { _terrian = terrian; }
-
+	inline	void	setTerrainPageIndex(int terrainPageIndex) {	_terrainPageIndex = terrainPageIndex; }
 
 	//getter
 	inline	int				getAroundWall() { return _nAroundWall; }
@@ -112,5 +118,5 @@ public:
 	inline	RECT			getRectTile() { return _rcTile; }
 	inline	int				getNodeIndex() { return _nNodeIndex; }
 	inline	TILE::TERRIAN	getTerrian() {return _terrian; }
-
+	inline	int				getTerrainPageIndex() { return _terrainPageIndex; }
 };

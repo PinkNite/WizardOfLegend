@@ -95,8 +95,8 @@ void MAPTOOL::passInit(int nTileCountX, int nTileCountY, int nTileSize)
 	_bIsWall = false;
 	_object = TILE::OBJECT::NONE;
 	
-	_pImgMap = IMAGEMANAGER->addFrameImage("MapSample", "resource/UI/sampleTile.bmp", 32, 32, 1, 1, true, RGB(255, 0, 255));
-
+	//_pImgMap = IMAGEMANAGER->addFrameImage("MapSample", "resource/UI/sampleTile.bmp", 32, 32, 1, 1, true, RGB(255, 0, 255));
+	_pImgMap = IMAGEMANAGER->addFrameImage("MapSample", "resource/UI/eraser.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
 	passCreateMap();
 }
 
@@ -478,13 +478,13 @@ void MAPTOOL::load()
 
 	this->init(_nTileCountX, _nTileCountY,_nTileSize);
 
-	int nData = _nTileCountX * _nTileCountY * 20;
+	int nData = _nTileCountX * _nTileCountY * 40;
 	char* strs = new char[nData];
 	
 	file = CreateFile("map01.map", GENERIC_READ, NULL, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	ReadFile(file, strs, 20000, &read, NULL);
+	ReadFile(file, strs, nData, &read, NULL);
 	//ReadFile(file, strTmp, 100, &read, NULL);
 	CloseHandle(file);
 
@@ -500,18 +500,27 @@ void MAPTOOL::load()
 		{
 			
 			//노드인덱스/주변값/벽/프레임x/프레임y	//오브젝트	
-			_vvMap[j][i]->setNodeIndex(atoi(tokenMap));
+			/*_vvMap[j][i]->setNodeIndex(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setAroundWall(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
+			*/
 			_vvMap[j][i]->setIsWall(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setFrameX(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setFrameY(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setTerrainPageIndex(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setObject(static_cast<TILE::OBJECT>(atoi(tokenMap)));
 			_vvMap[j][i]->setttingObject();
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setTerrian(static_cast<TILE::TERRIAN>(atoi(tokenMap)));
+			_vvMap[j][i]->setttingTerrain();
+
+
+
 			tokenMap = strtok_s(NULL, separator, &tmp);
 		}
 	}
@@ -538,10 +547,10 @@ int MAPTOOL::getPacManPosX()
 	{
 		for (int i = 0; i < _nTileCountX; i++)
 		{
-			if (_vvMap[j][i]->getObject() == TILE::OBJECT::PACMAN)
+			/*if (_vvMap[j][i]->getObject() == TILE::OBJECT::PACMAN)
 			{
 				return _vvMap[j][i]->getRectTile().left + (_vvMap[j][i]->getRectTile().right - _vvMap[j][i]->getRectTile().left) / 2;
-			}
+			}*/
 		}
 	}
 
@@ -554,10 +563,10 @@ int MAPTOOL::getPacManPosY()
 	{
 		for (int i = 0; i < _nTileCountX; i++)
 		{
-			if (_vvMap[j][i]->getObject() == TILE::OBJECT::PACMAN)
+			/*if (_vvMap[j][i]->getObject() == TILE::OBJECT::PACMAN)
 			{
 				return _vvMap[j][i]->getRectTile().top + (_vvMap[j][i]->getRectTile().bottom - _vvMap[j][i]->getRectTile().top) / 2;
-			}
+			}*/
 		}
 	}
 	return 0;

@@ -18,7 +18,7 @@ void TILE::setttingObject()
 	case TILE::NONE:
 		
 		break;
-	case TILE::PACMAN:
+	case TILE::PLAYER:
 		strTmp.append("pacman32");
 		break;
 	case TILE::ENEMY01:
@@ -36,12 +36,98 @@ void TILE::setttingObject()
 	case TILE::ITEM:
 		strTmp.append("item");
 		break;
+	case TILE::NOMAL_OBJECT:
+		strTmp.append("object");
+		break;
 	case TILE::MAX:
 		break;
 	}
 
 
 	_pObjectImage = IMAGEMANAGER->findImage(strTmp);
+}
+
+void TILE::setttingTerrain()
+{
+	string strTmp = "";
+
+	switch (_terrian)
+	{
+	case TILE::TERRIAN::NONE:
+		break;
+	case TILE::TERRIAN::WALL:
+		if(_terrainPageIndex == 0)
+		{
+			strTmp.append("MapPalletIce1");
+		}
+		else if (_terrainPageIndex == 1)
+		{
+			strTmp.append("MapPalletCastle1");
+		}
+		else if (_terrainPageIndex == 2)
+		{
+			strTmp.append("MapPalletEarth1");
+		}
+		else if (_terrainPageIndex == 3)
+		{
+			strTmp.append("MapPalletFire1");
+		}
+		else if (_terrainPageIndex == 4)
+		{
+			strTmp.append("MapEraser");
+		}
+		break;
+	case TILE::TERRIAN::PASS:
+		if (_terrainPageIndex == 0)
+		{
+			strTmp.append("MapPalletIce1");
+		}
+		else if (_terrainPageIndex == 1)
+		{
+			strTmp.append("MapPalletCastle1");
+		}
+		else if (_terrainPageIndex == 2)
+		{
+			strTmp.append("MapPalletEarth1");
+		}
+		else if (_terrainPageIndex == 3)
+		{
+			strTmp.append("MapPalletFire1");
+		}
+		else if (_terrainPageIndex == 4)
+		{
+			strTmp.append("MapEraser");
+		}
+		break;
+	case TILE::TERRIAN::DMAGE_PASS:
+		if (_terrainPageIndex == 0)
+		{
+			strTmp.append("MapPalletIce1");
+		}
+		else if (_terrainPageIndex == 1)
+		{
+			strTmp.append("MapPalletCastle1");
+		}
+		else if (_terrainPageIndex == 2)
+		{
+			strTmp.append("MapPalletEarth1");
+		}
+		else if (_terrainPageIndex == 3)
+		{
+			strTmp.append("MapPalletFire1");
+		}
+		else if (_terrainPageIndex == 4)
+		{
+			strTmp.append("MapEraser");
+		}
+		break;
+	case TILE::TERRIAN::MAX:
+		break;
+	default:
+		break;
+	}
+
+	_pImage = IMAGEMANAGER->findImage(strTmp);
 }
 
 void TILE::init(int nTileLeft, int nTileTop, int nTileSize, image* pImg, int nNodeIndex)
@@ -66,8 +152,9 @@ void TILE::passInit(int nTileLeft, int nTileTop, int nTileSize, image* pImg)
 	//setIsWall(true);
 	setTerrian(TILE::TERRIAN::WALL);
 	setImg(nullptr);
-	setFrameX(0);
+	setFrameX(10);
 	setFrameY(0);
+	_terrainPageIndex = 4;
 	setRectTile(nTileLeft, nTileTop, nTileSize, nTileSize);
 	setImg(pImg);
 	_object = OBJECT::NONE;
@@ -82,17 +169,38 @@ void TILE::render(HDC hdc)
 		&& _rcTile.top < _rcCameraLimit.bottom
 		)
 	{
-		_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+		//_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
 		if (_terrian == TERRIAN::WALL)
 		{
+			_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+			SetTextColor(hdc, RGB(255, 255, 0));
+			SetBkMode(hdc, TRANSPARENT);
 			sprintf_s(str, "벽");
-			TextOut(hdc, _rcTile.left + 2, _rcTile.top + 2, str, strlen(str));
+			TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
 		}
 		else if (_terrian == TERRIAN::PASS)
 		{
+			_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+			SetTextColor(hdc, RGB(0, 255, 0));
+			SetBkMode(hdc, TRANSPARENT);
 			sprintf_s(str, "길");
-			TextOut(hdc, _rcTile.left + 2, _rcTile.top + 2, str, strlen(str));
+			TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
 		}
+		else if (_terrian == TERRIAN::DMAGE_PASS)
+		{
+			_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+			SetTextColor(hdc, RGB(255, 0, 0));
+			SetBkMode(hdc, TRANSPARENT);
+			sprintf_s(str, "뎀");
+			TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+		}
+		/*else if (_object == OBJECT::NOMAL_OBJECT)
+		{
+			SetTextColor(hdc, RGB(0, 0, 255));
+			SetBkMode(hdc, TRANSPARENT);
+			sprintf_s(str, "오");
+			TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+		}*/
 		if (_object != OBJECT::NONE)
 		{
 			_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, getFrameX(), setFrameY());
@@ -104,6 +212,10 @@ void TILE::render(HDC hdc)
 void TILE::release()
 {
 	_pImage = nullptr;
+}
+
+void TILE::update()
+{
 }
 
 void TILE::settingTile(int nFrameX, int nFrameY, bool bIsWall, OBJECT object)
@@ -136,17 +248,21 @@ string TILE::makeSaveString()
 {
 	//노드인덱스/주변값/벽/프레임x/프레임y
 	string strTmp = "";
-	strTmp.append(to_string(_nNodeIndex));
+	/*strTmp.append(to_string(_nNodeIndex));
 	strTmp.append("/");
 	strTmp.append(to_string(_nAroundWall));
-	strTmp.append("/");
+	strTmp.append("/");*/
 	strTmp.append(to_string((int)_bIsWall));
 	strTmp.append("/");
 	strTmp.append(to_string(_nFrameX));
 	strTmp.append("/");
 	strTmp.append(to_string(_nFrameY));
 	strTmp.append("/");
+	strTmp.append(to_string(_terrainPageIndex));
+	strTmp.append("/");
 	strTmp.append(to_string(static_cast<int>(_object)));
+	strTmp.append("/");
+	strTmp.append(to_string(static_cast<int>(_terrian)));
 	strTmp.append("/");
 
 	return strTmp;

@@ -21,11 +21,13 @@ void MAPEDIT::callBackMapObject()
 void MAPEDIT::callBackMapSave()
 {
 	printf_s("Save버튼을 눌렀네요\n");
+	_pMapTool->save();
 }
 
 void MAPEDIT::callBackMapLoad()
 {
 	printf_s("Load버튼을 눌렀네요\n");
+	_pMapTool->load();
 }
 
 void MAPEDIT::callBackMapSizeUp()
@@ -77,6 +79,9 @@ HRESULT MAPEDIT::init()
 	imgMapPalletCastle1 = IMAGEMANAGER->addFrameImage("MapPalletCastle1", "resource/UI/castletileset.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
 	imgMapPalletEarth1 = IMAGEMANAGER->addFrameImage("MapPalletEarth1", "resource/UI/earthtileset.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
 	imgMapPalletFire1 = IMAGEMANAGER->addFrameImage("MapPalletFire1", "resource/UI/firetileset.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
+	imgMapEraser = IMAGEMANAGER->addFrameImage("MapEraser", "resource/UI/eraser.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
+	imgMapObject = IMAGEMANAGER->addFrameImage("MapOBJECT", "resource/UI/OBJECT.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
+	imgMapObject2 = IMAGEMANAGER->addFrameImage("MapOBJECT2", "resource/UI/OBJECT2.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Wall", "resource/UI/WallUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Terrain", "resource/UI/TerrainUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Object", "resource/UI/ObjectUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
@@ -104,7 +109,11 @@ HRESULT MAPEDIT::init()
 	_vTerrainPage.push_back(IMAGEMANAGER->findImage("MapPalletEarth1"));
 	rcMapPalletCastle1 = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
 	_vTerrainPage.push_back(IMAGEMANAGER->findImage("MapPalletFire1"));
-
+	rcMapPalletEraser = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
+	_vTerrainPage.push_back(IMAGEMANAGER->findImage("MapEraser"));
+	rcMapOBJECT = RectMake(rcSelectPage.left + 53, rcSelectPage.top + 125, 768, 768);
+	_vObjectPage.push_back(IMAGEMANAGER->findImage("MapOBJECT"));
+	_vObjectPage2.push_back(IMAGEMANAGER->findImage("MapOBJECT2"));
 	for (int i = 0; i < 5; i++)
 	{
 		rcRelicUIDrawer[i] = RectMake(53 + 1015, 277 + 61 + 96 * i, 470, 88);
@@ -168,107 +177,7 @@ void MAPEDIT::update()
 			_currentIndex.y = i;
 		}
 	}
-
-	//타일 추가
-	if (!PtInRect(&rcTypePage, _ptMouse) || !PtInRect(&rcSelectPage, _ptMouse))
-	{
-		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-		{
-			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
-			{
-
-				for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
-				{
-					if (i >= _clickDownStart.x && i <= _clickDownEnd.x &&
-						j >= _clickDownStart.y && j <= _clickDownEnd.y)
-					{
-						if (_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2) >= 0 && _currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2) >= 0
-							&& _currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2) < _pMapTool->getMapCountY() && _currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2) < _pMapTool->getMapCountX())
-						{
-							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-								[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setImg(_vTerrainPage[_terrainPageIndex]);
-							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-								[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setFrameX(i);
-							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-								[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setFrameY(j);
-							if (i == 0 || i == 11)
-							{
-								i, j;
-								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
-								_pMapTool->setisWall(true);
-								_pMapTool->setObject(TILE::OBJECT::NONE);
-								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
-							}
-							else if ((j >= 0 && j <= 3) || j == 11)
-							{
-								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
-								_pMapTool->setisWall(true);
-								_pMapTool->setObject(TILE::OBJECT::NONE);
-								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
-							}
-							else
-							{
-								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::PASS);
-								_pMapTool->setisWall(false);
-								_pMapTool->setObject(TILE::OBJECT::NONE);
-								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
-							}
-						}
-						//else break;
-					}
-				}
-			}
-			/*
-			//마우스가 샘플의 시작인덱스, 끝인덱스를 가지고있다면,
-			//현재 마우스가 가리키는 맵의 idx를 알고있다면( mapidx)
-			//for(샘플인덱스 y의 크기만큼){
-			//	for(샘플인덱스 x의 크기만큼){
-					tile* tmptile = terrain[i][j];
-					_vMapTool[mapidx.y][mapidx.x].setTile(tmptile);
-					}
-				}
-			*/
-
-			//박범기
-			/*
-			for (int i = 0; i < _pMapTool->getMapCountX(); i++)
-			{
-				for (int j = 0; j < _pMapTool->getMapCountY(); j++)
-				{
-					TILE* pTile = _pMapTool->getVvMap[j][i];
-
-					if (PtInRect(&(pTile->getRectTile()), _ptMouse))
-					{
-						pTile->settingTile(_clickDownStart.x, _clickDownStart.y, false, _object);
-					}
-				}
-			}
-			*/
-			/*
-			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
-			{
-				for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
-				{
-					if (i >= _clickDownStart.x && i <= _clickDownEnd.x &&
-						j >= _clickDownStart.y && j <= _clickDownEnd.y)
-					{
-						_vTerrainPage[_terrainPageIndex]->alphaFrameRender(getMemDC(),
-							_ptMouse.x + (i - _clickDownStart.x) * _vTerrainPage[_terrainPageIndex]->getFrameWidth() - ((_clickDownEnd.x - _clickDownStart.x) * _vTerrainPage[_terrainPageIndex]->getFrameWidth() / 2 + (_vTerrainPage[_terrainPageIndex]->getFrameWidth() / 2)),
-							_ptMouse.y + (j - _clickDownStart.y) * _vTerrainPage[_terrainPageIndex]->getFrameHeight() - ((_clickDownEnd.y - _clickDownStart.y) * _vTerrainPage[_terrainPageIndex]->getFrameHeight() / 2 + (_vTerrainPage[_terrainPageIndex]->getFrameHeight() / 2)),
-							i, j, 127);
-					}
-				}
-			}
-			*/
-		}
-	}
-
+	
 	if (_mapEditstate == MAPEDITSTATE::MAPEDITMENU)
 	{
 		updateMenu();
@@ -493,14 +402,138 @@ void MAPEDIT::updateTerrain()
 	//왼쪽 위 모서리
 	rcSelectPageVertex = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
 	moveWindow();
+	if (!PtInRect(&rcTypePage, _ptMouse) || !PtInRect(&rcSelectPage, _ptMouse))
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+			{
+
+				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+				{
+					if (i >= _clickDownStart.x && i <= _clickDownEnd.x &&
+						j >= _clickDownStart.y && j <= _clickDownEnd.y)
+					{
+						//맵 사이즈 외로 타일맵 세팅해주는걸 막음
+						if (_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2) >= 0 && _currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2) >= 0
+							&& _currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2) < _pMapTool->getMapCountY() && _currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2) < _pMapTool->getMapCountX())
+						{
+							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+								[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setImg(_vTerrainPage[_terrainPageIndex]);
+							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+								[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setFrameX(i);
+							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+								[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setFrameY(j);
+							if (_terrainPageIndex == _vTerrainPage.size() - 1)
+							{
+								if (i >= 0 && i <= 4 && j >= 0 && j <= 11)
+								{
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::DMAGE_PASS);
+									_pMapTool->setisWall(true);
+									_pMapTool->setObject(TILE::OBJECT::NONE);
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
+								}
+								else if (i >= 5 && i <= 8 && j >= 0 && j <= 4)
+								{
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::PASS);
+									_pMapTool->setisWall(true);
+									_pMapTool->setObject(TILE::OBJECT::NONE);
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
+								}
+								else
+								{
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
+									_pMapTool->setisWall(true);
+									_pMapTool->setObject(TILE::OBJECT::NONE);
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
+								}
+							}
+							else if (i == 0 || i == 11)
+							{
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
+								_pMapTool->setisWall(true);
+								_pMapTool->setObject(TILE::OBJECT::NONE);
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
+							}
+							else if ((j >= 0 && j <= 3) || j == 11)
+							{
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
+								_pMapTool->setisWall(true);
+								_pMapTool->setObject(TILE::OBJECT::NONE);
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
+							}
+							else
+							{
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::PASS);
+								_pMapTool->setisWall(false);
+								_pMapTool->setObject(TILE::OBJECT::NONE);
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
+							}
+							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+								[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrainPageIndex(_terrainPageIndex);
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 void MAPEDIT::updateObject()
 {
 	//왼쪽 위 모서리
 	rcSelectPageVertex = RectMake(rcTypePage.left, rcTypePage.top, _drawerVertexSize, _drawerVertexSize);
-	
 	moveWindow();
+	if (!PtInRect(&rcTypePage, _ptMouse) || !PtInRect(&rcSelectPage, _ptMouse))
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+			{
+
+				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+				{
+					if (i >= _clickDownStart2.x && i <= _clickDownEnd2.x &&
+						j >= _clickDownStart2.y && j <= _clickDownEnd2.y)
+					{
+						if (_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2) >= 0 && _currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2) >= 0
+							&& _currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2) < _pMapTool->getMapCountY() && _currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2) < _pMapTool->getMapCountX())
+						{
+							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+								[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObjimg(_vObjectPage2[_objectPageIndex]);
+							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+								[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setFrameX(i);
+							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+								[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setFrameY(j);
+							
+							//페이지별 지형 결정해주기.
+							if (_objectPageIndex == 0)
+							{
+								//_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+								//	[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
+								//_pMapTool->setisWall(false);
+								_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObject(TILE::OBJECT::NOMAL_OBJECT);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 void MAPEDIT::renderMenu()
@@ -562,9 +595,9 @@ void MAPEDIT::renderTerrain()
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
 			{
-				for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
 				{
 					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() + _vTerrainPage[_terrainPageIndex]->getFrameWidth()
 						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() + _vTerrainPage[_terrainPageIndex]->getFrameHeight())
@@ -578,9 +611,10 @@ void MAPEDIT::renderTerrain()
 		}
 		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
-			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
 			{
-				for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+
+				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
 				{
 					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() + _vTerrainPage[_terrainPageIndex]->getFrameWidth()
 						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() + _vTerrainPage[_terrainPageIndex]->getFrameHeight())
@@ -599,9 +633,10 @@ void MAPEDIT::renderTerrain()
 
 	if (_clickMap == true)
 	{
-		for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+		for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
 		{
-			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+
+			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
 			{
 				if (i >= _clickDownStart.x && i <= _clickDownEnd.x &&
 					j >= _clickDownStart.y && j <= _clickDownEnd.y)
@@ -617,9 +652,9 @@ void MAPEDIT::renderTerrain()
 	}
 	else
 	{
-		for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+		for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
 		{
-			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
 			{
 				if (i >= _clickDownStart.x && i <= _clickDownEnd.x &&
 					j >= _clickDownStart.y && j <= _clickDownEnd.y)
@@ -669,6 +704,130 @@ void MAPEDIT::renderObject()
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
 		RectangleMake(getMemDC(), rcSelectPageVertex.left, rcSelectPageVertex.top, rcSelectPageVertex.right - rcSelectPageVertex.left, rcSelectPageVertex.bottom - rcSelectPageVertex.top);
+	}
+	
+	if (_clickMap == false)
+	{
+		_vObjectPage[_objectPageIndex]->render(getMemDC(), rcMapPalletIce1.left, rcMapPalletIce1.top);
+	}
+	//페이지 글꼴
+	sprintf_s(_pageIndex, "%d/%d", _objectPageIndex + 1, _vObjectPage.size());
+	HFONT font = CreateFont(30, 0, 0, 0, 1000, 0, 0, 0,
+		DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Edwardian Script ITC"));
+	HFONT oldFont = (HFONT)SelectObject(getMemDC(), font);
+	SetTextColor(getMemDC(), RGB(88, 76, 64));
+	SetBkMode(getMemDC(), TRANSPARENT);
+	TextOut(getMemDC(), rcTypePage.left + 400, rcTypePage.top + 40, _pageIndex, strlen(_pageIndex));
+	SelectObject(getMemDC(), oldFont);
+	DeleteObject(font);
+
+	//선택 알파 블랜드
+	if (PtInRect(&rcMapPalletIce1, _ptMouse))
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+			{
+
+				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+				{
+					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() + _vObjectPage[_objectPageIndex]->getFrameWidth()
+						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() + _vObjectPage[_objectPageIndex]->getFrameHeight())
+					{
+						_clickDownStart2.x = i;
+						_clickDownStart2.y = j;
+					}
+				}
+			}
+			_clickMap = true;
+		}
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+			{
+
+				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+				{
+					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() + _vObjectPage[_objectPageIndex]->getFrameWidth()
+						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() + _vObjectPage[_objectPageIndex]->getFrameHeight())
+					{
+						_clickDownEnd2.x = i;
+						_clickDownEnd2.y = j;
+					}
+				}
+			}
+		}
+		else if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_clickMap = false;
+		}
+	}
+
+	if (_clickMap == true)
+	{
+		for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+		{
+
+			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+			{
+				if (i >= _clickDownStart2.x && i <= _clickDownEnd2.x &&
+					j >= _clickDownStart2.y && j <= _clickDownEnd2.y)
+				{
+					_vObjectPage2[_objectPageIndex]->alphaFrameRender(getMemDC(), rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth(), rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight(), i, j, 127);
+				}
+				else
+				{
+					_vObjectPage2[_objectPageIndex]->alphaFrameRender(getMemDC(), rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth(), rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight(), i, j, 255);
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+		{
+
+			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+			{
+				if (i >= _clickDownStart2.x && i <= _clickDownEnd2.x &&
+					j >= _clickDownStart2.y && j <= _clickDownEnd2.y)
+				{
+					_vObjectPage2[_objectPageIndex]->alphaFrameRender(getMemDC(),
+						_ptMouse.x + (i - _clickDownStart2.x) * _vObjectPage[_objectPageIndex]->getFrameWidth() - ((_clickDownEnd2.x - _clickDownStart2.x) * _vObjectPage[_objectPageIndex]->getFrameWidth() / 2 + (_vObjectPage[_objectPageIndex]->getFrameWidth() / 2)),
+						_ptMouse.y + (j - _clickDownStart2.y) * _vObjectPage[_objectPageIndex]->getFrameHeight() - ((_clickDownEnd2.y - _clickDownStart2.y) * _vObjectPage[_objectPageIndex]->getFrameHeight() / 2 + (_vObjectPage[_objectPageIndex]->getFrameHeight() / 2)),
+						i, j, 127);
+				}
+			}
+		}
+	}
+
+	if (KEYMANAGER->isToggleKey(VK_F1))
+	{
+		RectangleMake(getMemDC(), rcSelectPageVertex.left, rcSelectPageVertex.top, rcSelectPageVertex.right - rcSelectPageVertex.left, rcSelectPageVertex.bottom - rcSelectPageVertex.top);
+
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+	{
+		if (_objectPageIndex >= _vObjectPage.size() - 1)
+		{
+			_objectPageIndex = _vObjectPage.size() - 1;
+		}
+		else
+		{
+			_objectPageIndex++;
+		}
+	}
+	else if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	{
+		if (_objectPageIndex <= 0)
+		{
+			_objectPageIndex = 0;
+		}
+		else
+		{
+			_objectPageIndex--;
+		}
 	}
 }
 

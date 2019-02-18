@@ -28,17 +28,22 @@ private:
 	image* imgMapPalletEarth1;
 	image* imgMapPalletFire1;
 	image* imgMapPalletCastle1;
+	image* imgMapEraser;
+	image* imgMapObject;
+	image* imgMapObject2;
 
 	RECT rcMapPalletIce1;
 	RECT rcMapPalletEarth1;
 	RECT rcMapPalletFire1;
 	RECT rcMapPalletCastle1;
+	RECT rcMapPalletEraser;
 	RECT rcRelicUIDrawer[5];
 	RECT rcBtnTitle[5];
 	RECT rcTypePageVertex;
 	RECT rcTypePage;
 	RECT rcSelectPageVertex;
 	RECT rcSelectPage;
+	RECT rcMapOBJECT;
 	POINT pt[3];
 	POINT movingWindow;
 
@@ -64,6 +69,8 @@ private:
 	bool _clickMap;
 	POINT _clickDownStart;
 	POINT _clickDownEnd;
+	POINT _clickDownStart2;
+	POINT _clickDownEnd2;
 	POINT _currentIndex;
 
 	MAPTOOL* _pMapTool;
@@ -73,7 +80,12 @@ private:
 	MAPEDITSTATE _mapEditstate;
 	vector<image *>				 _vTerrainPage;
 	vector<image *>::iterator	 _viTerrainPage;
+	vector<image *>				 _vObjectPage;
+	vector<image *>::iterator	 _viObjectPage;
+	vector<image *>				 _vObjectPage2;
+	vector<image *>::iterator	 _viObjectPage2;
 	int _terrainPageIndex;
+	int _objectPageIndex;
 	char _pageIndex[128];
 
 public:
