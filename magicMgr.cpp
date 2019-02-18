@@ -96,6 +96,21 @@ void MAGICMGR::pushMagicKey(const string& strKey, float fPosX, float fPosY, floa
 	pMagic = nullptr;
 }
 
+void MAGICMGR::pushMagicKey(const string & strKey, float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer, int nFrameX, int nFrameY)
+{
+	if (_mqMagicPool.find(strKey) == _mqMagicPool.end())
+	{
+		return;
+	}
+
+	MAGIC* pMagic = _mqMagicPool.find(strKey)->second.front();
+	_mqMagicPool.find(strKey)->second.pop();
+	pMagic->create(fPosX, fPosY, fMoveAngle, fMoveSpeed, bIsPlayer,nFrameX,nFrameY);
+	_lActiveMagic.push_back(pMagic);
+	pMagic = nullptr;
+
+}
+
 void MAGICMGR::addObject(const string& strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime)
 {
 	if (_mqMagicPool.find(strKey) != _mqMagicPool.end())
@@ -109,6 +124,25 @@ void MAGICMGR::addObject(const string& strKey, int nMagicCount, int nWidth, int 
 	{
 		MAGIC* pMagic = new MAGIC();
 		pMagic->init(nWidth, nHeight, pImg, nFps, nFrameMaxX, nFrameMaxY, fTotalTime, strKey);	
+		qMagic.push(pMagic);
+	}
+
+	_mqMagicPool.insert(pair<string, queue<MAGIC*>>(strKey, qMagic));
+}
+
+void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY, float fTotalTime)
+{
+	if (_mqMagicPool.find(strKey) != _mqMagicPool.end())
+	{
+		return;
+	}
+
+	queue<MAGIC*> qMagic;
+
+	for (int i = 0; i < nMagicCount; i++)
+	{
+		MAGIC* pMagic = new MAGIC();
+		pMagic->init(nWidth, nHeight, pImg,nFrameX,nFrameY,fTotalTime,strKey);
 		qMagic.push(pMagic);
 	}
 

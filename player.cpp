@@ -142,7 +142,7 @@ void PLAYER::update()
 	//임시 피담
 	if (KEYMANAGER->isOnceKeyDown('P'))
 	{
-		_fCurrentHealthPoint -= 10;
+		_fCurrentHealthPoint -= 10.0f;
 	}
 }
 

@@ -22,7 +22,9 @@ private:
 	float	_fMoveSpeed;	//움직이는 속도
 
 	bool	_bIsPlayer;		//플레이어의 마법인지 아닌지
-
+	
+	bool	_bIsAnimation;	//에니메이션이 있고 없고
+	
 	string	_strKey;
 public:
 	MAGIC();
@@ -31,11 +33,15 @@ public:
 
 	void	init(int nWidth, int nHeight,image* pImg, int nFps, int nFrameMaxX, int nFrameMaxY,float fTotalTime, const string& strKey);
 	void	init(int nWidth, int nHeight, image* pImg, animation* pAni, float fTotalTime, const string& strkey);
+	void	init(int nWidth, int nHeight, image* pImg, int nFrameX,int nFrameY, float fTotalTime, const string& strkey);
 	void	release();
 	void	update();
 	void	render(HDC hdc);
 
 	void	create(float fPosX, float fPosY,float fMoveAngle, float fMoveSpeed,bool bIsPlayer);
+
+	void	create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer, int nFrameX, int nFrameY);
+	
 	void	returnPool();
 	bool	getActive() { return _bIsActive; }
 	const string&	getKey() { return _strKey; }

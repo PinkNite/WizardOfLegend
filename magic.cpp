@@ -25,6 +25,7 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	_bIsActive = false;
 	_bIsPlayer = false;
 	_strKey = strKey;
+	_bIsAnimation = true;
 }
 
 void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float fTotalTime, const string & strkey)
@@ -41,6 +42,26 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float 
 	_bIsActive = false;
 	_bIsPlayer = false;
 	_strKey = strkey;
+	_bIsAnimation = true;
+
+}
+
+void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY, float fTotalTime, const string & strkey)
+{
+	_fPosX = -2000.0f;
+	_fPosY = -2000.0f;
+	_nWidth = nWidth;
+	_nHeight = nHeight;
+	_pImg = pImg;
+	_pImg->SetFrameX(nFrameX);
+	_pImg->SetFrameY(nFrameY);
+	_fActiveTime = 0.0f;
+	_fTotalTime = fTotalTime;
+	_bIsActive = false;
+	_bIsPlayer = false;
+	_strKey = strkey;
+	_bIsAnimation = false;
+
 }
 
 void MAGIC::release()
@@ -79,7 +100,14 @@ void MAGIC::render(HDC hdc)
 {
 	if (!_bIsActive)
 		return;
-	_pImg->aniRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY), _pEffectAni);
+	if (_bIsAnimation)
+	{
+		_pImg->aniRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY), _pEffectAni);
+	}
+	else
+	{
+		_pImg->frameRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY), _pImg->getFrameX(), _pImg->getFrameY());
+	}
 	//Rectangle(hdc, _rcCollision);
 }
 
@@ -94,6 +122,19 @@ void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed,
 	_fMoveAngle = fMoveAngle;
 	_fMoveSpeed = fMoveSpeed;
 	_bIsPlayer = bIsPlayer;
+}
+
+void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer, int nFrameX, int nFrameY)
+{
+	_fPosX = fPosX;
+	_fPosY = fPosY;
+	_fActiveTime = 0.0f;
+	_bIsActive = true;
+	_fMoveAngle = fMoveAngle;
+	_fMoveSpeed = fMoveSpeed;
+	_bIsPlayer = bIsPlayer;
+	_pImg->SetFrameX(nFrameX);
+	_pImg->SetFrameY(nFrameY);
 }
 
 void MAGIC::returnPool()

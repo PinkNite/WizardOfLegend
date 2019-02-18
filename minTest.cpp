@@ -52,6 +52,9 @@ HRESULT MINTESTSCENE::init()
 	IMAGEMANAGER->addImage("upRock", "resource/skill/upRock.bmp", 121, 128, true, Mins::getMazenta());
 
 	IMAGEMANAGER->addFrameImage("iceCrystal", "resource/skill/iceCrystal.bmp", 700, 199, 5, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("dlbSmallRock", "resource/skill/dlbSmallRock.bmp", 128, 32, 4, 1, true, Mins::getMazenta());
+
+	IMAGEMANAGER->addFrameImage("icePunch", "resource/skill/icePunch.bmp", 900, 400, 9, 4, true, Mins::getMazenta());
 
 
 	KEYANIMANAGER->addObject("shokeNova");
@@ -61,7 +64,7 @@ HRESULT MINTESTSCENE::init()
 	KEYANIMANAGER->addObject("Rock");
 	KEYANIMANAGER->addArrayCoordinateFrameAnimation("Rock", "bicRock", "bicRock", arr, 4, 16, true, 16);
 	KEYANIMANAGER->addArrayCoordinateFrameAnimation("Rock", "smallRock", "smallRock", arr, 4, 16, true, 16);
-
+	KEYANIMANAGER->addArrayCoordinateFrameAnimation("Rock", "dlbSmallRock", "dlbSmallRock", arr, 4, 16, true, 16);
 
 
 	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("shokeNova", "shokeNova"), "shokeNova", 3, 512, 512, IMAGEMANAGER->findImage("shokeNova"), 6, 512, 512, 1.0f);
@@ -79,10 +82,14 @@ HRESULT MINTESTSCENE::init()
 
 	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "bicRock"), "bicRock", 100, 128, 128, IMAGEMANAGER->findImage("bicRock"), 16,128, 128, 0.5f);
 	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "smallRock"), "smallRock", 100, 64, 64, IMAGEMANAGER->findImage("smallRock"), 16, 64, 64, 1.0f);
+	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "dlbSmallRock"), "dlbSmallRock", 100, 32, 32, IMAGEMANAGER->findImage("dlbSmallRock"), 16, 32, 32, 0.3f);
 
 	_pMagicMgr->addObject("upRock", 10, 121, 128, IMAGEMANAGER->findImage("upRock"), 1, 121, 128, 0.3f);
 
 	_pMagicMgr->addObject("iceCrystal", 100, 140, 199, IMAGEMANAGER->findImage("iceCrystal"), 15, 140, 199, 0.3f);
+
+	_pMagicMgr->addObject("icePunch", 10, 100, 100, IMAGEMANAGER->findImage("icePunch"), 0, 0, 1.0f);
+
 
 	_pPlayer->setLink(_pMagicMgr, _pSkillEffectMgr);
 	return S_OK;
