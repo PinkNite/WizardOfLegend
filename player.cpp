@@ -138,6 +138,12 @@ void PLAYER::update()
 
 	//KEYANIMANAGER->update();
 
+
+	//임시 피담
+	if (KEYMANAGER->isOnceKeyDown('P'))
+	{
+		_fCurrentHealthPoint -= 10;
+	}
 }
 
 void PLAYER::release()
