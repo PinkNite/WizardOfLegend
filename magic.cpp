@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "magic.h"
+#include "camera.h"
 
 MAGIC::MAGIC()
 {
@@ -26,6 +27,13 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	_bIsPlayer = false;
 	_strKey = strKey;
 	_bIsAnimation = true;
+
+
+	OBJECT::setPosX(_fPosX);
+	OBJECT::setPosY(_fPosY);
+	OBJECT::setPosZ(nHeight);
+	OBJECT::setHeight(nHeight);
+	OBJECT::setImage(pImg);
 }
 
 void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float fTotalTime, const string & strkey)
@@ -44,6 +52,11 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float 
 	_strKey = strkey;
 	_bIsAnimation = true;
 
+	OBJECT::setPosX(_fPosX);
+	OBJECT::setPosY(_fPosY);
+	OBJECT::setPosZ(nHeight);
+	OBJECT::setHeight(nHeight);
+	OBJECT::setImage(pImg);
 }
 
 void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY, float fTotalTime, const string & strkey)
@@ -62,6 +75,11 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY
 	_strKey = strkey;
 	_bIsAnimation = false;
 
+	OBJECT::setPosX(_fPosX);
+	OBJECT::setPosY(_fPosY);
+	OBJECT::setPosZ(nHeight);
+	OBJECT::setHeight(nHeight);
+	OBJECT::setImage(pImg);
 }
 
 void MAGIC::release()
@@ -88,6 +106,8 @@ void MAGIC::update()
 		_fPosX += Mins::presentPowerX(_fMoveAngle, _fMoveSpeed * TIMEMANAGER->getElapsedTime());
 		_fPosY += Mins::presentPowerY(_fMoveAngle, _fMoveSpeed * TIMEMANAGER->getElapsedTime());
 		
+		OBJECT::setPosX(_fPosX);
+		OBJECT::setPosY(_fPosY);
 
 		_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);
 		if (_bIsAnimation)
@@ -96,7 +116,7 @@ void MAGIC::update()
 		}
 
 	}
-
+	_pCamera->pushRenderObject(this);
 }
 
 void MAGIC::render(HDC hdc)
@@ -112,6 +132,8 @@ void MAGIC::render(HDC hdc)
 		_pImg->frameRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY),_nFrameX, _nFrameY);
 	}
 	//Rectangle(hdc, _rcCollision);
+
+	
 }
 
 void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer)

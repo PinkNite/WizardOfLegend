@@ -27,6 +27,7 @@ void MAGICMGR::update()
 			iter = _lActiveMagic.erase(iter);
 			pMagic->returnPool();
 			_mqMagicPool.find(pMagic->getKey())->second.push(pMagic);
+
 		}
 		else
 		{
@@ -123,7 +124,12 @@ void MAGICMGR::addObject(const string& strKey, int nMagicCount, int nWidth, int 
 	for (int i = 0; i < nMagicCount; i++)
 	{
 		MAGIC* pMagic = new MAGIC();
-		pMagic->init(nWidth, nHeight, pImg, nFps, nFrameMaxX, nFrameMaxY, fTotalTime, strKey);	
+		pMagic->init(nWidth, nHeight, pImg, nFps, nFrameMaxX, nFrameMaxY, fTotalTime, strKey);
+		
+		
+		pMagic->setCamera(_pCamera);
+		
+		
 		qMagic.push(pMagic);
 	}
 
@@ -143,6 +149,9 @@ void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int
 	{
 		MAGIC* pMagic = new MAGIC();
 		pMagic->init(nWidth, nHeight, pImg,nFrameX,nFrameY,fTotalTime,strKey);
+
+		pMagic->setCamera(_pCamera);
+
 		qMagic.push(pMagic);
 	}
 
@@ -162,6 +171,9 @@ void MAGICMGR::addObject(animation * pAni, const string & strKey, int nMagicCoun
 	{
 		MAGIC* pMagic = new MAGIC();
 		pMagic->init(nWidth, nHeight, pImg, pAni, fTotalTime, strKey);
+
+		pMagic->setCamera(_pCamera);
+
 		qMagic.push(pMagic);
 	}
 

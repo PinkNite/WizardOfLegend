@@ -20,20 +20,33 @@ void CAMERA::init(int posX, int posY, int width, int height)
 	_rcCameraLimit = { 0,0,_width,_height };
 
 	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _width, _height);
+	_listRenderObject.clear();
 }
 
 void CAMERA::update()
 {
+	_listRenderObject.clear();
+
 }
 
 void CAMERA::render(HDC hdc)
 {
+	list<OBJECT*>::iterator	iter = _listRenderObject.begin();
+	list<OBJECT*>::iterator	end = _listRenderObject.end();
+
+	while (iter != end)
+	{
+		OBJECT* pObject = (*iter);
+		pObject->render(getMemDC());
+		iter++;
+	}
+
 	_pCameraBuffer->render(hdc, 0, 0, _left, _top, _width, _height);
 }
 
 void CAMERA::renderinit()
 {
-	PatBlt(_pCameraBuffer->getMemDC(), 0, 0, _width, _height, WHITENESS);
+	PatBlt(_pCameraBuffer->getMemDC(), 0, 0, _width, _height, BLACKNESS);
 
 }
 
@@ -121,4 +134,36 @@ void CAMERA::outOfRange()
 	{
 		_posY = static_cast<float>(_rcCameraLimit.bottom - _height / 2);
 	}
+}
+
+void CAMERA::pushRenderObject(OBJECT * pObject)
+{
+	//정렬도 되야한다
+	float fZorder = pObject->getPosY() + static_cast<float>(pObject->getPosZ());
+
+	list<OBJECT*>::iterator	iter = _listRenderObject.begin();
+	list<OBJECT*>::iterator	end = _listRenderObject.end();
+
+	bool bIsSearch = false;
+
+	while (iter != end)
+	{
+		float fTmp = (*iter)->getPosY() + static_cast<float>((*iter)->getPosZ());
+		if (fTmp > fZorder)
+		{
+			_listRenderObject.insert(iter, pObject);
+			iter = end;
+			bIsSearch = true;
+		}
+		else
+		{
+			iter++;
+		}
+	}
+
+	if (!bIsSearch)
+	{
+		_listRenderObject.push_back(pObject);
+	}
+
 }

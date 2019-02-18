@@ -28,7 +28,6 @@ void CIRCLEEFFECT::update(float fPosX, float fPosY, float fAngle)
 	
 	_fTargetPosX = _fPosX + Mins::presentPowerX(fAngle, 72.0f);
 	_fTargetPosY = _fPosY + Mins::presentPowerY(fAngle, 72.0f);
-
 }
 
 void CIRCLEEFFECT::render(HDC hdc)

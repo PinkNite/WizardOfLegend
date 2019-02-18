@@ -13,13 +13,16 @@ MINTESTSCENE::~MINTESTSCENE()
 HRESULT MINTESTSCENE::init()
 {
 
-
-
+	_pCamera = new CAMERA();
 	_pPlayer = new PLAYER();
 	_pPlayer->init();
-	
+	_pCamera->init(_pPlayer->getPosX(), _pPlayer->getPosY(), 2048, 2048);
+
 	_pMagicMgr			= new MAGICMGR();
 	_pSkillEffectMgr	= new SKILL_EFFECT_MGR();
+
+	_pMagicMgr->setLink(_pCamera);
+
 
 	_pMagicMgr->addObject("dashFlame", 100, 64, 64,
 		IMAGEMANAGER->addFrameImage("dashFlame", "resource/skill/flame.bmp", 1408, 384, 11, 3, true, Mins::getMazenta()),
@@ -94,16 +97,22 @@ HRESULT MINTESTSCENE::init()
 	_pMagicMgr->addObject("iceBullet", 100, 25, 25, IMAGEMANAGER->findImage("iceBullet"), 0, 0, 0.3f);
 
 	_pPlayer->setLink(_pMagicMgr, _pSkillEffectMgr);
+
+
+	_pCamera->setting(_pPlayer->getPosX(), _pPlayer->getPosY());
+	_pPlayer->setCameraLink(_pCamera);
 	return S_OK;
 }
 
 void MINTESTSCENE::update()
 {
 	KEYANIMANAGER->update();
-
+	_pCamera->update();
 	_pPlayer->update();
 	_pMagicMgr->update();
 	_pSkillEffectMgr->update();
+
+	_pCamera->setting(_pPlayer->getPosX(), _pPlayer->getPosY());
 }
 
 void MINTESTSCENE::release()
@@ -111,21 +120,28 @@ void MINTESTSCENE::release()
 	_pPlayer->release();
 	_pSkillEffectMgr->release();
 	_pMagicMgr->release();
-
+	
 	delete _pPlayer;
 	delete _pSkillEffectMgr;
 	delete _pMagicMgr;
+	delete _pCamera;
 
 	_pPlayer = nullptr;
 	_pSkillEffectMgr = nullptr;
 	_pMagicMgr = nullptr;
+	_pCamera = nullptr;
 }
 
 void MINTESTSCENE::render()
 {
+	_pCamera->renderinit();
+
+
+
 	_pSkillEffectMgr->render(getMemDC());
-	_pPlayer->render(getMemDC());
-	_pMagicMgr->render(getMemDC());
+	//_pPlayer->render(getMemDC());
+	//_pMagicMgr->render(getMemDC());
+	_pCamera->render(getMemDC());
 
 	KEYANIMANAGER->render();
 

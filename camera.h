@@ -2,11 +2,17 @@
 
 #include "stdafx.h"
 #include "image.h"
+#include "object.h"
 
 //렌더를 바꾸어야한다.
 //y축 순으로 정렬
-//1행------------------------------지형
-//1행//////////////////////////////오브젝트
+
+//최종 y오더 치는 지형 높이 + 오브젝트 높이
+//길높이 + 플레이어
+//길높이는 행단위로 같다.
+//오브젝트 높이는 다 다르다.
+//y축이 클수록 지형의 y오더치가 높아진다.
+
 
 class CAMERA {
 private:
@@ -24,6 +30,7 @@ private:
 	float	_travelRangeY;
 	RECT	_rcCameraLimit;
 	
+	list<OBJECT*>		_listRenderObject;
 
 public:
 	CAMERA();
@@ -65,4 +72,6 @@ public:
 	image * getCameraBuffer() { return _pCameraBuffer; }
 	HDC getMemDC() { return _pCameraBuffer->getMemDC(); }
 	void	setCameraBuffer(image* pImg) { _pCameraBuffer = pImg; }
+
+	void	pushRenderObject(OBJECT* pObject);
 };

@@ -68,12 +68,16 @@ void GLACIALCROSS::update()
 					fAngle -= PI / 2.0f;
 				}
 
-				while (fAngle > PI / 18.0f)
+				while (fAngle >= PI / 18.0f)
 				{
 					nFrameX++;
 					fAngle -= PI / 18.0f;
 				}
-
+				if (nFrameX >= 9)
+				{
+					nFrameX -= 9;
+					nFrameY++;
+				}
 				SKILL::_pMagicMgr->pushMagicKey("iceBullet", _fStartPosX, _fStartPosY, _arAngle[i], _fSpeed * 2.0f, true, nFrameX, nFrameY);
 
 			}
@@ -110,7 +114,11 @@ void GLACIALCROSS::pushMagicKey(float fPosX, float fPosY)
 		nFrameX++;
 		fAngle -= PI / 18.0f;
 	}
-
+	if (nFrameX >= 9)
+	{
+		nFrameX -= 9;
+		nFrameY++;
+	}
 
 	_fTimer = 0.0f;
 	_fStartPosX = _pPlayer->getAttactPosX();

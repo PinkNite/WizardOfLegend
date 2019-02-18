@@ -15,6 +15,7 @@ protected:
 	int			_top;		//사각형 위
 	image*		_pImg;		//이미지 설정
 	RECT		_rc;		//사각형
+	int			_posZ;		//zoder용
 
 public:
 	//x,y가로길이 세로길이 초기화
@@ -36,13 +37,13 @@ public:
 	inline int getWidth() { return _width; }
 	inline int getHeight() { return _height; }
 	inline image* getImage() { return _pImg; }
-
+	inline int getPosZ() { return _posZ; }
 
 	inline void setPosX(float posX) { _posX = posX; }
 	inline void setPosY(float posY) { _posY = posY; }
 	inline void setWidth(int width) { _width = width; }
 	inline void setHeight(int height) { _height = height; }
-	
+	inline void	setPosZ(int posZ) { _posZ = posZ; }
 
 };
 

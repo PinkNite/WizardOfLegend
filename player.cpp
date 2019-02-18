@@ -23,6 +23,8 @@
 #include "reboundingIcicles.h"
 #include "glacialCross.h"
 
+#include "camera.h"
+
 PLAYER::PLAYER() :
 	_fMaxHealthPoint(0.0f),
 	_fCurrentHealthPoint(0.0f),
@@ -69,6 +71,8 @@ void PLAYER::init()
 {
 	//초기 위치 중앙값
 	OBJECT::init(200, 200, 100, 100);
+	OBJECT::setPosZ(5);
+
 	OBJECT::setImage(IMAGEMANAGER->addFrameImage("wizardSprites", "resource/player/wizardSprite.bmp", WIZARD_SPRITE_WIDTH, WIZARD_SPRITE_HEIGHT, WIZARD_SPRITE_MAXFRAMEX, WIZARD_SPRITE_MAXFRAMEY, true, RGB(255, 0, 255)));
 	setEnumName();
 	_pAnimation = new animation();
@@ -143,6 +147,8 @@ void PLAYER::update()
 	{
 		_fCurrentHealthPoint -= 10.0f;
 	}
+
+	_pCamera->pushRenderObject(this);
 }
 
 void PLAYER::release()
@@ -161,6 +167,17 @@ void PLAYER::render(HDC hdc)
 	_pCirEffect->render(hdc);
 	Rectangle(hdc, _rcMovingCollision);
 	OBJECT::getImage()->aniRenderCenter(hdc, static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()), _pAnimation);
+
+	for (int i = 0; i < (int)PLAYER::ACTION::MAX; i++)
+	{
+		if (_pCurrentState == _arState[i])
+		{
+			char str[32] = "";
+			sprintf_s(str, "%d", i);
+			TextOut(hdc, 20, 200, str, strlen(str));
+		}
+	}
+	
 }
 
 void PLAYER::setEnumName()

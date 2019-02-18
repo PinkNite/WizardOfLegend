@@ -9,7 +9,7 @@ class STATE;
 class SKILL;
 class MAGICMGR;
 class SKILL_EFFECT_MGR;
-
+class CAMERA;
 
 class PLAYER : public OBJECT
 {
@@ -174,7 +174,9 @@ private:
 
 
 	int			_nNormalSkillCoount;
-
+	
+	CAMERA*		_pCamera;
+	
 public:
 	PLAYER();
 	~PLAYER();
@@ -253,7 +255,7 @@ public:
 
 
 	void setLink(MAGICMGR* pMagicMgr, SKILL_EFFECT_MGR* pSkillEffectMgr);
-
+	void setCameraLink(CAMERA* pCamera) { _pCamera = pCamera; }
 	float	getAttactPosX() { return _fAttackPosX; }
 	float	getAttactPosY() { return _fAttackPosY; }
 

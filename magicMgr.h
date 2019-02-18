@@ -2,12 +2,14 @@
 #include "stdafx.h"
 #include "magic.h"
 
+class CAMERA;
+
 class MAGICMGR {
 private:
 	map<string,queue<MAGIC*>>		_mqMagicPool;
 	list<MAGIC*>					_lActiveMagic;
 
-
+	CAMERA*					_pCamera;
 public:
 	MAGICMGR();
 	~MAGICMGR();
@@ -28,7 +30,7 @@ public:
 	void addObject(animation* pAni,const string& strKey, int nMagicCount, int nWidth, int nHeight, image* pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime);
 
 
-
+	void setLink(CAMERA* pCamera) { _pCamera = pCamera; }
 
 	//마법과 객체 충돌은 여기서 처리하자
 

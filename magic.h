@@ -1,8 +1,11 @@
 #pragma once
 #include "stdafx.h"
 #include "animation.h"
+#include "object.h"
 
-class MAGIC {
+class CAMERA;
+
+class MAGIC : public OBJECT{
 private:
 	float	_fPosX;
 	float	_fPosY;
@@ -29,6 +32,7 @@ private:
 
 	int		_nFrameX;			//프레임 렌더용
 	int		_nFrameY;			//프레임 렌더용
+	CAMERA*					_pCamera;
 
 public:
 	MAGIC();
@@ -38,9 +42,9 @@ public:
 	void	init(int nWidth, int nHeight,image* pImg, int nFps, int nFrameMaxX, int nFrameMaxY,float fTotalTime, const string& strKey);
 	void	init(int nWidth, int nHeight, image* pImg, animation* pAni, float fTotalTime, const string& strkey);
 	void	init(int nWidth, int nHeight, image* pImg, int nFrameX,int nFrameY, float fTotalTime, const string& strkey);
-	void	release();
-	void	update();
-	void	render(HDC hdc);
+	void	release()		override;
+	void	update()		override;
+	void	render(HDC hdc)	override;
 
 	void	create(float fPosX, float fPosY,float fMoveAngle, float fMoveSpeed,bool bIsPlayer);
 
@@ -52,4 +56,6 @@ public:
 
 	RECT*	getRect() { return &_rcCollision; }
 	bool	getIsAni() { return _bIsAnimation; }
+
+	void	setCamera(CAMERA*	pCamera) { _pCamera = pCamera; }
 };
