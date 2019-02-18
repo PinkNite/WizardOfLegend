@@ -1,19 +1,19 @@
 #pragma once
 #include "object.h"
-enum SKILLNUMBER
-{
-	SKILL_1,
-	SKILL_2,
-	SKILL_3,
-	SKILL_4,
-	SkILL_5,
-	SKILL_6,
-	SKILL_EMPTY
-};
+#include "skillIcon.h"
+//enum SKILLNUMBER
+//{
+//	SKILL_0,
+//	SKILL_1,
+//	SKILL_2,
+//	SKILL_3,
+//	SKILL_4,
+//	SKILL_5,
+//	SKILL_EMPTY
+//};
 class STATUSBOX :public OBJECT
 {
 private:
-	SKILLNUMBER _skillNumber;
 	int _alpha;
 	int _frameX, _frameY;
 	RECT _rc;
@@ -21,15 +21,28 @@ private:
 	bool _isCollision;
 	bool _isClick;
 
+	int _skillX;
+	int _skillY;
+	int _skillNum;
+	int _index;//템프 번호로 찾아야하기때문에
+
 public:
+	SKILLICON* _pSkillIcon;
 	STATUSBOX();
 	~STATUSBOX();
 	HRESULT init(int x, int y);
 	void release();
 	void update();
 	void render(HDC hdc);
+	void setSkillXY(int x, int y);
+	//스킬 번호
+	void setSkillNum(int num);
 public:
 	//접근자 참조자
+	int getX(){return _x;}
+	int getY(){return _y;}
+	void setX(int x) { _x = x; }
+	void setY(int y) { _y = y; }
 	void setFrameX(int num) { _frameX = num; }
 	int getFrameX() { return _frameX; }
 	RECT getRC() const { return _rc; }
@@ -38,10 +51,23 @@ public:
 	//알파값 접근자
 	int getAlpha() { return _alpha; }
 	void setAlpha(int alpha) { _alpha = alpha; }
-
+	//인덱스번호 배열번호 접근자
+	int getIndex() { return _index; }
+	void setIndex(int num) { _index = num; }
 	//아이템이 가지고 있는 스킬 상태 접근자
-	SKILLNUMBER getSkillNumber() { return _skillNumber; }
-	void setSkillNumber(SKILLNUMBER num) { _skillNumber = num; }
+	//SKILLNUMBER getSkillNumber() { return _skillNumber; }
+	//void setSkillNumber(SKILLNUMBER num) { _skillNumber = num; }
+	//스탯박스위치에 따라 스킬박스 위치를 지정해줄 x y좌표
+	int getSkillX() { return _skillX; }
+	void setSkillX(int x) { _skillX = x; }
+	int getSkillY() { return _skillY; }
+	void setSkillY(int y) { _skillY = y; }
+	//스킬 번호
+	int getSkillNum() { return _skillNum; }
+	
+
+
+
 
 	//클릭상태 접근자
 	bool getIsClick() { return _isClick; }

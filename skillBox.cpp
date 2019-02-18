@@ -4,7 +4,7 @@
 
 
 SKILLBOX::SKILLBOX()
-:_frameX(1),_x(0),_y(0),_alpha(255),_alphaBlack(0),_skillCool(0)
+:_frameX(1),_x(0),_y(0),_alpha(255),_alphaBlack(0),_skillCool(0),_skillCoolMax(0),_count(0)
 {
 }
 
@@ -23,9 +23,12 @@ HRESULT SKILLBOX::init(int x,int y,string imageName, float cool)
 	_y = y;
 	_pSkillIcon = new SKILLICON;
 	_pSkillIcon->init(_x + 8, _y + 8);
+	_skillCool = cool;
+	_skillCoolMax = cool;
 	coolDownSetting();
 
 	fontSetting( cool);
+	
 	return S_OK;
 }
 
@@ -39,6 +42,8 @@ void SKILLBOX::update()
 {
 	coolDownUpdate();
 	fontUpdate();
+	_pSkillIcon->move(_x+8, _y+8);//스킬박스에만 드감
+	
 }
 
 void SKILLBOX::render(HDC hdc)
@@ -65,7 +70,7 @@ void SKILLBOX::coolDownSetting()
 			{
 			case 1:
 
-				_poly.angle[j] = PI / 2 - 0.06f;
+				_poly.angle[j] = PI / 2 ;
 				break;
 			default:
 				_poly.angle[j] = PI / 2;
@@ -100,18 +105,42 @@ void SKILLBOX::coolDownUpdate()
 
 	//픽셀테스트용
 	
+		//시간이 늘어나면서 정해진 6초만큼의 시간동안 돔
+
 		switch (_poly.isUse)
 		{
 		case USE:
-			_poly.angle[1] -= 0.06f;
-			_poly.angle[2] -= 0.06f;
-			_skillCool -= 0.06f;
-
+			if (_skillCool <= 0)
+			{
+				_count++;
+				if (_count > 2)
+				{
+					_poly.isUse = UN_USE;
+				}
+				
+			}
+			else
+			{
+				_poly.angle[1] -= TIMEMANAGER->getElapsedTime()*(2 * PI / _skillCoolMax);
+				_poly.angle[2] -= TIMEMANAGER->getElapsedTime()*(2 * PI / _skillCoolMax);
+			}
+			if (_skillCool > 0)
+			{
+				_skillCool -= TIMEMANAGER->getElapsedTime();
+			}
 			break;
 		case UN_USE:
-			_poly.angle[1] = PI / 2 - 0.06f;
-			_poly.angle[2] = PI / 2;
-			_skillCool = 0;
+			if (_skillCool <= 0)
+			{
+
+
+			}
+			else
+			{
+				_poly.angle[1] = PI / 2;
+				_poly.angle[2] = PI / 2;
+				_skillCool = _skillCoolMax;
+			}
 			break;
 		}
 		for (int i = 0; i < 2; i++)
@@ -137,43 +166,48 @@ void SKILLBOX::coolDownRender(HDC hdc)
 	
 	
 	
-		IMAGEMANAGER->findImage(_imageName)->alphaRender(hdc, _x, _y, _alphaBlack);
-	switch (_poly.isUse)
-	{
-	case USE:
-		_alphaBlack = 155;
-		_alpha = 155;
-		pen = CreatePen(PS_SOLID, 0, RGB(255, 0, 255));
-		oldPen = (HPEN)SelectObject(IMAGEMANAGER->findImage(_imageName)->getMemDC(), pen);
-		brush = CreateSolidBrush(RGB(255, 0, 255));
-		oldBrush = (HBRUSH)SelectObject(IMAGEMANAGER->findImage(_imageName)->getMemDC(), brush);
-		Polygon(IMAGEMANAGER->findImage(_imageName)->getMemDC(), _poly.pos, 4);
+	IMAGEMANAGER->findImage(_imageName)->alphaRender(hdc, _x, _y, _alphaBlack);
+		
+		
+			switch (_poly.isUse)
+			{
+			case USE:
 
 
-		SelectObject(IMAGEMANAGER->findImage(_imageName)->getMemDC(), oldBrush);
-		DeleteObject(brush);
-		SelectObject(IMAGEMANAGER->findImage(_imageName)->getMemDC(), oldPen);
-		DeleteObject(pen);
-		break;
-	 default:
-		 _alphaBlack=0;
-		 _alpha = 255;
-		brush = CreateSolidBrush(RGB(0, 0, 0));
-		FillRect(IMAGEMANAGER->findImage(_imageName)->getMemDC(), &_rc, brush);
-		DeleteObject(brush);
-		break;
-	}
+				_alphaBlack = 155;
+				_alpha = 155;
+				pen = CreatePen(PS_SOLID, 0, RGB(255, 0, 255));
+				oldPen = (HPEN)SelectObject(IMAGEMANAGER->findImage(_imageName)->getMemDC(), pen);
+				brush = CreateSolidBrush(RGB(255, 0, 255));
+				oldBrush = (HBRUSH)SelectObject(IMAGEMANAGER->findImage(_imageName)->getMemDC(), brush);
+				Polygon(IMAGEMANAGER->findImage(_imageName)->getMemDC(), _poly.pos, 4);
+
+
+				SelectObject(IMAGEMANAGER->findImage(_imageName)->getMemDC(), oldBrush);
+				DeleteObject(brush);
+				SelectObject(IMAGEMANAGER->findImage(_imageName)->getMemDC(), oldPen);
+				DeleteObject(pen);
+
+				break;
+			default:
+				_alphaBlack = 0;
+				_alpha = 255;
+				brush = CreateSolidBrush(RGB(0, 0, 0));
+				FillRect(IMAGEMANAGER->findImage(_imageName)->getMemDC(), &_rc, brush);
+				DeleteObject(brush);
+				break;
+			}
 
 		
 
-		char str[120];
+	/*	char str[120];
 		sprintf_s(str, "%2d", _poly.isUse);
 
 		TextOut(hdc, _x, _y-300, str, strlen(str));
 		sprintf_s(str, "앵글:%.1lf", _poly.angle[1]);
 
 		TextOut(hdc, _x, _y - 400, str, strlen(str));
-
+*/
 
 
 }
@@ -191,7 +225,10 @@ void SKILLBOX::fontUpdate()
 
 void SKILLBOX::fontRender(HDC hdc)
 {
-	fontRender(hdc, _skillCool, "HY센스L", _x+20, _y+20, 20, RGB(255, 255, 255));
+	if (_skillCool != 0&&_poly.isUse==USE)
+	{
+		fontRender(hdc, _skillCool, "HY센스L", _x + 20, _y + 20, 17, RGB(255, 255, 255));
+	}
 	//fontRender(hdc, _tempFont.str, "elephant", _x, _y, 15, RGB(255, 255, 255));
 }
 

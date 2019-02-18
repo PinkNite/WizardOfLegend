@@ -52,20 +52,29 @@ private:
 	int _num;
 	string _str;
 	TAGSKILLICON _skillIcon;
+	int _x;
+	int _y;
 	
 public:
 	SKILLICON();
 	~SKILLICON();
 	HRESULT init(int x, int y);
+
 	void release();
 	void update();
 	void render(HDC hdc);
 	void setSkillIcon();
+	void move(int x, int y);
 public:
 	int getAlpha() { return _alpha;}
 	void setAlpha(int num) { _alpha = num; }
 	void setNum(int num) { _num = num; }
 	int getNum() { return _num; }
+	void setX(int x) { _x = x; }
+	int getX() { return _x; }
+	void setY(int y) { _y = y; }
+	int getY() { return _y; }
+
 	vector<TAGSKILLICON> getVSkillIcon() { return _vSkillIcon; }
 };
 

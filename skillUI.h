@@ -2,7 +2,7 @@
 #include "object.h"
 #include "skillBox.h"
 #include "skillIcon.h"
-
+#include "statusUI.h"
 
 class ITEM;
 
@@ -21,7 +21,7 @@ private:
 	//FONT* _pFont[2];
 	SKILLICON* _pSkillIcon;
 	SKILLBOX* _pSkillBox[6];
-	
+	STATUSUI* _pStatusUI;
 	int _x;
 	int _y;
 	
@@ -38,7 +38,7 @@ public:
 	
 
 public:
-	//void setLinkUI(ITEM* item) { _pItem = item; }
-
+	void setLinkUI(ITEM* item) { _pItem = item; }
+	void setStatusUI(STATUSUI* ui) { _pStatusUI = ui; }
 };
 

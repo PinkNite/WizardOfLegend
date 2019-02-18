@@ -6,6 +6,7 @@ struct TAGFONT
 {
 	const char* str;
 };
+
 enum SKILLUSE
 {
 	USE,
@@ -33,6 +34,8 @@ private:
 	RECT _rc;
 	TAGPOLY _poly;
 	float _skillCool;
+	float _skillCoolMax;
+	int _count;
 	
 public:
 	SKILLICON* _pSkillIcon;
@@ -56,5 +59,10 @@ public:
 	void setSkillUse(SKILLUSE num) { _poly.isUse = num; }
 	SKILLUSE getSkillUse() { return _poly.isUse; }
 	void setImageName(string name) { _imageName = name; }
+	void setX(int x) { _x = x; }
+	int getX() { return _x; }
+	void setY(int y) { _y= y; }
+	int getY() { return _y; }
+
 };
 

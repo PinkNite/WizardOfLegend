@@ -14,11 +14,13 @@ UI::~UI()
 
 HRESULT UI::init()
 {
-	_pSkillUI = new SKILLUI;
-	_pSkillUI->init();
-
 	_pStatusUI = new STATUSUI;
 	_pStatusUI->init();
+
+	
+	_pSkillUI = new SKILLUI;
+	_pSkillUI->init();
+	_pSkillUI->setStatusUI(_pStatusUI);//링크
 	for (int i = 0; i < 2; i++)
 	{
 		_pGoldHD[i] = new GOLDHD;
@@ -55,8 +57,7 @@ HRESULT UI::init()
 	_pMpBar = new MPBAR;
 	_pMpBar->init(40+65,50+33);
 	_pMpBar->setRcWidth(0);
-	_pPlayer = new PLAYER;
-	_pPlayer->init();
+	
 	
 	_HP = 500;//아직 안받는 값
 	_damage = 100;
@@ -69,7 +70,7 @@ void UI::release()
 
 void UI::update()
 {
-	//_HP = _pPlayer->getCurrentHp();
+	
 	
 	
 	_pSkillUI->update();
@@ -98,7 +99,7 @@ void UI::update()
 
 		_pStatusUI->update();
 	}
-
+	//확인용
 	if (KEYMANAGER->isOnceKeyDown('U'))
 	{
 		_HP += _damage;
@@ -116,8 +117,8 @@ void UI::update()
 		_MP -= 10;
 	}
 
-	_pHpBar[1]->setGauge(_HP, _pPlayer->getMaxHp());
-	_pHpBar[0]->setDamage(_HP, _pPlayer->getMaxHp());
+	_pHpBar[1]->setGauge(_pPlayer->getCurrentHp(), _pPlayer->getMaxHp());
+	_pHpBar[0]->setDamage(_pPlayer->getCurrentHp(), _pPlayer->getMaxHp());
 
 	_pMpBar->setGauge(_MP, 100);
 
@@ -166,7 +167,7 @@ void UI::render(HDC hdc)
 	
 
 
-	char str[12];
-	sprintf_s(str, " %.2lf", _pHpBar[1]->getHP());
-	TextOut(hdc, 400, 400, str, strlen(str));
+	/*char str[12];
+	sprintf_s(str, " %.2lf", _pPlayer->getCurrentHp());
+	TextOut(hdc, 400, 400, str, strlen(str));*/
 }

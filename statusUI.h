@@ -3,8 +3,9 @@
 #include "statusSelect.h"
 #include "statusBox.h"
 #include "explainUse.h"	
-#include "skillIcon.h"
+//#include "skillIcon.h"
 #include "statusButton.h"
+#include "skillIcon.h"
 
 
 class ITEM;
@@ -20,9 +21,9 @@ public:
 	STATUSSELECT* _pStatusSelect;
 	ITEM* _pItem[2];//2번은 맵이미지
 	EXPLAINUSE* _pExplainUse;
-	SKILLICON* _pSkillIcon[6];
+	//SKILLICON* _pSkillIcon[6];
 	STATUSBUTTON* _pStatusButton[6];
-
+	SKILLICON* _pTempSkill;
 	int _num;//변화값
 
 	int _count;//스왑?
@@ -31,12 +32,16 @@ public:
 
 	int _x;
 	int _y;
+	
 	int _alpha;
 	RECT _rcText;
 
 	bool _isClick;
 	//스왑용 템프
 	int _temp;
+	int _tempX;
+	
+	
 
 public:
 	STATUSUI();
@@ -55,6 +60,8 @@ public:
 	//접근자
 	bool getIsClick() { return _isClick; }
 	void setIsClick(SELECTSTATE num) { _pStatusSelect->setSelectState(num); }
+	
+	
 
 };
 

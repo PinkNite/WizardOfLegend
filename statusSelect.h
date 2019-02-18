@@ -1,5 +1,6 @@
 #pragma once
 #include "object.h"
+#include "statusBox.h"
 enum SELECTSTATE
 {
 	ITEM_STATE,//아이템선택?아이템설명나오게
@@ -10,7 +11,8 @@ enum SELECTSTATE
 class STATUSSELECT :public OBJECT
 {
 private:
-	float _x, _y;
+	
+	int _x, _y;
 	int _alpha;
 	RECT _rc;
 	bool _isCollision;
@@ -32,8 +34,11 @@ public:
 	//와이값에 따라 나오는 이미지
 	float getY() { return _y; }
 	int getAlpha() { return _alpha; }
+	void setX(int x) { _x = x; }
+	void setY(int y) { _y = y; }
 
 	SELECTSTATE getSelectState() { return _selectState; }
 	void setSelectState(SELECTSTATE num) { _selectState = num; }
+	
 };
 

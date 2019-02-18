@@ -65,9 +65,9 @@ void STATUSSELECT::render(HDC hdc)
 {
 	OBJECT::getImage()->alphaRender(hdc, OBJECT::getPosX(), OBJECT::getPosY(), _alpha);
 
-	/*char str[128];
-	sprintf_s(str, "%2lf%2lf", _x,_y);
-	TextOut(hdc, 400, 400, str, strlen(str));*/
+	//char str[128];
+	//sprintf_s(str, "%2d", 11);
+	//TextOut(hdc, 800, 600, str, strlen(str));
 
 }
 
@@ -77,23 +77,31 @@ void STATUSSELECT::keySetting()
 	{
 		_x -= 66;
 	}
-	if ((KEYMANAGER->isOnceKeyDown('D') || KEYMANAGER->isOnceKeyDown(VK_RIGHT)) && _y == 148)
+	else if ((KEYMANAGER->isOnceKeyDown('D') || KEYMANAGER->isOnceKeyDown(VK_RIGHT)) && _y == 148)
 	{
 		_x += 66;
 
 
 	}
-	if (KEYMANAGER->isStayKeyDown('W') || KEYMANAGER->isOnceKeyDown(VK_UP))
+	for (int i = 0; i < 6; i++)
 	{
-		_y = 148;
-		_x = 211;
 
-	}
-	if (KEYMANAGER->isStayKeyDown('S') || KEYMANAGER->isOnceKeyDown(VK_DOWN))
-	{
-		_y = 330;
-		_x = 211;
 
+		if ((KEYMANAGER->isStayKeyDown('W') || KEYMANAGER->isOnceKeyDown(VK_UP) )&& _selectState==ITEM_STATE)
+		{
+			_y = 148;
+			_x = 211;
+			break;
+
+		}
+		else if ((KEYMANAGER->isStayKeyDown('S') || KEYMANAGER->isOnceKeyDown(VK_DOWN) )&&_selectState==SKILL_STATE)
+		{
+			_y = 330;
+			_x = 211;
+		
+			break;
+
+		}
 	}
 	if (_x > 541)//오른쪽 을 넘어가면 왼쪽으로
 	{

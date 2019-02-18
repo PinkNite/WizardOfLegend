@@ -34,5 +34,9 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
+public :
+	void setLinkPlayer(PLAYER* p) { _pPlayer = p; }
+	bool getIsClick() { return _isClick; }
+	
 };
 

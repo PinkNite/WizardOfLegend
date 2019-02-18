@@ -3,7 +3,7 @@
 
 
 SKILLICON::SKILLICON()
-	:_num(0),_alpha(255)
+	:_num(0),_alpha(255),_x(0),_y(0)
 {
 }
 
@@ -15,6 +15,8 @@ HRESULT SKILLICON::init(int x, int y)
 {
 	OBJECT::setImage(IMAGEMANAGER->addFrameImage("skillIcon", "resource/UI/skillIcon.bmp", 690, 690, 16, 16, true, RGB(255, 0, 255)));
 	OBJECT::init(x, y, OBJECT::getImage()->getFrameWidth(), OBJECT::getImage()->getFrameHeight());
+	_x = x;
+	_y = y;
 	setSkillIcon();
 	return S_OK;
 }
@@ -25,22 +27,26 @@ void SKILLICON::release()
 
 void SKILLICON::update()
 {
+	
 }
 
 void SKILLICON::render(HDC hdc)
 {
-	OBJECT::getImage()->alphaFrameRender(hdc, OBJECT::getPosX(), OBJECT::getPosY(),_vSkillIcon[_num].frameX,_vSkillIcon[_num].frameY,_alpha);
+	OBJECT::getImage()->alphaFrameRender(hdc, _x,_y,_vSkillIcon[_num].frameX,_vSkillIcon[_num].frameY,_alpha);
+	/*char str[200];
+	sprintf_s(str, "%d", _x);
+	TextOut(hdc, _x, _y-100, str, strlen(str));*/
 }
 
 void SKILLICON::setSkillIcon()
 {
 	
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 11; i++)
 	{
 		switch (i)
 		{
 		case 0:
-			_str=_skillIcon.name = "Flame Strike";    //6
+			_str = _skillIcon.name = "Flame Strike";    //6
 			_skillIcon.info = "Blast enemies away with plumes of flames!";
 			_skillIcon.element = FIRE;
 			_skillIcon.skillType = BASIC;
@@ -63,8 +69,8 @@ void SKILLICON::setSkillIcon()
 
 			break;
 		case 1:
-			
-			_str=_skillIcon.name = "Searing Rush";    //6
+
+			_str = _skillIcon.name = "Searing Rush";    //6
 			_skillIcon.info = "Rush forward and leave flames in your wake!";
 			_skillIcon.element = FIRE;
 			_skillIcon.skillType = DASH;
@@ -88,7 +94,7 @@ void SKILLICON::setSkillIcon()
 			break;
 		case 2:
 
-			_str=_skillIcon.name = "Shock Nova";    //6
+			_str = _skillIcon.name = "Shock Nova";    //6
 			_skillIcon.info = "Hold to charge up and release an explosion of electricity that shocks all foes in the area at maximum charge!";
 			_skillIcon.element = LIGHTNING;
 			_skillIcon.skillType = SIGNATURE;
@@ -232,7 +238,7 @@ void SKILLICON::setSkillIcon()
 
 			break;
 		case 8:
-	
+
 			_str = _skillIcon.name = "Tearing Whirlwind";    //6
 			_skillIcon.info = "Rapidly spin forward and pull nearby enemies into your wake!";
 			_skillIcon.element = AIR;
@@ -272,16 +278,28 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.knockBack3 = 1;
 			_skillIcon.knockBack4 = 0;
 			_skillIcon.duration = 0;
-			_skillIcon.platinum =75;
+			_skillIcon.platinum = 75;
 			_skillIcon.gold = 150;
 			_skillIcon.pool = 5;
 			_skillIcon.frameX = 142 % 16;
 			_skillIcon.frameY = 142 / 16;
 
 			break;
+
+		case 10:
+			_str = _skillIcon.name = "empty";
+			_skillIcon.frameX = 240 % 16;
+			_skillIcon.frameY = 240 / 16;
+			break;
 		}
 		_vSkillIcon.push_back(_skillIcon);
 		_mSkillIcon.insert(make_pair(_str, _vSkillIcon));
 
 	}
+}
+
+void SKILLICON::move(int x, int y)
+{
+	_x = x;
+	_y = y;
 }

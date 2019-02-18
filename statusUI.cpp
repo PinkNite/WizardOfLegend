@@ -3,7 +3,7 @@
 #include "item.h"
 
 STATUSUI::STATUSUI()
-	:_num(0), _numA(0), _count(0), _alpha(200), _isClick(0), _temp(0)
+	:_num(0), _numA(0), _count(0), _alpha(200), _isClick(0), _temp(0),_tempX(0)
 {
 }
 
@@ -13,18 +13,29 @@ STATUSUI::~STATUSUI()
 
 HRESULT STATUSUI::init()
 {
-
+	
 	IMAGEMANAGER->addImage("statusUI", "resource/UI/statusUI.bmp", 480, 724, true, RGB(255, 0, 255));
 	OBJECT::setImage(IMAGEMANAGER->findImage("statusUI"));
 	OBJECT::init(51 + (2 * 51 + 2 * 2), 51 + 25, OBJECT::getImage()->GetWidth(), OBJECT::getImage()->GetHeight());
 
-	_pStatusSelect = new STATUSSELECT;
-	_pStatusSelect->init();
 
 	for (int i = 0; i < 6; i++)
 	{
 		_pStatusBox[i] = new STATUSBOX;
 		_pStatusBox[i]->init(214 + i * 66, 150);
+		_pStatusBox[i]->setSkillXY(60 + (i * 60) + 3,WINSIZEY-90);
+		
+		switch (i)
+		{
+		case 5:
+			_pStatusBox[i]->_pSkillIcon->setNum(i+1);
+			break;
+		default:
+		_pStatusBox[i]->_pSkillIcon->setNum(i);
+			break;
+		}
+		
+		_pStatusBox[i]->setSkillNum(i);
 		switch (i)
 		{
 		case 4:
@@ -32,13 +43,14 @@ HRESULT STATUSUI::init()
 		case 5:
 			break;
 		default:
-			_pStatusBox[i]->setSkillNumber(static_cast <SKILLNUMBER>(i));
+			
 			break;
 		}
 
 	}
 	_pStatusBox[6] = new STATUSBOX;
 	_pStatusBox[6]->init(214, 333);
+	_pStatusBox[6]->_pSkillIcon->setNum(10);
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -55,25 +67,21 @@ HRESULT STATUSUI::init()
 	_pExplainUse = new EXPLAINUSE;
 	_pExplainUse->init(214, 200);
 
-	for (int i = 0; i < 6; i++)
-	{
-		_pSkillIcon[i] = new SKILLICON;
-		//_pSkillIcon[i]->init(212 + i * 66, 150);
-		_pSkillIcon[i]->init(_pStatusBox[i]->getPosX()-2, _pStatusBox[i]->getPosY()-2);
-		_pSkillIcon[i]->setNum(i);
-
-	}
-
+	
 	//스왑용 템프박스
 	_pTempBox = new STATUSBOX;
+	_pTempSkill = new SKILLICON;
 	for (int i = 0; i < 6; i++)
 	{
 
 		_pStatusButton[i] = new STATUSBUTTON;
 		_pStatusButton[i]->init(220 + i * 66, 118);
 		_pStatusButton[i]->setFrameX(i);
+		
 	}
-
+	_pStatusSelect = new STATUSSELECT;
+	_pStatusSelect->init();
+	
 	return S_OK;
 }
 
@@ -83,19 +91,17 @@ void STATUSUI::release()
 
 void STATUSUI::update()
 {
-	for (int i = 0; i < 6; i++)
-	{
-
-		_pSkillIcon[i]->setPosX(_pStatusBox[i]->getPosX() - 2);
-		_pSkillIcon[i]->setPosY(_pStatusBox[i]->getPosY()-2);
-
-	}
-
+	
+	
 	_pStatusSelect->update();
 	for (int i = 0; i < 6; i++)
 	{
-
+		//_pStatusBox[i]->setX(214 + i * 66);
 		_pStatusBox[i]->update();
+		//바뀐 번호로 엑스좌표를 가져옴 
+		
+		
+		//_pStatusBox[i]->setX()
 		//0,1,3알파값이 다름 원작
 		if (_pStatusBox[i]->getFrameX() != 2 && _pStatusSelect->getSelectState() != SWAP_STATE)
 		{
@@ -135,13 +141,17 @@ void STATUSUI::update()
 	spaceKeyAndLButton();
 	swapSetting();
 
-	if (KEYMANAGER->isOnceKeyDown('O'))
+	if (KEYMANAGER->isOnceKeyDown('X'))
 	{
 		_numA++;
 	}
-	if (KEYMANAGER->isOnceKeyDown('P'))
+	if (KEYMANAGER->isOnceKeyDown('Z'))
 	{
 		_numA--;
+	}
+	if (KEYMANAGER->isOnceKeyDown('F'))
+	{
+
 	}
 	_pExplainUse->alphaPlus(_pStatusSelect->getAlpha());
 
@@ -157,7 +167,7 @@ void STATUSUI::render(HDC hdc)
 
 		_pStatusBox[i]->render(hdc);
 
-		_pSkillIcon[i]->render(hdc);//이게 화면에 //여기에 스킬 이미지 배열로 
+		
 
 	}
 	if (_pStatusSelect->getSelectState() == ITEM_STATE)
@@ -185,18 +195,21 @@ void STATUSUI::render(HDC hdc)
 		_pStatusButton[i]->render(hdc);
 	}
 
-	char str[222];
+	//char str[222];
 
-	for (int i = 0; i < 6; i++)
-	{
+	//for (int i = 0; i < 6; i++)
+	//{
 
-		sprintf_s(str, "  %d ", _pStatusBox[i]->getSkillNumber(), _pStatusBox[i]->getIsCollision());
-		TextOut(hdc, _pStatusBox[i]->getPosX(), _pStatusBox[i]->getPosY(), str, strlen(str));
-	}
-	sprintf_s(str, "선택엑스좌표:%d,선택상태값:%d", (int)_pStatusSelect->getPosX(), _pStatusSelect->getSelectState());
-	TextOut(hdc, 700, 400, str, strlen(str));
-	sprintf_s(str, "count :%d temp:%d frame: %d", _count, _temp, _pStatusBox[_temp]->getFrameX());
-	TextOut(hdc, 700, 100, str, strlen(str));
+	//	//sprintf_s(str, "%d,%d", _pStatusBox[i]->getX(), _pStatusBox[i]->getY());
+	//	//TextOut(hdc, _pStatusBox[i]->getX(), _pStatusBox[i]->getY(), str, strlen(str));
+
+	//	sprintf_s(str, "%d", _pStatusBox[_pStatusBox[i]->getIndex()]->getX());
+	//	TextOut(hdc, _pStatusBox[i]->getX(), _pStatusBox[i]->getY(), str, strlen(str));
+	//}
+	//sprintf_s(str, "선택엑스좌표:%d,선택상태값:%d", (int)_pStatusSelect->getPosX(), _pStatusSelect->getSelectState());
+	//TextOut(hdc, 700, 400, str, strlen(str));
+	//sprintf_s(str, "count :%d temp:%d frame: %d", _count, _temp, _pStatusBox[_temp]->getFrameX());
+	//TextOut(hdc, 700, 100, str, strlen(str));
 }
 
 void STATUSUI::collision()
@@ -260,12 +273,87 @@ void STATUSUI::spaceKeyAndLButton()
 			_pStatusBox[_temp]->setFrameX(0);//프레임 원래색
 			_count = 0;//0
 			//여기부터 스왑
-			_pTempBox = _pStatusBox[_temp];
+			/*_pTempBox = _pStatusBox[_temp];
+			_pTempBox->setX(_pStatusBox[_temp]->getX());
+			
+
 			_pStatusBox[_temp] = _pStatusBox[i];
+			
+			_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());
+
 			_pStatusBox[i] = _pTempBox;
+			
+			_pStatusBox[i]->setX(_pTempBox->getX());*/
+
+
+			_pTempBox->setX(_pStatusBox[_temp]->getX());
+			_pTempBox->setSkillX(_pStatusBox[_temp]->getSkillX());
+			_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());
+			_pStatusBox[_temp]->setSkillX(_pStatusBox[i]->getSkillX());
+			_pStatusBox[i]->setX(_pTempBox->getX());
+			_pStatusBox[i]->setSkillX(_pTempBox->getSkillX());
+
+
+			break;
+		}
+		else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse)&& _pStatusSelect->getSelectState() != SWAP_STATE && _count == 0)
+		{
+			//system("pause");
+			_pStatusSelect->setSelectState(SWAP_STATE);//스왑모드가 되고
+			_pStatusBox[i]->setIsClick(true);//클릭상태만들어주고
+			_pStatusBox[i]->setFrameX(2);//프레임 녹색으로 해주고 
+			_count = 1;//일이됨
+			_temp = i;
+			_pStatusSelect->setX(_pStatusBox[i]->getRC().left-3);
+			_pStatusSelect->setY(_pStatusBox[i]->getRC().top-2);
+			break;//나옴
+		}
+		else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse) && _pStatusSelect->getSelectState() == SWAP_STATE && _count == 1 && _pStatusBox[i]->getFrameX() == 2)
+		{
+			// 녹색이미지이면 해당박스랑 충돌일때
+			//system("pause");
+			_pStatusSelect->setSelectState(SKILL_STATE);//스왑모드가 되고
+			_pStatusBox[i]->setIsClick(false);//클릭상태만들어주고
+			_pStatusBox[i]->setFrameX(0);//프레임 녹색으로 해주고 
+			_count = 0;//0
+			_pStatusSelect->setX(_pStatusBox[i]->getRC().left-3);
+			_pStatusSelect->setY(_pStatusBox[i]->getRC().top-2);
+			break;//나옴
+		}
+		else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse) && _pStatusSelect->getSelectState() == SWAP_STATE && _count == 1 && _pStatusBox[_temp]->getFrameX() == 2 && _temp != i)
+		{
+			//system("pause");
+			//다른 박스랑 충돌할때
+			//스왑
+			_pStatusSelect->setSelectState(SKILL_STATE);//상태는 스킬
+			_pStatusBox[_temp]->setIsClick(false);
+			_pStatusBox[_temp]->setFrameX(0);//프레임 원래색
+			_count = 0;//0
+			//여기부터 스왑
+			_pStatusSelect->setX(_pStatusBox[i]->getRC().left-3);
+			_pStatusSelect->setY(_pStatusBox[i]->getRC().top-2);
+		
+
+		/*	_pTempBox = _pStatusBox[_temp];
+			
+
+			_pStatusBox[_temp] = _pStatusBox[i];
+		
+
+			_pStatusBox[i] = _pTempBox;*/
+
+			_pTempBox->setX(_pStatusBox[_temp]->getX());
+			_pTempBox->setSkillX(_pStatusBox[_temp]->getSkillX());
+			_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());
+			_pStatusBox[_temp]->setSkillX(_pStatusBox[i]->getSkillX());
+			_pStatusBox[i]->setX(_pTempBox->getX());
+			_pStatusBox[i]->setSkillX(_pTempBox->getSkillX());
+			
 			break;
 		}
 	}
+
+	
 }
 void STATUSUI::fontRender(HDC hdc, const char * str, const char * str2, int x, int y, int num, COLORREF color)
 {
@@ -328,6 +416,12 @@ void STATUSUI::swapSetting()
 	{
 	default:
 		break;
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		
+		//_pStatusBox[i]->_pSkillIcon->move(_pStatusBox[i]->getX(), _pStatusBox[i]->getY());
 	}
 }
 

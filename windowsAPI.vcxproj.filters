@@ -106,14 +106,14 @@
     <Filter Include="PlayGround\UI">
       <UniqueIdentifier>{50e06987-9122-424b-8dab-23717715bd09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayGround\UI\status">
-      <UniqueIdentifier>{de1a2301-569c-4f79-9b3f-c7184b9b998a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayGround\UI\skill">
-      <UniqueIdentifier>{8a2909f1-b4ae-47cd-8a71-1c5515efc017}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PlayGround\UI\hpBar">
       <UniqueIdentifier>{79cacc1d-5ce5-4566-b249-673327ff0b92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\UI\skillUI">
+      <UniqueIdentifier>{8a2909f1-b4ae-47cd-8a71-1c5515efc017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\UI\statusUI">
+      <UniqueIdentifier>{de1a2301-569c-4f79-9b3f-c7184b9b998a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -331,34 +331,34 @@
       <Filter>PlayGround\enemy\boss</Filter>
     </ClInclude>
     <ClInclude Include="statusUI.h">
-      <Filter>PlayGround\UI\status</Filter>
+      <Filter>PlayGround\UI\statusUI</Filter>
     </ClInclude>
     <ClInclude Include="statusSelect.h">
-      <Filter>PlayGround\UI\status</Filter>
+      <Filter>PlayGround\UI\statusUI</Filter>
     </ClInclude>
     <ClInclude Include="statusBox.h">
-      <Filter>PlayGround\UI\status</Filter>
+      <Filter>PlayGround\UI\statusUI</Filter>
     </ClInclude>
     <ClInclude Include="explainUse.h">
-      <Filter>PlayGround\UI\status</Filter>
+      <Filter>PlayGround\UI\statusUI</Filter>
     </ClInclude>
     <ClInclude Include="skillUI.h">
-      <Filter>PlayGround\UI\skill</Filter>
+      <Filter>PlayGround\UI\skillUI</Filter>
     </ClInclude>
     <ClInclude Include="skillButton.h">
-      <Filter>PlayGround\UI\skill</Filter>
+      <Filter>PlayGround\UI\skillUI</Filter>
     </ClInclude>
     <ClInclude Include="font.h">
-      <Filter>PlayGround\UI\skill</Filter>
+      <Filter>PlayGround\UI\skillUI</Filter>
     </ClInclude>
     <ClInclude Include="skillIcon.h">
-      <Filter>PlayGround\UI\skill</Filter>
+      <Filter>PlayGround\UI\skillUI</Filter>
     </ClInclude>
     <ClInclude Include="fireStrike.h">
       <Filter>PlayGround\skill</Filter>
     </ClInclude>
     <ClInclude Include="statusButton.h">
-      <Filter>PlayGround\UI\status</Filter>
+      <Filter>PlayGround\UI\statusUI</Filter>
     </ClInclude>
     <ClInclude Include="skillnone.h">
       <Filter>PlayGround\skill</Filter>
@@ -376,7 +376,7 @@
       <Filter>PlayGround\skill</Filter>
     </ClInclude>
     <ClInclude Include="skillBox.h">
-      <Filter>PlayGround\UI\skill</Filter>
+      <Filter>PlayGround\UI\skillUI</Filter>
     </ClInclude>
     <ClInclude Include="chainLightning.h">
       <Filter>PlayGround\skill</Filter>
@@ -594,34 +594,34 @@
       <Filter>PlayGround\enemy\boss</Filter>
     </ClCompile>
     <ClCompile Include="statusUI.cpp">
-      <Filter>PlayGround\UI\status</Filter>
+      <Filter>PlayGround\UI\statusUI</Filter>
     </ClCompile>
     <ClCompile Include="statusSelect.cpp">
-      <Filter>PlayGround\UI\status</Filter>
+      <Filter>PlayGround\UI\statusUI</Filter>
     </ClCompile>
     <ClCompile Include="statusBox.cpp">
-      <Filter>PlayGround\UI\status</Filter>
+      <Filter>PlayGround\UI\statusUI</Filter>
     </ClCompile>
     <ClCompile Include="explainUse.cpp">
-      <Filter>PlayGround\UI\status</Filter>
+      <Filter>PlayGround\UI\statusUI</Filter>
     </ClCompile>
     <ClCompile Include="skillUI.cpp">
-      <Filter>PlayGround\UI\skill</Filter>
+      <Filter>PlayGround\UI\skillUI</Filter>
     </ClCompile>
     <ClCompile Include="skillButton.cpp">
-      <Filter>PlayGround\UI\skill</Filter>
+      <Filter>PlayGround\UI\skillUI</Filter>
     </ClCompile>
     <ClCompile Include="font.cpp">
-      <Filter>PlayGround\UI\skill</Filter>
+      <Filter>PlayGround\UI\skillUI</Filter>
     </ClCompile>
     <ClCompile Include="skillIcon.cpp">
-      <Filter>PlayGround\UI\skill</Filter>
+      <Filter>PlayGround\UI\skillUI</Filter>
     </ClCompile>
     <ClCompile Include="fireStrike.cpp">
       <Filter>PlayGround\skill</Filter>
     </ClCompile>
     <ClCompile Include="statusButton.cpp">
-      <Filter>PlayGround\UI\status</Filter>
+      <Filter>PlayGround\UI\statusUI</Filter>
     </ClCompile>
     <ClCompile Include="skillnone.cpp">
       <Filter>PlayGround\skill</Filter>
@@ -636,7 +636,7 @@
       <Filter>PlayGround\UI\hpBar</Filter>
     </ClCompile>
     <ClCompile Include="skillBox.cpp">
-      <Filter>PlayGround\UI\skill</Filter>
+      <Filter>PlayGround\UI\skillUI</Filter>
     </ClCompile>
     <ClCompile Include="shokeNova.cpp">
       <Filter>PlayGround\skill</Filter>

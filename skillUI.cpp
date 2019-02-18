@@ -21,7 +21,8 @@ SKILLUI::~SKILLUI()
 HRESULT SKILLUI::init()
 {
 	
-	
+	_pStatusUI = new STATUSUI;
+	_pStatusUI->init();
 
 
 	//스탯박스 추가해서 그림
@@ -36,6 +37,7 @@ HRESULT SKILLUI::init()
 		_pStatusBox[i] = new STATUSBOX;
 		_pStatusBox[i]->init(_x + (i * 55), _y);
 		_pStatusBox[i]->setAlpha(60);
+		_pStatusBox[i]->_pSkillIcon->setNum(10);
 
 	}
 	_pStatusBox[0]->setFrameX(1);
@@ -57,15 +59,7 @@ HRESULT SKILLUI::init()
 			break;
 		}
 	}
-	//폰트
-	/*for (int i = 0; i < 2; i++)
-	{
-		_pFont[i] = new FONT;
 
-
-		_pFont[i]->init(WINSIZEX / 2 - 332 + i * 54, WINSIZEY - 20);
-	}*/
-	//_pFont[1]->setFrameX(1);
 
 
 	_pItem = new ITEM;
@@ -102,15 +96,21 @@ HRESULT SKILLUI::init()
 		case 5:
 			_name = "5";
 			break;
-		}
-		_pSkillBox[i]->init(60 + (i *60)+ 3, WINSIZEY - 90,_name,_pSkillIcon->getVSkillIcon()[i].coolDown);//이쪽수정필요
+		}	
+		
+
+		//_pSkillBox[i]->init(60 + (i *60)+ 3, WINSIZEY - 90,_name,_pSkillIcon->getVSkillIcon()[i].coolDown);//이쪽수정필요
+
+		_pSkillBox[i]->init(_pStatusUI->_pStatusBox[i]->getSkillX(), _pStatusUI->_pStatusBox[i]->getSkillY(), _name, _pSkillIcon->getVSkillIcon()[i].coolDown);//이쪽수정필요
+
+		//_pSkillBox[i]->init(_pStatusUI->getPosX(), _pStatusUI->getPosY(), _name, _pSkillIcon->getVSkillIcon()[i].coolDown);//이쪽수정필요
 		if (i == 3)
 		{
 			_pSkillBox[i]->setFrameX(0);
 		}
-		_pSkillBox[i]->_pSkillIcon->setNum(i);
+		//_pSkillBox[i]->_pSkillIcon->setNum(_pStatusUI->_pStatusBox[i]->getSkillNum());
+		_pSkillBox[i]->_pSkillIcon->setNum(_pStatusUI->_pStatusBox[i]->_pSkillIcon->getNum());
 		
-
 	}
 	
 	
@@ -129,7 +129,10 @@ void SKILLUI::update()
 {
 	for (int i = 0; i < 6; i++)
 	{
+		_pSkillBox[i]->setX(_pStatusUI->_pStatusBox[i]->getSkillX());
+		_pSkillBox[i]->setY(_pStatusUI->_pStatusBox[i]->getSkillY());
 		_pSkillBox[i]->update();
+		
 		
 	}
 	if (KEYMANAGER->isOnceKeyDown('1'))
@@ -175,7 +178,10 @@ void SKILLUI::render(HDC hdc)
 	{
 		
 		_pSkillBox[i]->render(hdc);
-		
+		/*char str[200];
+
+		sprintf_s(str, "%d", _pStatusUI->_pStatusBox[i]->getSkillX());
+		TextOut(hdc, _pStatusUI->_pStatusBox[i]->getSkillX(), _pSkillBox[i]->getY()-50, str, strlen(str));*/
 
 	}
 
@@ -206,10 +212,7 @@ void SKILLUI::render(HDC hdc)
 	
 	_pItem->render(hdc);
 
-	/*char str[200];
 	
-		sprintf_s(str, "%lf", _pSkillIcon->getVSkillIcon()[1].coolDown);
-		TextOut(hdc, 800, 400, str, strlen(str));*/
 	
 
 }

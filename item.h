@@ -21,6 +21,7 @@ struct TAGITEM
 	int pool;
 	int frameX;
 	int frameY;
+	int isDrop;
 };
 class ITEM :public OBJECT
 {

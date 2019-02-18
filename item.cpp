@@ -30,6 +30,7 @@ HRESULT ITEM::init()
 		item.costA = 0;
 		item.costB = 0;
 		item.pool = 0;
+		item.isDrop = false;//¶³¾îÁ³³Ä  Æ®·ç¸é ¶³¾îÁü
 		switch (i)
 		{
 		case 0:
