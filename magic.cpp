@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "magic.h"
 #include "camera.h"
-
+#include "player.h"
 MAGIC::MAGIC()
 {
 }
@@ -27,8 +27,8 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	_bIsPlayer = false;
 	_strKey = strKey;
 	_bIsAnimation = true;
-
-
+	_bIsTrun = false;
+	_fTurnTime = 0.0f;
 	OBJECT::setPosX(_fPosX);
 	OBJECT::setPosY(_fPosY);
 	OBJECT::setPosZ(nHeight);
@@ -51,7 +51,8 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float 
 	_bIsPlayer = false;
 	_strKey = strkey;
 	_bIsAnimation = true;
-
+	_bIsTrun = false;
+	_fTurnTime = 0.0f;
 	OBJECT::setPosX(_fPosX);
 	OBJECT::setPosY(_fPosY);
 	OBJECT::setPosZ(nHeight);
@@ -74,6 +75,35 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY
 	_bIsPlayer = false;
 	_strKey = strkey;
 	_bIsAnimation = false;
+	_bIsTrun = false;
+	_fTurnTime = 0.0f;
+	OBJECT::setPosX(_fPosX);
+	OBJECT::setPosY(_fPosY);
+	OBJECT::setPosZ(nHeight);
+	OBJECT::setHeight(nHeight);
+	OBJECT::setImage(pImg);
+}
+
+void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, float fTurnTime, const string & strKey)
+{
+	_fPosX = -2000.0f;
+	_fPosY = -2000.0f;
+	_nWidth = nWidth;
+	_nHeight = nHeight;
+	_pImg = pImg;
+	_pEffectAni = new animation();
+	_pEffectAni->init(_pImg->GetWidth(), _pImg->GetHeight(), nFrameMaxX, nFrameMaxY);
+	_pEffectAni->setDefPlayFrame(false, false);
+	_pEffectAni->setFPS(nFps);
+	_fActiveTime = 0.0f;
+	_fTotalTime = fTotalTime;
+	_bIsActive = false;
+	_bIsPlayer = false;
+	_strKey = strKey;
+	_bIsAnimation = true;
+	_bIsTrun = true;
+	_fTurnTime = fTurnTime;
+
 
 	OBJECT::setPosX(_fPosX);
 	OBJECT::setPosY(_fPosY);
@@ -96,16 +126,40 @@ void MAGIC::update()
 	{
 		_fActiveTime += TIMEMANAGER->getElapsedTime();
 
-		
 		if (_fActiveTime >= _fTotalTime)
 		{
 			_bIsActive = false;
+			_bIsTrun = true;
 			return;
 		}
 
-		_fPosX += Mins::presentPowerX(_fMoveAngle, _fMoveSpeed * TIMEMANAGER->getElapsedTime());
-		_fPosY += Mins::presentPowerY(_fMoveAngle, _fMoveSpeed * TIMEMANAGER->getElapsedTime());
-		
+
+		if (!_bIsTrun)
+		{
+			_fPosX += Mins::presentPowerX(_fMoveAngle, _fMoveSpeed * TIMEMANAGER->getElapsedTime());
+			_fPosY += Mins::presentPowerY(_fMoveAngle, _fMoveSpeed * TIMEMANAGER->getElapsedTime());
+
+		}
+		else
+		{
+			if (_fActiveTime<= _fTurnTime)
+			{
+				//_fMoveAngle += 앵글값 더해지는 값 넣어주세요
+				//
+				_fPosX = _fCirclePosX + Mins::presentPowerX(_fMoveAngle, _fMoveSpeed);
+				_fPosY = _fCirclePosY + Mins::presentPowerY(_fMoveAngle, _fMoveSpeed);
+			}
+			else
+			{
+				if (_bIsTrun)
+				{
+					_bIsTrun = false;
+					_fMoveAngle = getAngle(_pPlayer->getPosX(), _pPlayer->getPosY(), _fPosX, _fPosY);
+					//_fMoveSpeed += 속도값넣어주세요
+				}
+			}
+
+		}
 		OBJECT::setPosX(_fPosX);
 		OBJECT::setPosY(_fPosY);
 
@@ -114,7 +168,6 @@ void MAGIC::update()
 		{
 			_pEffectAni->frameUpdate(TIMEMANAGER->getElapsedTime());
 		}
-
 	}
 	_pCamera->pushRenderObject(this);
 }
@@ -160,6 +213,27 @@ void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed,
 	_bIsPlayer = bIsPlayer;
 	_nFrameX = nFrameX;
 	_nFrameY = nFrameY;
+}
+
+
+void MAGIC::create(bool bIsPlayer, float fCirclePosX, float fCirclePosY, float fRadius, float fAngle)
+{
+	_fCirclePosX = fCirclePosX;
+	_fCirclePosY = fCirclePosY;
+
+
+	_pEffectAni->start();
+	_fActiveTime = 0.0f;
+	_bIsActive = true;
+
+	_fMoveAngle = fAngle;
+	_fMoveSpeed = fRadius * 2.0f;
+
+	_fPosX = _fCirclePosX + Mins::presentPowerX(_fMoveAngle, _fMoveSpeed);
+	_fPosY = _fCirclePosY + Mins::presentPowerY(_fMoveAngle, _fMoveSpeed);
+
+
+	_bIsPlayer = bIsPlayer;
 }
 
 void MAGIC::returnPool()

@@ -16,13 +16,13 @@ HRESULT MINTESTSCENE::init()
 	_pCamera = new CAMERA();
 	_pPlayer = new PLAYER();
 	_pPlayer->init();
-	_pCamera->init(_pPlayer->getPosX(), _pPlayer->getPosY(), 2048, 2048);
+	_pCamera->init(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()), 2048, 2048);
 
 	_pMagicMgr			= new MAGICMGR();
 	_pSkillEffectMgr	= new SKILL_EFFECT_MGR();
 
 	_pMagicMgr->setLink(_pCamera);
-
+	_pMagicMgr->setPlayer(_pPlayer);
 
 	_pMagicMgr->addObject("dashFlame", 100, 64, 64,
 		IMAGEMANAGER->addFrameImage("dashFlame", "resource/skill/flame.bmp", 1408, 384, 11, 3, true, Mins::getMazenta()),
@@ -109,8 +109,9 @@ HRESULT MINTESTSCENE::init()
 	_pMagicMgr->addObject("dropRightRock", 1200, 32, 32, IMAGEMANAGER->findImage("dropRightRock"), 0, 0, 0.3f);
 
 
-	_pCamera->setting(_pPlayer->getPosX(), _pPlayer->getPosY());
+	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 	_pPlayer->setCameraLink(_pCamera);
+
 	return S_OK;
 }
 
@@ -122,7 +123,7 @@ void MINTESTSCENE::update()
 	_pMagicMgr->update();
 	_pSkillEffectMgr->update();
 
-	_pCamera->setting(_pPlayer->getPosX(), _pPlayer->getPosY());
+	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 }
 
 void MINTESTSCENE::release()

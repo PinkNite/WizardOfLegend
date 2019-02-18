@@ -4,6 +4,7 @@
 #include "object.h"
 
 class CAMERA;
+class PLAYER;
 
 class MAGIC : public OBJECT{
 private:
@@ -32,7 +33,15 @@ private:
 
 	int		_nFrameX;			//프레임 렌더용
 	int		_nFrameY;			//프레임 렌더용
+	
 	CAMERA*					_pCamera;
+	PLAYER*					_pPlayer;
+
+	float	_fCirclePosX;
+	float	_fCirclePosY;
+	
+	bool	_bIsTrun;			//턴이 있는지 없는지
+	float	_fTurnTime;
 
 public:
 	MAGIC();
@@ -42,6 +51,9 @@ public:
 	void	init(int nWidth, int nHeight,image* pImg, int nFps, int nFrameMaxX, int nFrameMaxY,float fTotalTime, const string& strKey);
 	void	init(int nWidth, int nHeight, image* pImg, animation* pAni, float fTotalTime, const string& strkey);
 	void	init(int nWidth, int nHeight, image* pImg, int nFrameX,int nFrameY, float fTotalTime, const string& strkey);
+	//수호형용 사각형 가로 세로 이미지 FPS 이미지 가로 이미지 세로 총 렌더 시간 중간에 운동 바뀌는 시간 키값
+	void	init(int nWidth, int nHeight, image* pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime,float fTurnTime, const string& strKey);
+	
 	void	release()		override;
 	void	update()		override;
 	void	render(HDC hdc)	override;
@@ -50,6 +62,9 @@ public:
 
 	void	create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer, int nFrameX, int nFrameY);
 	
+	//수호형용 원 중심 x y 반지름 플레이어 꺼인지
+	void	create(bool bIsPlayer,float fCirclePosX, float fCirclePosY, float fRadius,float fAngle);
+
 	void	returnPool();
 	bool	getActive() { return _bIsActive; }
 	const string&	getKey() { return _strKey; }
@@ -58,4 +73,5 @@ public:
 	bool	getIsAni() { return _bIsAnimation; }
 
 	void	setCamera(CAMERA*	pCamera) { _pCamera = pCamera; }
+	void	setPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 };
