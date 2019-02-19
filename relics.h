@@ -1,7 +1,5 @@
 #pragma once
 #include "object.h"
-#include "relics_Type.h"
-#include "relics_Ring.h"
 #include "relics_Cover.h"
 #include "relics_Home.h"
 #include "relics_Select.h"
@@ -29,10 +27,8 @@ private:
 		WHITE,
 		BLACK
 	};
-	RELICS_TYPE* _pOffenceType;
-	RELICS_TYPE* _pDefenceType;
-	RELICS_TYPE* _pMISCType;
-	RELICS_RING* _pRing[6];
+	
+	
 	RELICS_COVER* _pCover[3];
 	RELICS_HOME* _pHome;
 	RELICS_SELECT* _pSelect[2];

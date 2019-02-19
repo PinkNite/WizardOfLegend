@@ -15,8 +15,8 @@ RELICS_HOME::~RELICS_HOME()
 
 HRESULT RELICS_HOME::init(int x, int y)
 {
-	OBJECT::setImage(IMAGEMANAGER->addFrameImage("relicsHome", "resource/item/relicsHome.bmp", 1251, 503, 2, 1, true, RGB(255, 0, 255)));
-	OBJECT::init(x, y,125, 503);
+	OBJECT::setImage(IMAGEMANAGER->addFrameImage("relicsHome", "resource/item/relicsHome.bmp", 1436, 610, 2, 1, true, RGB(255, 0, 255)));
+	OBJECT::init(x, y,1436, 610);
 	return S_OK;
 }
 

@@ -14,8 +14,8 @@ RELICS_RING::~RELICS_RING()
 
 HRESULT RELICS_RING::init(int x, int y)
 {
-	OBJECT::setImage(IMAGEMANAGER->addFrameImage("relicsRing", "resource/item/relicsRing.bmp", 63, 290, 1, 4, true, RGB(255, 0, 255)));
-	OBJECT::init(x, y, 63, 290);
+	OBJECT::setImage(IMAGEMANAGER->addFrameImage("relicsRing", "resource/item/relicsRing.bmp", 61, 283, 1, 4, true, RGB(255, 0, 255)));
+	OBJECT::init(x, y, 61, 283);
 	KEYANIMANAGER->addObject("ring");
 	int arr[] = { 0,1,2,3 };
 	

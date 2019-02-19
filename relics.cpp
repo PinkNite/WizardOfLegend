@@ -17,23 +17,12 @@ HRESULT RELICS::init(int x, int y)
 	for (int i = 0; i < 3; i++)
 	{
 		_pCover[i] = new RELICS_COVER;
-		_pCover[i]->init(x+64, y + 60);
+		_pCover[i]->init(x+64, y + 170+i*115);
 
 	}
-	_pOffenceType = new RELICS_TYPE;
-	_pOffenceType->init(x, y);
-	_pDefenceType = new RELICS_TYPE;
-	_pDefenceType->init(x, y+100);
-	_pDefenceType->setFrameY(1);
-	_pMISCType = new RELICS_TYPE;
-	_pMISCType->init(x, y+200);
-	_pMISCType->setFrameY(2);
+	
 
-	for (int i = 0; i < 6; i++)
-	{
-	_pRing[i] = new RELICS_RING;
-	_pRing[i]->init(x+100, y);
-	}
+	
 	for (int i = 0; i < 2; i++)
 	{
 
@@ -51,11 +40,7 @@ void RELICS::release()
 
 void RELICS::update()
 {
-	for (int i = 0; i < 6; i++)
-	{
-		_pRing[i]->update();
-		
-	}
+	
 	for (int i = 0; i < 3; i++)
 	{
 
@@ -73,14 +58,8 @@ void RELICS::render(HDC hdc)
 	_pCover[i]->render(hdc);
 
 	}
-	_pOffenceType->render(hdc);
-	_pDefenceType->render(hdc);
-	_pMISCType->render(hdc);
-	for (int i = 0; i < 6; i++)
-	{
-	_pRing[i]->render(hdc);
-
-	}
+	
+	
 	for (int i = 0; i < 2; i++)
 	{
 		_pSelect[i]->render(hdc);
