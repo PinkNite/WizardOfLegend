@@ -476,7 +476,7 @@ void BOSS::skillFire(float x, float y)
 	_timeSet += TIMEMANAGER->getElapsedTime();
 
 	// 탄이 발사되는 간격 
-	if (_timeSet > 0.1f)
+	if (_timeSet > 0.2f)
 	{
 		int fireCount = 0;
 		for (int i = _bulletSize - 1; i >= 0; i--)

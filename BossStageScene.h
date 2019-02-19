@@ -1,13 +1,16 @@
 #pragma once
 #include "gameNode.h"
 #include "boss.h"
-#include "magicMgr.h"
 #include "skillEffectMgr.h"
+#include "magicMgr.h"
+#include "camera.h"
 
 class BossStageScene :	public gameNode
 {
 private:
-	BOSS* _boss;
+	BOSS* _pBoss;
+	CAMERA*				_pCamera;
+	MAGICMGR*			_pMagicMgr;
 
 	bool _isShow;
 

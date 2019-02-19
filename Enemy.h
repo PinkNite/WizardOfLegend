@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "animation.h"
 
-class EneyState;
+class EnemyState;
 
 class Enemy : public OBJECT
 {
@@ -18,7 +18,7 @@ public:
 		GHOUL, GOLEM, SUMMONER, LANCER
 	};
 
-	enum class EnemyState 
+	enum class State 
 	{
 		IDLE = 0,
 		RUN,
@@ -39,7 +39,7 @@ private:
 	float _fCurrentHP;
 	float _fSpeed;
 
-	map<EnemyState, string> _mAction;
+	map<State, string> _mState;
 	map<DIRECTION, string> _mDirection;
 
 	image * _pWeaponImage;
@@ -52,7 +52,7 @@ private:
 
 	string		_objName;
 	EnemyType	_enType;
-	EnemyState	_action;
+	State		_state;
 	DIRECTION	_direction;
 
 	// 이동 방향
@@ -60,7 +60,7 @@ private:
 	float		_fAngleY;
 
 	EnemyState *	_pCurrentState;
-	EnemyState *	_arState[static_cast<const int>(EnemyState::MAX)];
+	EnemyState *	_arState[static_cast<const int>(State::MAX)];
 
 public:
 	Enemy();
@@ -90,10 +90,10 @@ public:
 
 	// 상태 패턴 생성
 	void createStates();
-	void setState(EnemyState eState);
+	void setState(State eState);
 	void setDirection(DIRECTION eDirection);
-	void setAction(EnemyState eState, DIRECTION eDirection);
-	void handleState(EnemyState eState, DIRECTION eDirection);
+	void setAction(State eState, DIRECTION eDirection);
+	void handleState(State eState, DIRECTION eDirection);
 	
 	void startAnimation();
 
