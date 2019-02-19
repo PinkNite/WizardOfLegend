@@ -328,7 +328,14 @@ void TILE::render(HDC hdc)
 			_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, getFrameX(), setFrameY());
 		}
 	}
-
+	if (bIsTrue)
+	{
+		Rectangle(hdc, _rcTile);
+		//bIsTrue = false;
+		if (_bIsWall) {
+			Rectangle(hdc, _rcTile);
+		}
+	}
 }
 
 void TILE::render(HDC hdc, bool Map)
@@ -451,4 +458,11 @@ void TILE::move(int vertical, int horizontal)
 
 	_rcTile.top += vertical;
 	_rcTile.bottom += vertical;
+}
+
+
+
+void TILE::Tilesefewa()
+{
+	bIsTrue = true;
 }

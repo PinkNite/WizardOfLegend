@@ -97,6 +97,9 @@ public:
 
 	void	move(int vertical,int horizontal);
 
+
+	void	Tilesefewa();
+	bool	bIsTrue;
 public:
 	//setter
 	inline	void	setAroundWall(int nAroundWall) { _nAroundWall = nAroundWall; }

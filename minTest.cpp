@@ -15,17 +15,23 @@ HRESULT MINTESTSCENE::init()
 
 	_pCamera = new CAMERA();
 	_pPlayer = new PLAYER();
+	_pMap = new MAP();
+	_pMap->init("map");
+
 	_pPlayer->init();
 
-	_pCamera->init(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()), WINSIZEX, WINSIZEY, 2048, 2048);
+	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY, _pMap->getMapCountX() * _pMap->getTileSize()*2, _pMap->getMapCountY() * _pMap->getTileSize()*2);
+	_pMap->setCamera(_pCamera);
 
-	_pCamera->settingCameraRange(0, 0,2048, 2048);
 
 	_pMagicMgr			= new MAGICMGR();
 	_pSkillEffectMgr	= new SKILL_EFFECT_MGR();
 
 	_pMagicMgr->setLink(_pCamera);
 	_pMagicMgr->setPlayer(_pPlayer);
+
+
+
 
 
 	_pMagicMgr->addObject("dashFlame", 100, 64, 64,
@@ -131,6 +137,10 @@ HRESULT MINTESTSCENE::init()
 
 	_pMagicMgr->setPlayer(_pPlayer);
 
+
+
+
+	_pPlayer->setLinkMap(_pMap);
 	return S_OK;
 }
 
@@ -169,7 +179,9 @@ void MINTESTSCENE::update()
 	}
 	_pBoss->update();
 
-
+	_pCamera->settingCameraRange(static_cast<int>(_pPlayer->getPosX() - WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() - WINSIZEY / 2.0f),
+		static_cast<int>(_pPlayer->getPosX() + WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() + WINSIZEY / 2.0f));
+	_pMap->settingLimitRect();
 
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 }
@@ -195,6 +207,7 @@ void MINTESTSCENE::release()
 void MINTESTSCENE::render()
 {
 	_pCamera->renderinit();
+	_pMap->render(_pCamera->getMemDC());
 
 	_pSkillEffectMgr->render(_pCamera->getMemDC());
 	//_pPlayer->render(getMemDC());

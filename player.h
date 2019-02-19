@@ -10,7 +10,7 @@ class SKILL;
 class MAGICMGR;
 class SKILL_EFFECT_MGR;
 class CAMERA;
-
+class MAP;
 class PLAYER : public OBJECT
 {
 public:
@@ -101,7 +101,7 @@ public:
 	enum { WIZARD_SPRITE_MAXFRAMEX = 14 };
 	enum { WIZARD_SPRITE_MAXFRAMEY = 19 };
 
-	enum { WIZARD_MOVING_RECT_SIZE = 64 };
+	enum { WIZARD_MOVING_RECT_SIZE = 60 };
 
 	enum { WIZARD_COLLISION_RECT_WIDTH = 64 };
 	enum { WIZARD_COLLISION_RECT_HEIGHT = 128 };
@@ -179,6 +179,8 @@ private:
 	
 
 	bool		_bIsDeath;	//죽은지 아닌지
+
+	MAP*		_pMap;
 public:
 	PLAYER();
 	~PLAYER();
@@ -295,4 +297,20 @@ public:
 	LPCRECT getCollisionRect() { return &_rcDamageCollision; }
 	LPCRECT getMovingRect() { return &_rcMovingCollision; }
 	void	getDamage(float fDamage);
+
+
+	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
+
+
+private:
+	void tileCollisionTop(float fSpeed);
+	void tIleCollisionBottom(float fSpeed);
+	void tIleCollisionLeft(float fSpeed);
+	void tIleCollisionRight(float fSpeed);
+
+	void tileCollisionTopLeft(float fSpeed);
+	void tileCollisionTopRight(float fSpeed);
+	void tileCollisionBottomLeft(float fSpeed);
+	void tileCollisionBottomRight(float fSpeed);
+
 };

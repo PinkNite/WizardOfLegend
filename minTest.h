@@ -7,7 +7,7 @@
 #include "magicMgr.h"
 #include "camera.h"
 #include "boss.h"
-
+#include "map.h"
 class MINTESTSCENE : public gameNode
 {
 private:
@@ -19,6 +19,7 @@ private:
 	BOSS* _pBoss;
 	bool _isBoss;
 
+	MAP*		_pMap;
 
 public:
 	MINTESTSCENE();

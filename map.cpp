@@ -164,7 +164,7 @@ void MAP::render(HDC hdc)
 	{
 		for (int i = 0; i < _nTileCountX; i++)
 		{
-			_vvMap[j][i]->render(hdc, true);
+			_vvMap[j][i]->render(hdc);// , true);
 		}
 	}
 }
