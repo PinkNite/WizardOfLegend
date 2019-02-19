@@ -16,13 +16,17 @@ HRESULT MINTESTSCENE::init()
 	_pCamera = new CAMERA();
 	_pPlayer = new PLAYER();
 	_pPlayer->init();
-	_pCamera->init(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()), 2048, 2048);
+
+	_pCamera->init(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()), WINSIZEX, WINSIZEY);
+
+	_pCamera->settingCameraRange(0, 0,2048, 2048);
 
 	_pMagicMgr			= new MAGICMGR();
 	_pSkillEffectMgr	= new SKILL_EFFECT_MGR();
 
 	_pMagicMgr->setLink(_pCamera);
 	_pMagicMgr->setPlayer(_pPlayer);
+
 
 	_pMagicMgr->addObject("dashFlame", 100, 64, 64,
 		IMAGEMANAGER->addFrameImage("dashFlame", "resource/skill/flame.bmp", 1408, 384, 11, 3, true, Mins::getMazenta()),
@@ -112,6 +116,21 @@ HRESULT MINTESTSCENE::init()
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 	_pPlayer->setCameraLink(_pCamera);
 
+	// boss area
+	_pBoss = new BOSS();
+	_pBoss->init();
+	_pBoss->showBoss();
+	_pBoss->setCameraLink(_pCamera);
+	_pBoss->setMagicMgr(_pMagicMgr);
+
+	// bubble
+	IMAGEMANAGER->addFrameImage("WaterBounce1", "resource/boss/ice/WaterBounce1.bmp", 600, 120, 5, 1, true, Mins::getMazenta());
+
+	_pMagicMgr->addObject("WaterBalls", 100,  40, 40, IMAGEMANAGER->findImage("WaterBounce1"), 4, 120, 120, 10.0f, 1.3f);
+	_pMagicMgr->addObject("IceChakram", 100,  40, 40, IMAGEMANAGER->findImage("IceChakram"), 4, 50, 50, 10.0f, 1.3f);
+
+	_pMagicMgr->setPlayer(_pPlayer);
+
 	return S_OK;
 }
 
@@ -123,6 +142,35 @@ void MINTESTSCENE::update()
 	_pMagicMgr->update();
 	_pSkillEffectMgr->update();
 
+	// boss code
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		_pBoss->spell01(BOSS::SKILL_TYPE::CHAKRAM);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_pBoss->spell01(BOSS::SKILL_TYPE::BUBBLE);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_pBoss->dash(float(_ptMouse.x), float(_ptMouse.y));
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('9'))
+	{
+		_pBoss->setDamage(50.0f);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('0'))
+	{
+		_pBoss->setDeath();
+	}
+	_pBoss->update();
+
+
+
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 }
 
@@ -131,7 +179,8 @@ void MINTESTSCENE::release()
 	_pPlayer->release();
 	_pSkillEffectMgr->release();
 	_pMagicMgr->release();
-	
+	_pBoss->release();
+
 	delete _pPlayer;
 	delete _pSkillEffectMgr;
 	delete _pMagicMgr;

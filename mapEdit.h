@@ -31,7 +31,12 @@ private:
 	image* imgMapEraser;
 	image* imgMapObject;
 	image* imgMapObject2;
-
+	image* imgMapPalletIce2;
+	image* imgMapPalletCastle2;
+	image* imgMapPalletEarth2;
+	image* imgMapPalletFire2;
+	image* imgMapEraser2;
+	
 	RECT rcMapPalletIce1;
 	RECT rcMapPalletEarth1;
 	RECT rcMapPalletFire1;

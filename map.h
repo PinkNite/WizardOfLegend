@@ -9,14 +9,14 @@ public:
 	MAP();
 	~MAP();
 private:
-	//한 타일의 사이즈는 32로 한다. 32 X 32
+	//한 타일의 사이즈는 64로 한다. 64 X 64
 	int		_nTileSize;
 
-	//타일 갯수는 가로 20 / 세로 20
+	//타일 갯수는 가로 25 / 세로 14
 	int		_nTileCountX;
 	int		_nTileCountY;
 
-	//타일 총 사이즈는 640 X 640
+	//타일 총 사이즈
 	int		_nMapWidth;
 	int		_nMapHeight;
 

@@ -37,7 +37,7 @@ void TILE::setttingObject()
 		strTmp.append("item");
 		break;
 	case TILE::NOMAL_OBJECT:
-		strTmp.append("object");
+		strTmp.append("MapOBJECT2");
 		break;
 	case TILE::MAX:
 		break;
@@ -119,6 +119,127 @@ void TILE::setttingTerrain()
 		else if (_terrainPageIndex == 4)
 		{
 			strTmp.append("MapEraser");
+		}
+		break;
+	case TILE::TERRIAN::MAX:
+		break;
+	default:
+		break;
+	}
+
+	_pImage = IMAGEMANAGER->findImage(strTmp);
+}
+
+void TILE::setttingObject2()
+{
+	string strTmp = "";
+
+	switch (_object)
+	{
+	case TILE::NONE:
+
+		break;
+	case TILE::PLAYER:
+		strTmp.append("pacman32");
+		break;
+	case TILE::ENEMY01:
+		strTmp.append("yellowEnemy32");
+		break;
+	case TILE::ENEMY02:
+		strTmp.append("skyEnemy32");
+		break;
+	case TILE::ENEMY03:
+		strTmp.append("redEnemy32");
+		break;
+	case TILE::ENEMY04:
+		strTmp.append("pinkEnemy32");
+		break;
+	case TILE::ITEM:
+		strTmp.append("item");
+		break;
+	case TILE::NOMAL_OBJECT:
+		strTmp.append("MapOBJECT2");
+		break;
+	case TILE::MAX:
+		break;
+	}
+
+
+	_pObjectImage = IMAGEMANAGER->findImage(strTmp);
+}
+
+void TILE::setttingTerrain2()
+{
+	string strTmp = "";
+
+	switch (_terrian)
+	{
+	case TILE::TERRIAN::NONE:
+		break;
+	case TILE::TERRIAN::WALL:
+		if (_terrainPageIndex == 0)
+		{
+			strTmp.append("MapPalletIce2");
+		}
+		else if (_terrainPageIndex == 1)
+		{
+			strTmp.append("MapPalletCastle2");
+		}
+		else if (_terrainPageIndex == 2)
+		{
+			strTmp.append("MapPalletEarth2");
+		}
+		else if (_terrainPageIndex == 3)
+		{
+			strTmp.append("MapPalletFire2");
+		}
+		else if (_terrainPageIndex == 4)
+		{
+			strTmp.append("MapEraser2");
+		}
+		break;
+	case TILE::TERRIAN::PASS:
+		if (_terrainPageIndex == 0)
+		{
+			strTmp.append("MapPalletIce2");
+		}
+		else if (_terrainPageIndex == 1)
+		{
+			strTmp.append("MapPalletCastle2");
+		}
+		else if (_terrainPageIndex == 2)
+		{
+			strTmp.append("MapPalletEarth2");
+		}
+		else if (_terrainPageIndex == 3)
+		{
+			strTmp.append("MapPalletFire2");
+		}
+		else if (_terrainPageIndex == 4)
+		{
+			strTmp.append("MapEraser2");
+		}
+		break;
+	case TILE::TERRIAN::DMAGE_PASS:
+		if (_terrainPageIndex == 0)
+		{
+			strTmp.append("MapPalletIce2");
+		}
+		else if (_terrainPageIndex == 1)
+		{
+			strTmp.append("MapPalletCastle2");
+		}
+		else if (_terrainPageIndex == 2)
+		{
+			strTmp.append("MapPalletEarth2");
+		}
+		else if (_terrainPageIndex == 3)
+		{
+			strTmp.append("MapPalletFire2");
+		}
+		else if (_terrainPageIndex == 4)
+		{
+			strTmp.append("MapEraser2");
 		}
 		break;
 	case TILE::TERRIAN::MAX:

@@ -42,6 +42,9 @@ void MAP::init(const char * mapName)
 	_strMapName = mapName;
 
 	load();
+
+	//오브젝트는 여기서 빼주세요
+
 }
 
 void MAP::load()
@@ -66,7 +69,7 @@ void MAP::load()
 
 	token = strtok_s(strTmp, separator, &temp);
 
-	_nTileSize = (atoi(token));
+	_nTileSize = (atoi(token)) * 2;
 	token = strtok_s(NULL, separator, &temp);
 	_nTileCountX = (atoi(token));
 	token = strtok_s(NULL, separator, &temp);
@@ -76,7 +79,7 @@ void MAP::load()
 	//맵만들기
 	createMap();
 
-	int nData = _nTileCountX * _nTileCountY * 20;
+	int nData = _nTileCountX * _nTileCountY * 30;
 	char *str = new char[nData];
 
 	strNameTmp = _strMapName;
@@ -100,7 +103,7 @@ void MAP::load()
 		{
 
 			//노드인덱스/주변값/벽/프레임x/프레임y			
-			_vvMap[j][i]->setNodeIndex(atoi(tokenMap));
+			/*_vvMap[j][i]->setNodeIndex(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setAroundWall(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
@@ -112,6 +115,20 @@ void MAP::load()
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setObject(static_cast<TILE::OBJECT>(atoi(tokenMap)));
 			_vvMap[j][i]->setttingObject();
+			tokenMap = strtok_s(NULL, separator, &tmp);*/
+			_vvMap[j][i]->setIsWall(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setFrameX(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setFrameY(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setTerrainPageIndex(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setObject(static_cast<TILE::OBJECT>(atoi(tokenMap)));
+			_vvMap[j][i]->setttingObject2();
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setTerrian(static_cast<TILE::TERRIAN>(atoi(tokenMap)));
+			_vvMap[j][i]->setttingTerrain2();
 			tokenMap = strtok_s(NULL, separator, &tmp);
 		}
 	}

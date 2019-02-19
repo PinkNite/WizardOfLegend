@@ -4,6 +4,7 @@
 #include "animation.h"
 
 class BossState;
+class MAGICMGR;
 
 class BOSS : public OBJECT
 {
@@ -121,6 +122,9 @@ private:
 	BossState*		_pCurrentState;
 	BossState*		_arState[static_cast<const int>(BOSS_STATE::MAX)];
 
+	CAMERA *	_pCamera;
+	MAGICMGR*   _pMagicMgr;
+
 public:
 	BOSS();
 	~BOSS();
@@ -143,6 +147,9 @@ private:
 public:
 	void showBoss();
 	void setBattle();
+
+	void setCameraLink(CAMERA* pCamera) { _pCamera = pCamera; }
+	void setMagicMgr(MAGICMGR* pMagicMgr) { _pMagicMgr = pMagicMgr; }
 
 	// state pattern
 	void initState();

@@ -69,6 +69,8 @@ private:
 public:
 	void	setttingObject();
 	void	setttingTerrain();
+	void	setttingObject2();
+	void	setttingTerrain2();
 
 public:
 	//초기 초기화

@@ -32,7 +32,7 @@ void BossStateSkill01::update(BOSS * boss)
 	_timeInterval += TIMEMANAGER->getElapsedTime();
 
 	// 애니메이션 두바퀴 돌고 나서 발사함
-	if (_timeInterval > 2.0f)
+	if (_timeInterval > 0.0f)
 	{
 		boss->skillFire(static_cast<float>(_ptMouse.x), static_cast<float>(_ptMouse.y));
 	}

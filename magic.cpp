@@ -144,7 +144,7 @@ void MAGIC::update()
 		{
 			if (_fActiveTime<= _fTurnTime)
 			{
-				//_fMoveAngle += 앵글값 더해지는 값 넣어주세요
+				_fMoveAngle += PI32;
 				//
 				_fPosX = _fCirclePosX + Mins::presentPowerX(_fMoveAngle, _fMoveSpeed);
 				_fPosY = _fCirclePosY + Mins::presentPowerY(_fMoveAngle, _fMoveSpeed);
@@ -154,8 +154,8 @@ void MAGIC::update()
 				if (_bIsTrun)
 				{
 					_bIsTrun = false;
-					_fMoveAngle = getAngle(_pPlayer->getPosX(), _pPlayer->getPosY(), _fPosX, _fPosY);
-					//_fMoveSpeed += 속도값넣어주세요
+					_fMoveAngle = getAngle(_fPosX, _fPosY,_pPlayer->getPosX(), _pPlayer->getPosY());
+					_fMoveSpeed = 1000.0f;
 				}
 			}
 
