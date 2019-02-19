@@ -163,7 +163,15 @@ void MAGIC::update()
 		OBJECT::setPosX(_fPosX);
 		OBJECT::setPosY(_fPosY);
 
-		_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);
+		if (!_bIsDamage)
+		{
+			_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);
+		}
+		else
+		{
+			_rcCollision = RectMakeCenter(0, 0, 0, 0);
+		}
+
 		if (_bIsAnimation)
 		{
 			_pEffectAni->frameUpdate(TIMEMANAGER->getElapsedTime());
@@ -200,6 +208,8 @@ void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed,
 	_fMoveAngle = fMoveAngle;
 	_fMoveSpeed = fMoveSpeed;
 	_bIsPlayer = bIsPlayer;
+	setIsDamage(false);
+
 }
 
 void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer, int nFrameX, int nFrameY)
@@ -213,6 +223,7 @@ void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed,
 	_bIsPlayer = bIsPlayer;
 	_nFrameX = nFrameX;
 	_nFrameY = nFrameY;
+	setIsDamage(false);
 }
 
 
@@ -234,6 +245,8 @@ void MAGIC::create(bool bIsPlayer, float fCirclePosX, float fCirclePosY, float f
 
 
 	_bIsPlayer = bIsPlayer;
+	setIsDamage(false);
+
 }
 
 void MAGIC::returnPool()

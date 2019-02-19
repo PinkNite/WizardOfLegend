@@ -632,6 +632,15 @@ void PLAYER::setSkill(PLAYER::SKILL_NAME eSkillName)
 	_pCurrentSkill = _arSkill[static_cast<int>(eSkillName)];
 }
 
+void PLAYER::getDamage(float fDamage)
+{
+	 _fCurrentHealthPoint -= fDamage;
+	 if (_fCurrentHealthPoint < 0.0f)
+	 {
+		 _fCurrentHealthPoint = 0.0f;
+	 }
+}
+
 void PLAYER::input()
 {
 	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::RUN)])

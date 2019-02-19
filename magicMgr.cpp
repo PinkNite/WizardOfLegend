@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "magicMgr.h"
+#include "player.h"
+#include "boss.h"
+
 
 MAGICMGR::MAGICMGR()
 {
@@ -35,6 +38,10 @@ void MAGICMGR::update()
 		}
 		pMagic = nullptr;
 	}
+
+	CollisionPlayerToMagic();
+	CollisionEnemyToMagic();
+	CollisionBossToMagic();
 }
 
 void MAGICMGR::release()
@@ -217,4 +224,82 @@ void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int
 	}
 
 	_mqMagicPool.insert(pair<string, queue<MAGIC*>>(strKey, qMagic));
+}
+
+void MAGICMGR::CollisionPlayerToMagic()
+{
+	list<MAGIC*>::iterator iter = _lActiveMagic.begin();
+	list<MAGIC*>::iterator end = _lActiveMagic.end();
+	while (iter != end)
+	{
+		MAGIC* pMagic = *iter;
+
+		if (!pMagic->getIsPlayer())
+		{
+			RECT rcTmp;
+			if (IntersectRect(&rcTmp, _pPlayer->getCollisionRect(), pMagic->getRect())) 
+			{
+				iter = _lActiveMagic.erase(iter);
+				_pPlayer->getDamage(30.0f);
+			}
+			else {
+				iter++;
+			}
+		}
+		else
+		{
+			iter++;
+		}
+		pMagic = nullptr;
+	}
+}
+
+void MAGICMGR::CollisionEnemyToMagic()
+{
+	list<MAGIC*>::iterator iter = _lActiveMagic.begin();
+	list<MAGIC*>::iterator end = _lActiveMagic.end();
+	while (iter != end)
+	{
+		MAGIC* pMagic = *iter;
+
+		if (!pMagic->getIsPlayer())
+		{
+			RECT rcTmp;
+			//에네미 사각형으로 바꿔주세요     여기 플레이어 렉부분 대신
+			if (IntersectRect(&rcTmp, _pPlayer->getCollisionRect(), pMagic->getRect()))
+			{
+				//에네미 데미지 입는것 해주세요
+				pMagic->setIsDamage(true);
+				//데미지는 걍 일단 난수처리해주세요
+			}
+		}
+
+		iter++;
+		pMagic = nullptr;
+	}
+}
+
+void MAGICMGR::CollisionBossToMagic()
+{
+	list<MAGIC*>::iterator iter = _lActiveMagic.begin();
+	list<MAGIC*>::iterator end = _lActiveMagic.end();
+	while (iter != end)
+	{
+		MAGIC* pMagic = *iter;
+
+		if (!pMagic->getIsPlayer())
+		{
+			RECT rcTmp;
+			//보스 사각형으로 바꿔주세요     여기 플레이어 렉부분 대신
+			if (IntersectRect(&rcTmp, _pPlayer->getCollisionRect(), pMagic->getRect()))
+			{
+				//보스 데이미 입는것 해주세요
+				pMagic->setIsDamage(true);
+				//데미지는 걍 일단 난수처리해주세요
+			}
+		}
+		
+		iter++;
+		pMagic = nullptr;
+	}
 }

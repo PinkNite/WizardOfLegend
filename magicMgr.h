@@ -38,5 +38,8 @@ public:
 	void setPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 	
 	//마법과 객체 충돌은 여기서 처리하자
-	
+private:
+	void CollisionPlayerToMagic();
+	void CollisionEnemyToMagic();
+	void CollisionBossToMagic();
 };

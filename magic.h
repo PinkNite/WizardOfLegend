@@ -43,6 +43,7 @@ private:
 	bool	_bIsTrun;			//턴이 있는지 없는지
 	float	_fTurnTime;
 
+	bool	_bIsDamage;			//에네미나 보스한테 데미지를 준 마법이다
 public:
 	MAGIC();
 	~MAGIC();
@@ -74,4 +75,8 @@ public:
 
 	void	setCamera(CAMERA*	pCamera) { _pCamera = pCamera; }
 	void	setPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
+
+	bool	getIsPlayer() { return _bIsPlayer; }
+
+	void	setIsDamage(bool bIsDamage) { _bIsDamage = bIsDamage; }
 };

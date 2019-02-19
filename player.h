@@ -289,5 +289,8 @@ public:
 	float	getAttackAngle() {return _fAttackDirAngle;}
 
 
-
+	//»ç°¢Çü get
+	LPCRECT getCollisionRect() { return &_rcDamageCollision; }
+	LPCRECT getMovingRect() { return &_rcMovingCollision; }
+	void	getDamage(float fDamage);
 };
