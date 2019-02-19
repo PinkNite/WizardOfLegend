@@ -1,10 +1,10 @@
 #pragma once
 #include "object.h"
-#include "animation.h"
+
 class RELICS_TYPE :public OBJECT
 {
 private:
-	animation* _pAni;
+
 	int _frameY;
 public:
 	RELICS_TYPE();
@@ -13,5 +13,8 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
+public:
+	int getFrameY() { return _frameY; }
+	void setFrameY(int y) { _frameY = y; }
 };
 

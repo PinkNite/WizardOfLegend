@@ -129,8 +129,8 @@ HRESULT LEETEST::init()
 	rc = RectMake(600, 700, 10, height);
 	hp = 200;*/
 
-	_pr = new RELICS_TYPE;
-	_pr->init(699, 699);
+	_pRelics = new RELICS;
+	_pRelics->init(500, 300);
 	
 	return S_OK;
 }
@@ -173,7 +173,7 @@ void LEETEST::update()
 	}
 	height = (hp / 100) * 100;
 	rc=RectMake(600, 700+100-height, 27, height);*/
-	_pr->update();
+	_pRelics->update();
 }
 
 void LEETEST::render()
@@ -199,6 +199,7 @@ void LEETEST::render()
 	char str[200];
 	sprintf_s(str, "%lf", height);
 	TextOut(getMemDC(), 600, 600, str, strlen(str));*/
-	_pr->render(getMemDC());
+	_pRelics->render(getMemDC());
+
 }
 

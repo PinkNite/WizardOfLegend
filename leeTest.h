@@ -9,7 +9,7 @@
 #include "skillEffectMgr.h"
 #include "magicMgr.h"
 #include "camera.h"
-#include "relics_Type.h"
+#include "relics.h"
 
 class LEETEST :public gameNode
 {
@@ -28,7 +28,8 @@ private:
 	//float height;
 	//float hp;
 	//image* _iImage;
-	RELICS_TYPE* _pr;
+	RELICS* _pRelics;
+
 public:
 	LEETEST();
 	~LEETEST();
