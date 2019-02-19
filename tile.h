@@ -79,6 +79,7 @@ public:
 
 	//그려주는 함수
 	virtual void	render(HDC hdc) override;
+	virtual void	render(HDC hdc, bool Map);
 
 	//메모리 해제
 	virtual void	release() override;

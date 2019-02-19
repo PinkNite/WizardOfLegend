@@ -124,6 +124,9 @@
     <Filter Include="PlayGround\UI\relicsUI\cover">
       <UniqueIdentifier>{a2dc3338-8930-439a-afbb-0e2da97d8036}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\Scene\gameScene">
+      <UniqueIdentifier>{b3f8dc85-5f75-4ebc-9f6b-c4ce89993a5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -438,6 +441,9 @@
     <ClInclude Include="EnemyStateDeath.h">
       <Filter>PlayGround\enemy\enemy</Filter>
     </ClInclude>
+    <ClInclude Include="gameScene.h">
+      <Filter>PlayGround\Scene\gameScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -727,6 +733,9 @@
     </ClCompile>
     <ClCompile Include="EnemyStateDeath.cpp">
       <Filter>PlayGround\enemy\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="gameScene.cpp">
+      <Filter>PlayGround\Scene\gameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

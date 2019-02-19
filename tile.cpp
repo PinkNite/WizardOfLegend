@@ -128,6 +128,7 @@ void TILE::setttingTerrain()
 	}
 
 	_pImage = IMAGEMANAGER->findImage(strTmp);
+	//this->setImage(_pImage);
 }
 
 void TILE::setttingObject2()
@@ -328,6 +329,44 @@ void TILE::render(HDC hdc)
 		}
 	}
 
+}
+
+void TILE::render(HDC hdc, bool Map)
+{
+	if (Map == true)
+	{
+		if (_rcTile.right > _rcCameraLimit.left
+			&& _rcTile.left < _rcCameraLimit.right
+			&&_rcTile.bottom > _rcCameraLimit.top
+			&& _rcTile.top < _rcCameraLimit.bottom
+			)
+		{
+			//_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+			if (_terrian == TERRIAN::WALL)
+			{
+				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+			}
+			else if (_terrian == TERRIAN::PASS)
+			{
+				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+			}
+			else if (_terrian == TERRIAN::DMAGE_PASS)
+			{
+				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+			}
+			/*else if (_object == OBJECT::NOMAL_OBJECT)
+			{
+				SetTextColor(hdc, RGB(0, 0, 255));
+				SetBkMode(hdc, TRANSPARENT);
+				sprintf_s(str, "¿À");
+				TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+			}*/
+			if (_object != OBJECT::NONE)
+			{
+				_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, getFrameX(), setFrameY());
+			}
+		}
+	}
 }
 
 void TILE::release()

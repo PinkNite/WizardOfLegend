@@ -19,7 +19,7 @@ void MAP::createMap()
 	_bIsWall = false;
 	_object = TILE::OBJECT::NONE;
 
-	_pImgMap = IMAGEMANAGER->addFrameImage("map", "image/mapFrame.bmp", 928, 32, 29, 1, true, RGB(255, 0, 255));
+	_pImgMap = IMAGEMANAGER->addFrameImage("MapSample2", "resource/UI/eraser2.bmp", 768, 768, 12, 12, true, RGB(255, 0, 255));
 	_pObjectImg = IMAGEMANAGER->findImage("mapTiles");
 
 	int nNodeIndex(0);
@@ -31,7 +31,7 @@ void MAP::createMap()
 		for (int j = 0; j < _nTileCountX; j++)
 		{
 			_vvMap[i].push_back(new TILE());
-			_vvMap[i][j]->init(j * _nTileSize, i * _nTileSize, _nTileSize, _pImgMap, nNodeIndex);
+			_vvMap[i][j]->passInit(j * _nTileSize, i * _nTileSize, _nTileSize, _pImgMap);
 			nNodeIndex++;
 		}
 	}
@@ -53,8 +53,8 @@ void MAP::load()
 	DWORD read;
 
 	char strTmp[100]{};
-	string strNameTmp = _strMapName;
-	strNameTmp.append("Full01.map");
+	string strNameTmp = "";
+	strNameTmp.append("mapFull01.map");
 	file = CreateFile(strNameTmp.c_str(), GENERIC_READ, NULL, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -79,11 +79,11 @@ void MAP::load()
 	//¸Ê¸¸µé±â
 	createMap();
 
-	int nData = _nTileCountX * _nTileCountY * 30;
+	int nData = _nTileCountX * _nTileCountY * 80;
 	char *str = new char[nData];
 
-	strNameTmp = _strMapName;
-	strNameTmp.append("01.map");
+	strNameTmp = "";
+	strNameTmp.append("map01.map");
 
 	file = CreateFile(strNameTmp.c_str(), GENERIC_READ, NULL, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -164,7 +164,7 @@ void MAP::render(HDC hdc)
 	{
 		for (int i = 0; i < _nTileCountX; i++)
 		{
-			_vvMap[j][i]->render(hdc);
+			_vvMap[j][i]->render(hdc, true);
 		}
 	}
 }

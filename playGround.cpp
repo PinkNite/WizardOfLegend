@@ -23,6 +23,7 @@ HRESULT playGround::init()
 	_pBossStageScene = new BossStageScene();
 	_pLeeTest = new LEETEST();
 	_pIntroScene = new INTROSCENE();
+	_pGameScene = new GAMESCENE();
 
 	SCENEMANAGER->addScene("mapEditScene", _pMapEditScene);
 	SCENEMANAGER->addScene("stageScene", _pstageScene);
@@ -30,12 +31,14 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("MinTest", _pMinTest);
 	SCENEMANAGER->addScene("leeTest", _pLeeTest);
 	SCENEMANAGER->addScene("intro", _pIntroScene);
-	
-	//SCENEMANAGER->changeScene("mapEditScene");
-	SCENEMANAGER->changeScene("MinTest");
+	SCENEMANAGER->addScene("gameScene", _pGameScene);
+
+	SCENEMANAGER->changeScene("mapEditScene");
+	//SCENEMANAGER->changeScene("MinTest");
 	//SCENEMANAGER->changeScene("bossStage");
 	//SCENEMANAGER->changeScene("intro");
 	//SCENEMANAGER->changeScene("leeTest");
+	SCENEMANAGER->changeScene("gameScene");
 
 	return S_OK;
 }

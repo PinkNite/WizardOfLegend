@@ -6,6 +6,7 @@
 #include "BossStageScene.h"
 #include "leeTest.h"
 #include "introScene.h"
+#include "gameScene.h"
 
 class playGround : public gameNode
 {
@@ -16,6 +17,7 @@ private:
 	gameNode*	_pBossStageScene;
 	gameNode*   _pLeeTest;
 	gameNode*   _pIntroScene;
+	gameNode*	_pGameScene;
 
 public:
 	virtual HRESULT init();

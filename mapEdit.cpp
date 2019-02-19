@@ -61,7 +61,7 @@ MAPEDIT::~MAPEDIT()
 HRESULT MAPEDIT::init()
 {
 	_pCamera = new CAMERA();
-	_pCamera->init((WINSIZEX) / 2 - 18, WINSIZEY / 2 - 18, WINSIZEX, WINSIZEY,2048,2048);
+	_pCamera->init((WINSIZEX) / 2 - 18, WINSIZEY / 2 - 18, WINSIZEX, WINSIZEY, 2048, 2048);
 
 	_pMapTool = new MAPTOOL();
 	_pMapTool->passInit(25, 14, 32);
@@ -520,9 +520,24 @@ void MAPEDIT::updateObject()
 								//_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
 								//	[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
 								//_pMapTool->setisWall(false);
-								_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
-								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
-									[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObject(TILE::OBJECT::NOMAL_OBJECT);
+								if (i >= 0 && i <= 7 && j >= 0 && j <= 1)
+								{
+									_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObject(TILE::OBJECT::NOMAL_OBJECT);
+								}
+								if (i >= 0 && i <= 7 && j >= 5 && j <= 6)
+								{
+									_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObject(TILE::OBJECT::NOMAL_OBJECT);
+								}
+								if (i >= 8 && i <= 9 && j >= 4 && j <= 5)
+								{
+									_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObject(TILE::OBJECT::NOMAL_OBJECT);
+								}
 							}
 						}
 					}
