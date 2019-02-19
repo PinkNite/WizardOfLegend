@@ -444,6 +444,12 @@
     <ClInclude Include="gameScene.h">
       <Filter>PlayGround\Scene\gameScene</Filter>
     </ClInclude>
+    <ClInclude Include="opening.h">
+      <Filter>PlayGround\Scene\intro</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>PlayGround\Scene\intro</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -736,6 +742,12 @@
     </ClCompile>
     <ClCompile Include="gameScene.cpp">
       <Filter>PlayGround\Scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="opening.cpp">
+      <Filter>PlayGround\Scene\intro</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>PlayGround\Scene\intro</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

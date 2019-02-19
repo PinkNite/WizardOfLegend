@@ -3,6 +3,7 @@
 #include "relics_Cover.h"
 #include "relics_Home.h"
 #include "relics_Select.h"
+#include "button.h"
 
 class RELICS :public OBJECT
 {
@@ -28,7 +29,10 @@ private:
 		BLACK
 	};
 	
-	
+	button* _pButton[3];
+	POINT _point1;
+	POINT _point2;
+
 	RELICS_COVER* _pCover[3];
 	RELICS_HOME* _pHome;
 	RELICS_SELECT* _pSelect[2];
@@ -39,5 +43,9 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
+public:
+	void animaitionStart1();
+	void animaitionStart2();
+	void animaitionStart3();
 };
 
