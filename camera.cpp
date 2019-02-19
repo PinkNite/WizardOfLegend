@@ -17,9 +17,9 @@ void CAMERA::init(int posX, int posY, int width, int height)
 	_height = height;
 	setLeftTop();
 
-	_rcCameraLimit = { 0,0,_width,_height };
+	_rcCameraLimit = { 0,0,2048,2048};
 
-	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _width, _height);
+	_pCameraBuffer = IMAGEMANAGER->addImage("camera", 2048, 2048);
 	_listRenderObject.clear();
 }
 
@@ -51,7 +51,7 @@ void CAMERA::release()
 
 void CAMERA::renderinit()
 {
-	PatBlt(_pCameraBuffer->getMemDC(), 0, 0, _width, _height, BLACKNESS);
+	PatBlt(_pCameraBuffer->getMemDC(), 0, 0, 2048, 2048, BLACKNESS);
 	
 }
 

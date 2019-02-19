@@ -16,13 +16,16 @@ HRESULT MINTESTSCENE::init()
 	_pCamera = new CAMERA();
 	_pPlayer = new PLAYER();
 	_pPlayer->init();
-	_pCamera->init(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()), 2048, 2048);
+	_pCamera->init(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()), WINSIZEX, WINSIZEY);
+
+	_pCamera->settingCameraRange(0, 0,2048, 2048);
 
 	_pMagicMgr			= new MAGICMGR();
 	_pSkillEffectMgr	= new SKILL_EFFECT_MGR();
 
 	_pMagicMgr->setLink(_pCamera);
 	_pMagicMgr->setPlayer(_pPlayer);
+
 
 	_pMagicMgr->addObject("dashFlame", 100, 64, 64,
 		IMAGEMANAGER->addFrameImage("dashFlame", "resource/skill/flame.bmp", 1408, 384, 11, 3, true, Mins::getMazenta()),
