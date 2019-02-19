@@ -5,7 +5,7 @@
 
 class STATE_DAMAGE : public STATE {
 private:
-
+	float	_fTimer;
 
 public:
 	STATE_DAMAGE();

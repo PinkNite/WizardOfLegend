@@ -177,6 +177,8 @@ private:
 	
 	CAMERA*		_pCamera;
 	
+
+	bool		_bIsDeath;	//죽은지 아닌지
 public:
 	PLAYER();
 	~PLAYER();

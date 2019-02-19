@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "stateDamage.h"
 
-STATE_DAMAGE::STATE_DAMAGE()
+STATE_DAMAGE::STATE_DAMAGE():
+	_fTimer(0.0f)
 {
 }
 
@@ -51,4 +52,12 @@ void STATE_DAMAGE::onBtnR(PLAYER * pPlayer)
 
 void STATE_DAMAGE::update(PLAYER * pPlayer)
 {
+	_fTimer += TIMEMANAGER->getElapsedTime();
+	if (_fTimer >= 0.3f)
+	{
+		pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
+		pPlayer->setAction(PLAYER::ACTION::IDLE);
+		pPlayer->settingAni();
+		_fTimer = 0.0f;
+	}
 }

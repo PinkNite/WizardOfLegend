@@ -51,7 +51,8 @@ PLAYER::PLAYER() :
 	_arStandardAngle{},
 	_fAttackPosX(0.0f),
 	_fAttackPosY(0.0f),
-	_nNormalSkillCoount(0)
+	_nNormalSkillCoount(0),
+	_bIsDeath(false)
 {
 }
 
@@ -110,6 +111,8 @@ void PLAYER::init()
 
 	_fAttackPosX = 0.0f;
 	_fAttackPosY = 0.0f;
+
+	_bIsDeath = false;
 }
 
 void PLAYER::update()
@@ -134,7 +137,6 @@ void PLAYER::update()
 	_pCurrentSkill->update();
 	_pCurrentState->update(this);
 
-
 	//땜방 ㅋㅋㅋ
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)]->update();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::REBOUNDINGICICLES)]->update();
@@ -149,6 +151,19 @@ void PLAYER::update()
 	}
 
 	_pCamera->pushRenderObject(this);
+
+
+	if (_fCurrentHealthPoint <= 0.0f && !_bIsDeath)
+	{
+		//죽음상태
+		_bIsDeath = true;
+		setState(PLAYER::PLAYER_STATE::DEATH);
+		setAction(PLAYER::ACTION::DEATH);
+		settingAni();
+	}
+
+
+	
 }
 
 void PLAYER::release()
@@ -487,6 +502,9 @@ void PLAYER::dash(float fOffset)
 		break;
 	}
 
+	//이동 타일 검출
+	//못가면 밀고
+	//뺄지 케이스에 넣을지 아직 고민
 }
 
 
@@ -528,6 +546,8 @@ void PLAYER::movePlayer()
 	
 	}
 
+	//이동 타일 검출
+	//못가면 밀고
 
 }
 
@@ -635,14 +655,28 @@ void PLAYER::setSkill(PLAYER::SKILL_NAME eSkillName)
 void PLAYER::getDamage(float fDamage)
 {
 	 _fCurrentHealthPoint -= fDamage;
-	 if (_fCurrentHealthPoint < 0.0f)
+	 
+
+	 if (_fCurrentHealthPoint <= 0.0f)
 	 {
 		 _fCurrentHealthPoint = 0.0f;
+	 }
+	 else
+	 {
+		 setState(PLAYER::PLAYER_STATE::DAMAGE);
+		 setAction(PLAYER::ACTION::DAMAGE);
+		 settingAni();
 	 }
 }
 
 void PLAYER::input()
 {
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DEATH)] ||
+		_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DAMAGE)])
+	{
+		return;
+	}
+
 	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::RUN)])
 	{
 		_eMoveDirection = PLAYER::MOVE_DIRECTION::NONE;
