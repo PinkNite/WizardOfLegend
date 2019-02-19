@@ -44,6 +44,8 @@ private:
 	float	_fTurnTime;
 
 	bool	_bIsDamage;			//에네미나 보스한테 데미지를 준 마법이다
+
+	float	_fDamage;			//데미지
 public:
 	MAGIC();
 	~MAGIC();
@@ -79,4 +81,7 @@ public:
 	bool	getIsPlayer() { return _bIsPlayer; }
 
 	void	setIsDamage(bool bIsDamage) { _bIsDamage = bIsDamage; }
+	
+	float	getDamage() { return _fDamage; }
+	void	setDamage(float fDamage) { _fDamage = fDamage; }
 };

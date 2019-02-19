@@ -34,6 +34,7 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	OBJECT::setPosZ(nHeight);
 	OBJECT::setHeight(nHeight);
 	OBJECT::setImage(pImg);
+	_fDamage = 10.0f;
 }
 
 void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float fTotalTime, const string & strkey)
@@ -58,6 +59,7 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float 
 	OBJECT::setPosZ(nHeight);
 	OBJECT::setHeight(nHeight);
 	OBJECT::setImage(pImg);
+	_fDamage = 10.0f;
 }
 
 void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY, float fTotalTime, const string & strkey)
@@ -82,6 +84,7 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY
 	OBJECT::setPosZ(nHeight);
 	OBJECT::setHeight(nHeight);
 	OBJECT::setImage(pImg);
+	_fDamage = 10.0f;
 }
 
 void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, float fTurnTime, const string & strKey)
@@ -110,6 +113,7 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	OBJECT::setPosZ(nHeight);
 	OBJECT::setHeight(nHeight);
 	OBJECT::setImage(pImg);
+	_fDamage = 10.0f;
 }
 
 void MAGIC::release()
