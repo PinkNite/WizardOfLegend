@@ -80,6 +80,8 @@ void BossStageScene::update()
 		_pBoss->update();
 	}
 
+	KEYANIMANAGER->update();
+
 	_pCamera->setting(float(_ptMouse.x), float(_ptMouse.y));
 }
 

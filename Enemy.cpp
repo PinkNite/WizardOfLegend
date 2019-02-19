@@ -42,7 +42,17 @@ void Enemy::init()
 
 void Enemy::update()
 {
+	if (State::HIDDEN != _state)
+	{
+		_pCurrentState->update(this);
+	}
 
+	if (_fCurrentHP < 0)
+	{
+		setDeath();
+	}
+
+	//GetHandleInformation
 }
 
 void Enemy::release()

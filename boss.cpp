@@ -83,8 +83,6 @@ void BOSS::update()
 
 	handleInputKey();
 
-	KEYANIMANAGER->update();
-
 	_pCamera->pushRenderObject(this);
 }
 
@@ -169,10 +167,10 @@ void BOSS::createAnimation()
 
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::ENTRANCE], 62, 64, 8, false, nullptr);
 
-	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
-	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
-	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::IDLE], 88, 97, 4, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::IDLE], 88, 97, 8, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::IDLE], 88, 97, 8, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::IDLE], 88, 97, 8, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::IDLE], 88, 97, 8, true, nullptr);
 
 	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::RUN], 0, 0, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::RUN], 1, 1, 1, true, nullptr);
@@ -193,26 +191,26 @@ void BOSS::createAnimation()
 
 
 	int effectFrame[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "Entrance", "IceCrystals", effectFrame, 8, 4, false, callbackSetBattle, this);
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "Entrance", "IceCrystals", effectFrame, 8, 6, false, callbackSetBattle, this);
 
 	int idlMaxFrame[7] = { 0, 1, 2, 3, 4, 5, 6 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMaxIdle", "IceWings", idlMaxFrame, 7, 4, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMaxIdle", "IceWings", idlMaxFrame, 7, 8, true);
 
 	int idlMinFrame[1] = { 14 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMinIdle", "IceWings", idlMinFrame, 1, 2, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMinIdle", "IceWings", idlMinFrame, 1, 8, true);
 
 	int minimize[7] = { 7, 8, 9, 10, 11, 12, 13 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMin", "IceWings", minimize, 7, 4, false, callbackMinWingIdle, this);
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMin", "IceWings", minimize, 7, 8, false, callbackMinWingIdle, this);
 
 	int maximize[7] = { 14, 15, 16, 17, 18, 19, 20 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMax", "IceWings", maximize, 7, 4, false, callbackMaxWingIdle, this);
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WingsMax", "IceWings", maximize, 7, 8, false, callbackMaxWingIdle, this);
 
 	// bubble
 	int waterBall[10] = { 0, 1, 2, 3, 4 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WaterBalls", "WaterBounce", waterBall, 5, 4, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WaterBalls", "WaterBounce", waterBall, 5, 8, true);
 
 	int skill01[24] = { 22, 22, 22, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01]), "iceBossImg", skill01, 24, 4, false);
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01]), "iceBossImg", skill01, 24, 8, false);
 
 	int death[4] = { 69, 69, 69, 69 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DEATH]), "iceBossImg", death, 3, 4, false);
@@ -435,7 +433,7 @@ void BOSS::spell01(SKILL_TYPE type)
 
 	_timeSet = 0;
 	_isEndSkill = false;
-	float positionAngle = 10.0f;
+	float positionAngle = 18.0f;
 
 	setDirection(DIRECTION::DOWN);
 	setState(BOSS_STATE::SKILL_01);
@@ -476,7 +474,7 @@ void BOSS::skillFire(float x, float y)
 	_timeSet += TIMEMANAGER->getElapsedTime();
 
 	// 탄이 발사되는 간격 
-	if (_timeSet > 0.2f)
+	if (_timeSet > 0.1f)
 	{
 		int fireCount = 0;
 		for (int i = _bulletSize - 1; i >= 0; i--)
@@ -506,10 +504,17 @@ void BOSS::skillFire(float x, float y)
 		if (_bulletSize == fireCount)
 		{
 			_isEndSkill = true;
-			setBossIdle();
+			if (_timeSet > 2.0f)
+			{
+				setBossIdle();
+				_timeSet = 0;
+				_isEndSkill = false;
+			}
 		}
-
-		_timeSet = 0;
+		else
+		{
+			_timeSet = 0;
+		}
 	}
 }
 
