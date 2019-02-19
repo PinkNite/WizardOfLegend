@@ -80,6 +80,11 @@ HRESULT MAPEDIT::init()
 	imgMapPalletEarth1 = IMAGEMANAGER->addFrameImage("MapPalletEarth1", "resource/UI/earthtileset.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
 	imgMapPalletFire1 = IMAGEMANAGER->addFrameImage("MapPalletFire1", "resource/UI/firetileset.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
 	imgMapEraser = IMAGEMANAGER->addFrameImage("MapEraser", "resource/UI/eraser.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
+	imgMapPalletIce2 = IMAGEMANAGER->addFrameImage("MapPalletIce2", "resource/UI/icetileset2.bmp", 768, 768, 12, 12, true, RGB(255, 0, 255));
+	imgMapPalletCastle2 = IMAGEMANAGER->addFrameImage("MapPalletCastle2", "resource/UI/castletileset2.bmp", 768, 768, 12, 12, true, RGB(255, 0, 255));
+	imgMapPalletEarth2 = IMAGEMANAGER->addFrameImage("MapPalletEarth2", "resource/UI/earthtileset2.bmp", 768, 768, 12, 12, true, RGB(255, 0, 255));
+	imgMapPalletFire2 = IMAGEMANAGER->addFrameImage("MapPalletFire2", "resource/UI/firetileset2.bmp", 768, 768, 12, 12, true, RGB(255, 0, 255));
+	imgMapEraser2 = IMAGEMANAGER->addFrameImage("MapEraser2", "resource/UI/eraser2.bmp", 768, 768, 12, 12, true, RGB(255, 0, 255));
 	imgMapObject = IMAGEMANAGER->addFrameImage("MapOBJECT", "resource/UI/OBJECT.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
 	imgMapObject2 = IMAGEMANAGER->addFrameImage("MapOBJECT2", "resource/UI/OBJECT2.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Wall", "resource/UI/WallUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
@@ -430,15 +435,6 @@ void MAPEDIT::updateTerrain()
 								{
 									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
 										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::DMAGE_PASS);
-									_pMapTool->setisWall(true);
-									_pMapTool->setObject(TILE::OBJECT::NONE);
-									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
-								}
-								else if (i >= 5 && i <= 8 && j >= 0 && j <= 4)
-								{
-									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
-										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::PASS);
 									_pMapTool->setisWall(true);
 									_pMapTool->setObject(TILE::OBJECT::NONE);
 									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
