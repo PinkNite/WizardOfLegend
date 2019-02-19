@@ -240,7 +240,7 @@ void MAGICMGR::CollisionPlayerToMagic()
 			if (IntersectRect(&rcTmp, _pPlayer->getCollisionRect(), pMagic->getRect())) 
 			{
 				iter = _lActiveMagic.erase(iter);
-				_pPlayer->getDamage(30.0f);
+				_pPlayer->getDamage(pMagic->getDamage());
 			}
 			else {
 				iter++;
