@@ -124,7 +124,7 @@
     <Filter Include="PlayGround\UI\relicsUI\cover">
       <UniqueIdentifier>{a2dc3338-8930-439a-afbb-0e2da97d8036}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayGround\Scene\gameScene">
+    <Filter Include="PlayGround\Scene\bossStage\gameScene">
       <UniqueIdentifier>{b3f8dc85-5f75-4ebc-9f6b-c4ce89993a5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -442,7 +442,7 @@
       <Filter>PlayGround\enemy\enemy</Filter>
     </ClInclude>
     <ClInclude Include="gameScene.h">
-      <Filter>PlayGround\Scene\gameScene</Filter>
+      <Filter>PlayGround\Scene\bossStage\gameScene</Filter>
     </ClInclude>
     <ClInclude Include="opening.h">
       <Filter>PlayGround\Scene\intro</Filter>
@@ -741,7 +741,7 @@
       <Filter>PlayGround\enemy\enemy</Filter>
     </ClCompile>
     <ClCompile Include="gameScene.cpp">
-      <Filter>PlayGround\Scene\gameScene</Filter>
+      <Filter>PlayGround\Scene\bossStage\gameScene</Filter>
     </ClCompile>
     <ClCompile Include="opening.cpp">
       <Filter>PlayGround\Scene\intro</Filter>

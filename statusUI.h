@@ -25,7 +25,7 @@ public:
 	ITEM* _pItem[2];//2번은 맵이미지
 	EXPLAINUSE* _pExplainUse;
 	//SKILLICON* _pSkillIcon[6];
-	STATUSBUTTON* _pStatusButton[6];
+	STATUSBUTTON* _pStatusButton[16];
 	SKILLICON* _pTempSkill;
 	int _num;//변화값
 

@@ -4,7 +4,7 @@
 
 
 STATUSBOX::STATUSBOX()
-	:_alpha(255), _frameX(0), _frameY(0), _isCollision(0),_isClick(0),_index(0)
+	:_alpha(255), _frameX(0), _frameY(0), _isCollision(0),_isClick(0),_index(0),_isItem(0)
 {
 }
 

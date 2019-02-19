@@ -446,12 +446,3 @@ bool OPENING::isCollision(int x, int y, int x2, int y2)
 }
 
 
-
-opening::opening()
-{
-}
-
-
-opening::~opening()
-{
-}

@@ -5,7 +5,7 @@
 
 
 MENU::MENU()
- : _menuCount(0)
+	: _menuCount(0), _count(0)
 {
 }
 
@@ -15,13 +15,18 @@ MENU::~MENU()
 
 HRESULT MENU::init()
 {
+	IMAGEMANAGER->addImage("button", "resource/intro/button.bmp", 20, 20, true, RGB(255, 0, 255));
+	_pButton = new image;
+	_pButton = IMAGEMANAGER->findImage("button");
 	tagInfoSetting();
+	
+	
 	return S_OK;
 }
 
 void MENU::release()
 {
-
+	_pButton = nullptr;
 	_option.image = nullptr;
 }
 
@@ -31,6 +36,14 @@ void MENU::update()
 	{
 		_pressButton.isSelect = true;
 	}
+	//메뉴 나가기
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_back.rc, _ptMouse))
+	{
+		
+		_option.isSelect = false;
+		_menuCount = 0;
+	}
+	fontSetting();
 }
 
 void MENU::render(HDC hdc)
@@ -38,14 +51,7 @@ void MENU::render(HDC hdc)
 	if (!_pressButton.isSelect) //button오프일ㄸㅐ
 
 	{
-		if (KEYMANAGER->isToggleKey(VK_TAB))
-		{
-			Rectangle(hdc, _singlePlayer.rc);
-			Rectangle(hdc, _mapEditor.rc);
-			Rectangle(hdc, _option.rc);
-			Rectangle(hdc, _credit.rc);
-			Rectangle(hdc, _quit.rc);
-		}
+		
 		switch (_pressButton.count % 2)
 		{
 		case 0:
@@ -84,12 +90,12 @@ void MENU::render(HDC hdc)
 	{
 
 
-		fontRender(hdc, "SINGLEPLAYER", "elephant", _singlePlayer.x, _singlePlayer.y, _singlePlayer.size, RGB(_singlePlayer.r, _singlePlayer.g, _singlePlayer.b));
-		fontRender(hdc, "MAPEDITOR", "elephant", _mapEditor.x, _mapEditor.y, _mapEditor.size, RGB(_mapEditor.r, _mapEditor.g, _mapEditor.b));
-		fontRender(hdc, "OPTIONS", "elephant", _option.x, _option.y, _option.size, RGB(_option.r, _option.g, _option.b));
-		fontRender(hdc, "CREDITS", "elephant", _credit.x, _credit.y, _credit.size, RGB(_credit.r, _credit.g, _credit.b));
-		fontRender(hdc, "QUIT", "elephant", _quit.x, _quit.y, _quit.size, RGB(_quit.r, _quit.g, _quit.b));
-		fontRender(hdc, " ", "굴림체", WINSIZEX / 2, WINSIZEY / 2, 20, RGB(255, 51, 153));
+		fontRender(hdc, "SINGLEPLAYER", _changeFont, _singlePlayer.x, _singlePlayer.y, _singlePlayer.size, RGB(_singlePlayer.r, _singlePlayer.g, _singlePlayer.b));
+		fontRender(hdc, "MAPEDITOR", _changeFont, _mapEditor.x, _mapEditor.y, _mapEditor.size, RGB(_mapEditor.r, _mapEditor.g, _mapEditor.b));
+		fontRender(hdc, "OPTIONS", _changeFont, _option.x, _option.y, _option.size, RGB(_option.r, _option.g, _option.b));
+		fontRender(hdc, "CREDITS", _changeFont, _credit.x, _credit.y, _credit.size, RGB(_credit.r, _credit.g, _credit.b));
+		fontRender(hdc, "QUIT", _changeFont, _quit.x, _quit.y, _quit.size, RGB(_quit.r, _quit.g, _quit.b));
+		fontRender(hdc, " ", _changeFont, WINSIZEX / 2, WINSIZEY / 2, 20, RGB(255, 51, 153));
 
 	}
 	
@@ -98,13 +104,29 @@ void MENU::render(HDC hdc)
 	//옵션 클릭되면 나오게
 	if (_option.isSelect)
 	{
+		_back.isSelect = false;
 		_option.image->render(hdc, 0, 0);
+		Rectangle(hdc, _back.rc);
+		fontRender(hdc, "FONT", _changeFont, WINSIZEX / 2-200, WINSIZEY / 2, 30, RGB(255, 255, 255));
+		fontRender(hdc, "SOUND", _changeFont, WINSIZEX / 2 - 200, WINSIZEY / 2-100, 30, RGB(255, 255, 255));
+		fontRender(hdc, "BACK", _changeFont, _back.x, _back.y, 30, RGB(255, 255, 255));
+		fontRender(hdc, _changeFont, _changeFont, WINSIZEX / 2 +100, WINSIZEY / 2, 30, RGB(160, 70, 10));
+		_pButton->render(hdc, _font.rc.left,_font.rc.top);
+		_pButton->render(hdc, _font.rc.left, _font.rc.top-100);
 	}
 	if (_back.isSelect)
 	{
 		_option.isSelect = false;
 	}
-	
+	if (KEYMANAGER->isToggleKey(VK_TAB))
+	{
+		Rectangle(hdc, _singlePlayer.rc);
+		Rectangle(hdc, _mapEditor.rc);
+		Rectangle(hdc, _option.rc);
+		Rectangle(hdc, _credit.rc);
+		Rectangle(hdc, _quit.rc);
+	}
+
 }
 
 void MENU::tagInfoSetting()
@@ -173,8 +195,16 @@ void MENU::tagInfoSetting()
 	_back.x = WINSIZEX / 2;// WINSIZEX / 2 - 20;
 	_back.y = WINSIZEY - 200;
 	_back.isSelect = false;
-	_back.rc = RectMakeCenter(_quit.x, _quit.y, (strlen("BACK") - 1)*_back.size, _back.size);
-
+	_back.rc = RectMakeCenter(_back.x, _back.y, (strlen("BACK") - 1)*_back.size, _back.size);
+	_font.r = 255;
+	_font.g = 255;
+	_font.b = 255;
+	_font.count = 0;
+	_font.size = 20;
+	_font.x = WINSIZEX / 2;// WINSIZEX / 2 - 20;
+	_font.y = WINSIZEY /2;
+	_font.isSelect = false;
+	_font.rc = RectMakeCenter(_font.x-100, _font.y, 20, _font.size);
 
 
 	
@@ -183,6 +213,28 @@ void MENU::tagInfoSetting()
 	//옵션 이미지
 	_option.image = new image;
 	_option.image = IMAGEMANAGER->addImage("option", "resource/intro/option.bmp", 1600, 900, true, RGB(255, 0, 255));
+}
+
+void MENU::fontSetting()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)&&PtInRect(&_font.rc,_ptMouse))
+	{
+		_count++;
+	}
+		switch (_count%3)
+		{
+		case 0:
+			_changeFont = "휴먼둥근헤드라인";
+			break;
+		case 1:
+			_changeFont = "elephant";
+			break;
+		case 2:
+			_changeFont = "굴림체";
+			break;
+		}
+	
+	
 }
 
 void MENU::singlePlayer()
@@ -201,16 +253,19 @@ void MENU::option()
 	{
 		_option.isSelect = true;
 	}
+	//옵션 창 폰트
+
+
+	
+
+
 }
 
 void MENU::credit()
 {
 }
 
-void MENU::back()
-{
-	//_menuCount = 0;
-}
+
 
 void MENU::quit()
 {
@@ -242,12 +297,7 @@ void MENU::buttonClick()
 			_menuCount = 1;
 			credit();
 		}
-		//메뉴 나가기
-		/*if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_back.rc, _ptMouse))
-		{
-			back();
-
-		}*/
+		
 		//나가기
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_quit.rc, _ptMouse))
 		{
@@ -286,12 +336,8 @@ void MENU::fontRender(HDC hdc, const char * str, const char * str2, int x, int y
 	DeleteObject(font);
 }
 
-
-menu::menu()
+void MENU::test()
 {
+	SCENEMANAGER->changeScene("mapEditScene");
 }
 
-
-menu::~menu()
-{
-}

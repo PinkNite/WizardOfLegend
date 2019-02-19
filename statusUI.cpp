@@ -48,9 +48,13 @@ HRESULT STATUSUI::init()
 		}
 
 	}
-	_pStatusBox[6] = new STATUSBOX;
-	_pStatusBox[6]->init(214, 333);
-	_pStatusBox[6]->_pSkillIcon->setNum(10);
+	for (int i = 6; i < 7; i++)
+	{
+		_pStatusBox[i] = new STATUSBOX;
+		_pStatusBox[i]->init(214, 333);
+		_pStatusBox[i]->_pSkillIcon->setNum(10);
+
+	}
 
 
 	for (int i = 0; i < 2; i++)
@@ -184,10 +188,15 @@ void STATUSUI::render(HDC hdc)
 	{
 		_pItem[i]->render(hdc);
 	}
-	fontRender(hdc, "[", "Aharoni", 214, 520, 40, RGB(183, 192, 195));
-	fontRender(hdc, _pItem[0]->getVItem()[_numA].name, "Aharoni", 240, 530, 20, RGB(255, 204, 0));
-	fontRender(hdc, "]", "Aharoni", _rcText.right, 520, 40, RGB(183, 192, 195));
-	fontRender2(hdc, _pItem[0]->getVItem()[_numA].info, "Aharoni", 214, 560, 20, RGB(183, 192, 195));
+	//아이템이 범위에 들어올때만
+	if (_pStatusBox[6]->getIsItem())
+	{
+		fontRender(hdc, "[", "Aharoni", 214, 520, 40, RGB(183, 192, 195));
+		fontRender(hdc, _pItem[0]->getVItem()[_numA].name, "Aharoni", 240, 530, 20, RGB(255, 204, 0));
+		fontRender(hdc, "]", "Aharoni", _rcText.right, 520, 40, RGB(183, 192, 195));
+		fontRender2(hdc, _pItem[0]->getVItem()[_numA].info, "Aharoni", 214, 560, 20, RGB(183, 192, 195));
+	}
+	
 
 	_pExplainUse->render(hdc);
 
@@ -238,6 +247,17 @@ void STATUSUI::collision()
 
 		}
 
+	}
+	for (int i = 6; i < 7; i++)
+	{
+		if (IntersectRect(&temp, &_pStatusSelect->getRC(), &_pStatusBox[i]->getRC()))//아이템과 셀렉트 박스랑 충돌이다.
+		{
+			_pStatusBox[i]->setIsItem(1);
+		}
+		else
+		{
+			_pStatusBox[i]->setIsItem(0);
+		}
 	}
 }
 

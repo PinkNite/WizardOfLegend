@@ -27,6 +27,8 @@ private:
 	SKILLNUMBER _skillNum;
 	int _index;//템프 번호로 찾아야하기때문에
 
+	bool _isItem;//콜리젼인게 아이템이다.
+
 	PLAYER* _pPlayer;
 public:
 	SKILLICON* _pSkillIcon;
@@ -67,7 +69,10 @@ public:
 	//스킬 번호
 	SKILLNUMBER getSkillNum() { return _skillNum; }
 	
-
+	//스탯박스
+	//아이템 상태냐
+	bool getIsItem() { return _isItem; }
+	void setIsItem(bool num) { _isItem = num; }
 
 
 
@@ -80,5 +85,6 @@ public:
 
 	//링크받을것
 	void setPlayer(PLAYER* p) { _pPlayer = p; }
+
 };
 

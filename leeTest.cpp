@@ -194,6 +194,7 @@ void LEETEST::render()
 
 	_pUI->render(getMemDC());
 	_pItemManager->render(getMemDC());
+	//_pRelics->render(getMemDC());
 	_pMouse->render(getMemDC(), _ptMouse.x - 32, _ptMouse.y - 32);
 
 	//Rectangle(getMemDC(), rc);
@@ -203,7 +204,6 @@ void LEETEST::render()
 	char str[200];
 	sprintf_s(str, "%lf", height);
 	TextOut(getMemDC(), 600, 600, str, strlen(str));*/
-	_pRelics->render(getMemDC());
 
 }
 

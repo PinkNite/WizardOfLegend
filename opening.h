@@ -69,11 +69,3 @@ public:
 	
 
 };
-
-class opening
-{
-public:
-	opening();
-	~opening();
-};
-

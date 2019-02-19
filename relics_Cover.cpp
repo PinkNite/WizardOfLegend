@@ -63,9 +63,9 @@ void RELICS_COVER::update()
 
 void RELICS_COVER::render(HDC hdc)
 {
-	RECT rc;
-	rc = RectMake(OBJECT::getPosX(), OBJECT::getPosY(), OBJECT::getImage()->getFrameWidth(), OBJECT::getImage()->getFrameHeight());
-	Rectangle(hdc, rc);
+	//RECT rc;
+	//rc = RectMake(OBJECT::getPosX(), OBJECT::getPosY(), OBJECT::getImage()->getFrameWidth(), OBJECT::getImage()->getFrameHeight());
+	//Rectangle(hdc, rc);
 	OBJECT::getImage()->aniRender(hdc, OBJECT::getPosX(), OBJECT::getPosY(),_pAni);
 	for (int i = 0; i < 2; i++)
 	{
