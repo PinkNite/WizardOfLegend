@@ -7,6 +7,7 @@
 #include "BossStateSkill01.h"
 #include "BossStateSkill02.h"
 #include "BossStateSkill03.h"
+#include "magicMgr.h"
 
 BOSS::BOSS() :
 	_fMaxHP(0.0f),
@@ -78,11 +79,13 @@ void BOSS::update()
 		setDeath();
 	}
 
-	bulletMove();
+	//bulletMove();
 
 	handleInputKey();
 
 	KEYANIMANAGER->update();
+
+	_pCamera->pushRenderObject(this);
 }
 
 void BOSS::release()
@@ -135,7 +138,7 @@ void BOSS::render(HDC hdc)
 		OBJECT::getImage()->aniRenderCenter(hdc, renderX, renderY, _pAnimation);
 	}
 
-	bulletRender(hdc);
+	//bulletRender(hdc);
 
 }
 
@@ -209,7 +212,7 @@ void BOSS::createAnimation()
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, "WaterBalls", "WaterBounce", waterBall, 5, 4, true);
 
 	int skill01[24] = { 22, 22, 22, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42 };
-	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01]), "iceBossImg", skill01, 24, 8, false);
+	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_01]), "iceBossImg", skill01, 24, 4, false);
 
 	int death[4] = { 69, 69, 69, 69 };
 	KEYANIMANAGER->addArrayFrameAnimation(_objectName, getAnimationKey(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DEATH]), "iceBossImg", death, 3, 4, false);
@@ -487,6 +490,16 @@ void BOSS::skillFire(float x, float y)
 			_bullet[i]->fireAngle = getAngle(_bullet[i]->x, _bullet[i]->y, x, y);;
 			_bullet[i]->speed = 18.0f;
 			_bullet[i]->isFire = true;
+
+			if (SKILL_TYPE::CHAKRAM == _skillType)
+			{
+				_pMagicMgr->pushMagicKey("IceChakram", false, getPosX(), getPosY(), _bullet[i]->distance / 2.0f, _bullet[i]->angle);
+			}
+			else if (SKILL_TYPE::BUBBLE == _skillType)
+			{
+				_pMagicMgr->pushMagicKey("WaterBalls", false, getPosX(), getPosY(), _bullet[i]->distance / 2.0f, _bullet[i]->angle);
+			}
+			
 			break;
 		}
 
@@ -502,6 +515,7 @@ void BOSS::skillFire(float x, float y)
 
 void BOSS::bulletMove()
 {
+
 	//  rolling circle
 	for (int i = 0; i < _bulletSize; i++)
 	{

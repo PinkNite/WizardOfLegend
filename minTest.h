@@ -6,6 +6,7 @@
 #include "skillEffectMgr.h"
 #include "magicMgr.h"
 #include "camera.h"
+#include "boss.h"
 
 class MINTESTSCENE : public gameNode
 {
@@ -14,6 +15,10 @@ private:
 	MAGICMGR*			_pMagicMgr;
 	SKILL_EFFECT_MGR*	_pSkillEffectMgr;
 	CAMERA*				_pCamera;
+
+	BOSS* _pBoss;
+	bool _isBoss;
+
 
 public:
 	MINTESTSCENE();
