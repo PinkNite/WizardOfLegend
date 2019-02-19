@@ -149,6 +149,7 @@ HRESULT MAPEDIT::init()
 	_drawerVertexSize = 40;
 	_mapEditstate = MAPEDITSTATE::MAPEDITMENU;
 	_terrainPageIndex = 0;
+	_objectPageIndex = 0;
 
 	return S_OK;
 }
@@ -496,10 +497,10 @@ void MAPEDIT::updateObject()
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
-			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+			for (int j = 0; j <= _vObjectPage[_objectPageIndex]->getMaxFrameY(); j++)
 			{
 
-				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+				for (int i = 0; i <= _vObjectPage[_objectPageIndex]->getMaxFrameX(); i++)
 				{
 					if (i >= _clickDownStart2.x && i <= _clickDownEnd2.x &&
 						j >= _clickDownStart2.y && j <= _clickDownEnd2.y)
@@ -738,10 +739,10 @@ void MAPEDIT::renderObject()
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+			for (int j = 0; j <= _vObjectPage[_objectPageIndex]->getMaxFrameY(); j++)
 			{
 
-				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+				for (int i = 0; i <= _vObjectPage[_objectPageIndex]->getMaxFrameX(); i++)
 				{
 					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() + _vObjectPage[_objectPageIndex]->getFrameWidth()
 						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() + _vObjectPage[_objectPageIndex]->getFrameHeight())
@@ -755,10 +756,10 @@ void MAPEDIT::renderObject()
 		}
 		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
-			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+			for (int j = 0; j <= _vObjectPage[_objectPageIndex]->getMaxFrameY(); j++)
 			{
 
-				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+				for (int i = 0; i <= _vObjectPage[_objectPageIndex]->getMaxFrameX(); i++)
 				{
 					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() + _vObjectPage[_objectPageIndex]->getFrameWidth()
 						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() + _vObjectPage[_objectPageIndex]->getFrameHeight())
@@ -777,34 +778,34 @@ void MAPEDIT::renderObject()
 
 	if (_clickMap == true)
 	{
-		for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+		for (int j = 0; j <= _vObjectPage[_objectPageIndex]->getMaxFrameY(); j++)
 		{
 
-			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+			for (int i = 0; i <= _vObjectPage[_objectPageIndex]->getMaxFrameX(); i++)
 			{
 				if (i >= _clickDownStart2.x && i <= _clickDownEnd2.x &&
 					j >= _clickDownStart2.y && j <= _clickDownEnd2.y)
 				{
-					_vObjectPage2[_objectPageIndex]->alphaFrameRender(getMemDC(), rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth(), rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight(), i, j, 127);
+					_vObjectPage[_objectPageIndex]->alphaFrameRender(getMemDC(), rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth(), rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight(), i, j, 127);
 				}
 				else
 				{
-					_vObjectPage2[_objectPageIndex]->alphaFrameRender(getMemDC(), rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth(), rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight(), i, j, 255);
+					_vObjectPage[_objectPageIndex]->alphaFrameRender(getMemDC(), rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth(), rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight(), i, j, 255);
 				}
 			}
 		}
 	}
 	else
 	{
-		for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+		for (int j = 0; j <= _vObjectPage2[_objectPageIndex]->getMaxFrameY(); j++)
 		{
 
-			for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+			for (int i = 0; i <= _vObjectPage2[_objectPageIndex]->getMaxFrameX(); i++)
 			{
 				if (i >= _clickDownStart2.x && i <= _clickDownEnd2.x &&
 					j >= _clickDownStart2.y && j <= _clickDownEnd2.y)
 				{
-					_vObjectPage2[_objectPageIndex]->alphaFrameRender(getMemDC(),
+					_vObjectPage[_objectPageIndex]->alphaFrameRender(getMemDC(),
 						_ptMouse.x + (i - _clickDownStart2.x) * _vObjectPage[_objectPageIndex]->getFrameWidth() - ((_clickDownEnd2.x - _clickDownStart2.x) * _vObjectPage[_objectPageIndex]->getFrameWidth() / 2 + (_vObjectPage[_objectPageIndex]->getFrameWidth() / 2)),
 						_ptMouse.y + (j - _clickDownStart2.y) * _vObjectPage[_objectPageIndex]->getFrameHeight() - ((_clickDownEnd2.y - _clickDownStart2.y) * _vObjectPage[_objectPageIndex]->getFrameHeight() / 2 + (_vObjectPage[_objectPageIndex]->getFrameHeight() / 2)),
 						i, j, 127);
