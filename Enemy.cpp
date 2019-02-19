@@ -53,7 +53,7 @@ void Enemy::render(HDC hdc)
 {
 	if (State::HIDDEN != _state)
 	{
-		OBJECT::_pImg->aniRenderCenter(  fasdf );
+		//OBJECT::_pImg->aniRenderCenter(  fasdf );
 	}
 }
 
