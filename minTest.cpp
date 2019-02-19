@@ -17,7 +17,7 @@ HRESULT MINTESTSCENE::init()
 	_pPlayer = new PLAYER();
 	_pPlayer->init();
 
-	_pCamera->init(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()), WINSIZEX, WINSIZEY);
+	_pCamera->init(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()), WINSIZEX, WINSIZEY, 2048, 2048);
 
 	_pCamera->settingCameraRange(0, 0,2048, 2048);
 

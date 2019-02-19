@@ -61,7 +61,7 @@ MAPEDIT::~MAPEDIT()
 HRESULT MAPEDIT::init()
 {
 	_pCamera = new CAMERA();
-	_pCamera->init((WINSIZEX) / 2 - 18, WINSIZEY / 2 - 18, WINSIZEX, WINSIZEY);
+	_pCamera->init((WINSIZEX) / 2 - 18, WINSIZEY / 2 - 18, WINSIZEX, WINSIZEY,2048,2048);
 
 	_pMapTool = new MAPTOOL();
 	_pMapTool->passInit(25, 14, 32);

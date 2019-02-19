@@ -18,7 +18,7 @@ HRESULT LEETEST::init()
 	_pCamera = new CAMERA();
 	_pPlayer = new PLAYER();
 	_pPlayer->init();
-	_pCamera->init(_pPlayer->getPosX(), _pPlayer->getPosY(), 2048, 2048);
+	_pCamera->init(_pPlayer->getPosX(), _pPlayer->getPosY(), WINSIZEX, WINSIZEY,2048,2048);
 
 	_pMagicMgr = new MAGICMGR();
 	_pSkillEffectMgr = new SKILL_EFFECT_MGR();

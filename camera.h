@@ -16,27 +16,28 @@
 
 class CAMERA {
 private:
-	float _posX;
-	float _posY;
-	int _width;
-	int _height;
-	int	_left;
-	int _top;
+	float _posX;			//중심x			(투영영역)
+	float _posY;			//중심y			(투영영역)
+	int _width;				//화면의 가로길이(투영영역)
+	int _height;			//화면의 세로길이(투영영역)
+	int	_left;				//그릴 영역 left	(투영영역)
+	int _top;				//그릴영역 right	(투영영역)
 	image* _pCameraBuffer;
 	HDC		_hdc;
-	bool	_isMoving;
+	bool	_isMoving;		
 	float	_time;
 	float	_travelRangeX;
 	float	_travelRangeY;
 	RECT	_rcCameraLimit;
 	
 	list<OBJECT*>		_listRenderObject;
-
+	int		_nMapWidth;		//맵의 가로	(World)
+	int		_nMapHeight;	//맵의 세로	(World)
 public:
 	CAMERA();
 	~CAMERA();
 	
-	void init(int posX, int posY, int width, int height);
+	void init(int posX, int posY, int windowWidth, int windowHeight,int mapWidth,int mapHeight);
 	void update();
 
 	void render(HDC hdc);
@@ -71,7 +72,6 @@ public:
 public:
 	image * getCameraBuffer() { return _pCameraBuffer; }
 	HDC getMemDC() { return _pCameraBuffer->getMemDC(); }
-	void	setCameraBuffer(image* pImg) { _pCameraBuffer = pImg; }
-
+	void	setCameraBuffer(image* pImg);
 	void	pushRenderObject(OBJECT* pObject);
 };
