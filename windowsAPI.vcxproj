@@ -168,7 +168,10 @@
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyState.h" />
+    <ClInclude Include="EnemyStateDeath.h" />
     <ClInclude Include="EnemyStateIdle.h" />
+    <ClInclude Include="EnemyStateRun.h" />
+    <ClInclude Include="EnemyStateSkill1.h" />
     <ClInclude Include="explainUse.h" />
     <ClInclude Include="fireDash.h" />
     <ClInclude Include="fireStrike.h" />
@@ -269,7 +272,10 @@
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyStateDeath.cpp" />
     <ClCompile Include="EnemyStateIdle.cpp" />
+    <ClCompile Include="EnemyStateRun.cpp" />
+    <ClCompile Include="EnemyStateSkill1.cpp" />
     <ClCompile Include="explainUse.cpp" />
     <ClCompile Include="fireDash.cpp" />
     <ClCompile Include="fireStrike.cpp" />

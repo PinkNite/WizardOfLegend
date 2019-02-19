@@ -426,6 +426,18 @@
     <ClInclude Include="relics_Type.h">
       <Filter>PlayGround\UI\relicsUI\cover</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyStateIdle.h">
+      <Filter>PlayGround\enemy\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateRun.h">
+      <Filter>PlayGround\enemy\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateSkill1.h">
+      <Filter>PlayGround\enemy\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateDeath.h">
+      <Filter>PlayGround\enemy\enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -703,6 +715,18 @@
     </ClCompile>
     <ClCompile Include="relics_Type.cpp">
       <Filter>PlayGround\UI\relicsUI\cover</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateIdle.cpp">
+      <Filter>PlayGround\enemy\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateRun.cpp">
+      <Filter>PlayGround\enemy\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateSkill1.cpp">
+      <Filter>PlayGround\enemy\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateDeath.cpp">
+      <Filter>PlayGround\enemy\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

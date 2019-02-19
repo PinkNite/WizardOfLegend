@@ -133,7 +133,7 @@ void BOSS::render(HDC hdc)
 	else
 	{
 		// ice wing
-		_pWingImage->aniRenderCenter(hdc, renderX, renderY, _pWingsAnimation);
+		_pWingImage->aniRenderCenter(hdc, renderX, renderY - 20, _pWingsAnimation);
 		// boss charater
 		OBJECT::getImage()->aniRenderCenter(hdc, renderX, renderY, _pAnimation);
 	}

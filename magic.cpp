@@ -148,7 +148,7 @@ void MAGIC::update()
 		{
 			if (_fActiveTime<= _fTurnTime)
 			{
-				_fMoveAngle += PI32;
+				_fMoveAngle += PI2 / 18;
 				//
 				_fPosX = _fCirclePosX + Mins::presentPowerX(_fMoveAngle, _fMoveSpeed);
 				_fPosY = _fCirclePosY + Mins::presentPowerY(_fMoveAngle, _fMoveSpeed);
