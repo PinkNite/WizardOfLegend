@@ -46,6 +46,7 @@ private:
 	bool	_bIsDamage;			//에네미나 보스한테 데미지를 준 마법이다
 
 	float	_fDamage;			//데미지
+
 public:
 	MAGIC();
 	~MAGIC();

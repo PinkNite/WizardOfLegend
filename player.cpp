@@ -162,7 +162,7 @@ void PLAYER::update()
 		settingAni();
 	}
 
-
+	settingPos();
 	
 }
 

@@ -133,7 +133,11 @@ void MAGIC::update()
 		if (_fActiveTime >= _fTotalTime)
 		{
 			_bIsActive = false;
-			_bIsTrun = true;
+			if (!_bIsPlayer)
+			{
+				_bIsTrun = true;
+			}
+
 			return;
 		}
 
@@ -144,7 +148,7 @@ void MAGIC::update()
 			_fPosY += Mins::presentPowerY(_fMoveAngle, _fMoveSpeed * TIMEMANAGER->getElapsedTime());
 
 		}
-		else
+		else if(!_bIsPlayer)
 		{
 			if (_fActiveTime<= _fTurnTime)
 			{
@@ -196,7 +200,7 @@ void MAGIC::render(HDC hdc)
 	{
 		_pImg->frameRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY),_nFrameX, _nFrameY);
 	}
-	//Rectangle(hdc, _rcCollision);
+	Rectangle(hdc, _rcCollision);
 
 	
 }
