@@ -134,7 +134,7 @@ HRESULT LEETEST::init()
 	hp = 200;*/
 
 	_pRelics = new RELICS;
-	_pRelics->init(500, 300);
+	_pRelics->init(50, 50);
 	
 	return S_OK;
 }

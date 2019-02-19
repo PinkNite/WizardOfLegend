@@ -14,8 +14,8 @@ RELICS_TYPE::~RELICS_TYPE()
 
 HRESULT RELICS_TYPE::init(int x, int y)
 {
-	OBJECT::setImage(IMAGEMANAGER->addFrameImage("relicsType", "resource/item/relicsType.bmp", 201, 192, 1, 3, true, RGB(255, 0, 255)));
-	OBJECT::init(x, y, 201, 192);
+	OBJECT::setImage(IMAGEMANAGER->addFrameImage("relicsType", "resource/item/relicsType.bmp", 46, 128, 1, 3, true, RGB(255, 0, 255)));
+	OBJECT::init(x, y, 46, 128);
 
 	
 

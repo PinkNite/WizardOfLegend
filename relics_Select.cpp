@@ -14,8 +14,8 @@ RELICS_SELECT::~RELICS_SELECT()
 
 HRESULT RELICS_SELECT::init(int x, int y)
 {
-	OBJECT::setImage(IMAGEMANAGER->addFrameImage("relicsSelect", "resource/item/selectAndBlack.bmp", 66, 132, 1, 2, true, RGB(255, 0, 255)));
-	OBJECT::init(x, y, 66, 132);
+	OBJECT::setImage(IMAGEMANAGER->addFrameImage("relicsSelect", "resource/item/selectAndBlack.bmp", 86, 172, 1, 2, true, RGB(255, 0, 255)));
+	OBJECT::init(x, y, 86, 172);
 	return S_OK;
 }
 
