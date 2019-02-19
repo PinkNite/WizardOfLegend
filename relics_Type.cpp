@@ -37,7 +37,6 @@ void RELICS_TYPE::update()
 
 void RELICS_TYPE::render(HDC hdc)
 {
+
 	OBJECT::getImage()->frameRender(hdc, OBJECT::getPosX(), OBJECT::getPosY(),0,_frameY);
-
-
 }
