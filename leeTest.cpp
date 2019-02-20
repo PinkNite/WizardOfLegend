@@ -23,7 +23,9 @@ HRESULT LEETEST::init()
 	_pPlayer->setLinkMap(_pMap);
 	_pPlayer->init();
 
-	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY, _pMap->getMapCountX() * _pMap->getTileSize() * 2, _pMap->getMapCountY() * _pMap->getTileSize() * 2);
+	int nSizeX = _pMap->getMapCountX() * _pMap->getTileSize();
+	int nSizeY = _pMap->getMapCountY() * _pMap->getTileSize();
+	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY, nSizeX, nSizeY);
 	_pMap->setCamera(_pCamera);
 
 
@@ -132,16 +134,19 @@ HRESULT LEETEST::init()
 	_pBoss->showBoss();
 	_pBoss->setCameraLink(_pCamera);
 	_pBoss->setMagicMgr(_pMagicMgr);
+	_pBoss->setPlayer(_pPlayer);
 
 	_pMagicMgr->setBoss(_pBoss);
 
 	// bubble
 	IMAGEMANAGER->addFrameImage("WaterBounce1", "resource/boss/ice/WaterBounce1.bmp", 600, 120, 5, 1, true, Mins::getMazenta());
 
-	_pMagicMgr->addObject("WaterBalls", 100, 40, 40, IMAGEMANAGER->findImage("WaterBounce1"), 4, 120, 120, 10.0f, 1.3f, 30.0f);
-	_pMagicMgr->addObject("IceChakram", 100, 40, 40, IMAGEMANAGER->findImage("IceChakram"), 4, 50, 50, 10.0f, 1.3f, 30.0f);
+	_pMagicMgr->addObject("WaterBalls", 100, 40, 40, IMAGEMANAGER->findImage("WaterBounce1"), 4, 120, 120, 10.0f, 1.3f, 30.0f, false);
+	_pMagicMgr->addObject("IceChakram", 100, 40, 40, IMAGEMANAGER->findImage("IceChakram"), 4, 50, 50, 10.0f, 1.3f, 30.0f, false);
 
 	_pMagicMgr->setPlayer(_pPlayer);
+
+	_pMap->settingLimitRect();
 
 	
 	_pMouse = new image;
@@ -219,13 +224,14 @@ void LEETEST::update()
 	{
 		_pBoss->setDeath();
 	}
-	_pBoss->update();
+	//_pBoss->update();
 
-	_pCamera->settingCameraRange(static_cast<int>(_pPlayer->getPosX() - WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() - WINSIZEY / 2.0f),
-		static_cast<int>(_pPlayer->getPosX() + WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() + WINSIZEY / 2.0f));
-	_pMap->settingLimitRect();
-
+	//_pCamera->settingCameraRange(static_cast<int>(_pPlayer->getPosX() - WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() - WINSIZEY / 2.0f),
+		//static_cast<int>(_pPlayer->getPosX() + WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() + WINSIZEY / 2.0f));
+	//_pMap->update();
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
+
+	_pMap->settingLimitRect();
 
 	_pUI->update();
 	_pItemManager->update();
