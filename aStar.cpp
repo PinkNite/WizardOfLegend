@@ -129,7 +129,8 @@ void ASTAR::pathFinder()
 		if (nIntervalPosX >= _nTileSizeX) continue;
 		if (nIntervalPosY >= _nTileSizeY) continue;
 		//나중가서는 터리안이나 오브젝트로 처리
-		if (_pMap->getTile(nIntervalPosX, nIntervalPosY)->getIsWall()) continue;
+		//if (_pMap->getTile(nIntervalPosX, nIntervalPosY)->getIsWall()) continue;
+		if (_pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::TERRIAN::PASS) continue;
 
 		bool bIsSearch = false;
 		list<TILENODE*>::iterator iter = _listOpendNode.begin();
