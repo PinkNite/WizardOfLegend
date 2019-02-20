@@ -13,13 +13,13 @@ class UI
 {
 private:
 	SKILLUI* _pSkillUI;//¹Ø¿¡ ½ºÅ³
-	GOLDHD* _pGoldHD[2];//°ñµå
+	STATUSUI* _pStatusUI;//½ºÅÈ
 	NUMBERS* _pNumbers[2];
 	HPBAR* _pHpBar[2];
-	STATUSUI* _pStatusUI;//½ºÅÈ
 	PLAYERFACE* _pPlayerFace[3];
 	MPBAR* _pMpBar;
 	PLAYER* _pPlayer;
+	GOLDHD* _pGoldHD[2];//°ñµå
 	bool _isClick;
 
 	//Å×½ºÆ®¿ë
@@ -35,8 +35,8 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
-public :
+public:
 	bool getIsClick() { return _isClick; }
-	
+
 };
 

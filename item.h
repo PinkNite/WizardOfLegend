@@ -2,6 +2,7 @@
 #include <map>
 #include <vector>
 #include "object.h"
+#include "itemWhite.h"
 
 enum TYPE
 {
@@ -26,6 +27,8 @@ struct TAGITEM
 class ITEM :public OBJECT
 {
 private:
+	ITEMWHITE* _pItemWhite;
+
 	vector<TAGITEM> _vItem;
 	vector<TAGITEM>::iterator _viItem;
 	map<int, vector<TAGITEM>> _mItem;
@@ -33,10 +36,11 @@ private:
 	image* _pImage;
 	int _x, _y;
 	int _alpha;
+	bool _isDrop;
 public:
 	ITEM();
 	~ITEM();
-	HRESULT init();
+	HRESULT init(int x, int y);
 	void release();
 	void update();
 	void render(HDC hdc);
@@ -44,8 +48,11 @@ public:
 	void setX(int x) { _x = x; }
 	void setY(int y) { _y = y; }
 	void setNum(int num) { _num = num; }
+	int getNum() { return _num; }
 public:
 	//∞Ÿ¿∏∑Œ ≥—∞‹æﬂµ 
+	bool getIsDrop() { return _isDrop; }
+	void setIsDrop(bool num) { _isDrop = num; }
 	vector<TAGITEM> getVItem() { return _vItem; }
 	map<int, vector<TAGITEM>> getMItem() { return _mItem; }
 
@@ -53,5 +60,7 @@ public:
 	void setVItemFrameY(int arrNum, int y) { _vItem[arrNum].frameY = y; }
 
 	void setAlpha(int alpha) { _alpha = alpha; }
+	bool getItemWhiteAction() { return _pItemWhite->getIsAction(); }
+	void setItemWhiteAction(bool s) { _pItemWhite->setIsAction(s); }
 
 };

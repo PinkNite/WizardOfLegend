@@ -15,8 +15,12 @@ ITEMMANAGER::~ITEMMANAGER()
 
 HRESULT ITEMMANAGER::init()
 {
-	_pItem = new ITEM;
-	_pItem->init();
+	for (int i = 0; i < 12; i++)
+	{
+		_pItem[i] = new ITEM;
+		_pItem[i]->init(-100, -100);
+
+	}
 	return S_OK;
 }
 
@@ -26,10 +30,17 @@ void ITEMMANAGER::release()
 
 void ITEMMANAGER::update()
 {
-	_pItem->update();
+	for (int i = 0; i < 12; i++)
+	{
+		_pItem[i]->update();
+	}
 }
 
 void ITEMMANAGER::render(HDC hdc)
 {
-	_pItem->render(hdc);
+	for (int i = 0; i < 12; i++)
+	{
+
+		_pItem[i]->render(hdc);
+	}
 }

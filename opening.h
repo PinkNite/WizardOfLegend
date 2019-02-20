@@ -26,7 +26,7 @@ private:
 	TAGINTRO _99;
 	TAGINTRO _introPeople;
 	TAGINTRO _hello;
-	
+
 	int _fontX, _arrFontY[8];//이건 어디에 쓰이노
 	float _angle;
 	float _speed;
@@ -39,7 +39,7 @@ private:
 	int _end;
 	float _gravity;
 	int _jumpCount;
-	
+
 
 	bool _isStart;
 	float _saveTime;
@@ -47,6 +47,8 @@ private:
 	MENU* _pMenu;
 
 	int test;
+
+
 public:
 	OPENING();
 	~OPENING();
@@ -66,6 +68,6 @@ public:
 	void fontRender(HDC hdc, const char * str, const char* str2, int x, int y, int num, COLORREF color);//폰트 렌더할 함수
 	void draw(HDC hdc);//이미지 애니메이션
 	bool isCollision(int x, int y, int x2, int y2);//충돌 함수
-	
 
+	void soundUpdate();
 };

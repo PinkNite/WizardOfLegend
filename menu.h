@@ -1,5 +1,6 @@
 #pragma once
 //#include "button.h"
+
 enum KEYBOARDCURSOR
 {
 	KEY_UP,
@@ -33,7 +34,7 @@ private:
 
 	};
 	int _menuCount;
-
+	float _time;
 
 	TAGINTRO _pressButton;
 	TAGINTRO _singlePlayer;
@@ -71,7 +72,7 @@ public:
 	void fontSetting();
 	void fontCollision();
 	void selectButtonSetting();
-	
+
 	///////////////////////////////////////////////메뉴선택//////////////////////////////
 	void singlePlayer();//싱글플레이어
 	void mapEditor();//맵에디터
@@ -83,7 +84,7 @@ public:
 	bool getPressButton() { return _pressButton.isSelect; }
 	void setPressButton(bool num) { _pressButton.isSelect = num; }
 	void test();
-	
+	void getTime(float time) { _time = time; }
 };
 
 

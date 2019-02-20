@@ -2,30 +2,31 @@
 #include "object.h"
 #include "skillIcon.h"
 
-enum SKILLNUMBER
-{
-	SKILL_0,
-	SKILL_1,
-	SKILL_2,
-	SKILL_3,
-	SKILL_4,
-	SKILL_5,
-	SKILL_EMPTY
-};
-enum SKILLNAMES
-{
-	SKILL_NAME_NONE,
-	SKILL_NAME_0,
-	SKILL_NAME_1,
-	SKILL_NAME_2,
-	SKILL_NAME_3,
-	SKILL_NAME_4,
-	SKILL_NAME_5,
-	SKILL_NAME_6,
-	SKILL_NAME_7,
-	SKILL_NAME_8,
-	SKILL_NAME_EMPTY
-};
+
+//enum SKILLNUMBER
+//{
+//	SKILL_0,
+//	SKILL_1,
+//	SKILL_2,
+//	SKILL_3,
+//	SKILL_4,
+//	SKILL_5,
+//	SKILL_EMPTY
+//};
+//enum SKILLNAMES
+//{
+//	SKILL_NAME_NONE,
+//	SKILL_NAME_0,
+//	SKILL_NAME_1,
+//	SKILL_NAME_2,
+//	SKILL_NAME_3,
+//	SKILL_NAME_4,
+//	SKILL_NAME_5,
+//	SKILL_NAME_6,
+//	SKILL_NAME_7,
+//	SKILL_NAME_8,
+//	SKILL_NAME_EMPTY
+//};
 class STATUSBOX :public OBJECT
 {
 private:
@@ -38,14 +39,15 @@ private:
 
 	int _skillX;
 	int _skillY;
-	SKILLNUMBER _skillNum;
-	SKILLNAMES _skillName;
+	int _skillNum;
+	int _skillName;
 	int _index;//템프 번호로 찾아야하기때문에
 
 	bool _isItem;//콜리젼인게 아이템이다.
 
-	
+
 public:
+
 	SKILLICON* _pSkillIcon;
 	STATUSBOX();
 	~STATUSBOX();
@@ -53,14 +55,14 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
-	void setSkillXY(int x, int y);
 	//스킬 번호
-	void setSkillNum(SKILLNUMBER num);
+
 
 public:
+	void setSkillXY(int x, int y);
 	//접근자 참조자
-	int getX(){return _x;}
-	int getY(){return _y;}
+	int getX() { return _x; }
+	int getY() { return _y; }
 	void setX(int x) { _x = x; }
 	void setY(int y) { _y = y; }
 	void setFrameX(int num) { _frameX = num; }
@@ -83,11 +85,12 @@ public:
 	int getSkillY() { return _skillY; }
 	void setSkillY(int y) { _skillY = y; }
 	//스킬 번호
-	SKILLNUMBER getSkillNum() { return _skillNum; }
+	int getSkillNum() { return _skillNum; }
+	void setSkillNum(int num) { _skillNum = num; }
 	//void setSkillNum(SKILLNUMBER num) { _skillNum = num; }
 	//스킬네임
-	SKILLNAMES getSkillName() { return _skillName; }
-	void setSkillName(SKILLNAMES num) { _skillName = num; }
+	int getSkillName() { return _skillName; }
+	void setSkillName(int num) { _skillName = num; }
 	//스탯박스
 	//아이템 상태냐
 	bool getIsItem() { return _isItem; }

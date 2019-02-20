@@ -5,7 +5,7 @@
 
 
 INTROSCENE::INTROSCENE()
-	
+
 {
 }
 
@@ -15,9 +15,10 @@ INTROSCENE::~INTROSCENE()
 
 HRESULT INTROSCENE::init()
 {
-	
-	
-	
+
+
+
+
 	ShowCursor(false);
 	imageSetting();
 	_pOpening = new OPENING;
@@ -27,7 +28,7 @@ HRESULT INTROSCENE::init()
 
 void INTROSCENE::release()
 {
-	
+
 	_pMouse = nullptr;
 }
 
@@ -45,7 +46,7 @@ void INTROSCENE::render()
 
 void INTROSCENE::imageSetting()
 {
-	
+
 	_pMouse = new image;
 	_pMouse = IMAGEMANAGER->addImage("mouse", "resource/intro/mouseCursor.bmp", 64, 64, true, RGB(255, 0, 255));
 

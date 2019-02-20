@@ -5,7 +5,7 @@
 
 
 MENU::MENU()
-	: _menuCount(0), _count(0),_x(0),_y(0),_keyCount(0)
+	: _menuCount(0), _count(0), _x(0), _y(0), _keyCount(0), _time(0)
 {
 }
 
@@ -20,7 +20,7 @@ HRESULT MENU::init()
 	_pButton = IMAGEMANAGER->findImage("button");
 	tagInfoSetting();
 	selectButtonSetting();
-	
+
 	return S_OK;
 }
 
@@ -46,18 +46,21 @@ void MENU::update()
 			_menuCount = 0;
 		}
 	}
-		fontSetting();
+	fontSetting();
 	if (_menuCount == 0)//옵션클릭하면 안들어옴
 	{
-		
-		fontCollision();
-		_selectButton = RectMakeCenter(_x, _y, 20, 20);
+
+		if (_time > 20)
+		{
+			fontCollision();
+			_selectButton = RectMakeCenter(_x, _y, 20, 20);
+		}
 	}
 }
 
 void MENU::render(HDC hdc)
 {
-	
+
 
 
 	if (_pressButton.isSelect)
@@ -72,7 +75,7 @@ void MENU::render(HDC hdc)
 		fontRender(hdc, " ", _changeFont, WINSIZEX / 2, WINSIZEY / 2, 20, RGB(255, 51, 153));
 
 	}
-	
+
 
 
 	//옵션 클릭되면 나오게
@@ -80,27 +83,27 @@ void MENU::render(HDC hdc)
 	{
 		_back.isSelect = false;
 		_option.image->render(hdc);
-	//	Rectangle(hdc, _back.rc);
-		fontRender(hdc, "FONT", _changeFont, WINSIZEX / 2-200, WINSIZEY / 2, 30, RGB(255, 255, 255));
-		fontRender(hdc, "SOUND", _changeFont, WINSIZEX / 2 - 200, WINSIZEY / 2-100, 30, RGB(255, 255, 255));
+		//	Rectangle(hdc, _back.rc);
+		fontRender(hdc, "FONT", _changeFont, WINSIZEX / 2 - 200, WINSIZEY / 2, 30, RGB(255, 255, 255));
+		fontRender(hdc, "SOUND", _changeFont, WINSIZEX / 2 - 200, WINSIZEY / 2 - 100, 30, RGB(255, 255, 255));
 		fontRender(hdc, "BACK", _changeFont, _back.x, _back.y, 30, RGB(255, 255, 255));
-		fontRender(hdc, _changeFont, _changeFont, WINSIZEX / 2 +100, WINSIZEY / 2, 30, RGB(160, 70, 10));
-		_pButton->render(hdc, _font.rc.left,_font.rc.top);
-		_pButton->render(hdc, _font.rc.left, _font.rc.top-100);
+		fontRender(hdc, _changeFont, _changeFont, WINSIZEX / 2 + 100, WINSIZEY / 2, 30, RGB(160, 70, 10));
+		_pButton->render(hdc, _font.rc.left, _font.rc.top);
+		_pButton->render(hdc, _font.rc.left, _font.rc.top - 100);
 	}
 	if (_back.isSelect)
 	{
 		_option.isSelect = false;
 	}
-	if (KEYMANAGER->isToggleKey(VK_TAB))
+	/*if (KEYMANAGER->isToggleKey(VK_TAB))
 	{
 		Rectangle(hdc, _singlePlayer.rc);
 		Rectangle(hdc, _mapEditor.rc);
 		Rectangle(hdc, _option.rc);
 		Rectangle(hdc, _credit.rc);
 		Rectangle(hdc, _quit.rc);
-	}
-	char str[200];
+	}*/
+	/*char str[200];
 	sprintf_s(str, "%d", _menuCount);
 	TextOut(hdc, 800, 800, str, strlen(str));
 
@@ -115,9 +118,9 @@ void MENU::render(HDC hdc)
 	TextOut(hdc, 1200, 500, str, strlen(str));
 	sprintf_s(str, "%d", _quit.isCursor);
 	TextOut(hdc, 1200, 600, str, strlen(str));
+*/
 
-
-	Rectangle(hdc, _selectButton);
+//Rectangle(hdc, _selectButton);
 }
 
 void MENU::pressRender(HDC hdc)
@@ -229,7 +232,7 @@ void MENU::tagInfoSetting()
 	_back.count = 0;
 	_back.size = 30;
 	_back.x = WINSIZEX / 2;// WINSIZEX / 2 - 20;
-	_back.y = WINSIZEY - 200;
+	_back.y = WINSIZEY - 150;
 	_back.isSelect = false;
 	_back.rc = RectMakeCenter(_back.x, _back.y, (strlen("BACK") - 1)*_back.size, _back.size);
 	_back.isCursor = false;
@@ -239,12 +242,12 @@ void MENU::tagInfoSetting()
 	_font.count = 0;
 	_font.size = 20;
 	_font.x = WINSIZEX / 2;// WINSIZEX / 2 - 20;
-	_font.y = WINSIZEY /2;
+	_font.y = WINSIZEY / 2;
 	_font.isSelect = false;
-	_font.rc = RectMakeCenter(_font.x-100, _font.y, 20, _font.size);
+	_font.rc = RectMakeCenter(_font.x - 100, _font.y, 20, _font.size);
 
 
-	
+
 
 
 	//옵션 이미지
@@ -254,8 +257,10 @@ void MENU::tagInfoSetting()
 
 void MENU::fontSetting()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)&&PtInRect(&_font.rc,_ptMouse))
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_font.rc, _ptMouse))
 	{
+		SOUNDMANAGER->stop("correct");
+		SOUNDMANAGER->play("correct");
 		_count++;
 	}
 	switch (_count % 3)
@@ -271,9 +276,9 @@ void MENU::fontSetting()
 		break;
 	}
 	////해당 커서가 들어오면 글씨 조절됨
-	
-		
-	
+
+
+
 }
 
 void MENU::fontCollision()
@@ -283,6 +288,7 @@ void MENU::fontCollision()
 	if (IntersectRect(&temp, &_selectButton, &_singlePlayer.rc))//싱글플레이어 버튼과 충돌
 	{
 		_singlePlayer.isCursor = true;
+
 	}
 	else
 	{
@@ -291,6 +297,8 @@ void MENU::fontCollision()
 	if (IntersectRect(&temp, &_selectButton, &_mapEditor.rc))//map
 	{
 		_mapEditor.isCursor = true;
+
+
 	}
 	else
 	{
@@ -299,6 +307,7 @@ void MENU::fontCollision()
 	if (IntersectRect(&temp, &_selectButton, &_option.rc))//싱글플레이어 버튼과 충돌
 	{
 		_option.isCursor = true;
+
 	}
 	else
 	{
@@ -307,6 +316,7 @@ void MENU::fontCollision()
 	if (IntersectRect(&temp, &_selectButton, &_credit.rc))//싱글플레이어 버튼과 충돌
 	{
 		_credit.isCursor = true;
+
 	}
 	else
 	{
@@ -315,6 +325,8 @@ void MENU::fontCollision()
 	if (IntersectRect(&temp, &_selectButton, &_quit.rc))//싱글플레이어 버튼과 충돌
 	{
 		_quit.isCursor = true;
+
+
 	}
 	else
 	{
@@ -323,13 +335,16 @@ void MENU::fontCollision()
 	if (KEYMANAGER->isOnceKeyDown(VK_UP) && _y > WINSIZEY - 400)
 	{
 		_keyCursor = KEY_UP;
+		SOUNDMANAGER->stop("correct");
+		SOUNDMANAGER->play("correct");
 
 	}
-	
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && _y < WINSIZEY - 200 )
+
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && _y < WINSIZEY - 200)
 	{
 		_keyCursor = KEY_DOWN;
-
+		SOUNDMANAGER->stop("correct");
+		SOUNDMANAGER->play("correct");
 	}
 	if (_keyCursor == KEY_UP)
 	{
@@ -342,29 +357,39 @@ void MENU::fontCollision()
 		_keyCursor = KEY_EMPTY;
 	}
 
-	if (PtInRect(&_singlePlayer.rc, _ptMouse)&&!_singlePlayer.isCursor&&_keyCount==0)//셀렉트박스좌표가 옮겨짐
+	if (PtInRect(&_singlePlayer.rc, _ptMouse) && !_singlePlayer.isCursor&&_keyCount == 0)//셀렉트박스좌표가 옮겨짐
 	{
 		//_mouseCursor = MOUSE_ON;
-		_y = WINSIZEY  - 400;
+		_y = WINSIZEY - 400;
+		SOUNDMANAGER->stop("correct");
+		SOUNDMANAGER->play("correct");
 	}
 
 	if (PtInRect(&_mapEditor.rc, _ptMouse) && !_mapEditor.isCursor&&_keyCount == 0)//셀렉트박스좌표가 옮겨짐
 	{
-		_y = WINSIZEY  - 350;
+		_y = WINSIZEY - 350;
+		SOUNDMANAGER->stop("correct");
+		SOUNDMANAGER->play("correct");
 	}
 	if (PtInRect(&_option.rc, _ptMouse) && !_option.isCursor&&_keyCount == 0)//셀렉트박스좌표가 옮겨짐
 	{
-		_y = WINSIZEY  - 300;
+		_y = WINSIZEY - 300;
+		SOUNDMANAGER->stop("correct");
+		SOUNDMANAGER->play("correct");
 	}
 	if (PtInRect(&_credit.rc, _ptMouse) && !_credit.isCursor&&_keyCount == 0)//셀렉트박스좌표가 옮겨짐
 	{
-		_y = WINSIZEY  - 250;
+		_y = WINSIZEY - 250;
+		SOUNDMANAGER->stop("correct");
+		SOUNDMANAGER->play("correct");
 	}
 	if (PtInRect(&_quit.rc, _ptMouse) && !_quit.isCursor&&_keyCount == 0)//셀렉트박스좌표가 옮겨짐
 	{
-		_y = WINSIZEY  - 200;
+		_y = WINSIZEY - 200;
+		SOUNDMANAGER->stop("correct");
+		SOUNDMANAGER->play("correct");
 	}
-	
+
 	if (_singlePlayer.isCursor)
 	{
 
@@ -448,8 +473,8 @@ void MENU::selectButtonSetting()
 	//50씩 내려가면 된다.
 	_x = WINSIZEX / 2;
 	_y = WINSIZEY - 400;
-	_selectButton = RectMakeCenter(_x,_y , 20, 20);
-	
+	_selectButton = RectMakeCenter(_x, _y, 20, 20);
+
 	_keyCursor = KEY_EMPTY;
 	_mouseCursor = MOUSE_OFF;
 }
@@ -476,7 +501,7 @@ void MENU::option()
 	//옵션 창 폰트
 
 
-	
+
 
 
 }
@@ -484,13 +509,14 @@ void MENU::option()
 void MENU::credit()
 {
 	SCENEMANAGER->changeScene("leeTest");
-	
+
 }
 
 
 
 void MENU::quit()
 {
+	exit(2);
 }
 
 void MENU::buttonClick()
@@ -498,31 +524,47 @@ void MENU::buttonClick()
 	//싱글플레이어
 	if (_menuCount == 0)
 	{
-		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_singlePlayer.rc, _ptMouse))||(KEYMANAGER->isOnceKeyDown(VK_RETURN)&&_singlePlayer.isCursor))
+		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_singlePlayer.rc, _ptMouse)) || (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _singlePlayer.isCursor))
 		{
+			SOUNDMANAGER->stop("correct");
+			SOUNDMANAGER->play("correct");
+			SOUNDMANAGER->stop("title");
+			SOUNDMANAGER->play("happy");
 			singlePlayer();
 		}
 		//맵
-		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_mapEditor.rc, _ptMouse)) ||(KEYMANAGER->isOnceKeyDown(VK_RETURN) && _mapEditor.isCursor))
+		else if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_mapEditor.rc, _ptMouse)) || (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _mapEditor.isCursor))
 		{
+			SOUNDMANAGER->stop("correct");
+			SOUNDMANAGER->play("correct");
+			SOUNDMANAGER->stop("title");
+			SOUNDMANAGER->play("mapEditor");
 			mapEditor();
 		}
 		//옵션
-		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_option.rc, _ptMouse)) || (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _option.isCursor))
+		else if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_option.rc, _ptMouse)) || (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _option.isCursor))
 		{
+			SOUNDMANAGER->stop("correct");
+			SOUNDMANAGER->play("correct");
 			_menuCount = 1;
 			option();
 		}
 		//크레딧
-		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_credit.rc, _ptMouse))|| (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _credit.isCursor))
+		else if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_credit.rc, _ptMouse)) || (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _credit.isCursor))
 		{
+			SOUNDMANAGER->stop("correct");
+			SOUNDMANAGER->play("correct");
+			SOUNDMANAGER->stop("title");
+			SOUNDMANAGER->play("credit");
 			_menuCount = 1;
 			credit();
 		}
-		
+
 		//나가기
-		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_quit.rc, _ptMouse)) || (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _quit.isCursor))
+		else if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_quit.rc, _ptMouse)) || (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _quit.isCursor) && (!_option.isSelect || !_credit.isSelect))
 		{
+			SOUNDMANAGER->stop("correct");
+			SOUNDMANAGER->play("correct");
 			quit();
 		}
 	}
@@ -560,6 +602,6 @@ void MENU::fontRender(HDC hdc, const char * str, const char * str2, int x, int y
 
 void MENU::test()
 {
-	
+
 }
 

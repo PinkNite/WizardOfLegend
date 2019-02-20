@@ -6,7 +6,7 @@
 
 
 UI::UI()
-	:_isClick(0),_HP(0),_MP(0)
+	:_isClick(0), _HP(0), _MP(0)
 {
 }
 
@@ -20,9 +20,10 @@ HRESULT UI::init()
 	_pStatusUI->setPlayer(_pPlayer);
 	_pStatusUI->init();
 
-	
+
 	_pSkillUI = new SKILLUI;
 	_pSkillUI->setStatusUI(_pStatusUI);//링크
+	_pSkillUI->setLinkPlayer(_pPlayer);
 	_pSkillUI->init();
 	for (int i = 0; i < 2; i++)
 	{
@@ -52,20 +53,20 @@ HRESULT UI::init()
 		case 1:
 			_pHpBar[i]->init(40 + 65, 40 + 10);
 			break;
-	
+
 		}
 		_pHpBar[i]->setFrameY(i);
 
 	}
 	_pMpBar = new MPBAR;
-	_pMpBar->init(40+65,50+33);
+	_pMpBar->init(40 + 65, 50 + 33);
 	_pMpBar->setRcWidth(0);
-	
-	
+
+
 	_HP = 500;//아직 안받는 값
 	_damage = 100;
 
-	
+
 	return S_OK;
 }
 
@@ -75,9 +76,9 @@ void UI::release()
 
 void UI::update()
 {
-	
-	
-	
+
+
+
 	_pSkillUI->update();
 	//키를 누르면 작동되게
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB))
@@ -115,7 +116,7 @@ void UI::update()
 	}
 	if (KEYMANAGER->isOnceKeyDown('K'))
 	{
-		_MP +=10;
+		_MP += 10;
 	}
 	if (KEYMANAGER->isOnceKeyDown('L'))
 	{
@@ -169,7 +170,7 @@ void UI::render(HDC hdc)
 		_pNumbers[i]->render(hdc);
 	}
 
-	
+
 
 
 	//char str[12];

@@ -1,10 +1,13 @@
 #pragma
 #include "item.h"
-
+#include "player.h"
+#include "UI.h"
 class ITEMMANAGER
 {
 private:
-	ITEM* _pItem;
+	PLAYER* _pPlayer;
+	ITEM* _pItem[12];
+	UI* _pUI;
 public:
 	ITEMMANAGER();
 	~ITEMMANAGER();
@@ -12,4 +15,8 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
+
+public:
+	void setLinkUI(UI* u) { _pUI = u; }
+	void setLinkPlayer(PLAYER* p) { _pPlayer = p; }
 };

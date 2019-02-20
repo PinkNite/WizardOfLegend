@@ -11,7 +11,7 @@ enum SELECTSTATE
 class STATUSSELECT :public OBJECT
 {
 private:
-	
+
 	int _x, _y;
 	int _alpha;
 	RECT _rc;
@@ -39,6 +39,6 @@ public:
 
 	SELECTSTATE getSelectState() { return _selectState; }
 	void setSelectState(SELECTSTATE num) { _selectState = num; }
-	
+
 };
 

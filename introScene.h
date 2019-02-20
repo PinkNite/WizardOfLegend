@@ -7,12 +7,12 @@
 class INTROSCENE :public gameNode
 {
 private:
-	
+
 
 	OPENING* _pOpening;
 	image* _pMouse;
 
-	
+
 public:
 	INTROSCENE();
 	~INTROSCENE();
@@ -22,6 +22,6 @@ public:
 	void render();
 	void imageSetting();
 
-	
+
 };
 

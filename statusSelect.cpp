@@ -73,36 +73,49 @@ void STATUSSELECT::render(HDC hdc)
 
 void STATUSSELECT::keySetting()
 {
-	if ((KEYMANAGER->isOnceKeyDown('A')|| KEYMANAGER->isOnceKeyDown(VK_LEFT)) && _y == 148)
+	if ((KEYMANAGER->isOnceKeyDown('A') || KEYMANAGER->isOnceKeyDown(VK_LEFT)) && (_y == 148 || _y == 330 || _y == 390))
 	{
 		_x -= 66;
 	}
-	else if ((KEYMANAGER->isOnceKeyDown('D') || KEYMANAGER->isOnceKeyDown(VK_RIGHT)) && _y == 148)
+	else if ((KEYMANAGER->isOnceKeyDown('D') || KEYMANAGER->isOnceKeyDown(VK_RIGHT)) && (_y == 148 || _y == 330 || _y == 390))
 	{
 		_x += 66;
 
 
 	}
-	for (int i = 0; i < 6; i++)
+
+	if ((KEYMANAGER->isOnceKeyDown('W') || KEYMANAGER->isOnceKeyDown(VK_UP)) && _selectState == ITEM_STATE && _y == 330)
 	{
+		_y = 148;
+		_x = 211;
 
 
-		if ((KEYMANAGER->isStayKeyDown('W') || KEYMANAGER->isOnceKeyDown(VK_UP) )&& _selectState==ITEM_STATE)
-		{
-			_y = 148;
-			_x = 211;
-			break;
-
-		}
-		else if ((KEYMANAGER->isStayKeyDown('S') || KEYMANAGER->isOnceKeyDown(VK_DOWN) )&&_selectState==SKILL_STATE)
-		{
-			_y = 330;
-			_x = 211;
-		
-			break;
-
-		}
 	}
+	else if ((KEYMANAGER->isOnceKeyDown('S') || KEYMANAGER->isOnceKeyDown(VK_DOWN)) && _selectState == SKILL_STATE)
+	{
+		_y = 330;
+		_x = 211;
+
+
+
+	}
+	else if ((KEYMANAGER->isOnceKeyDown('W') || KEYMANAGER->isOnceKeyDown(VK_UP)) && _selectState == ITEM_STATE && _y == 390)
+	{
+		_y = 330;
+
+
+
+	}
+	else if ((KEYMANAGER->isOnceKeyDown('S') || KEYMANAGER->isOnceKeyDown(VK_DOWN)) && _selectState == ITEM_STATE && _y == 330)
+	{
+		_y = 390;
+
+
+
+
+	}
+
+
 	if (_x > 541)//오른쪽 을 넘어가면 왼쪽으로
 	{
 		_x = 211;
@@ -120,7 +133,7 @@ void STATUSSELECT::selectStateChange()
 	{
 		_selectState = ITEM_STATE;
 	}
-	else if(_y<=148&&_selectState!=SWAP_STATE)
+	else if (_y <= 148 && _selectState != SWAP_STATE)
 	{
 		_selectState = SKILL_STATE;
 	}

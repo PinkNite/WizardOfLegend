@@ -459,6 +459,9 @@
     <ClInclude Include="throwIceSpear.h">
       <Filter>PlayGround\enemy\boss</Filter>
     </ClInclude>
+    <ClInclude Include="itemWhite.h">
+      <Filter>PlayGround\item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -766,6 +769,9 @@
     </ClCompile>
     <ClCompile Include="throwIceSpear.cpp">
       <Filter>PlayGround\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="itemWhite.cpp">
+      <Filter>PlayGround\item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

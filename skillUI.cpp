@@ -20,7 +20,7 @@ SKILLUI::~SKILLUI()
 
 HRESULT SKILLUI::init()
 {
-	
+
 	/*_pStatusUI = new STATUSUI;
 	_pStatusUI->init();*/
 
@@ -28,8 +28,12 @@ HRESULT SKILLUI::init()
 	//스탯박스 추가해서 그림
 	_x = 60 + (6 * 60 + 12 + 36);
 	_y = WINSIZEY - 90 + 10;
+	for (int i = 0; i < 6; i++)
+	{
+		_findX[i] = _pStatusUI->_pStatusBox[i]->getSkillX();
+		_findY[i] = _pStatusUI->_pStatusBox[i]->getSkillY();
+	}
 
-	
 
 	for (int i = 0; i < 2; i++)//탭과 지도
 	{
@@ -46,7 +50,7 @@ HRESULT SKILLUI::init()
 	{
 		_pSkillButton[i] = new SKILLBUTTON;
 		_pSkillButton[i]->setFrameX(i);
-		_pSkillButton[i]->init(60 + (i* 60 + 2 * i) + 10, WINSIZEY - 90 - 45);
+		_pSkillButton[i]->init(60 + (i * 60 + 2 * i) + 10, WINSIZEY - 90 - 45);
 		switch (i)//알파값도 조정해야됨
 		{
 		case 6:
@@ -63,10 +67,9 @@ HRESULT SKILLUI::init()
 
 
 	_pItem = new ITEM;
-	_pItem->init();
+	_pItem->init(_x + 55, _y);
 
-	_pItem->setX(_x + 55);
-	_pItem->setY(_y);
+
 	_pItem->setNum(188);
 	_pItem->setAlpha(60);
 	_pSkillIcon = new SKILLICON;
@@ -74,11 +77,11 @@ HRESULT SKILLUI::init()
 	for (int i = 0; i < 6; i++)
 	{
 		_pSkillBox[i] = new SKILLBOX;
-		
+
 		switch (i)
 		{
 		case 0:
-			
+
 			_name = "0";
 			break;
 		case 1:
@@ -96,33 +99,33 @@ HRESULT SKILLUI::init()
 		case 5:
 			_name = "5";
 			break;
-		}	
-		
+		}
 
-		
 
-		_pSkillBox[i]->init(_pStatusUI->_pStatusBox[i]->getSkillX(), _pStatusUI->_pStatusBox[i]->getSkillY(), _name, _pSkillIcon->getVSkillIcon()[i].coolDown);//이쪽수정필요
 
-		
+
+		_pSkillBox[i]->init(_pStatusUI->_pStatusBox[i]->getSkillX(), _pStatusUI->_pStatusBox[i]->getSkillY(), _name, _pStatusUI->_pStatusBox[i]->_pSkillIcon->getVSkillIcon()[_pStatusUI->_pStatusBox[i]->_pSkillIcon->getNum()].coolDown);//이쪽수정필요
+
+
 		if (i == 3)
 		{
 			_pSkillBox[i]->setFrameX(0);
 		}
-		
+
 		_pSkillBox[i]->_pSkillIcon->setNum(_pStatusUI->_pStatusBox[i]->_pSkillIcon->getNum());
-		
+
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	return S_OK;
 }
 
 void SKILLUI::release()
 {
-	
+
 }
 
 void SKILLUI::update()
@@ -133,51 +136,91 @@ void SKILLUI::update()
 		_pSkillBox[i]->setX(_pStatusUI->_pStatusBox[i]->getSkillX());
 		_pSkillBox[i]->setY(_pStatusUI->_pStatusBox[i]->getSkillY());
 		_pSkillBox[i]->update();
-		
-		
+
+
 	}
-	if (KEYMANAGER->isOnceKeyDown('1'))
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		_pSkillBox[0]->setSkillUse(USE);
+		for (int i = 0; i < 6; i++)
+		{
+			if (_pSkillBox[i]->getX() == _findX[0])
+			{
+				_pSkillBox[i]->setSkillUse(USE);
+				break;
+			}
+		}
 
 	}
-	if (KEYMANAGER->isOnceKeyDown('2'))
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
-		_pSkillBox[1]->setSkillUse(USE);
+		for (int i = 0; i < 6; i++)
+		{
+			if (_pSkillBox[i]->getX() == _findX[1])
+			{
+				_pSkillBox[i]->setSkillUse(USE);
+				break;
+			}
+		}
 
 	}
-	if (KEYMANAGER->isOnceKeyDown('3'))
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
-		_pSkillBox[2]->setSkillUse(USE);
-
+		for (int i = 0; i < 6; i++)
+		{
+			if (_pSkillBox[i]->getX() == _findX[2])
+			{
+				_pSkillBox[i]->setSkillUse(USE);
+				break;
+			}
+		}
 	}
-	if (KEYMANAGER->isOnceKeyDown('4'))
+	if (KEYMANAGER->isOnceKeyDown('Q'))
 	{
-		_pSkillBox[3]->setSkillUse(USE);
+		for (int i = 0; i < 6; i++)
+		{
+			if (_pSkillBox[i]->getX() == _findX[3])
+			{
+				_pSkillBox[i]->setSkillUse(USE);
+				break;
+			}
+		}
 
 	}
-	if (KEYMANAGER->isOnceKeyDown('5'))
+	if (KEYMANAGER->isOnceKeyDown('E'))
 	{
-		_pSkillBox[4]->setSkillUse(USE);
+		for (int i = 0; i < 6; i++)
+		{
+			if (_pSkillBox[i]->getX() == _findX[4])
+			{
+				_pSkillBox[i]->setSkillUse(USE);
+				break;
+			}
+		}
 
 	}
-	if (KEYMANAGER->isOnceKeyDown('6'))
+	if (KEYMANAGER->isOnceKeyDown('R'))
 	{
-		_pSkillBox[5]->setSkillUse(USE);
-
+		for (int i = 0; i < 6; i++)
+		{
+			if (_pSkillBox[i]->getX() == _findX[5])
+			{
+				_pSkillBox[i]->setSkillUse(USE);
+				break;
+			}
+		}
 	}
 
-	
+
 
 }
 
 void SKILLUI::render(HDC hdc)
 {
-	
-	
+
+
 	for (int i = 0; i < 6; i++)
 	{
-		
+
 		_pSkillBox[i]->render(hdc);
 		/*char str[200];
 
@@ -186,7 +229,7 @@ void SKILLUI::render(HDC hdc)
 
 	}
 
-	
+
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -210,11 +253,11 @@ void SKILLUI::render(HDC hdc)
 		}
 
 	}
-	
+
 	_pItem->render(hdc);
 
-	
-	
+
+
 
 }
 
@@ -222,4 +265,3 @@ void SKILLUI::render(HDC hdc)
 
 
 
- 

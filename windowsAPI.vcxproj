@@ -189,6 +189,7 @@
     <ClInclude Include="introScene.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="itemManager.h" />
+    <ClInclude Include="itemWhite.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="leeTest.h" />
@@ -298,6 +299,7 @@
     <ClCompile Include="introScene.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="itemManager.cpp" />
+    <ClCompile Include="itemWhite.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="leeTest.cpp" />

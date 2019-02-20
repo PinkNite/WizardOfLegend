@@ -16,6 +16,15 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 	
+	//intro
+	SOUNDMANAGER->addSound("title", "resource/sound/TitleScreen.wav", 1, 1);
+	SOUNDMANAGER->addSound("mapEditor", "resource/sound/PlayerRoom.wav", 1, 1);
+	SOUNDMANAGER->addSound("boss", "resource/sound/ice.wav", 1, 1);
+	SOUNDMANAGER->addSound("happy", "resource/sound/Tutorial.wav", 1, 1);
+	SOUNDMANAGER->addSound("ending", "resource/sound/Ending.wav", 1, 1);
+	SOUNDMANAGER->addSound("credit", "resource/sound/Credits.wav", 1, 1);
+	SOUNDMANAGER->addSound("correct", "resource/sound/Correct.wav", 1, 0);
+	SOUNDMANAGER->addSound("crowdCheer", "resource/sound/CrowdCheer.wav", 1, 0);
 	
 	_pMapEditScene = new MAPEDIT();
 	_pstageScene = new STAGESCENE();
@@ -37,7 +46,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->changeScene("MinTest");
 	//SCENEMANAGER->changeScene("bossStage");
 	//SCENEMANAGER->changeScene("intro");
-	//SCENEMANAGER->changeScene("leeTest");
+	SCENEMANAGER->changeScene("leeTest");
 	//SCENEMANAGER->changeScene("gameScene");
 
 	return S_OK;

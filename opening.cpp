@@ -43,7 +43,11 @@ void OPENING::release()
 
 void OPENING::update()
 {
-	_pMenu->update();
+	if (_pMenu->getPressButton())
+	{
+		_pMenu->update(); \
+			_pMenu->getTime(_time);
+	}
 	//시간을 계산할 식
 	_time += TIMEMANAGER->getElapsedTime();
 
@@ -62,7 +66,7 @@ void OPENING::update()
 	}
 
 	//엔터키나 마우스클릭하면 버튼 화면 사라짐
-	if (_jumpCount == 2 && !_pMenu->getPressButton()&& (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) || KEYMANAGER->isOnceKeyDown(VK_RETURN)))
+	if (_jumpCount == 2 && !_pMenu->getPressButton() && (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) || KEYMANAGER->isOnceKeyDown(VK_RETURN)))
 	{
 		_pMenu->setPressButton(1);
 		//로고창 위로 살짝
@@ -89,11 +93,14 @@ void OPENING::update()
 		}
 	}
 	_pMenu->update();
+
+	soundUpdate();
+
 }
 
 void OPENING::render(HDC hdc)
 {
-	
+
 	if (_time < 6)
 	{
 		_99.image->alphaRender(hdc, _99.x, _99.y, _99.alpha);
@@ -120,7 +127,7 @@ void OPENING::render(HDC hdc)
 	{
 		_pMenu->render(hdc);
 	}
-	
+
 }
 
 void OPENING::setImage()
@@ -160,7 +167,7 @@ void OPENING::setImage()
 	_hello.currentY = 0;
 	_hello.speed = 0;
 
-	
+
 
 
 
@@ -189,8 +196,8 @@ void OPENING::openingMove()
 
 void OPENING::fontMove(HDC hdc)
 {
-	
-	
+
+
 
 	if (_time < 20)
 	{
@@ -275,18 +282,18 @@ void OPENING::fontMove(HDC hdc)
 					fontRender(hdc, "E", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
 					if (_time > 10 + i * 0.2f&&_time < 18)
 					{
-						
+
 						if (_time < 14)
 						{
 							_angle += 0.1f;
 						}
-						if(_time>14)
+						if (_time > 14)
 						{
-							
-							_angle = getAngle(_fontX + i * 50, _arrFontY[i], _hello.x+30, _hello.y+30);
+
+							_angle = getAngle(_fontX + i * 50, _arrFontY[i], _hello.x + 30, _hello.y + 30);
 							_angle = 2 * PI - PI / 6;
 						}
-						
+
 						_speed += 0.1f;
 						_fontX += cosf(_angle) * _speed;
 
@@ -441,6 +448,21 @@ bool OPENING::isCollision(int x, int y, int x2, int y2)
 		return true;
 	}
 	return false;
+}
+
+void OPENING::soundUpdate()
+{
+	if (_time > 12 && _time < 13)
+	{
+		SOUNDMANAGER->play("crowdCheer", 1.0f);
+	}
+	if (_time > 17 && _time < 18)
+	{
+		SOUNDMANAGER->stop("crowdCheer");
+		SOUNDMANAGER->play("title", 1);
+	}
+
+	//SOUNDMANAGER->update();
 }
 
 
