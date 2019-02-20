@@ -620,7 +620,7 @@ bool PLAYER::isOnDropArea()
 	nTileIndexX = OBJECT::getPosX() / _pMap->getTileSize();
 	nTileIndexY = (OBJECT::getPosY() + 32.0f) / _pMap->getTileSize();
 
-	//_pMap->getTile(nTileIndexX, nTileIndexY - 1)->Tilesefewa();
+	//_pMap->getTile(nTileIndexX, nTileIndexY )->Tilesefewa();
 	//_pMap->getTile(nTileIndexX+1, nTileIndexY )->Tilesefewa();
 	//_pMap->getTile(nTileIndexX, nTileIndexY +1)->Tilesefewa();
 	//_pMap->getTile(nTileIndexX-1, nTileIndexY )->Tilesefewa();
