@@ -236,3 +236,15 @@ void MAP::deleteObject()
 		}
 	}
 }
+
+void MAP::drawMap(HDC hdc)
+{
+	for (int j = 0; j < _nTileCountY; j++)
+	{
+		for (int i = 0; i < _nTileCountX; i++)
+		{
+			_vvMap[j][i]->renderBackGround(hdc);
+		}
+	}
+
+}
