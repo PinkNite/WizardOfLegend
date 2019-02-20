@@ -493,34 +493,42 @@ void PLAYER::dash(float fOffset)
 
 	case PLAYER::MOVE_DIRECTION::LEFT:
 		moveLeft(fSpeed);
-		//_pMap->getTile((OBJECT::getPosX() - 32.0f) / _pMap->getMapCountX(), (OBJECT::getPosY() - 32.0f) / _pMap->getMapCountY() - 1)->getRectTile();
-
-
-
+		tIleCollisionLeft(fSpeed);
 		break;
 	case PLAYER::MOVE_DIRECTION::RIGHT:
 		moveRight(fSpeed);
-
-
+		tIleCollisionRight(fSpeed);
 		break;
 	case PLAYER::MOVE_DIRECTION::TOP:
 		moveUp(fSpeed);
+		tileCollisionTop(fSpeed);
+
 		break;
 	case PLAYER::MOVE_DIRECTION::BOTTOM:
 		moveDown(fSpeed);
+		tIleCollisionBottom(fSpeed);
 		break;
 	case PLAYER::MOVE_DIRECTION::LEFT_TOP:
+
 		moveUpLeft(fSpeed);
+		tileCollisionTopLeft(fSpeed);
 		break;
 	case PLAYER::MOVE_DIRECTION::LEFT_BOTTOM:
 		moveDownLeft(fSpeed);
+
+		tileCollisionBottomLeft(fSpeed);
 		break;
 	case PLAYER::MOVE_DIRECTION::RIGHT_TOP:
 		moveUpRight(fSpeed);
+
+		tileCollisionTopRight(fSpeed);
 		break;
 	case PLAYER::MOVE_DIRECTION::RIGHT_BOTTOM:
 		moveDownRight(fSpeed);
+
+		tileCollisionBottomRight(fSpeed);
 		break;
+
 	}
 
 	//이동 타일 검출
