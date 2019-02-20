@@ -262,7 +262,7 @@ void MAGICMGR::CollisionEnemyToMagic()
 	{
 		MAGIC* pMagic = *iter;
 
-		if (!pMagic->getIsPlayer())
+		if (pMagic->getIsPlayer())
 		{
 			RECT rcTmp;
 			//에네미 사각형으로 바꿔주세요     여기 플레이어 렉부분 대신
@@ -287,15 +287,14 @@ void MAGICMGR::CollisionBossToMagic()
 	{
 		MAGIC* pMagic = *iter;
 
-		if (!pMagic->getIsPlayer())
+		if (pMagic->getIsPlayer())
 		{
 			RECT rcTmp;
 			//보스 사각형으로 바꿔주세요     여기 플레이어 렉부분 대신
-			if (IntersectRect(&rcTmp, _pPlayer->getCollisionRect(), pMagic->getRect()))
+			if (IntersectRect(&rcTmp, _pBoss->getCollisionRect(), pMagic->getRect()))
 			{
 				//보스 데이미 입는것 해주세요
-				pMagic->setIsDamage(true);
-				//데미지는 걍 일단 난수처리해주세요
+				_pBoss->setDamage(50.0f);
 			}
 		}
 		

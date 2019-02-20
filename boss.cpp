@@ -74,6 +74,24 @@ void BOSS::update()
 		_pCurrentState->update(this);
 	}
 
+	if (ACTION::DASH == _action)
+	{
+		_dashSpeed -= TIMEMANAGER->getElapsedTime() + 1;
+
+		float distance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), _targetX, _targetY);
+		if (distance > 100.0f) 
+		{
+			OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_targetAngle, _dashSpeed));
+			OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_targetAngle, _dashSpeed));
+			setRect();
+		}
+		else
+		{
+			//setBossIdle(); 
+			spell01(SKILL_TYPE::CHAKRAM);
+		}
+	}
+
 	if (_fCurrentHP < 0 && ACTION::DEATH != _action)
 	{
 		setDeath();
@@ -136,6 +154,8 @@ void BOSS::render(HDC hdc)
 		OBJECT::getImage()->aniRenderCenter(hdc, renderX, renderY, _pAnimation);
 	}
 
+	//RectangleMakeCenter(hdc, renderX, renderY, BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
+
 	//bulletRender(hdc);
 
 }
@@ -177,10 +197,10 @@ void BOSS::createAnimation()
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::RUN], 2, 2, 1, true, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::RUN], 3, 3, 1, true, nullptr);
 
-	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::DASH], 0, 0, 1, true, nullptr);
-	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::DASH], 1, 1, 1, true, nullptr);
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DASH], 2, 2, 1, true, nullptr);
-	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::DASH], 3, 3, 1, true, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::DASH], 105, 99, 32, false, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::DASH], 55, 61, 32, false, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DASH], 105, 99, 32, false, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::DASH], 55, 61, 32, false, nullptr);
 
 	// TODO: 이미지 추가 
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_02], 22, 42, 6, false, nullptr);
@@ -396,31 +416,20 @@ void BOSS::moveRight(float speed)
 
 void BOSS::dash(float targetX, float targetY)
 {
+	_dashSpeed = 50.0f;
+	_targetX = targetX;
+	_targetY = targetY;
+	_targetAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY(), _targetX, _targetY);
 
-	float dashSpeed = 10.0f;
-	float targetAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY(), targetX, targetY);
-
-	if (0.78f < targetAngle && targetAngle <= 2.35) _direction = DIRECTION::UP;
-	if (2.35f < targetAngle && targetAngle <= 3.92) _direction = DIRECTION::LEFT;
-	if (3.92f < targetAngle && targetAngle <= 4.95) _direction = DIRECTION::DOWN;
-	if (4.95f < targetAngle && targetAngle <= 6.28) _direction = DIRECTION::RIGHT;
-	if (0.0f < targetAngle && targetAngle <= 0.78) _direction = DIRECTION::RIGHT;
+	if (0.78f < _targetAngle && _targetAngle <= 2.35) _direction = DIRECTION::UP;
+	if (2.35f < _targetAngle && _targetAngle <= 3.92) _direction = DIRECTION::LEFT;
+	if (3.92f < _targetAngle && _targetAngle <= 4.95) _direction = DIRECTION::DOWN;
+	if (4.95f < _targetAngle && _targetAngle <= 6.28) _direction = DIRECTION::RIGHT;
+	if (0.0f < _targetAngle && _targetAngle <= 0.78) _direction = DIRECTION::RIGHT;
 
 	setAction(ACTION::DASH, _direction);
 
-	float distance;
-	for (size_t i = 0; i < 100; i++)
-	{
-		distance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), targetX, targetY);
-		if (distance < 200.0f) break;
-
-		OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(targetAngle, dashSpeed) * dashSpeed);
-		OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(targetAngle, dashSpeed) * dashSpeed);
-		setRect();
-	}
-
-
-	setAction(ACTION::IDLE, _direction);
+	//setAction(ACTION::IDLE, _direction);
 
 	// TODO: 칼질 키 애니메이션 및 랜서  
 
@@ -429,7 +438,7 @@ void BOSS::dash(float targetX, float targetY)
 
 void BOSS::spell01(SKILL_TYPE type)
 {
-	if (ACTION::ENTRANCE == _action) return;
+	if (ACTION::ENTRANCE == _action || ACTION::DEATH == _action) return;
 
 	_timeSet = 0;
 	_isEndSkill = false;

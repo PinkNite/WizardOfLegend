@@ -129,6 +129,8 @@ HRESULT MINTESTSCENE::init()
 	_pBoss->setCameraLink(_pCamera);
 	_pBoss->setMagicMgr(_pMagicMgr);
 
+	_pMagicMgr->setBoss(_pBoss);
+
 	// bubble
 	IMAGEMANAGER->addFrameImage("WaterBounce1", "resource/boss/ice/WaterBounce1.bmp", 600, 120, 5, 1, true, Mins::getMazenta());
 

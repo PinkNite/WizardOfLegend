@@ -3,6 +3,8 @@
 #include "magic.h"
 class CAMERA;
 class PLAYER;
+class BOSS;
+
 class MAGICMGR {
 private:
 	map<string,queue<MAGIC*>>		_mqMagicPool;
@@ -10,6 +12,7 @@ private:
 
 	CAMERA*					_pCamera;
 	PLAYER*					_pPlayer;
+	BOSS*					_pBoss;
 public:
 	MAGICMGR();
 	~MAGICMGR();
@@ -33,10 +36,10 @@ public:
 	//수호형용
 	void addObject(const string& strKey, int nMagicCount, int nWidth, int nHeight, image* pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime,float fTurnTime, float fDamage);
 
-
 	void setLink(CAMERA* pCamera) { _pCamera = pCamera; }
 	void setPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
-	
+	void setBoss(BOSS* pBoss) { _pBoss = pBoss; }
+
 	//마법과 객체 충돌은 여기서 처리하자
 private:
 	void CollisionPlayerToMagic();

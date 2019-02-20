@@ -81,8 +81,8 @@ private:
 	const int BOSS_IMAGE_HEIGHT = 2000;
 	const int BOSS_MAX_FRAME_X = 11;
 	const int BOSS_MAX_FRAME_Y = 10;
-	const int BOSS_RECT_WIDTH = 40;
-	const int BOSS_RECT_HEIGHT = 75; // FrameSize: 150, 200
+	const int BOSS_RECT_WIDTH = 70;
+	const int BOSS_RECT_HEIGHT = 140; // FrameSize: 150, 200
 
 	float _fMaxHP;
 	float _fCurrentHP;
@@ -118,6 +118,12 @@ private:
 	// ¿Ãµø πÊ«‚
 	float		_fAngleX;
 	float		_fAngleY;
+
+	// ≈∏∞Ÿ ¡¬«•
+	float		_targetX;
+	float		_targetY;
+	float		_dashSpeed;
+	float		_targetAngle;
 
 	BossState*		_pCurrentState;
 	BossState*		_arState[static_cast<const int>(BOSS_STATE::MAX)];
@@ -181,6 +187,8 @@ public:
 	inline float getSpeed() { return _fSpeed; }
 	inline DIRECTION getDiretion() { return _direction; }
 	inline animation* getAni() { return _pAnimation; }
+
+	LPCRECT getCollisionRect() { return &_rc; }
 
 	static void callbackSetBattle(void * obj);
 	static void callbackMinWingIdle(void * obj);
