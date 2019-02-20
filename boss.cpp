@@ -8,6 +8,7 @@
 #include "BossStateSkill02.h"
 #include "BossStateSkill03.h"
 #include "magicMgr.h"
+#include "player.h"
 
 BOSS::BOSS() :
 	_fMaxHP(0.0f),
@@ -60,18 +61,25 @@ void BOSS::init()
 	startBossAnimation();
 	initState();
 
+	_pIceSpear = new throwIceSpear();
+	_pIceSpear->init();
 }
 
 void BOSS::update()
 {
+	_moveTimeStart += TIMEMANAGER->getElapsedTime();
+
+	if (_moveTimeStart > _moveTimeEnd)
+	{
+		_moveTimeStart = 0;
+		_moveTimeEnd = RND->getFromFloatTo(3.0f, 5.0f);
+		dash(_pPlayer->getPosX(), _pPlayer->getPosY());
+	}
+
+
 	if (ACTION::ENTRANCE == _action)
 	{
 		_timeSet += TIMEMANAGER->getElapsedTime();
-	}
-
-	if (_pCurrentState != nullptr)
-	{
-		_pCurrentState->update(this);
 	}
 
 	if (ACTION::DASH == _action)
@@ -79,7 +87,7 @@ void BOSS::update()
 		_dashSpeed -= TIMEMANAGER->getElapsedTime() + 1;
 
 		float distance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), _targetX, _targetY);
-		if (distance > 100.0f) 
+		if (distance > 200.0f) 
 		{
 			OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_targetAngle, _dashSpeed));
 			OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_targetAngle, _dashSpeed));
@@ -87,8 +95,34 @@ void BOSS::update()
 		}
 		else
 		{
-			//setBossIdle(); 
-			spell01(SKILL_TYPE::CHAKRAM);
+			int skillNo = RND->getInt(4);
+			switch (skillNo)
+			{
+			case 0:
+				spell01(SKILL_TYPE::BUBBLE);
+				break;
+			case 1:
+				spell01(SKILL_TYPE::CHAKRAM);
+				break;
+			case 2:
+				spell02(SKILL_TYPE::LANCE);
+				break;
+			default:
+					break;
+			}
+		}
+	}
+
+	// skill 2
+	_pIceSpear->update();
+	if (ACTION::SKILL_02 == _action)
+	{
+		_timeSet += TIMEMANAGER->getElapsedTime();
+		if (_timeSet > 2.3f)
+		{
+			setBossIdle();
+			_pIceSpear->ResetAll();
+			_timeSet = 0;
 		}
 	}
 
@@ -98,10 +132,12 @@ void BOSS::update()
 	}
 
 	//bulletMove();
-
 	handleInputKey();
-
 	_pCamera->pushRenderObject(this);
+	if (_pCurrentState != nullptr)
+	{
+		_pCurrentState->update(this);
+	}
 }
 
 void BOSS::release()
@@ -158,6 +194,7 @@ void BOSS::render(HDC hdc)
 
 	//bulletRender(hdc);
 
+	_pIceSpear->render(hdc);
 }
 
 void BOSS::setEnumName()
@@ -202,8 +239,10 @@ void BOSS::createAnimation()
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::DASH], 105, 99, 32, false, nullptr);
 	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::DASH], 55, 61, 32, false, nullptr);
 
-	// TODO: 이미지 추가 
-	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_02], 22, 42, 6, false, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::LEFT], _mAction[ACTION::SKILL_02], 105, 105, 2, false, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::RIGHT], _mAction[ACTION::SKILL_02], 61, 61, 2, false, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::UP], _mAction[ACTION::SKILL_02], 105, 105, 2, false, nullptr);
+	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_02], 61, 61, 2, false, nullptr);
 	// TODO: 이미지 추가 
 	addBossKeyAni(_mDirection[DIRECTION::DOWN], _mAction[ACTION::SKILL_03], 22, 42, 6, false, nullptr);
 
@@ -332,7 +371,7 @@ void BOSS::initState()
 	_arState[int(BOSS_STATE::IDLE)] = new BossStateIdle();
 	_arState[int(BOSS_STATE::RUN)] = new BossStateRun();
 	_arState[int(BOSS_STATE::SKILL_01)] = new BossStateSkill01();
-	_arState[int(BOSS_STATE::SKILL_02)] = new BossStateSkill01();
+	_arState[int(BOSS_STATE::SKILL_02)] = new BossStateSkill02();
 	_arState[int(BOSS_STATE::SKILL_03)] = new BossStateSkill01();
 }
 
@@ -478,6 +517,21 @@ void BOSS::spell01(SKILL_TYPE type)
 	}
 }
 
+void BOSS::spell02(SKILL_TYPE type)
+{
+	_timeSet = 0.f;
+	POINTFLOAT* bossPoint = new POINTFLOAT{ _posX, _posY };
+	POINTFLOAT* targetPoint = new POINTFLOAT{ _pPlayer->getPosX(), _pPlayer->getPosY()};
+	_pIceSpear->UseSkill(bossPoint, targetPoint, 3);
+
+	//setState(BOSS_STATE::SKILL_02);
+	setAction(ACTION::SKILL_02, _direction);
+}
+
+void BOSS::spell03(SKILL_TYPE type)
+{
+}
+
 void BOSS::skillFire(float x, float y)
 {
 	_timeSet += TIMEMANAGER->getElapsedTime();
@@ -494,7 +548,8 @@ void BOSS::skillFire(float x, float y)
 				continue;
 			}
 
-			_bullet[i]->fireAngle = getAngle(_bullet[i]->x, _bullet[i]->y, x, y);;
+			_bullet[i]->fireAngle = getAngle(_bullet[i]->x, _bullet[i]->y, _pPlayer->getPosX(), _pPlayer->getPosY());;
+			//_bullet[i]->fireAngle = getAngle(_bullet[i]->x, _bullet[i]->y, x, y);;
 			_bullet[i]->speed = 18.0f;
 			_bullet[i]->isFire = true;
 
@@ -582,57 +637,13 @@ void BOSS::setRect()
 		BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
 }
 
-void BOSS::moveBoss()
-{
-	if (_pCurrentState == _arState[static_cast<int>(BOSS_STATE::RUN)])
-	{
-		float speed = _fSpeed * TIMEMANAGER->getElapsedTime();
-
-		switch (_direction)
-		{
-		case BOSS::DIRECTION::LEFT:
-			moveLeft(speed);
-			break;
-		case BOSS::DIRECTION::RIGHT:
-			moveRight(speed);
-			break;
-		case BOSS::DIRECTION::UP:
-			moveUp(speed);
-			break;
-		case BOSS::DIRECTION::DOWN:
-			moveDown(speed);
-			break;
-		case BOSS::DIRECTION::L_UP:
-			moveLeft(speed);
-			moveUp(speed);
-			break;
-		case BOSS::DIRECTION::L_DOWN:
-			moveLeft(speed);
-			moveDown(speed);
-			break;
-		case BOSS::DIRECTION::R_UP:
-			moveRight(speed);
-			moveUp(speed);
-			break;
-		case BOSS::DIRECTION::R_DOWN:
-			moveRight(speed);
-			moveDown(speed);
-			break;
-		}
-	}
-}
-
-
 void BOSS::showBoss()
 {
 	_direction = DIRECTION::DOWN;
 	_action = ACTION::ENTRANCE;
 
-	_pWingsAnimation = KEYANIMANAGER->findAnimation(_objectName, "WingsMin");
-	_pWingsAnimation->start();
-
-	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, getAnimationKey(_mDirection[_direction], _mAction[_action]));
-	_pAnimation->start();
+	setWings(false);
+	startBossAnimation();
 
 	_pEffectAnimation = KEYANIMANAGER->findAnimation(_objectName, "Entrance");
 	_pEffectAnimation->start();
@@ -641,17 +652,15 @@ void BOSS::showBoss()
 
 void BOSS::setBattle()
 {
+	_action = ACTION::IDLE;
+	_direction = DIRECTION::DOWN;
+
 	setState(BOSS_STATE::IDLE);
 
-	_direction = DIRECTION::DOWN;
-	_action = ACTION::IDLE;
+	setWings(true);
+	startBossAnimation();
 
-	_pAnimation = KEYANIMANAGER->findAnimation(_objectName, getAnimationKey(_mDirection[_direction], _mAction[_action]));
-	_pAnimation->start();
-
-	_pWingsAnimation = KEYANIMANAGER->findAnimation(_objectName, "WingsMax");
-	_pWingsAnimation->start();
-
+	_moveTimeEnd = 0.1f;
 }
 
 void BOSS::setBossIdle()
@@ -659,7 +668,7 @@ void BOSS::setBossIdle()
 	if (ACTION::DEATH == _action) return;
 
 	// 스킬 시전중에는 Idle 상태 변하지 않음.
-	if (ACTION::SKILL_01 == _action || ACTION::SKILL_02 == _action || ACTION::SKILL_02 == _action)
+	if (ACTION::SKILL_01 == _action || ACTION::SKILL_03 == _action)
 	{
 		if (_isEndSkill == true)
 		{

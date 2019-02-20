@@ -2,7 +2,9 @@
 #include "object.h"
 #include "stdafx.h"
 #include "animation.h"
+#include "throwIceSpear.h"
 
+class PLAYER;
 class BossState;
 class MAGICMGR;
 
@@ -15,10 +17,6 @@ public:
 		RIGHT,
 		UP,
 		DOWN,
-		L_UP,
-		L_DOWN,
-		R_UP,
-		R_DOWN,
 		MAX
 	};
 	//
@@ -102,17 +100,19 @@ private:
 	animation* _pIceBulletAnimation;
 
 	// bullet
-	int _bulletSize;
-	bool _isEndSkill;
-	tagBullet* _bullet[18];
-	SKILL_TYPE _skillType;
+	int			_bulletSize;
+	bool		_isEndSkill;
+	tagBullet*	_bullet[18];
+	SKILL_TYPE	_skillType;
 
 	// 프레임
-	int _arFrame[20];
-	float _timeSet;
+	int			_arFrame[20];
+	float		_timeSet;
+	float		_moveTimeStart;
+	float		_moveTimeEnd;
 
-	DIRECTION	_direction;
 	ACTION		_action;
+	DIRECTION	_direction;
 	string		_objectName;
 
 	// 이동 방향
@@ -125,11 +125,13 @@ private:
 	float		_dashSpeed;
 	float		_targetAngle;
 
-	BossState*		_pCurrentState;
-	BossState*		_arState[static_cast<const int>(BOSS_STATE::MAX)];
+	BossState*	_pCurrentState;
+	BossState*	_arState[static_cast<const int>(BOSS_STATE::MAX)];
 
+	PLAYER *	_pPlayer;
 	CAMERA *	_pCamera;
 	MAGICMGR*   _pMagicMgr;
+	throwIceSpear* _pIceSpear;
 
 public:
 	BOSS();
@@ -154,6 +156,7 @@ public:
 	void showBoss();
 	void setBattle();
 
+	void setPlayer(PLAYER * pPlayer) { _pPlayer = pPlayer; }
 	void setCameraLink(CAMERA* pCamera) { _pCamera = pCamera; }
 	void setMagicMgr(MAGICMGR* pMagicMgr) { _pMagicMgr = pMagicMgr; }
 
@@ -175,6 +178,8 @@ public:
 	void dash(float targetX, float targetY);
 	void skillFire(float x, float y);
 	void spell01(SKILL_TYPE type);
+	void spell02(SKILL_TYPE type);
+	void spell03(SKILL_TYPE type);
 	void bulletMove();
 	void bulletRender(HDC hdc);
 	void setRect();

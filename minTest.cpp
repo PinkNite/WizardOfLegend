@@ -132,6 +132,7 @@ HRESULT MINTESTSCENE::init()
 	_pBoss->showBoss();
 	_pBoss->setCameraLink(_pCamera);
 	_pBoss->setMagicMgr(_pMagicMgr);
+	_pBoss->setPlayer(_pPlayer);
 
 	_pMagicMgr->setBoss(_pBoss);
 

@@ -453,6 +453,12 @@
     <ClInclude Include="EnemyStateDamage.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="rotateImgMaker.h">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="throwIceSpear.h">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -754,6 +760,12 @@
     </ClCompile>
     <ClCompile Include="EnemyStateDamage.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="rotateImgMaker.cpp">
+      <Filter>PlayGround\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="throwIceSpear.cpp">
+      <Filter>PlayGround\enemy\boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
