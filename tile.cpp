@@ -159,7 +159,7 @@ void TILE::setttingObject2()
 		strTmp.append("item");
 		break;
 	case TILE::NOMAL_OBJECT:
-		strTmp.append("MapOBJECT2");
+		strTmp.append("MapOBJECT3");
 		break;
 	case TILE::MAX:
 		break;
@@ -395,7 +395,8 @@ void TILE::render(HDC hdc, bool Map)
 			}*/
 			if (_object != OBJECT::NONE)
 			{
-				_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, getFrameX(), setFrameY());
+				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nObjFrameX, _nObjFrameY);
 			}
 		}
 	}
@@ -449,6 +450,10 @@ string TILE::makeSaveString()
 	strTmp.append(to_string(_nFrameX));
 	strTmp.append("/");
 	strTmp.append(to_string(_nFrameY));
+	strTmp.append("/");
+	strTmp.append(to_string(_nObjFrameX));
+	strTmp.append("/");
+	strTmp.append(to_string(_nObjFrameY));
 	strTmp.append("/");
 	strTmp.append(to_string(_terrainPageIndex));
 	strTmp.append("/");

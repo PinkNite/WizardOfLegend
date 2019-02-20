@@ -122,6 +122,10 @@ void MAP::load()
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setFrameY(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setObjFrameX(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setObjFrameY(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setTerrainPageIndex(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setObject(static_cast<TILE::OBJECT>(atoi(tokenMap)));

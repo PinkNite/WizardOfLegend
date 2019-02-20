@@ -87,6 +87,7 @@ HRESULT MAPEDIT::init()
 	imgMapEraser2 = IMAGEMANAGER->addFrameImage("MapEraser2", "resource/UI/eraser2.bmp", 768, 768, 12, 12, true, RGB(255, 0, 255));
 	imgMapObject = IMAGEMANAGER->addFrameImage("MapOBJECT", "resource/UI/OBJECT.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
 	imgMapObject2 = IMAGEMANAGER->addFrameImage("MapOBJECT2", "resource/UI/OBJECT2.bmp", 384, 384, 12, 12, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("MapOBJECT3", "resource/UI/OBJECT3.bmp", 768, 768, 12, 12, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Wall", "resource/UI/WallUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Terrain", "resource/UI/TerrainUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Object", "resource/UI/ObjectUItitle.bmp", 213, 192, 1, 3, true, RGB(255, 0, 255));
