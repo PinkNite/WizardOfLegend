@@ -18,8 +18,8 @@ void CAMERA::init(int posX, int posY, int windowWidth, int windowHeight, int map
 	_width = windowWidth;
 	_height = windowHeight;
 	setLeftTop();
-	_nMapHeight = mapHeight;
-	_nMapWidth = mapWidth;
+	_nMapHeight = mapHeight*2;
+	_nMapWidth = mapWidth*2;
 	_rcCameraLimit = { 0,0,_nMapWidth,_nMapHeight };
 
 	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _nMapWidth, _nMapHeight);
