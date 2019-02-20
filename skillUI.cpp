@@ -22,7 +22,7 @@ HRESULT SKILLUI::init()
 {
 	
 	_pStatusUI = new STATUSUI;
-	_pStatusUI->init();
+	
 
 
 	//스탯박스 추가해서 그림

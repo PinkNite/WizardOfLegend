@@ -131,6 +131,8 @@ HRESULT LEETEST::init()
 	_pBoss->setCameraLink(_pCamera);
 	_pBoss->setMagicMgr(_pMagicMgr);
 
+	_pMagicMgr->setBoss(_pBoss);
+
 	// bubble
 	IMAGEMANAGER->addFrameImage("WaterBounce1", "resource/boss/ice/WaterBounce1.bmp", 600, 120, 5, 1, true, Mins::getMazenta());
 
@@ -147,8 +149,8 @@ HRESULT LEETEST::init()
 	_pMouse = new image;
 	_pMouse = IMAGEMANAGER->addImage("mouse", "resource/intro/mouseCursor.bmp", 64, 64, true, RGB(255, 0, 255));
 	_pUI = new UI;
-	_pUI->init();
 	_pUI->setLinkPlayer(_pPlayer);
+	_pUI->init();
 	_pItemManager = new ITEMMANAGER;
 	_pItemManager->init();
 	ShowCursor(false);

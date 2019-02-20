@@ -8,7 +8,7 @@
 #include "hpBar.h"
 #include "playerFace.h"
 #include "mpbar.h"
-#include "player.h"
+class PLAYER;
 class UI
 {
 private:
@@ -30,12 +30,12 @@ private:
 public:
 	UI();
 	~UI();
+	void setLinkPlayer(PLAYER* p) { _pPlayer = p; }
 	HRESULT init();
 	void release();
 	void update();
 	void render(HDC hdc);
 public :
-	void setLinkPlayer(PLAYER* p) { _pPlayer = p; }
 	bool getIsClick() { return _isClick; }
 	
 };

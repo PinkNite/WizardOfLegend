@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "UI.h"
+#include "player.h"
+
 
 
 
@@ -15,6 +17,7 @@ UI::~UI()
 HRESULT UI::init()
 {
 	_pStatusUI = new STATUSUI;
+	_pStatusUI->setPlayer(_pPlayer);
 	_pStatusUI->init();
 
 	
@@ -61,8 +64,21 @@ HRESULT UI::init()
 	
 	_HP = 500;//아직 안받는 값
 	_damage = 100;
-
-	_pStatusUI->setPlayer(_pPlayer);
+	
+	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::LBUTTON, PLAYER::SKILL_NAME::NONE);
+	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::RBUTTON, PLAYER::SKILL_NAME::NONE);
+	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::BTN_Q, PLAYER::SKILL_NAME::NONE);
+	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::BTN_E, PLAYER::SKILL_NAME::NONE);
+	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::BTN_R, PLAYER::SKILL_NAME::NONE);
+	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::BTN_SPACE, PLAYER::SKILL_NAME::NONE);
+	//	
+	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON);
+	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON);
+	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q);
+	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E);
+	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_R);
+	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_SPACE);
+	
 	return S_OK;
 }
 
@@ -169,7 +185,11 @@ void UI::render(HDC hdc)
 	
 
 
-	/*char str[12];
+	//char str[12];
+	/*
 	sprintf_s(str, " %.2lf", _pPlayer->getCurrentHp());
-	TextOut(hdc, 400, 400, str, strlen(str));*/
+	TextOut(hdc, 400, 400, str, strlen(str));
+	sprintf_s(str, "%d", _pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q));//겟으로 어떤 키에 어떤 스킬이 있는지 알수 있다.
+	TextOut(hdc, 600, 600, str, strlen(str));
+	*/
 }

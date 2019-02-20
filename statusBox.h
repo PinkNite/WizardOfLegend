@@ -1,7 +1,7 @@
 #pragma once
 #include "object.h"
 #include "skillIcon.h"
-#include "player.h"
+
 enum SKILLNUMBER
 {
 	SKILL_0,
@@ -29,7 +29,7 @@ private:
 
 	bool _isItem;//콜리젼인게 아이템이다.
 
-	PLAYER* _pPlayer;
+	
 public:
 	SKILLICON* _pSkillIcon;
 	STATUSBOX();
@@ -83,8 +83,6 @@ public:
 	float xx() { return _x; }
 	bool dd() { return _isCollision; }
 
-	//링크받을것
-	void setPlayer(PLAYER* p) { _pPlayer = p; }
 
 };
 

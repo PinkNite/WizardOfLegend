@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "statusUI.h"
 #include "item.h"
+#include "player.h"
 
 STATUSUI::STATUSUI()
 	:_num(0), _numA(0), _count(0), _alpha(200), _isClick(0), _temp(0),_tempX(0)
@@ -13,22 +14,24 @@ STATUSUI::~STATUSUI()
 
 HRESULT STATUSUI::init()
 {
-	
+
+	//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON);
 	IMAGEMANAGER->addImage("statusUI", "resource/UI/statusUI.bmp", 480, 724, true, RGB(255, 0, 255));
 	OBJECT::setImage(IMAGEMANAGER->findImage("statusUI"));
 	OBJECT::init(51 + (2 * 51 + 2 * 2), 51 + 25, OBJECT::getImage()->GetWidth(), OBJECT::getImage()->GetHeight());
-
+	
 
 	for (int i = 0; i < 6; i++)
 	{
 		_pStatusBox[i] = new STATUSBOX;
 		_pStatusBox[i]->init(214 + i * 66, 150);
 		_pStatusBox[i]->setSkillXY(60 + (i * 60) + 3,WINSIZEY-90);
-		_pStatusBox[i]->setPlayer(_pPlayer);
+	
 		switch (i)
 		{
+		
 		case 5:
-			_pStatusBox[i]->_pSkillIcon->setNum(i+1);
+			_pStatusBox[i]->_pSkillIcon->setNum(6);
 			break;
 		default:
 		_pStatusBox[i]->_pSkillIcon->setNum(i);
@@ -36,16 +39,7 @@ HRESULT STATUSUI::init()
 		}
 		
 		_pStatusBox[i]->setSkillNum(static_cast<SKILLNUMBER> (i));
-		switch (i)
-		{
-		case 4:
-			break;
-		case 5:
-			break;
-		default:
-			
-			break;
-		}
+	
 
 	}
 	for (int i = 6; i < 7; i++)
@@ -87,8 +81,31 @@ HRESULT STATUSUI::init()
 	_pStatusSelect = new STATUSSELECT;
 	_pStatusSelect->init();
 	
-
 	
+	
+	
+	
+
+	/*	enum class SKILL_NAME
+	{
+		NONE = 0, 0  ->10
+		FIRE_DASH, 1  ->1
+		FIRE_STRIKE, 2 - >0
+ 		SHOKE_NOVA,3 ->2
+		CHAIN_LIGHTNING,4 ->3
+		STONE_SHOT,5->4
+		SHATTERINGSTRIKE,6->7
+		REBOUNDINGICICLES,7->6
+		GLACIALCROSS,8->5
+		MAX
+	};*/
+	
+	
+//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON);
+//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q);
+//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E);
+//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_R);
+//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_SPACE);
 	return S_OK;
 }
 
@@ -98,7 +115,7 @@ void STATUSUI::release()
 
 void STATUSUI::update()
 {
-	
+
 	
 	_pStatusSelect->update();
 	for (int i = 0; i < 6; i++)
@@ -222,6 +239,8 @@ void STATUSUI::render(HDC hdc)
 	//TextOut(hdc, 700, 400, str, strlen(str));
 	//sprintf_s(str, "count :%d temp:%d frame: %d", _count, _temp, _pStatusBox[_temp]->getFrameX());
 	//TextOut(hdc, 700, 100, str, strlen(str));
+
+	
 }
 
 void STATUSUI::collision()
@@ -248,6 +267,9 @@ void STATUSUI::collision()
 		}
 
 	}
+
+	//이거 다시 해야됨
+
 	for (int i = 6; i < 7; i++)
 	{
 		if (IntersectRect(&temp, &_pStatusSelect->getRC(), &_pStatusBox[i]->getRC()))//아이템과 셀렉트 박스랑 충돌이다.
