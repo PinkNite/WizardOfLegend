@@ -168,6 +168,7 @@
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyState.h" />
+    <ClInclude Include="EnemyStateDamage.h" />
     <ClInclude Include="EnemyStateDeath.h" />
     <ClInclude Include="EnemyStateIdle.h" />
     <ClInclude Include="EnemyStateRun.h" />
@@ -275,6 +276,7 @@
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyStateDamage.cpp" />
     <ClCompile Include="EnemyStateDeath.cpp" />
     <ClCompile Include="EnemyStateIdle.cpp" />
     <ClCompile Include="EnemyStateRun.cpp" />

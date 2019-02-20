@@ -29,6 +29,10 @@ HRESULT BossStageScene::init()
 	_pBoss->setCameraLink(_pCamera);
 	_pBoss->setMagicMgr(_pMagicMgr);
 
+	// enemy area
+	_pEnemy = new Enemy();
+	_pEnemy->init();
+
 	// bubble
 	IMAGEMANAGER->addFrameImage("WaterBounce1", "resource/boss/ice/WaterBounce1.bmp", 600, 120, 5, 1, true, Mins::getMazenta());
 
@@ -45,12 +49,14 @@ void BossStageScene::update()
 
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
-		_pBoss->spell01(BOSS::SKILL_TYPE::CHAKRAM);
+		//_pBoss->spell01(BOSS::SKILL_TYPE::CHAKRAM);
+		_pEnemy->skillFire(float(_ptMouse.x), float(_ptMouse.y));
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('2'))
 	{
-		_pBoss->spell01(BOSS::SKILL_TYPE::BUBBLE);
+		//_pBoss->spell01(BOSS::SKILL_TYPE::BUBBLE);
+		_pEnemy->skillFire(float(_ptMouse.x), float(_ptMouse.y));
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('3'))
@@ -58,26 +64,46 @@ void BossStageScene::update()
 		_pBoss->dash(float(_ptMouse.x), float(_ptMouse.y));
 	}
 
+	if (KEYMANAGER->isOnceKeyDown('6'))
+	{
+		_pEnemy->setEnemy(Enemy::EnemyType::GHOUL, 300.0f, 400.0f);
+		_pEnemy->showEnemy();
+	}
+	if (KEYMANAGER->isOnceKeyDown('7'))
+	{
+		_pEnemy->setEnemy(Enemy::EnemyType::GOLEM, 300.0f, 400.0f);
+		_pEnemy->showEnemy();
+	}
+	if (KEYMANAGER->isOnceKeyDown('8'))
+	{
+		_pEnemy->setEnemy(Enemy::EnemyType::SUMMONER, 300.0f, 400.0f);
+		_pEnemy->showEnemy();
+	}
+
 	if (KEYMANAGER->isOnceKeyDown('9'))
 	{
 		_pBoss->setDamage(50.0f);
+		_pEnemy->setDamage(50.0f);
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('0'))
 	{
 		_pBoss->setDeath();
+		_pEnemy->setDeath();
 	}
 
-	//Å°ÆĞµå 0
 	if (KEYMANAGER->isOnceKeyDown(VK_SHIFT))
 	{
 		_isShow = true;
 		_pBoss->showBoss();
+		_pEnemy->setEnemy(Enemy::EnemyType::GHOUL, 300.0f, 400.0f);
+		_pEnemy->showEnemy();
 	}
 
 	if (_isShow)
 	{
 		_pBoss->update();
+		_pEnemy->update();
 	}
 
 	KEYANIMANAGER->update();
@@ -89,15 +115,16 @@ void BossStageScene::release()
 {
 	_pMagicMgr->release();
 	_pBoss->release();
+	_pEnemy->release();
 }
 
 void BossStageScene::render()
 {
 	_pCamera->renderinit();
 	_pCamera->render(getMemDC());
-
 	if (_isShow)
 	{
+		_pEnemy->render(getMemDC());
 		//_pBoss->render(getMemDC());
 	}
 }

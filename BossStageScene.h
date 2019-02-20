@@ -4,11 +4,13 @@
 #include "skillEffectMgr.h"
 #include "magicMgr.h"
 #include "camera.h"
+#include "Enemy.h"
 
 class BossStageScene :	public gameNode
 {
 private:
-	BOSS* _pBoss;
+	BOSS*				_pBoss;
+	Enemy*				_pEnemy;
 	CAMERA*				_pCamera;
 	MAGICMGR*			_pMagicMgr;
 

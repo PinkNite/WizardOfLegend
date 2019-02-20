@@ -8,9 +8,8 @@ public:
 	EnemyStateIdle();
 	~EnemyStateIdle();
 
-	EnemyState * handleState(Enemy * enemy, Enemy::State state)		override;
-	void enter(Enemy * enemy)					override;
-	void update(Enemy * enemy)					override;
-
+	virtual EnemyState * handleState(Enemy * enemy, Enemy::ActionState state)		override;
+	virtual void enter(Enemy * enemy)					override;
+	virtual void update(Enemy * enemy)					override;
 };
 

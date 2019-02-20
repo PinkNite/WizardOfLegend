@@ -11,14 +11,14 @@ EnemyStateIdle::~EnemyStateIdle()
 {
 }
 
-EnemyState * EnemyStateIdle::handleState(Enemy * enemy, Enemy::State state)
+EnemyState * EnemyStateIdle::handleState(Enemy * enemy, Enemy::ActionState state)
 {
 	return nullptr;
 }
 
 void EnemyStateIdle::enter(Enemy * enemy)
 {
-	enemy->setAction(Enemy::State::IDLE, Enemy::DIRECTION::RIGHT);
+	enemy->setAction(Enemy::ActionState::IDLE, enemy->getDirection());
 }
 
 void EnemyStateIdle::update(Enemy * enemy)
