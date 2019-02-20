@@ -46,6 +46,7 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
+	void pressRender(HDC hdc);
 	void tagInfoSetting();
 	void fontSetting();
 	///////////////////////////////////////////////메뉴선택//////////////////////////////

@@ -32,10 +32,10 @@ void MENU::release()
 
 void MENU::update()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))/////////임시 지워얗됨
-	{
-		_pressButton.isSelect = true;
-	}
+	//if (KEYMANAGER->isOnceKeyDown(VK_SPACE)||KEYMANAGER->isOnceKeyDown(VK_LBUTTON))/////////임시 지워얗됨
+	//{
+	//	_pressButton.isSelect = true;
+	//}
 	//메뉴 나가기
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_back.rc, _ptMouse))
 	{
@@ -48,10 +48,60 @@ void MENU::update()
 
 void MENU::render(HDC hdc)
 {
+	
+
+
+	if (_pressButton.isSelect)
+	{
+
+
+		fontRender(hdc, "SINGLEPLAYER", _changeFont, _singlePlayer.x, _singlePlayer.y, _singlePlayer.size, RGB(_singlePlayer.r, _singlePlayer.g, _singlePlayer.b));
+		fontRender(hdc, "MAPEDITOR", _changeFont, _mapEditor.x, _mapEditor.y, _mapEditor.size, RGB(_mapEditor.r, _mapEditor.g, _mapEditor.b));
+		fontRender(hdc, "OPTIONS", _changeFont, _option.x, _option.y, _option.size, RGB(_option.r, _option.g, _option.b));
+		fontRender(hdc, "CREDITS", _changeFont, _credit.x, _credit.y, _credit.size, RGB(_credit.r, _credit.g, _credit.b));
+		fontRender(hdc, "QUIT", _changeFont, _quit.x, _quit.y, _quit.size, RGB(_quit.r, _quit.g, _quit.b));
+		fontRender(hdc, " ", _changeFont, WINSIZEX / 2, WINSIZEY / 2, 20, RGB(255, 51, 153));
+
+	}
+	
+
+
+	//옵션 클릭되면 나오게
+	if (_option.isSelect)
+	{
+		_back.isSelect = false;
+		_option.image->render(hdc);
+	//	Rectangle(hdc, _back.rc);
+		fontRender(hdc, "FONT", _changeFont, WINSIZEX / 2-200, WINSIZEY / 2, 30, RGB(255, 255, 255));
+		fontRender(hdc, "SOUND", _changeFont, WINSIZEX / 2 - 200, WINSIZEY / 2-100, 30, RGB(255, 255, 255));
+		fontRender(hdc, "BACK", _changeFont, _back.x, _back.y, 30, RGB(255, 255, 255));
+		fontRender(hdc, _changeFont, _changeFont, WINSIZEX / 2 +100, WINSIZEY / 2, 30, RGB(160, 70, 10));
+		_pButton->render(hdc, _font.rc.left,_font.rc.top);
+		_pButton->render(hdc, _font.rc.left, _font.rc.top-100);
+	}
+	if (_back.isSelect)
+	{
+		_option.isSelect = false;
+	}
+	if (KEYMANAGER->isToggleKey(VK_TAB))
+	{
+		Rectangle(hdc, _singlePlayer.rc);
+		Rectangle(hdc, _mapEditor.rc);
+		Rectangle(hdc, _option.rc);
+		Rectangle(hdc, _credit.rc);
+		Rectangle(hdc, _quit.rc);
+	}
+	char str[200];
+	sprintf_s(str, "%d", _menuCount);
+	TextOut(hdc, 800, 800, str, strlen(str));
+}
+
+void MENU::pressRender(HDC hdc)
+{
 	if (!_pressButton.isSelect) //button오프일ㄸㅐ
 
 	{
-		
+
 		switch (_pressButton.count % 2)
 		{
 		case 0:
@@ -84,49 +134,6 @@ void MENU::render(HDC hdc)
 		fontRender(hdc, "PRESS ANI BUTTON", "휴먼둥근헤드라인", _pressButton.x, _pressButton.y, 15, RGB(_pressButton.r, _pressButton.g, _pressButton.b));
 
 	}
-
-
-	if (_pressButton.isSelect)
-	{
-
-
-		fontRender(hdc, "SINGLEPLAYER", _changeFont, _singlePlayer.x, _singlePlayer.y, _singlePlayer.size, RGB(_singlePlayer.r, _singlePlayer.g, _singlePlayer.b));
-		fontRender(hdc, "MAPEDITOR", _changeFont, _mapEditor.x, _mapEditor.y, _mapEditor.size, RGB(_mapEditor.r, _mapEditor.g, _mapEditor.b));
-		fontRender(hdc, "OPTIONS", _changeFont, _option.x, _option.y, _option.size, RGB(_option.r, _option.g, _option.b));
-		fontRender(hdc, "CREDITS", _changeFont, _credit.x, _credit.y, _credit.size, RGB(_credit.r, _credit.g, _credit.b));
-		fontRender(hdc, "QUIT", _changeFont, _quit.x, _quit.y, _quit.size, RGB(_quit.r, _quit.g, _quit.b));
-		fontRender(hdc, " ", _changeFont, WINSIZEX / 2, WINSIZEY / 2, 20, RGB(255, 51, 153));
-
-	}
-	
-
-
-	//옵션 클릭되면 나오게
-	if (_option.isSelect)
-	{
-		_back.isSelect = false;
-		_option.image->render(hdc, 0, 0);
-		Rectangle(hdc, _back.rc);
-		fontRender(hdc, "FONT", _changeFont, WINSIZEX / 2-200, WINSIZEY / 2, 30, RGB(255, 255, 255));
-		fontRender(hdc, "SOUND", _changeFont, WINSIZEX / 2 - 200, WINSIZEY / 2-100, 30, RGB(255, 255, 255));
-		fontRender(hdc, "BACK", _changeFont, _back.x, _back.y, 30, RGB(255, 255, 255));
-		fontRender(hdc, _changeFont, _changeFont, WINSIZEX / 2 +100, WINSIZEY / 2, 30, RGB(160, 70, 10));
-		_pButton->render(hdc, _font.rc.left,_font.rc.top);
-		_pButton->render(hdc, _font.rc.left, _font.rc.top-100);
-	}
-	if (_back.isSelect)
-	{
-		_option.isSelect = false;
-	}
-	if (KEYMANAGER->isToggleKey(VK_TAB))
-	{
-		Rectangle(hdc, _singlePlayer.rc);
-		Rectangle(hdc, _mapEditor.rc);
-		Rectangle(hdc, _option.rc);
-		Rectangle(hdc, _credit.rc);
-		Rectangle(hdc, _quit.rc);
-	}
-
 }
 
 void MENU::tagInfoSetting()
@@ -244,7 +251,7 @@ void MENU::singlePlayer()
 
 void MENU::mapEditor()
 {
-	SCENEMANAGER->changeScene("leeTest");
+	SCENEMANAGER->changeScene("mapEditScene");
 }
 
 void MENU::option()
@@ -263,6 +270,8 @@ void MENU::option()
 
 void MENU::credit()
 {
+	SCENEMANAGER->changeScene("leeTest");
+	
 }
 
 
@@ -338,6 +347,6 @@ void MENU::fontRender(HDC hdc, const char * str, const char * str2, int x, int y
 
 void MENU::test()
 {
-	SCENEMANAGER->changeScene("mapEditScene");
+	
 }
 

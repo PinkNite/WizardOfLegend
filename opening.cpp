@@ -93,23 +93,41 @@ void OPENING::update()
 
 void OPENING::render(HDC hdc)
 {
-	fontMove(hdc);
-
 	//메뉴창에서 나옴
 	/*if (_pressButton.isSelect)
 	{*/
 		//여기에 메뉴렌더
-	if (_jumpCount == 2)
-	{
-		_pMenu->render(hdc);
-	}
 	//}
 
 	//_fontX, _arrFontY[7], _hello.x, _hello.y
 		//RectangleMake(getMemDC(), _fontX+350, _arrFontY[7], 5, 5);
 		//RectangleMake(getMemDC(), _hello.x, _hello.y, 100, 100);
-	
+	if (_time < 6)
+	{
+		_99.image->alphaRender(hdc, _99.x, _99.y, _99.alpha);
+	}
+	if (_time > 6 && _time < 16)
+	{
+		_introPeople.image->alphaRender(hdc, _introPeople.x, _introPeople.y, _introPeople.alpha);
+	}
+	if (_time < 18)
+	{
+		fontMove(hdc);
+	}
+	if (_time > 20)
+	{
+		_title.image->alphaRender(hdc, _title.x, _title.y, _title.alpha);
+	}
+	if (_time > 20)
+	{
+		_logo.image->alphaRender(hdc, _logo.x, _logo.y, _logo.alpha);
+		_pMenu->pressRender(hdc);
+	}
 
+	if (_jumpCount == 2)
+	{
+		_pMenu->render(hdc);
+	}
 	
 }
 
@@ -161,7 +179,7 @@ void OPENING::helloManMove()
 	//충돌
 	if (isCollision(_fontX + 350, _arrFontY[7], _hello.x, _hello.y))
 	{
-		_hello.speed = 20;
+		_hello.speed = 25;
 	}
 	_hello.x -= _hello.speed;
 	_hello.y -= _hello.speed;
@@ -179,23 +197,8 @@ void OPENING::openingMove()
 
 void OPENING::fontMove(HDC hdc)
 {
-	if (_time < 6)
-	{
-		_99.image->alphaRender(hdc, _99.x, _99.y, _99.alpha);
-	}
-	if (_time > 20)
-	{
-		_title.image->alphaRender(hdc, _title.x, _title.y, _title.alpha);
-	}
-	if (_time > 20)
-	{
-		_logo.image->alphaRender(hdc, _logo.x, _logo.y, _logo.alpha);
-	}
-	if (_time > 6 && _time < 16)
-	{
-		_introPeople.image->alphaRender(hdc, _introPeople.x, _introPeople.y, _introPeople.alpha);
-	}
-
+	
+	
 
 	if (_time < 20)
 	{
@@ -280,23 +283,26 @@ void OPENING::fontMove(HDC hdc)
 					fontRender(hdc, "E", "양재블럭체", _fontX + i * 50, _arrFontY[i], 50, RGB(255, 51, 153));
 					if (_time > 10 + i * 0.2f&&_time < 18)
 					{
+						
 						if (_time < 14)
 						{
 							_angle += 0.1f;
 						}
-						if(_time>14&&_time<16)
+						if(_time>14)
 						{
 							
+							_angle = getAngle(_fontX + i * 50, _arrFontY[i], _hello.x+30, _hello.y+30);
 							_angle = 2 * PI - PI / 6;
 						}
-						 if (_time > 16)
-						{
-							_angle = getAngle(_fontX, _arrFontY[i], _hello.x-30, _hello.y-39);
-						}
+						
 						_speed += 0.1f;
 						_fontX += cosf(_angle) * _speed;
 
 						_arrFontY[i] += -sinf(_angle) * _speed;
+						if (isCollision(_fontX + i * 50, _arrFontY[i], _hello.x + 30, _hello.y + 30))
+						{
+							_angle = 2 * PI - PI / 6;
+						}
 					}
 				}
 				break;
