@@ -45,3 +45,8 @@ void SKILL::setMap(MAP * pMap)
 	_pMap = pMap;
 }
 
+int SKILL::getSkillType()
+{
+	return _nSkillType; 
+}
+

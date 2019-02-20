@@ -1402,6 +1402,11 @@ void PLAYER::setSkill(PLAYER::SKILL_NAME eSkillName)
 	_pCurrentSkill = _arSkill[static_cast<int>(eSkillName)];
 }
 
+int PLAYER::getSkillType(PLAYER::SKILL_NAME eSkillName)
+{
+	{ return _arSkill[static_cast<int>(eSkillName)]->getSkillType(); }
+}
+
 void PLAYER::getDamage(float fDamage)
 {
 	_fCurrentHealthPoint -= fDamage;

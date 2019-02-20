@@ -43,4 +43,6 @@ public:
 	void setPlayer(PLAYER* pPlayer);
 	void setMap(MAP* pMap);
 
+
+	virtual int	getSkillType();
 };

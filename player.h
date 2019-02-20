@@ -288,6 +288,8 @@ public:
 
 	SKILL_NAME	getCurrentSkill(PLAYER::SKILL_KEY skillKey) { return _arSettingSkill[static_cast<int>(skillKey)]; }
 
+	int		getSkillType(PLAYER::SKILL_NAME eSkillName);
+
 
 	bool	getIsUsingSkill(PLAYER::SKILL_KEY eSkillKey) {
 		return _arCurrentDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(eSkillKey)])] >= _arSkillDelayTime[static_cast<int>(_arSettingSkill[static_cast<int>(eSkillKey)])];
