@@ -309,6 +309,10 @@ public:
 	void saveDashStartPosX() {_fDashStartPosX = OBJECT::getPosX();}
 	void saveDashStartPosY() { _fDashStartPosY = OBJECT::getPosY(); }
 
+	float getDashStartPosX(){return _fDashStartPosX;}
+	float getDashStartPosY(){return _fDashStartPosY;}
+
+	bool isOnDropArea();
 
 private:
 	void tileCollisionTop(float fSpeed);

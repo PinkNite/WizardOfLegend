@@ -145,7 +145,8 @@ void STATE_RUN::onBtnSpace(PLAYER* pPlayer)
 	pPlayer->setDashTime(0.0f);
 	pPlayer->setAction(PLAYER::ACTION::DASH);
 	pPlayer->settingAni();
-
+	pPlayer->saveDashStartPosX();
+	pPlayer->saveDashStartPosY();
 	//pPlayer->setSkill(PLAYER::SKILL_NAME::FIRE_DASH);
 }
 

@@ -53,11 +53,28 @@ void STATE_DAMAGE::onBtnR(PLAYER * pPlayer)
 void STATE_DAMAGE::update(PLAYER * pPlayer)
 {
 	_fTimer += TIMEMANAGER->getElapsedTime();
-	if (_fTimer >= 0.3f)
+
+	if (pPlayer->isOnDropArea())
 	{
-		pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
-		pPlayer->setAction(PLAYER::ACTION::IDLE);
-		pPlayer->settingAni();
-		_fTimer = 0.0f;
+		if (_fTimer >= 0.3f)
+		{
+			pPlayer->getDamage(25.0f);
+			pPlayer->setPosX(pPlayer->getDashStartPosX());
+			pPlayer->setPosY(pPlayer->getDashStartPosY());
+			pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
+			pPlayer->setAction(PLAYER::ACTION::IDLE);
+			pPlayer->settingAni();
+			_fTimer = 0.0f;
+		}
+	}
+	else
+	{
+		if (_fTimer >= 0.3f)
+		{
+			pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
+			pPlayer->setAction(PLAYER::ACTION::IDLE);
+			pPlayer->settingAni();
+			_fTimer = 0.0f;
+		}
 	}
 }

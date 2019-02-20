@@ -183,9 +183,8 @@ void PLAYER::update()
 	{
 		if (_pMap->getTile(nTileIndexX, nTileIndexY )->getTerrian() == TILE::TERRIAN::DMAGE_PASS)
 		{
-			_bIsDeath = true;
-			setState(PLAYER::PLAYER_STATE::DEATH);
-			setAction(PLAYER::ACTION::DEATH);
+			setState(PLAYER::PLAYER_STATE::DAMAGE);
+			setAction(PLAYER::ACTION::DAMAGE);
 			settingAni();
 		}
 	}
@@ -613,6 +612,27 @@ void PLAYER::movePlayer()
 
 }
 
+
+bool PLAYER::isOnDropArea()
+{
+	int	nTileIndexX = 0;
+	int	nTileIndexY = 0;
+	nTileIndexX = OBJECT::getPosX() / _pMap->getTileSize();
+	nTileIndexY = (OBJECT::getPosY() + 32.0f) / _pMap->getTileSize();
+
+	//_pMap->getTile(nTileIndexX, nTileIndexY - 1)->Tilesefewa();
+	//_pMap->getTile(nTileIndexX+1, nTileIndexY )->Tilesefewa();
+	//_pMap->getTile(nTileIndexX, nTileIndexY +1)->Tilesefewa();
+	//_pMap->getTile(nTileIndexX-1, nTileIndexY )->Tilesefewa();
+
+	
+	if (_pMap->getTile(nTileIndexX, nTileIndexY)->getTerrian() == TILE::TERRIAN::DMAGE_PASS)
+	{
+			return true;
+	}
+	
+	return false;
+}
 
 void PLAYER::tileCollisionTop(float fSpeed)
 {
