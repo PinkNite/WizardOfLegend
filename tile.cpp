@@ -409,6 +409,7 @@ void TILE::release()
 
 void TILE::update()
 {
+	
 }
 
 void TILE::settingTile(int nFrameX, int nFrameY, bool bIsWall, OBJECT object)

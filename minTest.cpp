@@ -139,8 +139,8 @@ HRESULT MINTESTSCENE::init()
 	// bubble
 	IMAGEMANAGER->addFrameImage("WaterBounce1", "resource/boss/ice/WaterBounce1.bmp", 600, 120, 5, 1, true, Mins::getMazenta());
 
-	_pMagicMgr->addObject("WaterBalls", 100,  40, 40, IMAGEMANAGER->findImage("WaterBounce1"), 4, 120, 120, 10.0f, 1.3f,30.0f);
-	_pMagicMgr->addObject("IceChakram", 100,  40, 40, IMAGEMANAGER->findImage("IceChakram"), 4, 50, 50, 10.0f, 1.3f, 30.0f);
+	_pMagicMgr->addObject("WaterBalls", 100, 40, 40, IMAGEMANAGER->findImage("WaterBounce1"), 4, 120, 120, 10.0f, 1.3f, 30.0f, false);
+	_pMagicMgr->addObject("IceChakram", 100,  40, 40, IMAGEMANAGER->findImage("IceChakram"), 4, 50, 50, 10.0f, 1.3f, 30.0f, false);
 
 	_pMagicMgr->setPlayer(_pPlayer);
 

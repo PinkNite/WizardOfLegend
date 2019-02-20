@@ -20,9 +20,10 @@ void CAMERA::init(int posX, int posY, int windowWidth, int windowHeight, int map
 	setLeftTop();
 	_nMapHeight = mapHeight*2;
 	_nMapWidth = mapWidth*2;
-	_rcCameraLimit = { 0,0,_nMapWidth,_nMapHeight };
 
-	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _nMapWidth, _nMapHeight);
+	_rcCameraLimit = { 0,0,windowWidth,windowHeight };
+
+	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _width, _height);
 	_listRenderObject.clear();
 }
 
@@ -40,7 +41,13 @@ void CAMERA::render(HDC hdc)
 	while (iter != end)
 	{
 		OBJECT* pObject = (*iter);
-		pObject->render(getMemDC());
+		if (pObject->getPosX() > _left + 64 &&
+			pObject->getPosY() > _top + 64 &&
+			pObject->getPosX() < _left + _width + 64 &&
+			pObject->getPosY() < _top + _height + 64 )
+		{
+			pObject->render(getMemDC());
+		}
 		iter++;
 	}
 

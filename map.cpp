@@ -175,7 +175,13 @@ void MAP::render(HDC hdc)
 
 void MAP::update()
 {
-
+	for (int j = 0; j < _nTileCountY; j++)
+	{
+		for (int i = 0; i < _nTileCountX; i++)
+		{
+			_pCamera->pushRenderObject(_vvMap[j][i]);
+		}
+	}
 }
 
 
