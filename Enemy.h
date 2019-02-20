@@ -10,15 +10,20 @@ class Enemy : public OBJECT
 public:
 	enum class DIRECTION
 	{
+		LEFT, RIGHT
+	};
+
+	enum class MOVE
+	{
 		LEFT, RIGHT, UP, DOWN
 	};
 
 	enum class EnemyType
 	{
-		GHOUL, GOLEM, SUMMONER, LANCER
+		GHOUL, GOLEM, SUMMONER//, LANCER
 	};
 
-	enum class State 
+	enum class ActionState 
 	{
 		IDLE = 0,
 		RUN,
@@ -32,14 +37,14 @@ public:
 
 private:
 
-	const int MOB_WIDTH = 40;
-	const int MOB_HEIGHT = 80;
+	int MOB_RECT_WIDTH = 40;
+	int MOB_RECT_HEIGHT = 80;
 
 	float _fMaxHP;
 	float _fCurrentHP;
 	float _fSpeed;
 
-	map<State, string> _mState;
+	map<ActionState, string> _mState;
 	map<DIRECTION, string> _mDirection;
 
 	image * _pWeaponImage;
@@ -47,20 +52,23 @@ private:
 
 	animation * _pAnimation;
 
-	int _arFrame[20];
+	int   _arFrame[20];
 	float _timeSet;
 
 	string		_objName;
 	EnemyType	_enType;
-	State		_state;
+	ActionState	_state;
 	DIRECTION	_direction;
+	MOVE		_move;
 
 	// 이동 방향
 	float		_fAngleX;
 	float		_fAngleY;
 
 	EnemyState *	_pCurrentState;
-	EnemyState *	_arState[static_cast<const int>(State::MAX)];
+	EnemyState *	_arState[static_cast<const int>(ActionState::MAX)];
+
+	CAMERA *	_pCamera;
 
 public:
 	Enemy();
@@ -82,7 +90,11 @@ private:
 	void addAnimaKey(const string& strDir, const string& strAction, int startFrame, int endFrame, int fps, bool isLoop, void * cbFunction);
 
 public:
+	void setCameraLink(CAMERA* pCamera) { _pCamera = pCamera; }
+
+	// 몹 종류, 위치 설정
 	void setEnemy(EnemyType enType, float x, float y);
+
 	// 맵에 출현
 	void showEnemy();
 	// 몹이 플레이어 인식시
@@ -90,10 +102,9 @@ public:
 
 	// 상태 패턴 생성
 	void createStates();
-	void setState(State eState);
+	void setState(ActionState eState);
 	void setDirection(DIRECTION eDirection);
-	void setAction(State eState, DIRECTION eDirection);
-	void handleState(State eState, DIRECTION eDirection);
+	void setAction(ActionState eState, DIRECTION eDirection);
 	
 	void startAnimation();
 
@@ -116,7 +127,5 @@ public:
 	inline DIRECTION getDirection() { return _direction; }
 	inline animation* getAnimation() { return _pAnimation; }
 
-	static void callbackBattle(void * obj);
-	static void callbackIdle(void * obj);
 };
 

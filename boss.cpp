@@ -74,7 +74,7 @@ void BOSS::update()
 		_pCurrentState->update(this);
 	}
 
-	if (_fCurrentHP < 0)
+	if (_fCurrentHP < 0 && ACTION::DEATH != _action)
 	{
 		setDeath();
 	}
