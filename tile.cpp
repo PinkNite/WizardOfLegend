@@ -292,46 +292,68 @@ void TILE::render(HDC hdc)
 		)
 	{
 		//_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
-		if (_terrian == TERRIAN::WALL)
+		if (_object == OBJECT::NONE)
 		{
-			_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
-			SetTextColor(hdc, RGB(255, 255, 0));
-			SetBkMode(hdc, TRANSPARENT);
-			sprintf_s(str, "벽");
-			TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+			if (_terrian == TERRIAN::WALL)
+			{
+				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				SetTextColor(hdc, RGB(255, 255, 0));
+				SetBkMode(hdc, TRANSPARENT);
+				sprintf_s(str, "벽");
+				TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+			}
+			else if (_terrian == TERRIAN::PASS)
+			{
+				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				SetTextColor(hdc, RGB(0, 255, 0));
+				SetBkMode(hdc, TRANSPARENT);
+				sprintf_s(str, "길");
+				TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+			}
+			else if (_terrian == TERRIAN::DMAGE_PASS)
+			{
+				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				SetTextColor(hdc, RGB(255, 0, 0));
+				SetBkMode(hdc, TRANSPARENT);
+				sprintf_s(str, "뎀");
+				TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+			}
 		}
-		else if (_terrian == TERRIAN::PASS)
-		{
-			_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
-			SetTextColor(hdc, RGB(0, 255, 0));
-			SetBkMode(hdc, TRANSPARENT);
-			sprintf_s(str, "길");
-			TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
-		}
-		else if (_terrian == TERRIAN::DMAGE_PASS)
-		{
-			_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
-			SetTextColor(hdc, RGB(255, 0, 0));
-			SetBkMode(hdc, TRANSPARENT);
-			sprintf_s(str, "뎀");
-			TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
-		}
-		/*else if (_object == OBJECT::NOMAL_OBJECT)
-		{
-			SetTextColor(hdc, RGB(0, 0, 255));
-			SetBkMode(hdc, TRANSPARENT);
-			sprintf_s(str, "오");
-			TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
-		}*/
 		if (_object != OBJECT::NONE)
 		{
-			_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, getFrameX(), setFrameY());
+			if (_terrian == TERRIAN::WALL)
+			{
+				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nObjFrameX, _nObjFrameY);
+				SetTextColor(hdc, RGB(255, 255, 0));
+				SetBkMode(hdc, TRANSPARENT);
+				sprintf_s(str, "벽");
+				TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+			}
+			else if (_terrian == TERRIAN::PASS)
+			{
+				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nObjFrameX, _nObjFrameY);
+				SetTextColor(hdc, RGB(0, 255, 0));
+				SetBkMode(hdc, TRANSPARENT);
+				sprintf_s(str, "길");
+				TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+			}
+			else if (_terrian == TERRIAN::DMAGE_PASS)
+			{
+				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nObjFrameX, _nObjFrameY);
+				SetTextColor(hdc, RGB(255, 0, 0));
+				SetBkMode(hdc, TRANSPARENT);
+				sprintf_s(str, "뎀");
+				TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+			}
 		}
 	}
 	if (bIsTrue)
 	{
 		Rectangle(hdc, _rcTile);
-		bIsTrue = false;
+		//bIsTrue = false;
 		if (_bIsWall) {
 			Rectangle(hdc, _rcTile);
 		}
@@ -349,17 +371,20 @@ void TILE::render(HDC hdc, bool Map)
 			)
 		{
 			//_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
-			if (_terrian == TERRIAN::WALL)
+			if (_object == OBJECT::NONE)
 			{
-				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
-			}
-			else if (_terrian == TERRIAN::PASS)
-			{
-				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
-			}
-			else if (_terrian == TERRIAN::DMAGE_PASS)
-			{
-				_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				if (_terrian == TERRIAN::WALL)
+				{
+					_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				}
+				else if (_terrian == TERRIAN::PASS)
+				{
+					_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				}
+				else if (_terrian == TERRIAN::DMAGE_PASS)
+				{
+					_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+				}
 			}
 			/*else if (_object == OBJECT::NOMAL_OBJECT)
 			{
@@ -371,15 +396,6 @@ void TILE::render(HDC hdc, bool Map)
 			if (_object != OBJECT::NONE)
 			{
 				_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, getFrameX(), setFrameY());
-			}
-
-			if (bIsTrue)
-			{
-				Rectangle(hdc, _rcTile);
-				bIsTrue = false;
-				if (_bIsWall) {
-					Rectangle(hdc, _rcTile);
-				}
 			}
 		}
 	}

@@ -57,6 +57,8 @@ private:
 	image*	_pImage;			//이미지를 담을 것이다.
 	int		_nFrameX;			//프레임 넘버 X
 	int		_nFrameY;			//프레임 넘버 Y
+	int		_nObjFrameX;		//오브젝트 프레임 넘버 X
+	int		_nObjFrameY;		//오브젝트 프레임 넘버 Y
 	RECT	_rcTile;			//사각형
 	int		_nNodeIndex;		//몇번째 노드인지 넣는 함수
 	OBJECT	_object;			//무슨 오브젝트가 있는지
@@ -108,6 +110,8 @@ public:
 	inline	void	setObjimg(image* pObjimg) { _pObjectImage = pObjimg; }
 	inline	void	setFrameX(int nFrameX) { _nFrameX = nFrameX; }
 	inline	void	setFrameY(int nFrameY) { _nFrameY = nFrameY; }
+	inline	void	setObjFrameX(int nObjFrameX) { _nObjFrameX = nObjFrameX; }
+	inline	void	setObjFrameY(int nObjFrameY) { _nObjFrameY = nObjFrameY; }
 	inline	void	setRectTile(RECT& rcTile) {	_rcTile = rcTile;}
 	inline	void	setRectTile(int nLeft, int nTop, int nWidth, int nHeight) { _rcTile = RectMake(nLeft, nTop, nWidth, nHeight); }
 	inline	void	setNodeIndex(int nIndex) { _nNodeIndex = nIndex; }

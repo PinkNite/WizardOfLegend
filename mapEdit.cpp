@@ -311,6 +311,7 @@ void MAPEDIT::render()
 	}
 	else if (_mapEditstate == MAPEDITSTATE::MAPEDITOBJECT)
 	{
+		//renderTerrain();
 		renderObject();
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_BACK))
@@ -486,6 +487,47 @@ void MAPEDIT::updateTerrain()
 			}
 		}
 	}
+
+	//선택 알파 블랜드
+	if (PtInRect(&rcMapPalletIce1, _ptMouse))
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+			{
+				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+				{
+					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() + _vTerrainPage[_terrainPageIndex]->getFrameWidth()
+						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() + _vTerrainPage[_terrainPageIndex]->getFrameHeight())
+					{
+						_clickDownStart.x = i;
+						_clickDownStart.y = j;
+					}
+				}
+			}
+			_clickMap = true;
+		}
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
+			{
+
+				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
+				{
+					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() + _vTerrainPage[_terrainPageIndex]->getFrameWidth()
+						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() + _vTerrainPage[_terrainPageIndex]->getFrameHeight())
+					{
+						_clickDownEnd.x = i;
+						_clickDownEnd.y = j;
+					}
+				}
+			}
+		}
+		else if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_clickMap = false;
+		}
+	}
 }
 
 void MAPEDIT::updateObject()
@@ -511,9 +553,9 @@ void MAPEDIT::updateObject()
 							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
 								[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObjimg(_vObjectPage2[_objectPageIndex]);
 							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
-								[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setFrameX(i);
+								[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObjFrameX(i);
 							_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
-								[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setFrameY(j);
+								[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObjFrameY(j);
 							
 							//페이지별 지형 결정해주기.
 							if (_objectPageIndex == 0)
@@ -521,29 +563,93 @@ void MAPEDIT::updateObject()
 								//_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
 								//	[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
 								//_pMapTool->setisWall(false);
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObject(TILE::OBJECT::NOMAL_OBJECT);
+								_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+									[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setTerrian(TILE::TERRIAN::PASS);
 								if (i >= 0 && i <= 7 && j >= 0 && j <= 1)
 								{
-									_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
+									//_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
 									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
-										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObject(TILE::OBJECT::NOMAL_OBJECT);
+										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
 								}
 								if (i >= 0 && i <= 7 && j >= 5 && j <= 6)
 								{
-									_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
+									//_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
 									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
-										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObject(TILE::OBJECT::NOMAL_OBJECT);
+										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
 								}
-								if (i >= 8 && i <= 9 && j >= 4 && j <= 5)
+								if (i >= 8 && i <= 9 && j >= 3 && j <= 4)
 								{
-									_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
+									//_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
 									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
-										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setObject(TILE::OBJECT::NOMAL_OBJECT);
+										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
+								}
+								if (i >= 10 && i <= 11 && j >= 2 && j <= 3)
+								{
+									//_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
+								}
+								if (i >= 3 && i <= 5 && j == 10)
+								{
+									//_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
+								}
+								if (i == 1 && j >= 9 && j <= 10)
+								{
+									//_pMapTool->setObject(TILE::OBJECT::NOMAL_OBJECT);
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart2.y - j) - ceil(abs(static_cast<float>(_clickDownEnd2.y) - static_cast<float>(_clickDownStart2.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart2.x - i) - ceil(abs(static_cast<float>(_clickDownEnd2.x) - static_cast<float>(_clickDownStart2.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
 								}
 							}
 						}
 					}
 				}
 			}
+		}
+	}
+
+	//선택 알파 블랜드
+	if (PtInRect(&rcMapPalletIce1, _ptMouse))
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			for (int j = 0; j <= _vObjectPage[_objectPageIndex]->getMaxFrameY(); j++)
+			{
+
+				for (int i = 0; i <= _vObjectPage[_objectPageIndex]->getMaxFrameX(); i++)
+				{
+					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() + _vObjectPage[_objectPageIndex]->getFrameWidth()
+						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() + _vObjectPage[_objectPageIndex]->getFrameHeight())
+					{
+						_clickDownStart2.x = i;
+						_clickDownStart2.y = j;
+					}
+				}
+			}
+			_clickMap = true;
+		}
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			for (int j = 0; j <= _vObjectPage[_objectPageIndex]->getMaxFrameY(); j++)
+			{
+
+				for (int i = 0; i <= _vObjectPage[_objectPageIndex]->getMaxFrameX(); i++)
+				{
+					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() + _vObjectPage[_objectPageIndex]->getFrameWidth()
+						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() + _vObjectPage[_objectPageIndex]->getFrameHeight())
+					{
+						_clickDownEnd2.x = i;
+						_clickDownEnd2.y = j;
+					}
+				}
+			}
+		}
+		else if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_clickMap = false;
 		}
 	}
 }
@@ -601,47 +707,6 @@ void MAPEDIT::renderTerrain()
 	TextOut(getMemDC(), rcTypePage.left + 400, rcTypePage.top + 40, _pageIndex, strlen(_pageIndex));
 	SelectObject(getMemDC(), oldFont);
 	DeleteObject(font);
-
-	//선택 알파 블랜드
-	if (PtInRect(&rcMapPalletIce1, _ptMouse))
-	{
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-		{
-			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
-			{
-				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
-				{
-					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() + _vTerrainPage[_terrainPageIndex]->getFrameWidth()
-						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() + _vTerrainPage[_terrainPageIndex]->getFrameHeight())
-					{
-						_clickDownStart.x = i;
-						_clickDownStart.y = j;
-					}
-				}
-			}
-			_clickMap = true;
-		}
-		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-		{
-			for (int j = 0; j <= _vTerrainPage[_terrainPageIndex]->getMaxFrameY(); j++)
-			{
-
-				for (int i = 0; i <= _vTerrainPage[_terrainPageIndex]->getMaxFrameX(); i++)
-				{
-					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vTerrainPage[_terrainPageIndex]->getFrameWidth() + _vTerrainPage[_terrainPageIndex]->getFrameWidth()
-						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vTerrainPage[_terrainPageIndex]->getFrameHeight() + _vTerrainPage[_terrainPageIndex]->getFrameHeight())
-					{
-						_clickDownEnd.x = i;
-						_clickDownEnd.y = j;
-					}
-				}
-			}
-		}
-		else if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-		{
-			_clickMap = false;
-		}
-	}
 
 	if (_clickMap == true)
 	{
@@ -734,47 +799,7 @@ void MAPEDIT::renderObject()
 	SelectObject(getMemDC(), oldFont);
 	DeleteObject(font);
 
-	//선택 알파 블랜드
-	if (PtInRect(&rcMapPalletIce1, _ptMouse))
-	{
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-		{
-			for (int j = 0; j <= _vObjectPage[_objectPageIndex]->getMaxFrameY(); j++)
-			{
-
-				for (int i = 0; i <= _vObjectPage[_objectPageIndex]->getMaxFrameX(); i++)
-				{
-					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() + _vObjectPage[_objectPageIndex]->getFrameWidth()
-						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() + _vObjectPage[_objectPageIndex]->getFrameHeight())
-					{
-						_clickDownStart2.x = i;
-						_clickDownStart2.y = j;
-					}
-				}
-			}
-			_clickMap = true;
-		}
-		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-		{
-			for (int j = 0; j <= _vObjectPage[_objectPageIndex]->getMaxFrameY(); j++)
-			{
-
-				for (int i = 0; i <= _vObjectPage[_objectPageIndex]->getMaxFrameX(); i++)
-				{
-					if (_ptMouse.x >= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() && _ptMouse.x <= rcMapPalletIce1.left + i * _vObjectPage[_objectPageIndex]->getFrameWidth() + _vObjectPage[_objectPageIndex]->getFrameWidth()
-						&& _ptMouse.y >= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() && _ptMouse.y <= rcMapPalletIce1.top + j * _vObjectPage[_objectPageIndex]->getFrameHeight() + _vObjectPage[_objectPageIndex]->getFrameHeight())
-					{
-						_clickDownEnd2.x = i;
-						_clickDownEnd2.y = j;
-					}
-				}
-			}
-		}
-		else if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-		{
-			_clickMap = false;
-		}
-	}
+	
 
 	if (_clickMap == true)
 	{
@@ -797,10 +822,10 @@ void MAPEDIT::renderObject()
 	}
 	else
 	{
-		for (int j = 0; j <= _vObjectPage2[_objectPageIndex]->getMaxFrameY(); j++)
+		for (int j = 0; j <= _vObjectPage[_objectPageIndex]->getMaxFrameY(); j++)
 		{
 
-			for (int i = 0; i <= _vObjectPage2[_objectPageIndex]->getMaxFrameX(); i++)
+			for (int i = 0; i <= _vObjectPage[_objectPageIndex]->getMaxFrameX(); i++)
 			{
 				if (i >= _clickDownStart2.x && i <= _clickDownEnd2.x &&
 					j >= _clickDownStart2.y && j <= _clickDownEnd2.y)
