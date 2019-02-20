@@ -175,13 +175,21 @@ void MAP::render(HDC hdc)
 
 void MAP::update()
 {
-	for (int j = 0; j < _nTileCountY; j++)
-	{
-		for (int i = 0; i < _nTileCountX; i++)
-		{
-			_pCamera->pushRenderObject(_vvMap[j][i]);
-		}
-	}
+	//for (int j = 0; j < _nTileCountY; j++)
+	//{
+	//	for (int i = 0; i < _nTileCountX; i++)
+	//	{
+	//		_vvMap[j][i]->update();
+	//		if (_pCamera->getLeft() - 64.0f < _vvMap[j][i]->getPosX() &&
+	//			_pCamera->getRight() + 64.0f > _vvMap[j][i]->getPosX() &&
+	//			_pCamera->getTop() - 64.0f < _vvMap[j][i]->getPosY() &&
+	//			_pCamera->getBotton() + 64.0f > _vvMap[j][i]->getPosY())
+	//		{
+	//			_pCamera->pushRenderObject(_vvMap[j][i]);
+	//			
+	//		}
+	//	}
+	//}
 }
 
 

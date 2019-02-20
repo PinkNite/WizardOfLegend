@@ -409,7 +409,8 @@ void TILE::release()
 
 void TILE::update()
 {
-	
+	setPosX(_rcTile.left + (_rcTile.right - _rcTile.left));
+	setPosY(_rcTile.top + (_rcTile.bottom - _rcTile.top));
 }
 
 void TILE::settingTile(int nFrameX, int nFrameY, bool bIsWall, OBJECT object)

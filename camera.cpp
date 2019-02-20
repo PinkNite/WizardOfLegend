@@ -21,9 +21,9 @@ void CAMERA::init(int posX, int posY, int windowWidth, int windowHeight, int map
 	_nMapHeight = mapHeight*2;
 	_nMapWidth = mapWidth*2;
 
-	_rcCameraLimit = { 0,0,windowWidth,windowHeight };
+	_rcCameraLimit = { 0,0,_nMapWidth,_nMapHeight };
 
-	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _width, _height);
+	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _nMapWidth + 400, _nMapHeight);
 	_listRenderObject.clear();
 }
 
@@ -31,6 +31,7 @@ void CAMERA::update()
 {
 	_listRenderObject.clear();
 
+	_rcCameraLimit = RectMake( _left,_top, _width, _height);
 }
 
 void CAMERA::render(HDC hdc)

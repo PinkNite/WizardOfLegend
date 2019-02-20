@@ -144,6 +144,7 @@ HRESULT MINTESTSCENE::init()
 
 	_pMagicMgr->setPlayer(_pPlayer);
 
+	_pMap->settingLimitRect();
 
 
 
@@ -185,11 +186,12 @@ void MINTESTSCENE::update()
 	}
 	_pBoss->update();
 
-	_pCamera->settingCameraRange(static_cast<int>(_pPlayer->getPosX() - WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() - WINSIZEY / 2.0f),
-		static_cast<int>(_pPlayer->getPosX() + WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() + WINSIZEY / 2.0f));
-	_pMap->settingLimitRect();
-
+	//_pCamera->settingCameraRange(static_cast<int>(_pPlayer->getPosX() - WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() - WINSIZEY / 2.0f),
+		//static_cast<int>(_pPlayer->getPosX() + WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() + WINSIZEY / 2.0f));
+	//_pMap->update();
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
+
+	_pMap->settingLimitRect();
 }
 
 void MINTESTSCENE::release()
