@@ -20,6 +20,7 @@ HRESULT LEETEST::init()
 	_pMap = new MAP();
 	_pMap->init("map");
 
+	_pPlayer->setLinkMap(_pMap);
 	_pPlayer->init();
 
 	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY, _pMap->getMapCountX() * _pMap->getTileSize() * 2, _pMap->getMapCountY() * _pMap->getTileSize() * 2);
@@ -31,7 +32,7 @@ HRESULT LEETEST::init()
 
 	_pMagicMgr->setLink(_pCamera);
 	_pMagicMgr->setPlayer(_pPlayer);
-
+	_pMagicMgr->setMap(_pMap);
 
 
 
@@ -142,10 +143,6 @@ HRESULT LEETEST::init()
 
 	_pMagicMgr->setPlayer(_pPlayer);
 
-
-
-
-	_pPlayer->setLinkMap(_pMap);
 	
 	_pMouse = new image;
 	_pMouse = IMAGEMANAGER->addImage("mouse", "resource/intro/mouseCursor.bmp", 64, 64, true, RGB(255, 0, 255));

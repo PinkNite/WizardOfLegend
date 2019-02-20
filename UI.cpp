@@ -22,8 +22,8 @@ HRESULT UI::init()
 
 	
 	_pSkillUI = new SKILLUI;
-	_pSkillUI->init();
 	_pSkillUI->setStatusUI(_pStatusUI);//링크
+	_pSkillUI->init();
 	for (int i = 0; i < 2; i++)
 	{
 		_pGoldHD[i] = new GOLDHD;
@@ -64,20 +64,7 @@ HRESULT UI::init()
 	
 	_HP = 500;//아직 안받는 값
 	_damage = 100;
-	
-	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::LBUTTON, PLAYER::SKILL_NAME::NONE);
-	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::RBUTTON, PLAYER::SKILL_NAME::NONE);
-	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::BTN_Q, PLAYER::SKILL_NAME::NONE);
-	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::BTN_E, PLAYER::SKILL_NAME::NONE);
-	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::BTN_R, PLAYER::SKILL_NAME::NONE);
-	//_pPlayer->setCurrentSkill(PLAYER::SKILL_KEY::BTN_SPACE, PLAYER::SKILL_NAME::NONE);
-	//	
-	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON);
-	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON);
-	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q);
-	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E);
-	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_R);
-	_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_SPACE);
+
 	
 	return S_OK;
 }

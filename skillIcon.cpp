@@ -40,12 +40,13 @@ void SKILLICON::render(HDC hdc)
 
 void SKILLICON::setSkillIcon()
 {
+
 	
 	for (int i = 0; i < 11; i++)
 	{
 		switch (i)
 		{
-		case 0:
+		case 2:
 			_str = _skillIcon.name = "Flame Strike";    //6
 			_skillIcon.info = "Blast enemies away with plumes of flames!";
 			_skillIcon.element = FIRE;
@@ -92,7 +93,7 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.frameY = 4 / 16;
 
 			break;
-		case 2:
+		case 3:
 
 			_str = _skillIcon.name = "Shock Nova";    //6
 			_skillIcon.info = "Hold to charge up and release an explosion of electricity that shocks all foes in the area at maximum charge!";
@@ -116,8 +117,8 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.frameY = 107 / 16;
 
 			break;
-		case 3:
-
+		case 4:
+			
 			_str = _skillIcon.name = "Thundering Chain";    //6
 			_skillIcon.info = "Generate a series of lightning strikes that shock foes!";
 			_skillIcon.element = LIGHTNING;
@@ -140,8 +141,8 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.frameY = 101 / 16;
 
 			break;
-		case 4:
-
+		case 5:
+			
 			_str = _skillIcon.name = "Stone Shot";    //6
 			_skillIcon.info = "Rapidly fire stones!";
 			_skillIcon.element = EARTH;
@@ -165,8 +166,8 @@ void SKILLICON::setSkillIcon()
 
 			break;
 
-		case 5:
-
+		case 8:
+			
 			_str = _skillIcon.name = "Glacial Cross";    //6
 			_skillIcon.info = "Dash forward and conjure a colossal frozen fist to strike foes!";
 			_skillIcon.element = WATER;
@@ -189,8 +190,8 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.frameY = 36 / 16;
 
 			break;
-		case 6:
-
+		case 7:
+		
 			_str = _skillIcon.name = "Rebounding Icicles";    //6
 			_skillIcon.info = "Conjure a series of icicles that cascade out and return to you!";
 			_skillIcon.element = WATER;
@@ -213,8 +214,8 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.frameY = 32 / 16;
 
 			break;
-		case 7:
-
+		case 6:
+			
 			_str = _skillIcon.name = "Shattering Strike";    //6
 			_skillIcon.info = "Strike a boulder to shatter it into a ring of shrapnel!";
 			_skillIcon.element = EARTH;
@@ -237,8 +238,8 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.frameY = 141 / 16;
 
 			break;
-		case 8:
-
+		case 9:
+			
 			_str = _skillIcon.name = "Tearing Whirlwind";    //6
 			_skillIcon.info = "Rapidly spin forward and pull nearby enemies into your wake!";
 			_skillIcon.element = AIR;
@@ -261,7 +262,7 @@ void SKILLICON::setSkillIcon()
 			_skillIcon.frameY = 85 / 16;
 
 			break;
-		case 9:
+		case 10:
 
 			_str = _skillIcon.name = "Terra Ring";    //6
 			_skillIcon.info = "Pulverize the ground to summon cascading rings of earth spikes!";
@@ -286,7 +287,7 @@ void SKILLICON::setSkillIcon()
 
 			break;
 
-		case 10:
+		case 0:
 			_str = _skillIcon.name = "empty";
 			_skillIcon.frameX = 240 % 16;
 			_skillIcon.frameY = 240 / 16;
@@ -294,7 +295,7 @@ void SKILLICON::setSkillIcon()
 		}
 		_vSkillIcon.push_back(_skillIcon);
 		_mSkillIcon.insert(make_pair(_str, _vSkillIcon));
-
+	
 	}
 }
 
