@@ -1,6 +1,8 @@
 #pragma once
 #include "stdafx.h"
 #include "magic.h"
+#include "map.h"
+
 class CAMERA;
 class PLAYER;
 class BOSS;
@@ -13,6 +15,8 @@ private:
 	CAMERA*					_pCamera;
 	PLAYER*					_pPlayer;
 	BOSS*					_pBoss;
+	MAP*					_pMap;
+
 public:
 	MAGICMGR();
 	~MAGICMGR();
@@ -39,6 +43,7 @@ public:
 	void setLink(CAMERA* pCamera) { _pCamera = pCamera; }
 	void setPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 	void setBoss(BOSS* pBoss) { _pBoss = pBoss; }
+	void setMap(MAP* pMap) { _pMap = pMap; }
 
 	//마법과 객체 충돌은 여기서 처리하자
 private:

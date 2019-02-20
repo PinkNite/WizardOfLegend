@@ -18,6 +18,7 @@ HRESULT MINTESTSCENE::init()
 	_pMap = new MAP();
 	_pMap->init("map");
 
+	_pPlayer->setLinkMap(_pMap);
 	_pPlayer->init();
 
 	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY, _pMap->getMapCountX() * _pMap->getTileSize()*2, _pMap->getMapCountY() * _pMap->getTileSize()*2);
@@ -29,6 +30,7 @@ HRESULT MINTESTSCENE::init()
 
 	_pMagicMgr->setLink(_pCamera);
 	_pMagicMgr->setPlayer(_pPlayer);
+	_pMagicMgr->setMap(_pMap);
 
 
 
@@ -142,7 +144,6 @@ HRESULT MINTESTSCENE::init()
 
 
 
-	_pPlayer->setLinkMap(_pMap);
 	return S_OK;
 }
 

@@ -1,11 +1,10 @@
 #pragma once
 #include "stdafx.h"
 #include "player.h"
-
+#include "map.h"
 class MAGICMGR;
 class SKILL_EFFECT_MGR;
 class PLAYER;
-
 class SKILL
 {
 public:
@@ -19,11 +18,15 @@ public:
 	};
 
 protected:
-	MAGICMGR*			_pMagicMgr;
+	MAGICMGR * _pMagicMgr;
 	SKILL_EFFECT_MGR*	_pSkillEffectMgr;
 	PLAYER*				_pPlayer;
 	int					_nSkillType;
 	PLAYER::SKILL_NAME	_eSkillName;
+
+
+	MAP*				_pMap;
+
 public:
 	SKILL();
 	virtual ~SKILL();
@@ -32,12 +35,12 @@ public:
 	virtual	void	update()		abstract;
 	virtual	void	release()		abstract;
 	virtual	void	render(HDC hdc)	abstract;
-	virtual void	pushMagicKey(float fPosX,float fPosY);		//스킬 하나 쓰는 애들 위해
-	virtual void	pullMagicKey(float fPosX = 0.0f,float fPosY = 0.0f);
+	virtual void	pushMagicKey(float fPosX, float fPosY);		//스킬 하나 쓰는 애들 위해
+	virtual void	pullMagicKey(float fPosX = 0.0f, float fPosY = 0.0f);
 public:
 	void setMagicMgr(MAGICMGR* pMagicMgr);
 	void setSkillEffectMgr(SKILL_EFFECT_MGR* pSkillEffectMgr);
 	void setPlayer(PLAYER* pPlayer);
-
+	void setMap(MAP* pMap);
 
 };

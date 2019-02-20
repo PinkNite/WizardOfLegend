@@ -10,7 +10,7 @@ MAGIC::~MAGIC()
 {
 }
 
-void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime,const string& strKey)
+void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, const string& strKey)
 {
 	_fPosX = -2000.0f;
 	_fPosY = -2000.0f;
@@ -129,9 +129,20 @@ void MAGIC::update()
 	if (_bIsActive)
 	{
 		_fActiveTime += TIMEMANAGER->getElapsedTime();
+		if (isCollisionWall()) {
+			_bIsActive = false;
+			if (!_bIsPlayer)
+			{
+				_bIsTrun = true;
+			}
+
+			return;
+		}
 
 		if (_fActiveTime >= _fTotalTime)
 		{
+
+
 			_bIsActive = false;
 			if (!_bIsPlayer)
 			{
@@ -148,9 +159,9 @@ void MAGIC::update()
 			_fPosY += Mins::presentPowerY(_fMoveAngle, _fMoveSpeed * TIMEMANAGER->getElapsedTime());
 
 		}
-		else if(!_bIsPlayer)
+		else if (!_bIsPlayer)
 		{
-			if (_fActiveTime<= _fTurnTime)
+			if (_fActiveTime <= _fTurnTime)
 			{
 				_fMoveAngle += PI2 / 18;
 				//
@@ -162,7 +173,7 @@ void MAGIC::update()
 				if (_bIsTrun)
 				{
 					_bIsTrun = false;
-					_fMoveAngle = getAngle(_fPosX, _fPosY,_pPlayer->getPosX(), _pPlayer->getPosY());
+					_fMoveAngle = getAngle(_fPosX, _fPosY, _pPlayer->getPosX(), _pPlayer->getPosY());
 					_fMoveSpeed = 1000.0f;
 				}
 			}
@@ -184,8 +195,13 @@ void MAGIC::update()
 		{
 			_pEffectAni->frameUpdate(TIMEMANAGER->getElapsedTime());
 		}
+
+
 	}
+
+
 	_pCamera->pushRenderObject(this);
+
 }
 
 void MAGIC::render(HDC hdc)
@@ -198,11 +214,11 @@ void MAGIC::render(HDC hdc)
 	}
 	else
 	{
-		_pImg->frameRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY),_nFrameX, _nFrameY);
+		_pImg->frameRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY), _nFrameX, _nFrameY);
 	}
 	//Rectangle(hdc, _rcCollision);
 
-	
+
 }
 
 void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed, bool bIsPlayer)
@@ -217,6 +233,7 @@ void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed,
 	_fMoveSpeed = fMoveSpeed;
 	_bIsPlayer = bIsPlayer;
 	setIsDamage(false);
+	_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);
 
 }
 
@@ -232,6 +249,8 @@ void MAGIC::create(float fPosX, float fPosY, float fMoveAngle, float fMoveSpeed,
 	_nFrameX = nFrameX;
 	_nFrameY = nFrameY;
 	setIsDamage(false);
+	_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);
+
 }
 
 
@@ -254,6 +273,7 @@ void MAGIC::create(bool bIsPlayer, float fCirclePosX, float fCirclePosY, float f
 
 	_bIsPlayer = bIsPlayer;
 	setIsDamage(false);
+	_rcCollision = RectMakeCenter(_fPosX, _fPosY, _nWidth, _nHeight);
 
 }
 
@@ -268,4 +288,32 @@ void MAGIC::returnPool()
 	}
 	_fMoveAngle = 0.0f;
 	_fMoveSpeed = 0.0f;
+}
+
+bool MAGIC::isCollisionWall()
+{
+	RECT rcTmp;
+	bool bIsCollision = false;
+
+	//3칸을 보고 밀자?
+	//자신 밑 옆을 보고 못가면 좌표계만 밀고
+	//자신의 밑 아래를 보고 못가면 좌표계만 밀어버린다
+	//그리고 setting을 한다
+	//왼쪽이 비면 가고
+	//위쪽이 비면 간다
+	int	nTileIndexX = 0;
+	int	nTileIndexY = 0;
+	nTileIndexX = static_cast<int>(_fPosX) / _pMap->getTileSize();
+	nTileIndexY = (static_cast<int>(_fPosY) + (_height / 2)) / _pMap->getTileSize();
+	RECT rcCollision = RectMakeCenter(_fPosX, (_fPosY)+(_height / 2), 16, 16);
+	if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX, nTileIndexY)->getRectTile(), &rcCollision))
+	{
+		if (_pMap->getTile(nTileIndexX, nTileIndexY)->getTerrian() != TILE::TERRIAN::PASS)
+		{
+
+			return true;
+		}
+	}
+
+	return false;
 }

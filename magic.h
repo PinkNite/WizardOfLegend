@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "animation.h"
 #include "object.h"
+#include "map.h"
 
 class CAMERA;
 class PLAYER;
@@ -46,6 +47,7 @@ private:
 	bool	_bIsDamage;			//에네미나 보스한테 데미지를 준 마법이다
 
 	float	_fDamage;			//데미지
+	MAP*	_pMap;
 
 public:
 	MAGIC();
@@ -85,4 +87,9 @@ public:
 	
 	float	getDamage() { return _fDamage; }
 	void	setDamage(float fDamage) { _fDamage = fDamage; }
+
+	void	setMap(MAP* pMap) { _pMap = pMap; }
+
+private:
+	bool	isCollisionWall();
 };

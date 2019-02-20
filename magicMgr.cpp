@@ -147,7 +147,8 @@ void MAGICMGR::addObject(const string& strKey, int nMagicCount, int nWidth, int 
 		MAGIC* pMagic = new MAGIC();
 		pMagic->init(nWidth, nHeight, pImg, nFps, nFrameMaxX, nFrameMaxY, fTotalTime, strKey);
 		pMagic->setDamage(fDamage);
-		
+		pMagic->setMap(_pMap);
+
 		pMagic->setCamera(_pCamera);
 		pMagic->setPlayer(_pPlayer);
 		
@@ -171,6 +172,8 @@ void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int
 		MAGIC* pMagic = new MAGIC();
 		pMagic->init(nWidth, nHeight, pImg,nFrameX,nFrameY,fTotalTime,strKey);
 		pMagic->setDamage(fDamage);
+		pMagic->setMap(_pMap);
+
 		pMagic->setCamera(_pCamera);
 		pMagic->setPlayer(_pPlayer);
 
@@ -194,6 +197,8 @@ void MAGICMGR::addObject(animation * pAni, const string & strKey, int nMagicCoun
 		MAGIC* pMagic = new MAGIC();
 		pMagic->init(nWidth, nHeight, pImg, pAni, fTotalTime, strKey);
 		pMagic->setDamage(fDamage);
+		pMagic->setMap(_pMap);
+
 		pMagic->setCamera(_pCamera);
 		pMagic->setPlayer(_pPlayer);
 
@@ -217,6 +222,8 @@ void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int
 		MAGIC* pMagic = new MAGIC();
 		pMagic->init(nWidth, nHeight, pImg, nFps, nFrameMaxX, nFrameMaxY, fTotalTime,fTurnTime, strKey);
 		pMagic->setDamage(fDamage);
+		pMagic->setMap(_pMap);
+
 		pMagic->setCamera(_pCamera);
 		pMagic->setPlayer(_pPlayer);
 
@@ -240,6 +247,8 @@ void MAGICMGR::CollisionPlayerToMagic()
 			if (IntersectRect(&rcTmp, _pPlayer->getCollisionRect(), pMagic->getRect())) 
 			{
 				iter = _lActiveMagic.erase(iter);
+				pMagic->returnPool();
+				_mqMagicPool.find(pMagic->getKey())->second.push(pMagic);
 				_pPlayer->getDamage(pMagic->getDamage());
 			}
 			else {

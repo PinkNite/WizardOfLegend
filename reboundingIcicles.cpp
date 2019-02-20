@@ -46,7 +46,25 @@ void REBOUNDINGICICLES::update()
 			_fOffsetTimer = 0.0f;
 		}
 
-		
+		RECT rcTmp;
+		RECT rcTile;
+		int nTileIndexX = 0;
+		int nTileIndexY = 0;
+		nTileIndexX = static_cast<int>(_fStartPosX) / SKILL::_pMap->getTileSize();
+		nTileIndexY = static_cast<int>(_fStartPosY) / SKILL::_pMap->getTileSize();
+		rcTile = RectMakeCenter(_fStartPosX, _fStartPosY, 32, 32);
+
+		if (IntersectRect(&rcTmp, &rcTile, &_pMap->getTile(nTileIndexX, nTileIndexY)->getRectTile()))
+		{
+			if (_pMap->getTile(nTileIndexX, nTileIndexY)->getTerrian() != TILE::TERRIAN::PASS)
+			{
+				//_pMap->getTile(nTileIndexX, nTileIndexY)->Tilesefewa();
+				_fTimer = 1.0f;
+				return;
+			}
+		}
+
+
 	}
 	if (_fTimer >= 1.0f &&
 		_fTimer < 2.0f)

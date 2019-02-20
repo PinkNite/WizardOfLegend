@@ -40,3 +40,8 @@ void SKILL::setPlayer(PLAYER * pPlayer)
 	_pPlayer = pPlayer;
 }
 
+void SKILL::setMap(MAP * pMap)
+{
+	_pMap = pMap;
+}
+

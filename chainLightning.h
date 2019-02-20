@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "skill.h"
 
-class CHAINLIGHTNING : public SKILL{
+class CHAINLIGHTNING : public SKILL {
 
 private:
 	float	_fTimer;

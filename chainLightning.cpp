@@ -34,11 +34,32 @@ void CHAINLIGHTNING::update()
 
 		if (_fOffsetTimer >= 0.2f)
 		{
+			RECT rcTmp;
+			RECT rcTile;
+			int nTileIndexX = 0;
+			int nTileIndexY = 0;
+			nTileIndexX = static_cast<int>(_fStartPosX) / SKILL::_pMap->getTileSize();
+			nTileIndexY = static_cast<int>(_fStartPosY) / SKILL::_pMap->getTileSize();
+			rcTile = RectMakeCenter(_fStartPosX, _fStartPosY, 32, 32);
+
+			if (IntersectRect(&rcTmp, &rcTile, &_pMap->getTile(nTileIndexX, nTileIndexY)->getRectTile()))
+			{
+				if (_pMap->getTile(nTileIndexX, nTileIndexY)->getTerrian() != TILE::TERRIAN::PASS)
+				{
+					//_pMap->getTile(nTileIndexX, nTileIndexY)->Tilesefewa();
+					_fTimer = 2.1f;
+					return;
+				}
+			}
+
+
+
+
 			SKILL::_pMagicMgr->pushMagicKey("thunder", _fStartPosX, _fStartPosY - 216.0f, 0.0f, 0.0f, true);
 			SKILL::_pSkillEffectMgr->activityEffect("thunderGround", _fStartPosX, _fStartPosY + 34.0f);
 			SKILL::_pSkillEffectMgr->activityEffect("electricBurnMark", _fStartPosX, _fStartPosY + 34.0f);
 
-			
+
 			_fStartPosX += Mins::presentPowerX(_fAngle, _fSpeed);
 			_fStartPosY += Mins::presentPowerY(_fAngle, _fSpeed);
 			_fOffsetTimer = 0.0f;

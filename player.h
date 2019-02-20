@@ -116,11 +116,11 @@ private:
 	float _fCriticalHit;			//치명타율
 
 
-	//위자드오브레전드는 이동 타일을 확인하는 용의 사각형과 중앙값을 따로 가지고 있어야한다.
-	//플레이어를 가볍게 상하로 구분하고 아래 사각형을 이동시 충돌 렉트로 한다
+									//위자드오브레전드는 이동 타일을 확인하는 용의 사각형과 중앙값을 따로 가지고 있어야한다.
+									//플레이어를 가볍게 상하로 구분하고 아래 사각형을 이동시 충돌 렉트로 한다
 
 
-	// 방향과 액션의 이름
+									// 방향과 액션의 이름
 	string _arDirection[static_cast<const int>(DIRECTION::MAX)];
 	string _arAction[static_cast<const int>(ACTION::MAX)];
 
@@ -174,9 +174,9 @@ private:
 
 
 	int			_nNormalSkillCoount;
-	
+
 	CAMERA*		_pCamera;
-	
+
 
 	bool		_bIsDeath;	//죽은지 아닌지
 
@@ -235,7 +235,7 @@ public:
 	void moveDownLeft(float fSpeed);
 	void moveDownRight(float fSpeed);
 
-	
+
 	inline float getSpeed() { return _fSpeed; }
 	void dash(float fOffset);
 	void movePlayer();
@@ -290,7 +290,7 @@ public:
 	}
 
 	void	setCurrentSkill(PLAYER::SKILL_KEY skillKey, PLAYER::SKILL_NAME skillName) { _arSettingSkill[static_cast<int>(skillKey)] = skillName; }
-	float	getAttackAngle() {return _fAttackDirAngle;}
+	float	getAttackAngle() { return _fAttackDirAngle; }
 
 
 	//사각형 get
