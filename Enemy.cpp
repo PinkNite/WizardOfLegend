@@ -49,31 +49,35 @@ void Enemy::update()
 	{
 		// 적출현 사정 거리
 		_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
-		if (_targetDistance < 300.f)
+		if (_targetDistance < 400.f)
 		{
 			showEnemy();
 		}
 	}
 	else
 	{
+		_timeSet += TIMEMANAGER->getElapsedTime();
+
 		// 적출현 사정 거리
 		_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
-		if (_targetDistance < 50.f)
+		if (_targetDistance < 100.0f)
 		{
-			skillAttack(_pPlayer->getPosX(), _pPlayer->getPosY());
+			//skillAttack(_pPlayer->getPosX(), _pPlayer->getPosY());
 		}
 		else
 		{
 			setBattle();
 		}
 
-		handleKeyInput();
-		_pCurrentState->update(this);
-
 		if (_fCurrentHP < 0 && ActionState::DEATH != _state)
 		{
 			setDeath();
 		}
+
+		setRect();
+		handleKeyInput();
+		_pCurrentState->update(this);
+		_pCamera->pushRenderObject(this);
 	}
 }
 
@@ -88,6 +92,7 @@ void Enemy::render(HDC hdc)
 	if (ActionState::HIDDEN != _state)
 	{
 		OBJECT::_pImg->aniRenderCenter(hdc, _posX, _posY, _pAnimation);
+		//RectangleMakeCenter(hdc, _posX, _posY, MOB_RECT_HEIGHT, MOB_RECT_HEIGHT);
 	}
 }
 
@@ -117,8 +122,8 @@ void Enemy::createAnimations()
 		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::IDLE], 0, 0, 1, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::RUN], 17, 12, 8, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::RUN], 6, 11, 8, true, nullptr);
-		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::ATTACK1], 4, 3, 2, false, nullptr);
-		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::ATTACK1], 1, 2, 2, false, nullptr);
+		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::ATTACK1], 4, 3, 6, false, nullptr);
+		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::ATTACK1], 1, 2, 6, false, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::ATTACK2], 4, 3, 2, false, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::ATTACK2], 1, 2, 2, false, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::DAMAGE], 35, 35, 4, false, nullptr);
@@ -131,8 +136,8 @@ void Enemy::createAnimations()
 		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::IDLE], 0, 0, 1, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::RUN], 17, 12, 8, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::RUN], 6, 11, 8, true, nullptr);
-		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::ATTACK1], 4, 3, 2, false, nullptr);
-		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::ATTACK1], 1, 2, 2, false, nullptr);
+		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::ATTACK1], 4, 3, 6, false, nullptr);
+		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::ATTACK1], 1, 2, 6, false, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::ATTACK2], 0, 0, 4, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::ATTACK2], 0, 0, 4, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::DAMAGE], 17, 17, 4, false, nullptr);
@@ -145,8 +150,8 @@ void Enemy::createAnimations()
 		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::IDLE], 10, 10, 1, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::RUN], 0, 2, 4, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::RUN], 10, 12, 4, true, nullptr);
-		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::ATTACK1], 3, 9, 4, true, nullptr);
-		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::ATTACK1], 13, 19, 4, true, nullptr);
+		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::ATTACK1], 3, 9, 6, true, nullptr);
+		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::ATTACK1], 13, 19, 6, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::ATTACK2], 0, 0, 4, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::RIGHT], _mState[ActionState::ATTACK2], 0, 0, 4, true, nullptr);
 		addAnimaKey(_mDirection[DIRECTION::LEFT], _mState[ActionState::DAMAGE], 34, 34, 4, false, nullptr);
@@ -210,32 +215,35 @@ void Enemy::setEnemy(EnemyType enType, float x, float y)
 	switch (_enType)
 	{
 	case Enemy::EnemyType::GHOUL:
+		_objName = "Ghoul";
+		_fDamage = 20.0f;
 		_fSpeed = 200.0f;
 		_fMaxHP = 200.0f;
-		MOB_RECT_WIDTH = 40;
-		MOB_RECT_HEIGHT = 80;
-		_objName = "Ghoul";
 		_fCurrentHP = _fMaxHP;
+		MOB_RECT_WIDTH = 100;
+		MOB_RECT_HEIGHT = 140;
 		OBJECT::init(x, y, MOB_RECT_WIDTH, MOB_RECT_HEIGHT);
 		OBJECT::_pImg = IMAGEMANAGER->findImage("Ghoul");
 		break;
 	case Enemy::EnemyType::GOLEM:
+		_objName = "Golem";
+		_fDamage = 30.0f;
 		_fSpeed = 100.0f;
 		_fMaxHP = 400.0f;
+		_fCurrentHP = _fMaxHP;
 		MOB_RECT_WIDTH = 100;
 		MOB_RECT_HEIGHT = 140;
-		_objName = "Golem";
-		_fCurrentHP = _fMaxHP;
 		OBJECT::init(x, y, MOB_RECT_WIDTH, MOB_RECT_HEIGHT);
 		OBJECT::_pImg = IMAGEMANAGER->findImage("Golem");
 		break;
 	case Enemy::EnemyType::SUMMONER:
+		_objName = "Summoner";
+		_fDamage = 20.0f;
 		_fSpeed = 200.0f;
 		_fMaxHP = 300.0f;
-		MOB_RECT_WIDTH = 40;
-		MOB_RECT_HEIGHT = 80;
-		_objName = "Summoner";
 		_fCurrentHP = _fMaxHP;
+		MOB_RECT_WIDTH = 100;
+		MOB_RECT_HEIGHT = 120;
 		OBJECT::init(x, y, MOB_RECT_WIDTH, MOB_RECT_HEIGHT);
 		OBJECT::_pImg = IMAGEMANAGER->findImage("Summoner");
 		break;
@@ -256,8 +264,13 @@ void Enemy::showEnemy()
 
 void Enemy::setBattle()
 {
-	//_pAstar->startFinder(_posX, _posY, _pPlayer->getPosX, _pPlayer->getPosY());
+	POINT startTileId = _pAstar->getTileIndex(_posX, _posY);
+	POINT endTileId = _pAstar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
+	//POINT endTileId = _pAstar->getTileIndex(*_pPlayer->getCollisionRect());
+	_pAstar->startFinder(startTileId.x, startTileId.y, endTileId.x, endTileId.y);
 	//_pAstar->pathFinder();
+	
+	moveEnemy();
 }
 
 void Enemy::createStates()
@@ -378,6 +391,7 @@ void Enemy::moveRight(float speed)
 
 void Enemy::moveEnemy()
 {
+	// Astart 로 찾은경로로 이동
 	/*
 	if (_pCurrentState == _arState[static_cast<int>(ActionState::RUN)])
 	{
@@ -404,14 +418,25 @@ void Enemy::moveEnemy()
 
 void Enemy::skillAttack(float x, float y)
 {
-	setState(ActionState::ATTACK1);
-	setAction(ActionState::ATTACK1, _direction);
-
-	_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
-	if (_targetDistance < 50.0f)
+	// 공격 텀
+ 	if (_timeSet > 1.0f)
 	{
-		//_pPlayer->set
-		// 플레이어 데미지 처리 : 매직매니저에 충돌처리 참조
+		setState(ActionState::ATTACK1);
+		setAction(ActionState::ATTACK1, _direction);
+
+		
+		RECT rcTemp;
+		if (IntersectRect(&rcTemp, _pPlayer->getCollisionRect(), &_rc))
+		{
+			_pPlayer->getDamage(_fDamage);
+		}
+		/*_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
+		if (_targetDistance < 20.0f)
+		{
+			_pPlayer->getDamage(_fDamage);
+		}*/
+
+		_timeSet = 0;
 	}
 }
 

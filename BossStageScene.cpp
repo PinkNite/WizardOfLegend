@@ -132,7 +132,9 @@ HRESULT BossStageScene::init()
 	_pEnemy->init();
 	_pEnemy->setMap(_pMap);
 	_pEnemy->setPlayer(_pPlayer);
+	_pEnemy->setCameraLink(_pCamera);
 	_pEnemy->setEnemy(Enemy::EnemyType::GHOUL, 200.0f, 400.0f);
+	_pMagicMgr->setEnemy(_pEnemy);
 
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 	_pPlayer->setCameraLink(_pCamera);
@@ -153,6 +155,7 @@ HRESULT BossStageScene::init()
 	_pMagicMgr->addObject("IceChakram", 100, 40, 40, IMAGEMANAGER->findImage("IceChakram"), 4, 50, 50, 10.0f, 1.3f, 10.0f, false);
 
 	_pMap->settingLimitRect();
+	_pMap->drawMap(_pCamera->getBackGoroundBuffer());
 
 	return S_OK;
 }
@@ -237,5 +240,4 @@ void BossStageScene::render()
 	_pMap->render(_pCamera->getMemDC());
 	_pCamera->renderinit();
 	_pCamera->render(getMemDC());
-	_pEnemy->render(getMemDC());
 }

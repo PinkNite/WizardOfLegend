@@ -6,6 +6,7 @@
 
 class MAP;
 class PLAYER;
+class CAMERA;
 class EnemyState;
 
 class Enemy : public OBJECT
@@ -61,7 +62,7 @@ private:
 	// 이동 방향
 	float		_fAngleX;
 	float		_fAngleY;
-
+	float		_fDamage;
 	float		_targetDistance;
 
 
@@ -71,15 +72,13 @@ private:
 	DIRECTION	_direction;
 	MOVE		_move;
 
-
-
 	EnemyState *	_pCurrentState;
 	EnemyState *	_arState[static_cast<const int>(ActionState::MAX)];
 
 	MAP *		_pMap;
 	ASTAR *		_pAstar;
 	PLAYER *	_pPlayer;
-
+	CAMERA *	_pCamera;
 public:
 	Enemy();
 	~Enemy();
@@ -102,6 +101,7 @@ private:
 public:
 	void setMap(MAP* pMap) { _pMap = pMap; }
 	void setPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
+	void setCameraLink(CAMERA* pCamera) { _pCamera = pCamera; }
 
 	// 몹 종류, 위치 설정
 	void setEnemy(EnemyType enType, float x, float y);
@@ -133,6 +133,8 @@ public:
 	void setRect();
 	void setDamage(float damage);
 	void setDeath();
+
+	LPCRECT getCollisionRect() { return &_rc; }
 
 	inline float getSpeed() { return _fSpeed; }
 	inline DIRECTION getDirection() { return _direction; }

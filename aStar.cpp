@@ -248,6 +248,23 @@ void ASTAR::pathFinder()
 	pathFinder();
 }
 
+POINT ASTAR::getTileIndex(RECT& rcCollision)
+{
+	POINT point;
+
+	point.x = rcCollision.left / _pMap->getTileSize();
+	point.y = rcCollision.top / _pMap->getTileSize();
+
+	return point;
+}
+
+POINT ASTAR::getTileIndex(float x, float y)
+{
+	POINT point;
+	point.x = int(x) / _pMap->getTileSize();
+	point.y = int(y) / _pMap->getTileSize();
+	return POINT();
+}
 
 
 void ASTAR::setObject(TILE::OBJECT obj)

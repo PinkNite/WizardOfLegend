@@ -53,7 +53,8 @@ public:
 	//어느 타일에 있는지 주는 함수
 	void	startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int nEndIndexY);
 	void	pathFinder();	// _stackPriority까지 완성이 된다.
-
+	POINT	getTileIndex(RECT& rc);
+	POINT	getTileIndex(float x, float y);
 	
 	void	setObject(TILE::OBJECT obj);
 	void	release();
