@@ -181,6 +181,10 @@ private:
 	bool		_bIsDeath;	//죽은지 아닌지
 
 	MAP*		_pMap;
+
+	float		_fDashStartPosX;
+	float		_fDashStartPosY;
+
 public:
 	PLAYER();
 	~PLAYER();
@@ -300,6 +304,10 @@ public:
 
 
 	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
+
+
+	void saveDashStartPosX() {_fDashStartPosX = OBJECT::getPosX();}
+	void saveDashStartPosY() { _fDashStartPosY = OBJECT::getPosY(); }
 
 
 private:

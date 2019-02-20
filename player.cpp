@@ -116,6 +116,10 @@ void PLAYER::init()
 	_fAttackPosY = 0.0f;
 
 	_bIsDeath = false;
+	settingPos();
+
+	_fDashStartPosX = OBJECT::getPosX();
+	_fDashStartPosY = OBJECT::getPosY();
 }
 
 void PLAYER::update()
@@ -175,8 +179,18 @@ void PLAYER::update()
 	//_pMap->getTile(nTileIndexX, nTileIndexY +1)->Tilesefewa();
 	//_pMap->getTile(nTileIndexX-1, nTileIndexY )->Tilesefewa();
 
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::IDLE)])
+	{
+		if (_pMap->getTile(nTileIndexX, nTileIndexY )->getTerrian() == TILE::TERRIAN::DMAGE_PASS)
+		{
+			_bIsDeath = true;
+			setState(PLAYER::PLAYER_STATE::DEATH);
+			setAction(PLAYER::ACTION::DEATH);
+			settingAni();
+		}
+	}
 
-	settingPos();
+
 
 }
 
@@ -603,7 +617,25 @@ void PLAYER::movePlayer()
 void PLAYER::tileCollisionTop(float fSpeed)
 {
 	RECT rcTmp;
-
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (int)(_rcMovingCollision.top) / _pMap->getTileSize())->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (int)(_rcMovingCollision.top) / _pMap->getTileSize())->getTerrian()== TILE::TERRIAN::WALL)
+			{
+				moveDown(fSpeed);
+				return;
+			}
+		}
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize() + 1, (int)(_rcMovingCollision.top) / _pMap->getTileSize())->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize() + 1, (int)(_rcMovingCollision.top) / _pMap->getTileSize())->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				moveDown(fSpeed);
+			}
+		}
+		return;
+	}
 	if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (int)(_rcMovingCollision.top) / _pMap->getTileSize())->getRectTile(), &_rcMovingCollision))
 	{
 		if (_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (int)(_rcMovingCollision.top) / _pMap->getTileSize())->getTerrian() != TILE::TERRIAN::PASS)
@@ -624,7 +656,22 @@ void PLAYER::tileCollisionTop(float fSpeed)
 void PLAYER::tIleCollisionBottom(float fSpeed)
 {
 	RECT rcTmp;
-
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (_rcMovingCollision.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (int)(_rcMovingCollision.top) / _pMap->getTileSize() + 1)->getTerrian() == TILE::TERRIAN::WALL) {
+				moveUp(fSpeed);
+				return;
+			}
+		}
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize() + 1, (_rcMovingCollision.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize() + 1, (int)(_rcMovingCollision.top) / _pMap->getTileSize() + 1)->getTerrian() == TILE::TERRIAN::WALL)
+				moveUp(fSpeed);
+		}
+		return;
+	}
 	if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (_rcMovingCollision.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rcMovingCollision))
 	{
 		if (_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (int)(_rcMovingCollision.top) / _pMap->getTileSize() + 1)->getTerrian() != TILE::TERRIAN::PASS) {
@@ -642,6 +689,24 @@ void PLAYER::tIleCollisionBottom(float fSpeed)
 void PLAYER::tIleCollisionLeft(float fSpeed)
 {
 	RECT rcTmp;
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (_rcMovingCollision.top) / _pMap->getTileSize())->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (int)(_rcMovingCollision.top) / _pMap->getTileSize())->getTerrian() == TILE::TERRIAN::WALL) {
+				moveRight(fSpeed);
+				return;
+			}
+
+		}
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (_rcMovingCollision.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (int)(_rcMovingCollision.top) / _pMap->getTileSize() + 1)->getTerrian() == TILE::TERRIAN::WALL)
+				moveRight(fSpeed);
+		}
+
+		return;
+	}
 
 	if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize(), (_rcMovingCollision.top) / _pMap->getTileSize())->getRectTile(), &_rcMovingCollision))
 	{
@@ -661,6 +726,24 @@ void PLAYER::tIleCollisionLeft(float fSpeed)
 void PLAYER::tIleCollisionRight(float fSpeed)
 {
 	RECT rcTmp;
+
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize() + 1, (_rcMovingCollision.top) / _pMap->getTileSize())->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize() + 1, (int)(_rcMovingCollision.top) / _pMap->getTileSize())->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				moveLeft(fSpeed);
+				return;
+			}
+		}
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize() + 1, (_rcMovingCollision.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize() + 1, (int)(_rcMovingCollision.top) / _pMap->getTileSize() + 1)->getTerrian() == TILE::TERRIAN::WALL)
+				moveLeft(fSpeed);
+		}
+		return;
+	}
 
 	if (IntersectRect(&rcTmp, &_pMap->getTile((_rcMovingCollision.left) / _pMap->getTileSize() + 1, (_rcMovingCollision.top) / _pMap->getTileSize())->getRectTile(), &_rcMovingCollision))
 	{
@@ -696,6 +779,65 @@ void PLAYER::tileCollisionTopLeft(float fSpeed)
 	nTileIndexX = static_cast<int>(OBJECT::getPosX()) / _pMap->getTileSize();
 	nTileIndexY = static_cast<int>(OBJECT::getPosY() + 32.0f) / _pMap->getTileSize();
 
+
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX, nTileIndexY - 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX, nTileIndexY - 1)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX, nTileIndexY - 1)->Tilesefewa();
+				OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(fAngle, fSpeed));
+
+
+
+				bIsCollision = true;
+			}
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX - 1, nTileIndexY)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX - 1, nTileIndexY)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX - 1, nTileIndexY)->Tilesefewa();
+
+				OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(fAngle, fSpeed));
+
+				bIsCollision = true;
+			}
+		}
+
+		if (bIsCollision)
+		{
+			settingPos();
+
+			return;
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX - 1, nTileIndexY - 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX - 1, nTileIndexY - 1)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX - 1, nTileIndexY - 1)->Tilesefewa();
+
+				OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(fAngle, fSpeed));
+
+
+				OBJECT::setPosY(OBJECT::getPosY() - rcTmp.bottom + rcTmp.top);
+			}
+		}
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX - 1, nTileIndexY)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX - 1, nTileIndexY)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				OBJECT::setPosX(OBJECT::getPosX() - rcTmp.right + rcTmp.left);
+			}
+		}
+
+		settingPos();
+
+		return;
+	}
 
 
 	if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX, nTileIndexY - 1)->getRectTile(), &_rcMovingCollision))
@@ -763,6 +905,65 @@ void PLAYER::tileCollisionTopRight(float fSpeed)
 	nTileIndexX = static_cast<int>(OBJECT::getPosX()) / _pMap->getTileSize();
 	nTileIndexY = static_cast<int>(OBJECT::getPosY() + 32.0f) / _pMap->getTileSize();
 
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX, nTileIndexY - 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX, nTileIndexY - 1)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX, nTileIndexY - 1)->Tilesefewa();
+				OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(fAngle, fSpeed));
+
+
+
+				bIsCollision = true;
+			}
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX + 1, nTileIndexY)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX + 1, nTileIndexY)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX + 1, nTileIndexY)->Tilesefewa();
+
+				OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(fAngle, fSpeed));
+
+				bIsCollision = true;
+			}
+		}
+
+		if (bIsCollision)
+		{
+			settingPos();
+
+			return;
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX + 1, nTileIndexY - 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX + 1, nTileIndexY - 1)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX + 1, nTileIndexY - 1)->Tilesefewa();
+
+				OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(fAngle, fSpeed));
+				OBJECT::setPosY(OBJECT::getPosY() - rcTmp.bottom + rcTmp.top);
+			}
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX + 1, nTileIndexY)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX + 1, nTileIndexY)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				OBJECT::setPosX(OBJECT::getPosX() - rcTmp.right + rcTmp.left);
+			}
+		}
+
+
+
+		settingPos();
+
+		return;
+	}
 
 	if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX, nTileIndexY - 1)->getRectTile(), &_rcMovingCollision))
 	{
@@ -831,6 +1032,67 @@ void PLAYER::tileCollisionBottomLeft(float fSpeed)
 	int	nTileIndexY = 0;
 	nTileIndexX = static_cast<int>(OBJECT::getPosX()) / _pMap->getTileSize();
 	nTileIndexY = static_cast<int>(OBJECT::getPosY() + 32.0f) / _pMap->getTileSize();
+
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX, nTileIndexY + 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX, nTileIndexY + 1)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX, nTileIndexY + 1)->Tilesefewa();
+				OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(fAngle, fSpeed));
+
+
+
+				bIsCollision = true;
+			}
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX - 1, nTileIndexY)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX - 1, nTileIndexY)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX - 1, nTileIndexY)->Tilesefewa();
+
+				OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(fAngle, fSpeed));
+
+				bIsCollision = true;
+			}
+		}
+
+		if (bIsCollision)
+		{
+			settingPos();
+
+			return;
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX - 1, nTileIndexY + 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX - 1, nTileIndexY + 1)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX - 1, nTileIndexY + 1)->Tilesefewa();
+
+				OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(fAngle, fSpeed));
+				OBJECT::setPosY(OBJECT::getPosY() - rcTmp.bottom + rcTmp.top);
+			}
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX - 1, nTileIndexY)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX - 1, nTileIndexY)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				OBJECT::setPosX(OBJECT::getPosX() - rcTmp.right + rcTmp.left);
+			}
+		}
+
+
+
+		settingPos();
+
+
+		return;
+	}
 
 
 	if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX, nTileIndexY + 1)->getRectTile(), &_rcMovingCollision))
@@ -902,6 +1164,65 @@ void PLAYER::tileCollisionBottomRight(float fSpeed)
 	nTileIndexX = static_cast<int>(OBJECT::getPosX()) / _pMap->getTileSize();
 	nTileIndexY = static_cast<int>(OBJECT::getPosY() + 32.0f) / _pMap->getTileSize();
 
+
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX, nTileIndexY + 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX, nTileIndexY + 1)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX, nTileIndexY + 1)->Tilesefewa();
+				OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(fAngle, fSpeed));
+
+
+
+				bIsCollision = true;
+			}
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX + 1, nTileIndexY)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX + 1, nTileIndexY)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX + 1, nTileIndexY)->Tilesefewa();
+
+				OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(fAngle, fSpeed));
+
+				bIsCollision = true;
+			}
+		}
+
+		if (bIsCollision)
+		{
+			settingPos();
+
+			return;
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX + 1, nTileIndexY + 1)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX + 1, nTileIndexY + 1)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				_pMap->getTile(nTileIndexX + 1, nTileIndexY + 1)->Tilesefewa();
+
+				OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(fAngle, fSpeed));
+				OBJECT::setPosY(OBJECT::getPosY() - rcTmp.bottom + rcTmp.top);
+			}
+		}
+
+		if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX + 1, nTileIndexY)->getRectTile(), &_rcMovingCollision))
+		{
+			if (_pMap->getTile(nTileIndexX + 1, nTileIndexY)->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				OBJECT::setPosX(OBJECT::getPosX() - rcTmp.right + rcTmp.left);
+			}
+		}
+
+
+		settingPos();
+
+		return;
+	}
 
 	if (IntersectRect(&rcTmp, &_pMap->getTile(nTileIndexX, nTileIndexY + 1)->getRectTile(), &_rcMovingCollision))
 	{

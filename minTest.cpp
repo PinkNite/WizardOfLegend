@@ -21,7 +21,9 @@ HRESULT MINTESTSCENE::init()
 	_pPlayer->setLinkMap(_pMap);
 	_pPlayer->init();
 
-	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY, _pMap->getMapCountX() * _pMap->getTileSize()*2, _pMap->getMapCountY() * _pMap->getTileSize()*2);
+	int nSizeX = _pMap->getMapCountX() * _pMap->getTileSize();
+	int nSizeY = _pMap->getMapCountY() * _pMap->getTileSize();
+	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY,nSizeX,nSizeY);
 	_pMap->setCamera(_pCamera);
 
 
