@@ -35,6 +35,7 @@ public:
 		ICED_OUT,
 		DAMAGE,
 		DEATH,
+		READY,
 		MAX
 	};
 

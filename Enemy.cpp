@@ -6,6 +6,8 @@
 #include "EnemyStateRun.h"
 #include "EnemyStateDamage.h"
 #include "EnemyStateDeath.h"
+#include "player.h"
+#include "map.h"
 
 Enemy::Enemy() :
 	_fMaxHP(100.0f),
@@ -31,6 +33,8 @@ void Enemy::init()
 	IMAGEMANAGER->addFrameImage("Summoner", "resource/enemy/SummonerSource.bmp", 750, 1050, 5, 7, true, RGB(255, 0, 255));
 	//IMAGEMANAGER->addFrameImage("Lancer", "resource/enemy/lancer.bmp", 491, 840, 6, 7, true, RGB(255, 0, 255));
 
+	_pAstar = new ASTAR();
+
 	_timeSet = 0.0f;
 	_pAnimation = new animation();
 
@@ -41,16 +45,35 @@ void Enemy::init()
 
 void Enemy::update()
 {
-	handleKeyInput();
-
-	if (ActionState::HIDDEN != _state)
+	if (ActionState::HIDDEN == _state)
 	{
-		_pCurrentState->update(this);
+		// 적출현 사정 거리
+		_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
+		if (_targetDistance < 300.f)
+		{
+			showEnemy();
+		}
 	}
-
-	if (_fCurrentHP < 0 && ActionState::DEATH != _state)
+	else
 	{
-		setDeath();
+		// 적출현 사정 거리
+		_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
+		if (_targetDistance < 50.f)
+		{
+			skillAttack(_pPlayer->getPosX(), _pPlayer->getPosY());
+		}
+		else
+		{
+			setBattle();
+		}
+
+		handleKeyInput();
+		_pCurrentState->update(this);
+
+		if (_fCurrentHP < 0 && ActionState::DEATH != _state)
+		{
+			setDeath();
+		}
 	}
 }
 
@@ -223,12 +246,18 @@ void Enemy::setEnemy(EnemyType enType, float x, float y)
 
 void Enemy::showEnemy()
 {
+	_pAstar->init(300, _pMap);
+
 	setState(ActionState::IDLE);
 	setAction(ActionState::IDLE, DIRECTION::RIGHT);
+
+	setBattle();
 }
 
 void Enemy::setBattle()
 {
+	//_pAstar->startFinder(_posX, _posY, _pPlayer->getPosX, _pPlayer->getPosY());
+	//_pAstar->pathFinder();
 }
 
 void Enemy::createStates()
@@ -349,6 +378,7 @@ void Enemy::moveRight(float speed)
 
 void Enemy::moveEnemy()
 {
+	/*
 	if (_pCurrentState == _arState[static_cast<int>(ActionState::RUN)])
 	{
 		float speed = _fSpeed * TIMEMANAGER->getElapsedTime();
@@ -368,13 +398,21 @@ void Enemy::moveEnemy()
 			moveDown(speed);
 			break;
 		}
-	}
+	}*/
+
 }
 
-void Enemy::skillFire(float x, float y)
+void Enemy::skillAttack(float x, float y)
 {
 	setState(ActionState::ATTACK1);
 	setAction(ActionState::ATTACK1, _direction);
+
+	_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
+	if (_targetDistance < 50.0f)
+	{
+		//_pPlayer->set
+		// 플레이어 데미지 처리 : 매직매니저에 충돌처리 참조
+	}
 }
 
 void Enemy::skillMove()

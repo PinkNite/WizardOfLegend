@@ -17,7 +17,7 @@ BOSS::BOSS() :
 	_pAnimation(nullptr),
 	_arFrame{ 0, },
 	_direction(DIRECTION::RIGHT),
-	_action(ACTION::IDLE),
+	_action(ACTION::READY),
 	_fAngleX(0.0f),
 	_fAngleY(0.0f)
 {
@@ -38,7 +38,7 @@ void BOSS::init()
 	IMAGEMANAGER->addImage("IceChakram", "resource/boss/ice/IceChakram.bmp", 50, 50, true, RGB(255, 0, 255));
 
 
-	OBJECT::init(300, 200, BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
+	OBJECT::init(100, 100, BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
 	OBJECT::_pImg = IMAGEMANAGER->addFrameImage("iceBossImg", "resource/boss/ice/IceBoss.bmp",
 		BOSS_IMAGE_WIDTH, BOSS_IMAGE_HEIGHT, BOSS_MAX_FRAME_X, BOSS_MAX_FRAME_Y, true, RGB(255, 0, 255));
 
@@ -55,10 +55,10 @@ void BOSS::init()
 	setEnumName();
 	createAnimation();
 
-	_direction = DIRECTION::DOWN;
-	_action = ACTION::IDLE;
+	//_direction = DIRECTION::DOWN;
+	//_action = ACTION::READY;
+	//startBossAnimation();
 
-	startBossAnimation();
 	initState();
 
 	_pIceSpear = new throwIceSpear();
@@ -67,77 +67,89 @@ void BOSS::init()
 
 void BOSS::update()
 {
-	_moveTimeStart += TIMEMANAGER->getElapsedTime();
-
-	if (_moveTimeStart > _moveTimeEnd)
+	if (ACTION::READY == _action)
 	{
-		_moveTimeStart = 0;
-		_moveTimeEnd = RND->getFromFloatTo(3.0f, 5.0f);
-		dash(_pPlayer->getPosX(), _pPlayer->getPosY());
-	}
-
-
-	if (ACTION::ENTRANCE == _action)
-	{
-		_timeSet += TIMEMANAGER->getElapsedTime();
-	}
-
-	if (ACTION::DASH == _action)
-	{
-		_dashSpeed -= TIMEMANAGER->getElapsedTime() + 1;
-
-		float distance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), _targetX, _targetY);
-		if (distance > 200.0f) 
+		// 보스 출현 사정 거리
+		float targetDistance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), _pPlayer->getPosX(), _pPlayer->getPosY());
+		if (targetDistance < 300.f)
 		{
-			OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_targetAngle, _dashSpeed));
-			OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_targetAngle, _dashSpeed));
-			setRect();
+			showBoss();
 		}
-		else
+	}
+	else
+	{
+		_moveTimeStart += TIMEMANAGER->getElapsedTime();
+
+		if (_moveTimeStart > _moveTimeEnd)
 		{
-			int skillNo = RND->getInt(4);
-			switch (skillNo)
+			_moveTimeStart = 0;
+			_moveTimeEnd = RND->getFromFloatTo(3.0f, 5.0f);
+			dash(_pPlayer->getPosX(), _pPlayer->getPosY());
+		}
+
+		if (ACTION::ENTRANCE == _action)
+		{
+			_timeSet += TIMEMANAGER->getElapsedTime();
+		}
+
+		if (ACTION::DASH == _action)
+		{
+			_dashSpeed -= TIMEMANAGER->getElapsedTime() + 1;
+
+			float distance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), _pPlayer->getPosX(), _pPlayer->getPosY());
+			if (distance > 200.0f)
 			{
-			case 0:
-				spell01(SKILL_TYPE::BUBBLE);
-				break;
-			case 1:
-				spell01(SKILL_TYPE::CHAKRAM);
-				break;
-			case 2:
-				spell02(SKILL_TYPE::LANCE);
-				break;
-			default:
+				OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_targetAngle, _dashSpeed));
+				OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_targetAngle, _dashSpeed));
+				setRect();
+			}
+			else
+			{
+				int skillNo = RND->getInt(4);
+				switch (skillNo)
+				{
+				case 0:
+					spell01(SKILL_TYPE::BUBBLE);
 					break;
+				case 1:
+					spell01(SKILL_TYPE::CHAKRAM);
+					break;
+				case 2:
+					spell02(SKILL_TYPE::LANCE);
+					break;
+				default:
+					break;
+				}
 			}
 		}
-	}
 
-	// skill 2
-	_pIceSpear->update();
-	if (ACTION::SKILL_02 == _action)
-	{
-		_timeSet += TIMEMANAGER->getElapsedTime();
-		if (_timeSet > 2.3f)
+		// skill 2
+		_pIceSpear->update();
+		if (ACTION::SKILL_02 == _action)
 		{
-			setBossIdle();
-			_pIceSpear->ResetAll();
-			_timeSet = 0;
+			_timeSet += TIMEMANAGER->getElapsedTime();
+			if (_timeSet > 2.3f)
+			{
+				setBossIdle();
+				_pIceSpear->ResetAll();
+				_timeSet = 0;
+			}
+		}
+
+		if (_fCurrentHP < 0 && ACTION::DEATH != _action)
+		{
+			setDeath();
+		}
+
+		//bulletMove();
+		handleInputKey();
+		_pCamera->pushRenderObject(this);
+		if (_pCurrentState != nullptr)
+		{
+			_pCurrentState->update(this);
 		}
 	}
 
-	if (_fCurrentHP < 0 && ACTION::DEATH != _action)
-	{
-		setDeath();
-	}
-
-	//bulletMove();
-	handleInputKey();
-	_pCamera->pushRenderObject(this);
-	if (_pCurrentState != nullptr)
-	{
-		_pCurrentState->update(this);
-	}
 }
 
 void BOSS::release()
@@ -156,6 +168,8 @@ void BOSS::release()
 
 void BOSS::render(HDC hdc)
 {
+	if (ACTION::READY == _action)  return;
+
 	//Rectangle(hdc, OBJECT::_rc);
 	int renderX = static_cast<int>(OBJECT::getPosX());
 	int renderY = static_cast<int>(OBJECT::getPosY());

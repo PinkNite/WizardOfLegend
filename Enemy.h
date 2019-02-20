@@ -2,7 +2,10 @@
 #include "object.h"
 #include "stdafx.h"
 #include "animation.h"
+#include "aStar.h"
 
+class MAP;
+class PLAYER;
 class EnemyState;
 
 class Enemy : public OBJECT
@@ -52,8 +55,15 @@ private:
 
 	animation * _pAnimation;
 
-	int   _arFrame[20];
-	float _timeSet;
+	int			_arFrame[20];
+	float		_timeSet;
+	
+	// 이동 방향
+	float		_fAngleX;
+	float		_fAngleY;
+
+	float		_targetDistance;
+
 
 	string		_objName;
 	EnemyType	_enType;
@@ -61,14 +71,14 @@ private:
 	DIRECTION	_direction;
 	MOVE		_move;
 
-	// 이동 방향
-	float		_fAngleX;
-	float		_fAngleY;
+
 
 	EnemyState *	_pCurrentState;
 	EnemyState *	_arState[static_cast<const int>(ActionState::MAX)];
 
-	CAMERA *	_pCamera;
+	MAP *		_pMap;
+	ASTAR *		_pAstar;
+	PLAYER *	_pPlayer;
 
 public:
 	Enemy();
@@ -90,7 +100,8 @@ private:
 	void addAnimaKey(const string& strDir, const string& strAction, int startFrame, int endFrame, int fps, bool isLoop, void * cbFunction);
 
 public:
-	void setCameraLink(CAMERA* pCamera) { _pCamera = pCamera; }
+	void setMap(MAP* pMap) { _pMap = pMap; }
+	void setPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 
 	// 몹 종류, 위치 설정
 	void setEnemy(EnemyType enType, float x, float y);
@@ -115,7 +126,7 @@ public:
 	void moveRight(float speed);
 	void moveEnemy();
 
-	void skillFire(float x, float y);
+	void skillAttack(float x, float y);
 	void skillMove();
 	void skillRender(HDC hdc);
 
