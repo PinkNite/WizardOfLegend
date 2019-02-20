@@ -18,7 +18,7 @@ private:
 	//셀렉트 박스 따로 그리고 
 	//골드창 따로
 	PLAYER* _pPlayer;
-
+	PLAYER* _pTemp;
 	ITEM* _pItem[2];//2번은 맵이미지
 	EXPLAINUSE* _pExplainUse;
 	//SKILLICON* _pSkillIcon[6];
