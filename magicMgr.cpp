@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "magicMgr.h"
 #include "player.h"
+#include "Enemy.h"
 #include "boss.h"
 
 
@@ -275,10 +276,10 @@ void MAGICMGR::CollisionEnemyToMagic()
 		{
 			RECT rcTmp;
 			//에네미 사각형으로 바꿔주세요     여기 플레이어 렉부분 대신
-			if (IntersectRect(&rcTmp, _pPlayer->getCollisionRect(), pMagic->getRect()))
+			if (IntersectRect(&rcTmp, _pEnemy->getCollisionRect(), pMagic->getRect()))
 			{
 				//에네미 데미지 입는것 해주세요
-				pMagic->setIsDamage(true);
+				_pEnemy->setDamage(30.0f);
 				//데미지는 걍 일단 난수처리해주세요
 			}
 		}

@@ -5,6 +5,7 @@
 
 class CAMERA;
 class PLAYER;
+class Enemy;
 class BOSS;
 
 class MAGICMGR {
@@ -14,6 +15,7 @@ private:
 
 	CAMERA*					_pCamera;
 	PLAYER*					_pPlayer;
+	Enemy*					_pEnemy;
 	BOSS*					_pBoss;
 	MAP*					_pMap;
 
@@ -44,6 +46,7 @@ public:
 	void setPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 	void setBoss(BOSS* pBoss) { _pBoss = pBoss; }
 	void setMap(MAP* pMap) { _pMap = pMap; }
+	void setEnemy(Enemy* pEnemy) { _pEnemy = pEnemy; }
 
 	//마법과 객체 충돌은 여기서 처리하자
 private:
