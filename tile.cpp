@@ -331,7 +331,7 @@ void TILE::render(HDC hdc)
 	if (bIsTrue)
 	{
 		Rectangle(hdc, _rcTile);
-		//bIsTrue = false;
+		bIsTrue = false;
 		if (_bIsWall) {
 			Rectangle(hdc, _rcTile);
 		}
@@ -371,6 +371,15 @@ void TILE::render(HDC hdc, bool Map)
 			if (_object != OBJECT::NONE)
 			{
 				_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, getFrameX(), setFrameY());
+			}
+
+			if (bIsTrue)
+			{
+				Rectangle(hdc, _rcTile);
+				bIsTrue = false;
+				if (_bIsWall) {
+					Rectangle(hdc, _rcTile);
+				}
 			}
 		}
 	}
