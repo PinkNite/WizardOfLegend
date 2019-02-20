@@ -442,6 +442,15 @@ void MAPEDIT::updateTerrain()
 									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
 										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
 								}
+								else if (i >= 5 && i <= 6 && j >= 0 && j <= 6)
+								{
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setTerrian(TILE::TERRIAN::WALL);
+									_pMapTool->setisWall(true);
+									_pMapTool->setObject(TILE::OBJECT::NONE);
+									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
+										[_currentIndex.x - (_clickDownStart.x - i) - ceil(abs(static_cast<float>(_clickDownEnd.x) - static_cast<float>(_clickDownStart.x)) / 2)]->setObject(TILE::OBJECT::NONE);
+								}
 								else
 								{
 									_pMapTool->getVvMap()[_currentIndex.y - (_clickDownStart.y - j) - ceil(abs(static_cast<float>(_clickDownEnd.y) - static_cast<float>(_clickDownStart.y)) / 2)]
