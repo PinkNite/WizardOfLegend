@@ -24,12 +24,14 @@ void REBOUNDINGICICLES::init(PLAYER::SKILL_NAME eSkillName)
 	_fSpeed = 1000.0f;
 	_fOffsetTimer = 0.0f;
 	_bIsReturn = false;
+	_fTurnTimer = 0.0f;
 }
 
 void REBOUNDINGICICLES::update()
 {
 	if (_fTimer < 1.0f)
 	{
+		_fTurnTimer += TIMEMANAGER->getElapsedTime();
 		_fOffsetTimer += TIMEMANAGER->getElapsedTime();
 		_fTimer += TIMEMANAGER->getElapsedTime();
 
@@ -64,8 +66,8 @@ void REBOUNDINGICICLES::update()
 			}
 		}
 
-
 	}
+
 	if (_fTimer >= 1.0f &&
 		_fTimer < 2.0f)
 	{
@@ -89,6 +91,12 @@ void REBOUNDINGICICLES::update()
 			_fStartPosX += Mins::presentPowerX(_fAngle, _fSpeed* TIMEMANAGER->getElapsedTime());
 			_fStartPosY += Mins::presentPowerY(_fAngle, _fSpeed* TIMEMANAGER->getElapsedTime());
 			_fOffsetTimer = 0.0f;
+		}
+
+		_fTurnTimer -= TIMEMANAGER->getElapsedTime();
+		if (_fTurnTimer <= 0.0f)
+		{
+			_fTimer = 2.0f;
 		}
 	}
 
@@ -114,6 +122,7 @@ void REBOUNDINGICICLES::pushMagicKey(float fPosX, float fPosY)
 	_fOffsetTimer = 0.0f;
 	_fAngle = SKILL::_pPlayer->getAttackAngle();
 	_bIsReturn = false;
+	_fTurnTimer = 0.0f;
 }
 
 void REBOUNDINGICICLES::pullMagicKey(float fPosX, float fPosY)
