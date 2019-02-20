@@ -174,7 +174,7 @@ void PLAYER::update()
 	nTileIndexX = OBJECT::getPosX() / _pMap->getTileSize();
 	nTileIndexY = (OBJECT::getPosY() + 32.0f) / _pMap->getTileSize();
 
-	//_pMap->getTile(nTileIndexX, nTileIndexY - 1)->Tilesefewa();
+	_pMap->getTile(nTileIndexX, nTileIndexY)->Tilesefewa();
 	//_pMap->getTile(nTileIndexX+1, nTileIndexY )->Tilesefewa();
 	//_pMap->getTile(nTileIndexX, nTileIndexY +1)->Tilesefewa();
 	//_pMap->getTile(nTileIndexX-1, nTileIndexY )->Tilesefewa();
@@ -207,7 +207,7 @@ void PLAYER::release()
 void PLAYER::render(HDC hdc)
 {
 	_pCirEffect->render(hdc);
-	Rectangle(hdc, _rcMovingCollision);
+	//Rectangle(hdc, _rcMovingCollision);
 	OBJECT::getImage()->aniRenderCenter(hdc, static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()), _pAnimation);
 
 	for (int i = 0; i < (int)PLAYER::ACTION::MAX; i++)

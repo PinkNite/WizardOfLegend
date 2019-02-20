@@ -65,7 +65,7 @@ void CAMERA::release()
 void CAMERA::renderinit()
 {
 	//PatBlt(_pCameraBuffer->getMemDC(), 0, 0, _nMapWidth, _nMapHeight, BLACKNESS);
-	BitBlt(_pCameraBuffer->getMemDC(), 0, 0, _nMapWidth, _nMapHeight, _pBackGroundBuffer->getMemDC(), 0, 0, SRCCOPY);
+	BitBlt(_pCameraBuffer->getMemDC(), _left, _top, _width, _height, _pBackGroundBuffer->getMemDC(), _left, _top, SRCCOPY);
 }
 
 void CAMERA::setting(int nPosX, int nPosY)
