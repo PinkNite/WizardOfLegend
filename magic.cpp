@@ -119,6 +119,7 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	OBJECT::setHeight(nHeight);
 	OBJECT::setImage(pImg);
 	_fDamage = 10.0f;
+	_bIsCollisionRemove = false;
 }
 
 void MAGIC::release()
@@ -297,6 +298,11 @@ void MAGIC::returnPool()
 
 bool MAGIC::isCollisionWall()
 {
+	if (!_bIsCollisionRemove)
+	{
+		return false;
+	}
+
 	RECT rcTmp;
 	bool bIsCollision = false;
 
