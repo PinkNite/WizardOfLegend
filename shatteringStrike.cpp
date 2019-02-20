@@ -40,7 +40,7 @@ void SHATTERINGSTRIKE::update()
 		float	fAngle = 0.0f;
 		for (int i = 0; i < 36; i++)
 		{
-			_pMagicMgr->pushMagicKey("dlbSmallRock", _pPlayer->getAttactPosX(), _pPlayer->getAttactPosY(), fAngle,600.0f, true);
+			_pMagicMgr->pushMagicKey("dlbSmallRock", _pPlayer->getAttactPosX(), _pPlayer->getAttactPosY(), fAngle,1000.0f, true);
 			fAngle += PI / 18.0f;
 		}
 		_bIsUse = true;

@@ -47,6 +47,9 @@ void CHAINLIGHTNING::update()
 				if (_pMap->getTile(nTileIndexX, nTileIndexY)->getTerrian() != TILE::TERRIAN::PASS)
 				{
 					//_pMap->getTile(nTileIndexX, nTileIndexY)->Tilesefewa();
+					SKILL::_pMagicMgr->pushMagicKey("thunder", _fStartPosX, _fStartPosY - 216.0f, 0.0f, 0.0f, true);
+					SKILL::_pSkillEffectMgr->activityEffect("thunderGround", _fStartPosX, _fStartPosY + 34.0f);
+					SKILL::_pSkillEffectMgr->activityEffect("electricBurnMark", _fStartPosX, _fStartPosY + 34.0f);
 					_fTimer = 2.1f;
 					return;
 				}
