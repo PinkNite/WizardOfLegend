@@ -93,15 +93,7 @@ void OPENING::update()
 
 void OPENING::render(HDC hdc)
 {
-	//메뉴창에서 나옴
-	/*if (_pressButton.isSelect)
-	{*/
-		//여기에 메뉴렌더
-	//}
-
-	//_fontX, _arrFontY[7], _hello.x, _hello.y
-		//RectangleMake(getMemDC(), _fontX+350, _arrFontY[7], 5, 5);
-		//RectangleMake(getMemDC(), _hello.x, _hello.y, 100, 100);
+	
 	if (_time < 6)
 	{
 		_99.image->alphaRender(hdc, _99.x, _99.y, _99.alpha);

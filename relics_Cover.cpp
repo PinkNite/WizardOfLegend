@@ -56,7 +56,7 @@ void RELICS_COVER::update()
 
 	}
 	
-	KEYANIMANAGER->update();
+	//KEYANIMANAGER->update();
 
 	
 }

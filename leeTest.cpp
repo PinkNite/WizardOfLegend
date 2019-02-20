@@ -17,17 +17,23 @@ HRESULT LEETEST::init()
 {
 	_pCamera = new CAMERA();
 	_pPlayer = new PLAYER();
+	_pMap = new MAP();
+	_pMap->init("map");
+
 	_pPlayer->init();
 
-	_pCamera->init(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()), WINSIZEX, WINSIZEY, 2048, 2048);
+	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY, _pMap->getMapCountX() * _pMap->getTileSize() * 2, _pMap->getMapCountY() * _pMap->getTileSize() * 2);
+	_pMap->setCamera(_pCamera);
 
-	_pCamera->settingCameraRange(0, 0, 2048, 2048);
 
 	_pMagicMgr = new MAGICMGR();
 	_pSkillEffectMgr = new SKILL_EFFECT_MGR();
 
 	_pMagicMgr->setLink(_pCamera);
 	_pMagicMgr->setPlayer(_pPlayer);
+
+
+
 
 
 	_pMagicMgr->addObject("dashFlame", 100, 64, 64,
@@ -117,6 +123,26 @@ HRESULT LEETEST::init()
 
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 	_pPlayer->setCameraLink(_pCamera);
+
+	// boss area
+	_pBoss = new BOSS();
+	_pBoss->init();
+	_pBoss->showBoss();
+	_pBoss->setCameraLink(_pCamera);
+	_pBoss->setMagicMgr(_pMagicMgr);
+
+	// bubble
+	IMAGEMANAGER->addFrameImage("WaterBounce1", "resource/boss/ice/WaterBounce1.bmp", 600, 120, 5, 1, true, Mins::getMazenta());
+
+	_pMagicMgr->addObject("WaterBalls", 100, 40, 40, IMAGEMANAGER->findImage("WaterBounce1"), 4, 120, 120, 10.0f, 1.3f, 30.0f);
+	_pMagicMgr->addObject("IceChakram", 100, 40, 40, IMAGEMANAGER->findImage("IceChakram"), 4, 50, 50, 10.0f, 1.3f, 30.0f);
+
+	_pMagicMgr->setPlayer(_pPlayer);
+
+
+
+
+	_pPlayer->setLinkMap(_pMap);
 	
 	_pMouse = new image;
 	_pMouse = IMAGEMANAGER->addImage("mouse", "resource/intro/mouseCursor.bmp", 64, 64, true, RGB(255, 0, 255));
@@ -144,14 +170,17 @@ void LEETEST::release()
 	_pPlayer->release();
 	_pSkillEffectMgr->release();
 	_pMagicMgr->release();
+	_pBoss->release();
 
 	delete _pPlayer;
 	delete _pSkillEffectMgr;
 	delete _pMagicMgr;
+	delete _pCamera;
 
 	_pPlayer = nullptr;
 	_pSkillEffectMgr = nullptr;
 	_pMagicMgr = nullptr;
+	_pCamera = nullptr;
 
 
 	_pMouse = nullptr;
@@ -165,8 +194,38 @@ void LEETEST::update()
 	_pMagicMgr->update();
 	_pSkillEffectMgr->update();
 
-	_pCamera->setting(_pPlayer->getPosX(), _pPlayer->getPosY());
+	// boss code
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		_pBoss->spell01(BOSS::SKILL_TYPE::CHAKRAM);
+	}
 
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_pBoss->spell01(BOSS::SKILL_TYPE::BUBBLE);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_pBoss->dash(float(_ptMouse.x), float(_ptMouse.y));
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('9'))
+	{
+		_pBoss->setDamage(50.0f);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('0'))
+	{
+		_pBoss->setDeath();
+	}
+	_pBoss->update();
+
+	_pCamera->settingCameraRange(static_cast<int>(_pPlayer->getPosX() - WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() - WINSIZEY / 2.0f),
+		static_cast<int>(_pPlayer->getPosX() + WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() + WINSIZEY / 2.0f));
+	_pMap->settingLimitRect();
+
+	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 
 	_pUI->update();
 	_pItemManager->update();
@@ -183,13 +242,12 @@ void LEETEST::update()
 void LEETEST::render()
 {
 	_pCamera->renderinit();
+	_pMap->render(_pCamera->getMemDC());
 
 	_pSkillEffectMgr->render(_pCamera->getMemDC());
-	_pPlayer->render(getMemDC());
-	_pMagicMgr->render(getMemDC());
+	//_pPlayer->render(getMemDC());
+	//_pMagicMgr->render(getMemDC());
 	_pCamera->render(getMemDC());
-
-	KEYANIMANAGER->render();
 
 
 	_pUI->render(getMemDC());

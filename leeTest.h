@@ -1,15 +1,17 @@
 #pragma once
+
 #include "gameNode.h"
 #include "itemManager.h"
 #include "UI.h"
+#include "relics.h"
 
-#include "stdafx.h"
 #include "gameNode.h"
 #include "player.h"
 #include "skillEffectMgr.h"
 #include "magicMgr.h"
 #include "camera.h"
-#include "relics.h"
+#include "boss.h"
+#include "map.h"
 
 class LEETEST :public gameNode
 {
@@ -29,6 +31,11 @@ private:
 	//float hp;
 	//image* _iImage;
 	RELICS* _pRelics;
+
+	BOSS* _pBoss;
+	bool _isBoss;
+
+	MAP*		_pMap;
 
 public:
 	LEETEST();

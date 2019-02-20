@@ -5,7 +5,7 @@
 
 
 MENU::MENU()
-	: _menuCount(0), _count(0)
+	: _menuCount(0), _count(0),_x(0),_y(0),_keyCount(0)
 {
 }
 
@@ -19,7 +19,7 @@ HRESULT MENU::init()
 	_pButton = new image;
 	_pButton = IMAGEMANAGER->findImage("button");
 	tagInfoSetting();
-	
+	selectButtonSetting();
 	
 	return S_OK;
 }
@@ -32,18 +32,27 @@ void MENU::release()
 
 void MENU::update()
 {
-	//if (KEYMANAGER->isOnceKeyDown(VK_SPACE)||KEYMANAGER->isOnceKeyDown(VK_LBUTTON))/////////임시 지워얗됨
-	//{
-	//	_pressButton.isSelect = true;
-	//}
-	//메뉴 나가기
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_back.rc, _ptMouse))
+	if (_option.isSelect)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_back.rc, _ptMouse))
+		{
+
+			_option.isSelect = false;
+			_menuCount = 0;
+		}
+		else if (KEYMANAGER->isOnceKeyDown(VK_ESCAPE))
+		{
+			_option.isSelect = false;
+			_menuCount = 0;
+		}
+	}
+		fontSetting();
+	if (_menuCount == 0)//옵션클릭하면 안들어옴
 	{
 		
-		_option.isSelect = false;
-		_menuCount = 0;
+		fontCollision();
+		_selectButton = RectMakeCenter(_x, _y, 20, 20);
 	}
-	fontSetting();
 }
 
 void MENU::render(HDC hdc)
@@ -94,6 +103,21 @@ void MENU::render(HDC hdc)
 	char str[200];
 	sprintf_s(str, "%d", _menuCount);
 	TextOut(hdc, 800, 800, str, strlen(str));
+
+
+	sprintf_s(str, "%d", _singlePlayer.isCursor);
+	TextOut(hdc, 1200, 200, str, strlen(str));
+	sprintf_s(str, "%d", _mapEditor.isCursor);
+	TextOut(hdc, 1200, 300, str, strlen(str));
+	sprintf_s(str, "%d", _option.isCursor);
+	TextOut(hdc, 1200, 400, str, strlen(str));
+	sprintf_s(str, "%d", _credit.isCursor);
+	TextOut(hdc, 1200, 500, str, strlen(str));
+	sprintf_s(str, "%d", _quit.isCursor);
+	TextOut(hdc, 1200, 600, str, strlen(str));
+
+
+	Rectangle(hdc, _selectButton);
 }
 
 void MENU::pressRender(HDC hdc)
@@ -147,65 +171,71 @@ void MENU::tagInfoSetting()
 	_pressButton.x = WINSIZEX / 2;//WINSIZEX / 2 - 70;
 	_pressButton.y = WINSIZEY - 100;
 	_pressButton.isSelect = false;
-	_singlePlayer.r = 255;
-	_singlePlayer.g = 255;
-	_singlePlayer.b = 255;
+	_singlePlayer.r = 116;
+	_singlePlayer.g = 112;
+	_singlePlayer.b = 117;
 	_singlePlayer.count = 0;
 	_singlePlayer.size = 30;
 	_singlePlayer.x = WINSIZEX / 2;//WINSIZEX / 2 - 75;
 	_singlePlayer.y = WINSIZEY - 400;
 	_singlePlayer.isSelect = false;
 	_singlePlayer.rc = RectMakeCenter(_singlePlayer.x, _singlePlayer.y, (strlen("SINGLEPLAYER") - 4)*_singlePlayer.size, _singlePlayer.size);
-	_option.r = 255;
-	_option.g = 255;
-	_option.b = 255;
+	_singlePlayer.isCursor = false;
+	_option.r = 116;
+	_option.g = 112;
+	_option.b = 117;
 	_option.count = 0;
 	_option.size = 30;
 	_option.x = WINSIZEX / 2;// WINSIZEX / 2 - 40;
 	_option.y = WINSIZEY - 300;
 	_option.isSelect = false;
 	_option.rc = RectMakeCenter(_option.x, _option.y, (strlen("OPTION") - 1)*_option.size, _option.size);
+	_option.isCursor = false;
 	//메뉴 클릭용
 	_option.isSelect = false;
-	_credit.r = 255;
-	_credit.g = 255;
-	_credit.b = 255;
+	_credit.r = 116;
+	_credit.g = 112;
+	_credit.b = 117;
 	_credit.count = 0;
 	_credit.size = 30;
 	_credit.x = WINSIZEX / 2;// WINSIZEX / 2 - 38;
 	_credit.y = WINSIZEY - 250;
 	_credit.isSelect = false;
 	_credit.rc = RectMakeCenter(_credit.x, _credit.y, (strlen("CREDIT") - 1)*_credit.size, _credit.size);
-	_mapEditor.r = 255;
-	_mapEditor.g = 255;
-	_mapEditor.b = 255;
+	_credit.isCursor = false;
+	_mapEditor.r = 116;
+	_mapEditor.g = 112;
+	_mapEditor.b = 117;
 	_mapEditor.count = 0;
 	_mapEditor.size = 30;
 	_mapEditor.x = WINSIZEX / 2;// WINSIZEX / 2 - 55;
 	_mapEditor.y = WINSIZEY - 350;
 	_mapEditor.isSelect = false;
 	_mapEditor.rc = RectMakeCenter(_mapEditor.x, _mapEditor.y, (strlen("MAPEDITOR") - 3)*_mapEditor.size, _mapEditor.size);
-	_quit.r = 255;
-	_quit.g = 255;
-	_quit.b = 255;
+	_mapEditor.isCursor = false;
+	_quit.r = 116;
+	_quit.g = 112;
+	_quit.b = 117;
 	_quit.count = 0;
 	_quit.size = 30;
 	_quit.x = WINSIZEX / 2;// WINSIZEX / 2 - 20;
 	_quit.y = WINSIZEY - 200;
 	_quit.isSelect = false;
 	_quit.rc = RectMakeCenter(_quit.x, _quit.y, (strlen("QUIT") - 1)*_quit.size, _quit.size);
-	_back.r = 255;
-	_back.g = 255;
-	_back.b = 255;
+	_quit.isCursor = false;
+	_back.r = 116;
+	_back.g = 112;
+	_back.b = 117;
 	_back.count = 0;
 	_back.size = 30;
 	_back.x = WINSIZEX / 2;// WINSIZEX / 2 - 20;
 	_back.y = WINSIZEY - 200;
 	_back.isSelect = false;
 	_back.rc = RectMakeCenter(_back.x, _back.y, (strlen("BACK") - 1)*_back.size, _back.size);
-	_font.r = 255;
-	_font.g = 255;
-	_font.b = 255;
+	_back.isCursor = false;
+	_font.r = 116;
+	_font.g = 112;
+	_font.b = 117;
 	_font.count = 0;
 	_font.size = 20;
 	_font.x = WINSIZEX / 2;// WINSIZEX / 2 - 20;
@@ -228,21 +258,204 @@ void MENU::fontSetting()
 	{
 		_count++;
 	}
-		switch (_count%3)
-		{
-		case 0:
-			_changeFont = "휴먼둥근헤드라인";
-			break;
-		case 1:
-			_changeFont = "elephant";
-			break;
-		case 2:
-			_changeFont = "굴림체";
-			break;
-		}
+	switch (_count % 3)
+	{
+	case 0:
+		_changeFont = "휴먼둥근헤드라인";
+		break;
+	case 1:
+		_changeFont = "elephant";
+		break;
+	case 2:
+		_changeFont = "굴림체";
+		break;
+	}
+	////해당 커서가 들어오면 글씨 조절됨
 	
+		
 	
 }
+
+void MENU::fontCollision()
+{
+	RECT temp;
+	//버튼들과 충돌하면 커서가 온이되고 온이되면 잠깐 글씨가 커진다 색깔도 좀 바뀌게하자
+	if (IntersectRect(&temp, &_selectButton, &_singlePlayer.rc))//싱글플레이어 버튼과 충돌
+	{
+		_singlePlayer.isCursor = true;
+	}
+	else
+	{
+		_singlePlayer.isCursor = false;
+	}
+	if (IntersectRect(&temp, &_selectButton, &_mapEditor.rc))//map
+	{
+		_mapEditor.isCursor = true;
+	}
+	else
+	{
+		_mapEditor.isCursor = false;
+	}
+	if (IntersectRect(&temp, &_selectButton, &_option.rc))//싱글플레이어 버튼과 충돌
+	{
+		_option.isCursor = true;
+	}
+	else
+	{
+		_option.isCursor = false;
+	}
+	if (IntersectRect(&temp, &_selectButton, &_credit.rc))//싱글플레이어 버튼과 충돌
+	{
+		_credit.isCursor = true;
+	}
+	else
+	{
+		_credit.isCursor = false;
+	}
+	if (IntersectRect(&temp, &_selectButton, &_quit.rc))//싱글플레이어 버튼과 충돌
+	{
+		_quit.isCursor = true;
+	}
+	else
+	{
+		_quit.isCursor = false;
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_UP) && _y > WINSIZEY - 400)
+	{
+		_keyCursor = KEY_UP;
+
+	}
+	
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && _y < WINSIZEY - 200 )
+	{
+		_keyCursor = KEY_DOWN;
+
+	}
+	if (_keyCursor == KEY_UP)
+	{
+		_y -= 25;
+		_keyCursor = KEY_EMPTY;
+	}
+	if (_keyCursor == KEY_DOWN)
+	{
+		_y += 25;
+		_keyCursor = KEY_EMPTY;
+	}
+
+	if (PtInRect(&_singlePlayer.rc, _ptMouse)&&!_singlePlayer.isCursor&&_keyCount==0)//셀렉트박스좌표가 옮겨짐
+	{
+		//_mouseCursor = MOUSE_ON;
+		_y = WINSIZEY  - 400;
+	}
+
+	if (PtInRect(&_mapEditor.rc, _ptMouse) && !_mapEditor.isCursor&&_keyCount == 0)//셀렉트박스좌표가 옮겨짐
+	{
+		_y = WINSIZEY  - 350;
+	}
+	if (PtInRect(&_option.rc, _ptMouse) && !_option.isCursor&&_keyCount == 0)//셀렉트박스좌표가 옮겨짐
+	{
+		_y = WINSIZEY  - 300;
+	}
+	if (PtInRect(&_credit.rc, _ptMouse) && !_credit.isCursor&&_keyCount == 0)//셀렉트박스좌표가 옮겨짐
+	{
+		_y = WINSIZEY  - 250;
+	}
+	if (PtInRect(&_quit.rc, _ptMouse) && !_quit.isCursor&&_keyCount == 0)//셀렉트박스좌표가 옮겨짐
+	{
+		_y = WINSIZEY  - 200;
+	}
+	
+	if (_singlePlayer.isCursor)
+	{
+
+		_singlePlayer.size = 40;
+		_singlePlayer.r = 255;
+		_singlePlayer.g = 255;
+		_singlePlayer.b = 255;
+	}
+	else
+	{
+		_singlePlayer.size = 30;
+		_singlePlayer.r = 116;
+		_singlePlayer.g = 112;
+		_singlePlayer.b = 117;
+	}
+	if (_mapEditor.isCursor)
+	{
+
+		_mapEditor.size = 40;
+		_mapEditor.r = 255;
+		_mapEditor.g = 255;
+		_mapEditor.b = 255;
+	}
+	else
+	{
+		_mapEditor.size = 30;
+		_mapEditor.r = 116;
+		_mapEditor.g = 112;
+		_mapEditor.b = 117;
+	}
+	if (_option.isCursor)
+	{
+
+		_option.size = 40;
+		_option.r = 255;
+		_option.g = 255;
+		_option.b = 255;
+	}
+	else
+	{
+		_option.size = 30;
+		_option.r = 116;
+		_option.g = 112;
+		_option.b = 117;
+	}
+	if (_credit.isCursor)
+	{
+
+		_credit.size = 40;
+		_credit.r = 255;
+		_credit.g = 255;
+		_credit.b = 255;
+	}
+	else
+	{
+		_credit.size = 30;
+		_credit.r = 116;
+		_credit.g = 112;
+		_credit.b = 117;
+	}
+	if (_quit.isCursor)
+	{
+
+		_quit.size = 40;
+		_quit.r = 255;
+		_quit.g = 255;
+		_quit.b = 255;
+	}
+	else
+	{
+		_quit.size = 30;
+		_quit.r = 116;
+		_quit.g = 112;
+		_quit.b = 117;
+	}
+
+}
+
+void MENU::selectButtonSetting()
+{
+	//50씩 내려가면 된다.
+	_x = WINSIZEX / 2;
+	_y = WINSIZEY - 400;
+	_selectButton = RectMakeCenter(_x,_y , 20, 20);
+	
+	_keyCursor = KEY_EMPTY;
+	_mouseCursor = MOUSE_OFF;
+}
+
+
+
 
 void MENU::singlePlayer()
 {
@@ -285,30 +498,30 @@ void MENU::buttonClick()
 	//싱글플레이어
 	if (_menuCount == 0)
 	{
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_singlePlayer.rc, _ptMouse))
+		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_singlePlayer.rc, _ptMouse))||(KEYMANAGER->isOnceKeyDown(VK_RETURN)&&_singlePlayer.isCursor))
 		{
 			singlePlayer();
 		}
 		//맵
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_mapEditor.rc, _ptMouse))
+		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_mapEditor.rc, _ptMouse)) ||(KEYMANAGER->isOnceKeyDown(VK_RETURN) && _mapEditor.isCursor))
 		{
 			mapEditor();
 		}
 		//옵션
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_option.rc, _ptMouse))
+		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_option.rc, _ptMouse)) || (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _option.isCursor))
 		{
 			_menuCount = 1;
 			option();
 		}
 		//크레딧
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_credit.rc, _ptMouse))
+		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_credit.rc, _ptMouse))|| (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _credit.isCursor))
 		{
 			_menuCount = 1;
 			credit();
 		}
 		
 		//나가기
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_quit.rc, _ptMouse))
+		if ((KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_quit.rc, _ptMouse)) || (KEYMANAGER->isOnceKeyDown(VK_RETURN) && _quit.isCursor))
 		{
 			quit();
 		}

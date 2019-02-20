@@ -33,7 +33,7 @@ void RELICS_RING::release()
 void RELICS_RING::update()
 {
 	_pAni->start();
-	KEYANIMANAGER->update();
+	//KEYANIMANAGER->update();
 }
 
 void RELICS_RING::render(HDC hdc)

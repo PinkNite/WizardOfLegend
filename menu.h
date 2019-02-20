@@ -1,5 +1,16 @@
 #pragma once
 //#include "button.h"
+enum KEYBOARDCURSOR
+{
+	KEY_UP,
+	KEY_DOWN,
+	KEY_EMPTY
+};
+enum MOUSECURSOR
+{
+	MOUSE_ON,
+	MOUSE_OFF
+};
 
 class MENU
 {
@@ -18,6 +29,7 @@ private:
 		bool isSelect;
 		float speed;
 		RECT rc;
+		bool isCursor;
 
 	};
 	int _menuCount;
@@ -31,7 +43,7 @@ private:
 	TAGINTRO _quit;
 	TAGINTRO _back;
 	TAGINTRO _font;
-
+	TAGINTRO _temp;//빈곳
 	image* _pButton;
 	//button* _pButton;
 	//POINT _point1;
@@ -39,6 +51,14 @@ private:
 	int _count;
 
 	const char* _changeFont;
+	RECT _selectButton;//메뉴 선택용 
+	int _x;//좌표
+	int _y;//메뉴선택박스 좌표
+
+	int _keyCount;
+	MOUSECURSOR _mouseCursor;
+	KEYBOARDCURSOR _keyCursor;
+
 public:
 	MENU();
 	~MENU();
@@ -49,6 +69,9 @@ public:
 	void pressRender(HDC hdc);
 	void tagInfoSetting();
 	void fontSetting();
+	void fontCollision();
+	void selectButtonSetting();
+	
 	///////////////////////////////////////////////메뉴선택//////////////////////////////
 	void singlePlayer();//싱글플레이어
 	void mapEditor();//맵에디터
