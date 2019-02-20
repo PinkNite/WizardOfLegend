@@ -144,9 +144,9 @@ HRESULT MINTESTSCENE::init()
 
 	_pMagicMgr->setPlayer(_pPlayer);
 
-	_pMap->settingLimitRect();
+	//_pMap->settingLimitRect();
 
-
+	_pMap->drawMap(_pCamera->getBackGoroundBuffer());
 
 	return S_OK;
 }
@@ -191,7 +191,7 @@ void MINTESTSCENE::update()
 	//_pMap->update();
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 
-	_pMap->settingLimitRect();
+	//_pMap->settingLimitRect();
 }
 
 void MINTESTSCENE::release()
@@ -215,7 +215,7 @@ void MINTESTSCENE::release()
 void MINTESTSCENE::render()
 {
 	_pCamera->renderinit();
-	_pMap->render(_pCamera->getMemDC());
+	//_pMap->render(_pCamera->getMemDC());
 
 	_pSkillEffectMgr->render(_pCamera->getMemDC());
 	//_pPlayer->render(getMemDC());

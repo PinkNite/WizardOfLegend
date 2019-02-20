@@ -14,8 +14,9 @@ STATUSUI::~STATUSUI()
 
 HRESULT STATUSUI::init()
 {
-
-	//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON);
+	_pTemp = new PLAYER;
+	_pTemp->init();
+	
 	IMAGEMANAGER->addImage("statusUI", "resource/UI/statusUI.bmp", 480, 724, true, RGB(255, 0, 255));
 	OBJECT::setImage(IMAGEMANAGER->findImage("statusUI"));
 	OBJECT::init(51 + (2 * 51 + 2 * 2), 51 + 25, OBJECT::getImage()->GetWidth(), OBJECT::getImage()->GetHeight());
@@ -26,27 +27,53 @@ HRESULT STATUSUI::init()
 		_pStatusBox[i] = new STATUSBOX;
 		_pStatusBox[i]->init(214 + i * 66, 150);
 		_pStatusBox[i]->setSkillXY(60 + (i * 60) + 3,WINSIZEY-90);
-	
-		switch (i)
-		{
 		
-		case 5:
-			_pStatusBox[i]->_pSkillIcon->setNum(6);
-			break;
-		default:
-		_pStatusBox[i]->_pSkillIcon->setNum(i);
-			break;
+		
+			switch (i)
+			{
+			case 0:
+				_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON)));
+				_pStatusBox[i]->setSkillName(static_cast<SKILLNAMES> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON)));
+				_pStatusBox[i]->setSkillNum(static_cast<SKILLNUMBER> (0));
+				break;
+			case 1:
+				_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_SPACE)));
+				_pStatusBox[i]->setSkillName(static_cast<SKILLNAMES> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_SPACE)));
+				_pStatusBox[i]->setSkillNum(static_cast<SKILLNUMBER> (5));
+				break;
+			case 2:
+				_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON)));
+				_pStatusBox[i]->setSkillName(static_cast<SKILLNAMES> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON)));
+				_pStatusBox[i]->setSkillNum(static_cast<SKILLNUMBER> (1));
+				break;
+
+			case 3:
+				_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q)));
+				_pStatusBox[i]->setSkillName(static_cast<SKILLNAMES> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q)));
+				_pStatusBox[i]->setSkillNum(static_cast<SKILLNUMBER> (2));
+				break;
+			case 4:
+				_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E)));
+				_pStatusBox[i]->setSkillName(static_cast<SKILLNAMES> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E)));
+				_pStatusBox[i]->setSkillNum(static_cast<SKILLNUMBER> (3));
+				break;
+			case 5:
+				_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_R)));
+				_pStatusBox[i]->setSkillName(static_cast<SKILLNAMES> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_R)));
+				_pStatusBox[i]->setSkillNum(static_cast<SKILLNUMBER> (4));
+				//_pStatusBox[i]->_pSkillIcon->setNum(6);
+				break;
 		}
+				
 		
-		_pStatusBox[i]->setSkillNum(static_cast<SKILLNUMBER> (i));
 	
 
 	}
-	for (int i = 6; i < 7; i++)
+	for (int i = 6; i < 7; i++)//임시 아이템 상자
 	{
 		_pStatusBox[i] = new STATUSBOX;
 		_pStatusBox[i]->init(214, 333);
-		_pStatusBox[i]->_pSkillIcon->setNum(10);
+		_pStatusBox[i]->_pSkillIcon->setNum(0);
 
 	}
 
@@ -61,6 +88,7 @@ HRESULT STATUSUI::init()
 		_pItem[i]->setX(214);
 		_pItem[i]->setY(333);
 		_pItem[i]->setNum(1);
+	
 
 	}
 	_pExplainUse = new EXPLAINUSE;
@@ -86,26 +114,7 @@ HRESULT STATUSUI::init()
 	
 	
 
-	/*	enum class SKILL_NAME
-	{
-		NONE = 0, 0  ->10
-		FIRE_DASH, 1  ->1
-		FIRE_STRIKE, 2 - >0
- 		SHOKE_NOVA,3 ->2
-		CHAIN_LIGHTNING,4 ->3
-		STONE_SHOT,5->4
-		SHATTERINGSTRIKE,6->7
-		REBOUNDINGICICLES,7->6
-		GLACIALCROSS,8->5
-		MAX
-	};*/
 	
-	
-//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON);
-//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q);
-//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E);
-//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_R);
-//_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_SPACE);
 	return S_OK;
 }
 
@@ -115,7 +124,42 @@ void STATUSUI::release()
 
 void STATUSUI::update()
 {
+	
+	//for (int i = 0; i < 6; i++)
+	//{
+	//	switch (i)
+	//	{
+	//	case 0:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON)));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_0);
+	//		break;
+	//	case 1:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_SPACE)));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_1);
+	//		break;
+	//	case 2:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::RBUTTON)));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_2);
+	//		break;
 
+	//	case 3:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_Q)));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_3);
+	//		break;
+	//	case 4:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_E)));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_4);
+	//		break;
+	//	case 5:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::BTN_R)));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_5);
+	//		//_pStatusBox[i]->_pSkillIcon->setNum(6);
+	//		break;
+	//	default:
+
+	//		break;
+	//	}
+	//}
 	
 	_pStatusSelect->update();
 	for (int i = 0; i < 6; i++)
@@ -224,17 +268,23 @@ void STATUSUI::render(HDC hdc)
 		_pStatusButton[i]->render(hdc);
 	}
 
-	//char str[222];
+	char str[222];
 
-	//for (int i = 0; i < 6; i++)
-	//{
+	for (int i = 0; i < 6; i++)
+	{
 
-	//	//sprintf_s(str, "%d,%d", _pStatusBox[i]->getX(), _pStatusBox[i]->getY());
-	//	//TextOut(hdc, _pStatusBox[i]->getX(), _pStatusBox[i]->getY(), str, strlen(str));
+		//sprintf_s(str, "%d,%d", _pStatusBox[i]->getX(), _pStatusBox[i]->getY());
+		//TextOut(hdc, _pStatusBox[i]->getX(), _pStatusBox[i]->getY(), str, strlen(str));
+		
+		sprintf_s(str, "%d", _pStatusBox[i]->getSkillNum());
+		TextOut(hdc,50*i+500, _pStatusBox[i]->getY(), str, strlen(str));
+		sprintf_s(str, "%d", _pStatusBox[i]->getSkillName());
+		TextOut(hdc, 500 + i * 50, 500, str, strlen(str));
 
-	//	sprintf_s(str, "%d", _pStatusBox[_pStatusBox[i]->getIndex()]->getX());
-	//	TextOut(hdc, _pStatusBox[i]->getX(), _pStatusBox[i]->getY(), str, strlen(str));
-	//}
+		
+	}
+	sprintf_s(str, "%d", _pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON));
+	TextOut(hdc, 900, 700, str, strlen(str));
 	//sprintf_s(str, "선택엑스좌표:%d,선택상태값:%d", (int)_pStatusSelect->getPosX(), _pStatusSelect->getSelectState());
 	//TextOut(hdc, 700, 400, str, strlen(str));
 	//sprintf_s(str, "count :%d temp:%d frame: %d", _count, _temp, _pStatusBox[_temp]->getFrameX());
@@ -333,11 +383,28 @@ void STATUSUI::spaceKeyAndLButton()
 
 			_pTempBox->setX(_pStatusBox[_temp]->getX());
 			_pTempBox->setSkillX(_pStatusBox[_temp]->getSkillX());
+
+			_pTempBox->setSkillNum(_pStatusBox[_temp]->getSkillNum());
+			_pTempBox->setSkillName(_pStatusBox[_temp]->getSkillName());
+			//_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (_pStatusBox[_temp]->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[_temp]->getSkillName()));
+
 			_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());
 			_pStatusBox[_temp]->setSkillX(_pStatusBox[i]->getSkillX());
+
+			_pStatusBox[_temp]->setSkillNum(_pStatusBox[i]->getSkillNum());
+			_pStatusBox[_temp]->setSkillName(_pStatusBox[i]->getSkillName());
+			//_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (_pStatusBox[i]->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[i]->getSkillName()));
+
 			_pStatusBox[i]->setX(_pTempBox->getX());
 			_pStatusBox[i]->setSkillX(_pTempBox->getSkillX());
 
+			_pStatusBox[i]->setSkillNum(_pTempBox->getSkillNum());
+			_pStatusBox[i]->setSkillName(_pTempBox->getSkillName());
+
+			//_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (_pTempBox->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pTempBox->getSkillName()));
+
+			
+			//해당스킬 번호도 스왑하고 그 스킬 번호에 따라 스킬 버튼이 업데이트 된다.
 
 			break;
 		}
@@ -389,14 +456,36 @@ void STATUSUI::spaceKeyAndLButton()
 
 			_pTempBox->setX(_pStatusBox[_temp]->getX());
 			_pTempBox->setSkillX(_pStatusBox[_temp]->getSkillX());
+			
+			_pTempBox->setSkillNum(_pStatusBox[_temp]->getSkillNum());
+			_pTempBox->setSkillName(_pStatusBox[_temp]->getSkillName());
+			//_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (_pStatusBox[_temp]->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[_temp]->getSkillName()));
+
 			_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());
 			_pStatusBox[_temp]->setSkillX(_pStatusBox[i]->getSkillX());
+
+			_pStatusBox[_temp]->setSkillNum(_pStatusBox[i]->getSkillNum());
+			_pStatusBox[_temp]->setSkillName(_pStatusBox[i]->getSkillName());
+			//_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (_pStatusBox[i]->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[i]->getSkillName()));
+
 			_pStatusBox[i]->setX(_pTempBox->getX());
 			_pStatusBox[i]->setSkillX(_pTempBox->getSkillX());
-			
+
+			_pStatusBox[i]->setSkillNum(_pTempBox->getSkillNum());
+			_pStatusBox[i]->setSkillName(_pTempBox->getSkillName());
+
+			//_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (_pTempBox->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pTempBox->getSkillName()));
+
 			break;
 		}
 	}
+	
+	_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (0), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[0]-> getSkillName()));
+	_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (5), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[1]->getSkillName()));
+	_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (1), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[2]->getSkillName()));
+	_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (2), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[3]->getSkillName()));
+	_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (3), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[4]->getSkillName()));
+	_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (4), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[5]->getSkillName()));
 
 	
 }

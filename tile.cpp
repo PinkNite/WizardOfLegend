@@ -498,3 +498,34 @@ void TILE::Tilesefewa()
 {
 	bIsTrue = true;
 }
+
+void TILE::renderBackGround(HDC hdc)
+{
+	if (_object == OBJECT::NONE)
+	{
+		if (_terrian == TERRIAN::WALL)
+		{
+			_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+		}
+		else if (_terrian == TERRIAN::PASS)
+		{
+			_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+		}
+		else if (_terrian == TERRIAN::DMAGE_PASS)
+		{
+			_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+		}
+	}
+	/*else if (_object == OBJECT::NOMAL_OBJECT)
+	{
+	SetTextColor(hdc, RGB(0, 0, 255));
+	SetBkMode(hdc, TRANSPARENT);
+	sprintf_s(str, "¿À");
+	TextOut(hdc, _rcTile.left + 8, _rcTile.top + 8, str, strlen(str));
+	}*/
+	if (_object != OBJECT::NONE)
+	{
+		_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+		_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nObjFrameX, _nObjFrameY);
+	}
+}

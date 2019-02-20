@@ -82,7 +82,7 @@ public:
 	//그려주는 함수
 	virtual void	render(HDC hdc) override;
 	virtual void	render(HDC hdc, bool Map);
-
+	
 	//메모리 해제
 	virtual void	release() override;
 	virtual void	update() override;
@@ -129,4 +129,7 @@ public:
 	inline	int				getNodeIndex() { return _nNodeIndex; }
 	inline	TILE::TERRIAN	getTerrian() {return _terrian; }
 	inline	int				getTerrainPageIndex() { return _terrainPageIndex; }
+
+
+	void renderBackGround(HDC hdc);
 };

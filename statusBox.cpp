@@ -22,7 +22,7 @@ HRESULT STATUSBOX::init(int x, int y)
 	_pSkillIcon = new SKILLICON;
 	_pSkillIcon->init(_x-2, _y-2);
 	//_pSkillIcon->setNum(i);
-
+	_skillName = SKILL_NAME_EMPTY;
 	
 	
 	return S_OK;

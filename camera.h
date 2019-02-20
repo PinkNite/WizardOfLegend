@@ -33,6 +33,9 @@ private:
 	list<OBJECT*>		_listRenderObject;
 	int		_nMapWidth;		//¸ÊÀÇ °¡·Î	(World)
 	int		_nMapHeight;	//¸ÊÀÇ ¼¼·Î	(World)
+
+	image*	_pBackGroundBuffer;
+
 public:
 	CAMERA();
 	~CAMERA();
@@ -74,4 +77,7 @@ public:
 	HDC getMemDC() { return _pCameraBuffer->getMemDC(); }
 	void	setCameraBuffer(image* pImg);
 	void	pushRenderObject(OBJECT* pObject);
+
+
+	HDC	getBackGoroundBuffer() { return _pBackGroundBuffer->getMemDC(); }
 };

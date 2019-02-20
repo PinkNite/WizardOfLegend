@@ -66,4 +66,6 @@ public:
 
 	inline	TILE*	getTile(int nX, int nY) { return _vvMap[nY][nX]; }
 
+
+	void	drawMap(HDC hdc);
 };
