@@ -133,7 +133,7 @@ void MAGICMGR::pushMagicKey(const string & strKey, bool bIsPlayer, float fCircle
 	pMagic = nullptr;
 }
 
-void MAGICMGR::addObject(const string& strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, float fDamage)
+void MAGICMGR::addObject(const string& strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, float fDamage, bool bIsCollisionRemove)
 {
 	if (_mqMagicPool.find(strKey) != _mqMagicPool.end())
 	{
@@ -145,7 +145,7 @@ void MAGICMGR::addObject(const string& strKey, int nMagicCount, int nWidth, int 
 	for (int i = 0; i < nMagicCount; i++)
 	{
 		MAGIC* pMagic = new MAGIC();
-		pMagic->init(nWidth, nHeight, pImg, nFps, nFrameMaxX, nFrameMaxY, fTotalTime, strKey);
+		pMagic->init(nWidth, nHeight, pImg, nFps, nFrameMaxX, nFrameMaxY, fTotalTime, strKey, bIsCollisionRemove);
 		pMagic->setDamage(fDamage);
 		pMagic->setMap(_pMap);
 
@@ -158,7 +158,7 @@ void MAGICMGR::addObject(const string& strKey, int nMagicCount, int nWidth, int 
 	_mqMagicPool.insert(pair<string, queue<MAGIC*>>(strKey, qMagic));
 }
 
-void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY, float fTotalTime, float fDamage)
+void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY, float fTotalTime, float fDamage, bool bIsCollisionRemove)
 {
 	if (_mqMagicPool.find(strKey) != _mqMagicPool.end())
 	{
@@ -170,7 +170,7 @@ void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int
 	for (int i = 0; i < nMagicCount; i++)
 	{
 		MAGIC* pMagic = new MAGIC();
-		pMagic->init(nWidth, nHeight, pImg,nFrameX,nFrameY,fTotalTime,strKey);
+		pMagic->init(nWidth, nHeight, pImg,nFrameX,nFrameY,fTotalTime,strKey, bIsCollisionRemove);
 		pMagic->setDamage(fDamage);
 		pMagic->setMap(_pMap);
 
@@ -183,7 +183,7 @@ void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int
 	_mqMagicPool.insert(pair<string, queue<MAGIC*>>(strKey, qMagic));
 }
 
-void MAGICMGR::addObject(animation * pAni, const string & strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, float fDamage)
+void MAGICMGR::addObject(animation * pAni, const string & strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, float fDamage, bool bIsCollisionRemove)
 {
 	if (_mqMagicPool.find(strKey) != _mqMagicPool.end())
 	{
@@ -195,7 +195,7 @@ void MAGICMGR::addObject(animation * pAni, const string & strKey, int nMagicCoun
 	for (int i = 0; i < nMagicCount; i++)
 	{
 		MAGIC* pMagic = new MAGIC();
-		pMagic->init(nWidth, nHeight, pImg, pAni, fTotalTime, strKey);
+		pMagic->init(nWidth, nHeight, pImg, pAni, fTotalTime, strKey, bIsCollisionRemove);
 		pMagic->setDamage(fDamage);
 		pMagic->setMap(_pMap);
 
@@ -208,7 +208,7 @@ void MAGICMGR::addObject(animation * pAni, const string & strKey, int nMagicCoun
 	_mqMagicPool.insert(pair<string, queue<MAGIC*>>(strKey, qMagic));
 }
 
-void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, float fTurnTime, float fDamage)
+void MAGICMGR::addObject(const string & strKey, int nMagicCount, int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, float fTurnTime, float fDamage, bool bIsCollisionRemove)
 {
 	if (_mqMagicPool.find(strKey) != _mqMagicPool.end())
 	{

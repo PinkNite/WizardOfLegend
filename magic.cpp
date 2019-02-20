@@ -10,7 +10,7 @@ MAGIC::~MAGIC()
 {
 }
 
-void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, const string& strKey)
+void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, const string& strKey, bool bIsCollisionRemove)
 {
 	_fPosX = -2000.0f;
 	_fPosY = -2000.0f;
@@ -35,9 +35,10 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	OBJECT::setHeight(nHeight);
 	OBJECT::setImage(pImg);
 	_fDamage = 10.0f;
+	_bIsCollisionRemove = bIsCollisionRemove;
 }
 
-void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float fTotalTime, const string & strkey)
+void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float fTotalTime, const string & strkey, bool bIsCollisionRemove)
 {
 	_fPosX = -2000.0f;
 	_fPosY = -2000.0f;
@@ -60,9 +61,11 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float 
 	OBJECT::setHeight(nHeight);
 	OBJECT::setImage(pImg);
 	_fDamage = 10.0f;
+	_bIsCollisionRemove = bIsCollisionRemove;
+
 }
 
-void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY, float fTotalTime, const string & strkey)
+void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY, float fTotalTime, const string & strkey, bool bIsCollisionRemove)
 {
 	_fPosX = -2000.0f;
 	_fPosY = -2000.0f;
@@ -85,6 +88,8 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY
 	OBJECT::setHeight(nHeight);
 	OBJECT::setImage(pImg);
 	_fDamage = 10.0f;
+	_bIsCollisionRemove = bIsCollisionRemove;
+
 }
 
 void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime, float fTurnTime, const string & strKey)
@@ -310,7 +315,6 @@ bool MAGIC::isCollisionWall()
 	{
 		if (_pMap->getTile(nTileIndexX, nTileIndexY)->getTerrian() != TILE::TERRIAN::PASS)
 		{
-
 			return true;
 		}
 	}

@@ -49,14 +49,16 @@ private:
 	float	_fDamage;			//데미지
 	MAP*	_pMap;
 
+	bool	_bIsCollisionRemove;
+
 public:
 	MAGIC();
 	~MAGIC();
 
 
-	void	init(int nWidth, int nHeight,image* pImg, int nFps, int nFrameMaxX, int nFrameMaxY,float fTotalTime, const string& strKey);
-	void	init(int nWidth, int nHeight, image* pImg, animation* pAni, float fTotalTime, const string& strkey);
-	void	init(int nWidth, int nHeight, image* pImg, int nFrameX,int nFrameY, float fTotalTime, const string& strkey);
+	void	init(int nWidth, int nHeight,image* pImg, int nFps, int nFrameMaxX, int nFrameMaxY,float fTotalTime, const string& strKey,bool bIsCollisionRemove);
+	void	init(int nWidth, int nHeight, image* pImg, animation* pAni, float fTotalTime, const string& strkey, bool bIsCollisionRemove);
+	void	init(int nWidth, int nHeight, image* pImg, int nFrameX,int nFrameY, float fTotalTime, const string& strkey, bool bIsCollisionRemove);
 	//수호형용 사각형 가로 세로 이미지 FPS 이미지 가로 이미지 세로 총 렌더 시간 중간에 운동 바뀌는 시간 키값
 	void	init(int nWidth, int nHeight, image* pImg, int nFps, int nFrameMaxX, int nFrameMaxY, float fTotalTime,float fTurnTime, const string& strKey);
 	
