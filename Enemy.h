@@ -154,6 +154,7 @@ public:
 	void tIleCollisionRight(float fSpeed);
 
 	inline float getSpeed() { return _fSpeed; }
+	inline ActionState getActionState() { return _state; }
 	inline DIRECTION getDirection() { return _direction; }
 	inline animation* getAnimation() { return _pAnimation; }
 

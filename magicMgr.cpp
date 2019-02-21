@@ -274,13 +274,19 @@ void MAGICMGR::CollisionEnemyToMagic()
 
 		if (pMagic->getIsPlayer())
 		{
-			RECT rcTmp;
-			//에네미 사각형으로 바꿔주세요     여기 플레이어 렉부분 대신
-			if (IntersectRect(&rcTmp, _pEnemy->getCollisionRect(), pMagic->getRect()))
+			for (int i = 0; i < _vEnemyList.size(); i++)
 			{
-				//에네미 데미지 입는것 해주세요
-				_pEnemy->setDamage(pMagic->getDamage());
-				//데미지는 걍 일단 난수처리해주세요
+				if (_vEnemyList[i]->getActionState() == Enemy::ActionState::DEATH) continue;
+				if (_vEnemyList[i]->getActionState() == Enemy::ActionState::DEATH_END) continue;
+
+				RECT rcTmp;
+				//에네미 사각형으로 바꿔주세요     여기 플레이어 렉부분 대신
+				if (IntersectRect(&rcTmp, _vEnemyList[i]->getCollisionRect(), pMagic->getRect()))
+				{
+					//에네미 데미지 입는것 해주세요
+					_vEnemyList[i]->setDamage(pMagic->getDamage());
+					//데미지는 걍 일단 난수처리해주세요
+				}
 			}
 		}
 

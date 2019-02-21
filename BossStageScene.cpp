@@ -20,7 +20,8 @@ HRESULT BossStageScene::init()
 	_pMagicMgr->setLink(_pCamera);
 
 	_pMap = new MAP();
-	_pMap->initBossMap("map");
+	//_pMap->initBossMap("map");
+	_pMap->init("map");
 
 	_pMap->setCamera(_pCamera);
 
@@ -131,16 +132,45 @@ HRESULT BossStageScene::init()
 	_pMagicMgr->addObject("dropRightRock", 1200, 32, 32, IMAGEMANAGER->findImage("dropRightRock"), 0, 0, 0.3f, 0.0f, false);
 
 
-	// enemy area
-	_pEnemy = new Enemy();
-	_pEnemy->init();
-	_pEnemy->setMap(_pMap);
-	_pEnemy->setPlayer(_pPlayer);
-	_pEnemy->setCameraLink(_pCamera);
-	_pEnemy->setEnemy(Enemy::EnemyType::GHOUL, 200.0f, 400.0f);
-	_pEnemy->showEnemy();
+	// enemy tile locationa
+	pair<int, int> tiles[12] = {
+		{7, 25}, {4, 26},
+	{ 16, 24 }, {25, 22}, {20, 20},
+	{20, 20}, {44, 22}, {51, 22},
+	{65, 40}, {61, 40}, {60, 36}, {60, 34}
+	};
 
-	_pMagicMgr->setEnemy(_pEnemy);
+	for (int i = 0; i < 12; i++)
+	{
+		Enemy* enemy = new Enemy();
+		enemy->init();
+		enemy->setMap(_pMap);
+		enemy->setPlayer(_pPlayer);
+		enemy->setCameraLink(_pCamera);
+
+		float x = tiles[i].first * _pMap->getTileSize();
+		float y = tiles[i].second * _pMap->getTileSize();
+		
+		int type = RND->getInt(3);
+		switch (type)
+		{
+		case 0:
+			enemy->setEnemy(Enemy::EnemyType::GHOUL, x, y);
+			break;
+		case 1:
+			enemy->setEnemy(Enemy::EnemyType::GOLEM, x, y);
+			break;
+		case 2:
+			enemy->setEnemy(Enemy::EnemyType::SUMMONER, x, y);
+			break;
+		}
+
+		//enemy->showEnemy();
+
+		_vEnemyList.push_back(enemy);
+	}
+
+	_pMagicMgr->setEnemyList(_vEnemyList);
 
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 	_pPlayer->setCameraLink(_pCamera);
@@ -174,17 +204,24 @@ void BossStageScene::update()
 	_pSkillEffectMgr->update();
 
 	_fTimeSet += TIMEMANAGER->getElapsedTime();
-	if (_fTimeSet > 0.5f)
+	if (_fTimeSet > 0.7f)
 	{
 		// 길찾기 업데이트 
-		POINT startTile = _pAStar->getTileIndex(_pEnemy->getPosX(), _pEnemy->getPosY());
-		POINT endTile = _pAStar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
-		_pAStar->startFinder(startTile.x, startTile.y, endTile.x, endTile.y);
-		_pAStar->pathFinder();
-		_pPathList = _pAStar->getPath();
-		if (0 < _pPathList.size())
+		for (int i = 0; i < _vEnemyList.size(); i++)
 		{
-			_pEnemy->setShortPath(_pPathList);
+			if (_vEnemyList[i]->getActionState() == Enemy::ActionState::HIDDEN) continue;
+			if (_vEnemyList[i]->getActionState() == Enemy::ActionState::DEATH) continue;
+			if (_vEnemyList[i]->getActionState() == Enemy::ActionState::DEATH_END) continue;
+
+			POINT startTile = _pAStar->getTileIndex(_vEnemyList[i]->getPosX(), _vEnemyList[i]->getPosY());
+			POINT endTile = _pAStar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
+			_pAStar->startFinder(startTile.x, startTile.y, endTile.x, endTile.y);
+			_pAStar->pathFinder();
+			_pPathList = _pAStar->getPath();
+			if (0 < _pPathList.size())
+			{
+				_vEnemyList[i]->setShortPath(_pPathList);
+			}
 		}
 		_fTimeSet = 0.f;
 	}
@@ -192,13 +229,14 @@ void BossStageScene::update()
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
 		//_pBoss->spell01(BOSS::SKILL_TYPE::CHAKRAM);
-		_pEnemy->skillAttack(_pPlayer->getPosX(), _pPlayer->getPosY());
+
+		_vEnemyList[0]->skillAttack(_pPlayer->getPosX(), _pPlayer->getPosY());
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('2'))
 	{
 		//_pBoss->spell01(BOSS::SKILL_TYPE::BUBBLE);
-		_pEnemy->skillAttack(_pPlayer->getPosX(), _pPlayer->getPosY());
+		_vEnemyList[0]->skillAttack(_pPlayer->getPosX(), _pPlayer->getPosY());
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('3'))
@@ -208,39 +246,43 @@ void BossStageScene::update()
 
 	if (KEYMANAGER->isOnceKeyDown('6'))
 	{
-		_pEnemy->setEnemy(Enemy::EnemyType::GHOUL, 300.0f, 400.0f);
-		_pEnemy->showEnemy();
+		_vEnemyList[0]->setEnemy(Enemy::EnemyType::GHOUL, 300.0f, 400.0f);
+		_vEnemyList[0]->showEnemy();
 	}
 	if (KEYMANAGER->isOnceKeyDown('7'))
 	{
-		_pEnemy->setEnemy(Enemy::EnemyType::GOLEM, 300.0f, 400.0f);
-		_pEnemy->showEnemy();
+		_vEnemyList[0]->setEnemy(Enemy::EnemyType::GOLEM, 300.0f, 400.0f);
+		_vEnemyList[0]->showEnemy();
 	}
 	if (KEYMANAGER->isOnceKeyDown('8'))
 	{
-		_pEnemy->setEnemy(Enemy::EnemyType::SUMMONER, 300.0f, 400.0f);
-		_pEnemy->showEnemy();
+		_vEnemyList[0]->setEnemy(Enemy::EnemyType::SUMMONER, 300.0f, 400.0f);
+		_vEnemyList[0]->showEnemy();
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('9'))
 	{
 		_pBoss->setDamage(50.0f);
-		_pEnemy->setDamage(50.0f);
+		_vEnemyList[0]->setDamage(50.0f);
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('0'))
 	{
 		_pBoss->setDeath();
-		_pEnemy->setDeath();
+		_vEnemyList[0]->setDeath();
 	}
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SHIFT))
 	{
 		//_pBoss->showBoss();
-		_pEnemy->showEnemy();
+		_vEnemyList[0]->showEnemy();
 	}
 
-	_pEnemy->update();
+	for (int i = 0; i < _vEnemyList.size(); i++)
+	{
+		_vEnemyList[i]->update();
+	}
+
 	_pBoss->update();
 
 	KEYANIMANAGER->update();
@@ -253,7 +295,6 @@ void BossStageScene::release()
 {
 	_pMagicMgr->release();
 	_pBoss->release();
-	_pEnemy->release();
 	_pPlayer->release();
 	_pMap->release();
 }
@@ -264,4 +305,6 @@ void BossStageScene::render()
 	_pCamera->renderinit();
 	_pSkillEffectMgr->render(_pCamera->getMemDC());
 	_pCamera->render(getMemDC());
+
+
 }

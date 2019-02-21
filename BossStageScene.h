@@ -22,6 +22,8 @@ private:
 	ASTAR*				_pAStar;
 	list<ASTAR::TILENODE*>		_pPathList;
 
+	vector<Enemy*>		_vEnemyList;
+
 	float		_fTimeSet;
 
 public:

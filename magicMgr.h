@@ -12,6 +12,7 @@ class MAGICMGR {
 private:
 	map<string,queue<MAGIC*>>		_mqMagicPool;
 	list<MAGIC*>					_lActiveMagic;
+	vector<Enemy*>					_vEnemyList;
 
 	CAMERA*					_pCamera;
 	PLAYER*					_pPlayer;
@@ -47,6 +48,7 @@ public:
 	void setBoss(BOSS* pBoss) { _pBoss = pBoss; }
 	void setMap(MAP* pMap) { _pMap = pMap; }
 	void setEnemy(Enemy* pEnemy) { _pEnemy = pEnemy; }
+	void setEnemyList(vector<Enemy*> vEnemyList) { _vEnemyList = vEnemyList; }
 
 	//마법과 객체 충돌은 여기서 처리하자
 private:
