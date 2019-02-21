@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "player.h"
 #include "map.h"
+#include "aStar.h"
 
 class BossStageScene :	public gameNode
 {
@@ -18,7 +19,7 @@ private:
 	CAMERA*				_pCamera;
 	MAGICMGR*			_pMagicMgr;
 	SKILL_EFFECT_MGR*	_pSkillEffectMgr;
-
+	ASTAR*				_pAStar;
 public:
 	BossStageScene();
 	~BossStageScene();

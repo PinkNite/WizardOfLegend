@@ -24,6 +24,9 @@ HRESULT BossStageScene::init()
 	//_pMap->settingLimitRect();
 	_pMap->setCamera(_pCamera);
 
+	_pAStar = new ASTAR();
+	_pAStar->init(8, _pMap);
+
 	_pPlayer = new PLAYER();
 	_pPlayer->init();
 	_pPlayer->setLinkMap(_pMap);
@@ -222,7 +225,7 @@ void BossStageScene::update()
 
 	KEYANIMANAGER->update();
 
-	_pMap->settingLimitRect();
+	//_pMap->settingLimitRect();
 	_pCamera->setting(_pPlayer->getPosX(), _pPlayer->getPosY());
 }
 
@@ -237,7 +240,7 @@ void BossStageScene::release()
 
 void BossStageScene::render()
 {
-	_pMap->render(_pCamera->getMemDC());
+	//_pMap->render(_pCamera->getMemDC());
 	_pCamera->renderinit();
 	_pCamera->render(getMemDC());
 }
