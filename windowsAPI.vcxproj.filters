@@ -779,6 +779,9 @@
     <ClCompile Include="itemWhite.cpp">
       <Filter>PlayGround\item</Filter>
     </ClCompile>
+    <ClCompile Include="stoneStatue.cpp">
+      <Filter>PlayGround\stonestatue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="windowsAPI.rc">
