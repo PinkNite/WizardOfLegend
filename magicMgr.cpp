@@ -279,7 +279,7 @@ void MAGICMGR::CollisionEnemyToMagic()
 			if (IntersectRect(&rcTmp, _pEnemy->getCollisionRect(), pMagic->getRect()))
 			{
 				//에네미 데미지 입는것 해주세요
-				_pEnemy->setDamage(30.0f);
+				_pEnemy->setDamage(pMagic->getDamage());
 				//데미지는 걍 일단 난수처리해주세요
 			}
 		}

@@ -28,8 +28,8 @@ HRESULT BossStageScene::init()
 	_pAStar->init(8, _pMap);
 
 	_pPlayer = new PLAYER();
-	_pPlayer->init();
 	_pPlayer->setLinkMap(_pMap);
+	_pPlayer->init();
 
 	_pSkillEffectMgr = new SKILL_EFFECT_MGR();
 
@@ -168,7 +168,7 @@ void BossStageScene::update()
 	_pCamera->update();
 	_pMagicMgr->update();
 	_pPlayer->update();
-
+	_pSkillEffectMgr->update();
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
 		//_pBoss->spell01(BOSS::SKILL_TYPE::CHAKRAM);
@@ -242,5 +242,6 @@ void BossStageScene::render()
 {
 	//_pMap->render(_pCamera->getMemDC());
 	_pCamera->renderinit();
+	_pSkillEffectMgr->render(_pCamera->getMemDC());
 	_pCamera->render(getMemDC());
 }
