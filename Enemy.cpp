@@ -400,6 +400,8 @@ void Enemy::moveRight(float speed)
 
 void Enemy::moveEnemy()
 {
+	if (ActionState::DEATH == _state || ActionState::DEATH_END == _state) return;
+
 	// Astar 로 찾은경로로 이동
 	if ( _pPathList.size() != 0 && _endPath == false)
 	{
@@ -460,6 +462,8 @@ void Enemy::moveEnemy()
 
 void Enemy::skillAttack(float x, float y)
 {
+	if (ActionState::DEATH == _state || ActionState::DEATH_END == _state) return;
+
 	setState(ActionState::ATTACK1);
 	setAction(ActionState::ATTACK1, _direction);
 

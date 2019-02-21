@@ -200,7 +200,6 @@ HRESULT GAMESCENE::init()
 
 void GAMESCENE::update()
 {
-
 	KEYANIMANAGER->update();
 	_pCamera->update();
 	_pPlayer->update();
@@ -218,15 +217,15 @@ void GAMESCENE::update()
 			if (_vEnemyList[i]->getActionState() == Enemy::ActionState::DEATH) continue;
 			if (_vEnemyList[i]->getActionState() == Enemy::ActionState::DEATH_END) continue;
 
-			//POINT startTile = _pAStar->getTileIndex(_vEnemyList[i]->getPosX(), _vEnemyList[i]->getPosY());
-			//POINT endTile = _pAStar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
-			//_pAStar->startFinder(startTile.x, startTile.y, endTile.x, endTile.y);
-			//_pAStar->pathFinder();
-			//_pPathList = _pAStar->getPath();
-			//if (0 < _pPathList.size())
-			//{
-			//	_vEnemyList[i]->setShortPath(_pPathList);
-			//}
+			POINT startTile = _pAStar->getTileIndex(_vEnemyList[i]->getPosX(), _vEnemyList[i]->getPosY());
+			POINT endTile = _pAStar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
+			_pAStar->startFinder(startTile.x, startTile.y, endTile.x, endTile.y);
+			_pAStar->pathFinder();
+			_pPathList = _pAStar->getPath();
+			if (0 < _pPathList.size())
+			{
+				_vEnemyList[i]->setShortPath(_pPathList);
+			}
 		}
 		_fTimeSet = 0.f;
 	}
