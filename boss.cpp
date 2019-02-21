@@ -67,13 +67,21 @@ void BOSS::init()
 
 void BOSS::update()
 {
-	if (ACTION::READY == _action)
+	if (ACTION::READY == _action || ACTION::ENTRANCE == _action)
 	{
-		// 보스 출현 사정 거리
-		float targetDistance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), _pPlayer->getPosX(), _pPlayer->getPosY());
-		if (targetDistance < 400.f)
+		if (ACTION::READY == _action)
 		{
-			showBoss();
+			// 보스 출현 사정 거리
+			float targetDistance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), _pPlayer->getPosX(), _pPlayer->getPosY());
+			if (targetDistance < 300.f)
+			{
+				showBoss();
+			}
+		}
+
+		if (ACTION::ENTRANCE == _action)
+		{
+			_timeSet += TIMEMANAGER->getElapsedTime();
 		}
 	}
 	else
@@ -87,10 +95,6 @@ void BOSS::update()
 			dash(_pPlayer->getPosX(), _pPlayer->getPosY());
 		}
 
-		if (ACTION::ENTRANCE == _action)
-		{
-			_timeSet += TIMEMANAGER->getElapsedTime();
-		}
 
 		if (ACTION::DASH == _action)
 		{
@@ -143,11 +147,12 @@ void BOSS::update()
 
 		//bulletMove();
 		handleInputKey();
-		_pCamera->pushRenderObject(this);
-		if (_pCurrentState != nullptr)
-		{
-			_pCurrentState->update(this);
-		}
+	}
+
+	_pCamera->pushRenderObject(this);
+	if (_pCurrentState != nullptr)
+	{
+		_pCurrentState->update(this);
 	}
 
 }

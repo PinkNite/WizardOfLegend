@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "animation.h"
 #include "throwIceSpear.h"
+#include "UI.h"
 
 class PLAYER;
 class BossState;
@@ -82,6 +83,8 @@ private:
 	const int BOSS_MAX_FRAME_Y = 10;
 	const int BOSS_RECT_WIDTH = 70;
 	const int BOSS_RECT_HEIGHT = 140; // FrameSize: 150, 200
+
+	UI*	  _pUi;
 
 	float _fMaxHP;
 	float _fCurrentHP;

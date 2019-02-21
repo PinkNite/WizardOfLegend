@@ -41,7 +41,7 @@ void MAGICMGR::update()
 	}
 
 	CollisionPlayerToMagic();
-	//CollisionEnemyToMagic();
+	CollisionEnemyToMagic();
 	CollisionBossToMagic();
 }
 

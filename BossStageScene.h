@@ -7,24 +7,26 @@
 #include "Enemy.h"
 #include "player.h"
 #include "map.h"
-#include "aStar.h"
+#include "StatueMgr.h"
+#include "UI.h"
+#include "itemManager.h"
 
 class BossStageScene :	public gameNode
 {
 private:
 	MAP*				_pMap;
 	BOSS*				_pBoss;
-	Enemy*				_pEnemy;
 	PLAYER*				_pPlayer;
 	CAMERA*				_pCamera;
 	MAGICMGR*			_pMagicMgr;
 	SKILL_EFFECT_MGR*	_pSkillEffectMgr;
-	ASTAR*				_pAStar;
-	list<ASTAR::TILENODE*>		_pPathList;
 
-	vector<Enemy*>		_vEnemyList;
+	UI*			_pUI;
+	image*		_pMouse;
+	STATUEMGR*	_pStatueMgr;
+	ITEMMANAGER* _pItemManager;
 
-	float		_fTimeSet;
+	float		_fDeathTimer;
 
 public:
 	BossStageScene();
@@ -35,4 +37,4 @@ public:
 	void release() override;
 	void render() override;
 };
-
+ 
