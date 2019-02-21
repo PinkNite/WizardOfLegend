@@ -1,4 +1,4 @@
-#pragma
+#pragma once
 #include "item.h"
 #include "player.h"
 #include "UI.h"

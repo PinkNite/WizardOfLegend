@@ -266,6 +266,11 @@ void MAGICMGR::CollisionPlayerToMagic()
 
 void MAGICMGR::CollisionEnemyToMagic()
 {
+	if (static_cast<int>(_vEnemyList.size()) == 0)
+	{
+		return;
+	}
+
 	list<MAGIC*>::iterator iter = _lActiveMagic.begin();
 	list<MAGIC*>::iterator end = _lActiveMagic.end();
 	while (iter != end)
@@ -297,6 +302,10 @@ void MAGICMGR::CollisionEnemyToMagic()
 
 void MAGICMGR::CollisionBossToMagic()
 {
+	if (!_pBoss)
+	{
+		return;
+	}
 	list<MAGIC*>::iterator iter = _lActiveMagic.begin();
 	list<MAGIC*>::iterator end = _lActiveMagic.end();
 	while (iter != end)

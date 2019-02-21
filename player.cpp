@@ -375,7 +375,7 @@ void PLAYER::settingSkill()
 
 
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::NONE)] = 0.0f;
-	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_DASH)] = 5.0f;
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_DASH)] = 6.0f;
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_STRIKE)] = 0.5f;
 
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::SHOKE_NOVA)] = 5.0f;
@@ -1441,14 +1441,14 @@ void PLAYER::input()
 	{
 		return;
 	}
-	//if (_pUi->getIsClick())
-	//{
-	//	setState(PLAYER::PLAYER_STATE::IDLE);
-	//	setAction(PLAYER::ACTION::IDLE);
-	//	settingAni();
-	//	setSkill(PLAYER::SKILL_NAME::NONE);
-	//	return;
-	//}
+	if (_pUi->getIsClick())
+	{
+		setState(PLAYER::PLAYER_STATE::IDLE);
+		setAction(PLAYER::ACTION::IDLE);
+		settingAni();
+		setSkill(PLAYER::SKILL_NAME::NONE);
+		return;
+	}
 
 	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::RUN)])
 	{
