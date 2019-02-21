@@ -1439,10 +1439,10 @@ void PLAYER::input()
 	{
 		return;
 	}
-	if (_pUi->getIsClick())
-	{
-		return;
-	}
+	//if (_pUi->getIsClick())
+	//{
+	//	return;
+	//}
 
 	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::RUN)])
 	{
