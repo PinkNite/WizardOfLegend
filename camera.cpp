@@ -23,8 +23,8 @@ void CAMERA::init(int posX, int posY, int windowWidth, int windowHeight, int map
 
 	_rcCameraLimit = { 0,0,_nMapWidth,_nMapHeight };
 
-	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _nMapWidth + 400, _nMapHeight);
-	_pBackGroundBuffer = IMAGEMANAGER->addImage("backGroundBuffer", _nMapWidth + 400, _nMapHeight);
+	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _nMapWidth + 400, _nMapHeight*2);
+	_pBackGroundBuffer = IMAGEMANAGER->addImage("backGroundBuffer", _nMapWidth + 400, _nMapHeight * 2);
 
 	_listRenderObject.clear();
 }

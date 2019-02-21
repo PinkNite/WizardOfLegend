@@ -226,7 +226,7 @@ void MAGIC::render(HDC hdc)
 	{
 		_pImg->frameRenderCenter(hdc, static_cast<int>(_fPosX), static_cast<int>(_fPosY), _nFrameX, _nFrameY);
 	}
-	//Rectangle(hdc, _rcCollision);
+	Rectangle(hdc, _rcCollision);
 
 
 }

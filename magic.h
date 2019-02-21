@@ -92,6 +92,8 @@ public:
 
 	void	setMap(MAP* pMap) { _pMap = pMap; }
 
+	bool	getIsCollision() { return _bIsCollisionRemove; }
+
 private:
 	bool	isCollisionWall();
 };

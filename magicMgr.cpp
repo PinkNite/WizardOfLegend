@@ -291,6 +291,11 @@ void MAGICMGR::CollisionEnemyToMagic()
 					//에네미 데미지 입는것 해주세요
 					_vEnemyList[i]->setDamage(pMagic->getDamage());
 					//데미지는 걍 일단 난수처리해주세요
+					if (pMagic->getIsCollision())
+					{
+						pMagic->setIsDamage(true);
+
+					}
 				}
 			}
 		}
@@ -320,6 +325,11 @@ void MAGICMGR::CollisionBossToMagic()
 			{
 				//보스 데이미 입는것 해주세요
 				_pBoss->setDamage(pMagic->getDamage());
+				if (pMagic->getIsCollision())
+				{
+					pMagic->setIsDamage(true);
+
+				}
 			}
 		}
 		
