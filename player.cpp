@@ -1443,6 +1443,10 @@ void PLAYER::input()
 	}
 	//if (_pUi->getIsClick())
 	//{
+	//	setState(PLAYER::PLAYER_STATE::IDLE);
+	//	setAction(PLAYER::ACTION::IDLE);
+	//	settingAni();
+	//	setSkill(PLAYER::SKILL_NAME::NONE);
 	//	return;
 	//}
 
