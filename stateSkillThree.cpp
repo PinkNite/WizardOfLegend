@@ -96,23 +96,24 @@ void STATE_SKILL_THREE::update(PLAYER * pPlayer)
 		}
 
 		return;
+
 	case PLAYER::SKILL_NAME::SHATTERINGSTRIKE:
-		if (_fTimer >= 0.3f)
+		if (_fTimer >= 0.3f &&
+			_fTimer < 5.0f)
 		{
 			pPlayer->setAction(PLAYER::ACTION::ATTACK_MOTION_05);
 			pPlayer->settingAni();
-
-
-			if (!pPlayer->getAni()->isPlay())
-			{
-				pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
-				pPlayer->setAction(PLAYER::ACTION::IDLE);
-				pPlayer->settingAni();
-				_fTimer = 0.0f;
-			}
+			_fTimer = 5.0f;
 		}
 
-		return;
+		if (!pPlayer->getAni()->isPlay() && _fTimer >= 5.0f)
+		{
+			pPlayer->setState(PLAYER::PLAYER_STATE::IDLE);
+			pPlayer->setAction(PLAYER::ACTION::IDLE);
+			pPlayer->settingAni();
+			_fTimer = 0.0f;
+		}
+		return;;
 	case PLAYER::SKILL_NAME::REBOUNDINGICICLES:
 		if (!pPlayer->getAni()->isPlay())
 		{
