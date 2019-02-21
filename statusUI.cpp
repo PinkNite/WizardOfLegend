@@ -209,71 +209,71 @@ void STATUSUI::update()
 	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
 	//		break;
 	//	}
-	//}
+//}
 
-	_pStatusSelect->update();
-	for (int i = 0; i < 10; i++)
+_pStatusSelect->update();
+for (int i = 0; i < 10; i++)
+{
+	//_pStatusBox[i]->setX(214 + i * 66);
+	_pStatusBox[i]->update();
+	//바뀐 번호로 엑스좌표를 가져옴 
+
+
+	//_pStatusBox[i]->setX()
+	//0,1,3알파값이 다름 원작
+	if (_pStatusBox[i]->getFrameX() != 2 && _pStatusSelect->getSelectState() != SWAP_STATE)
 	{
-		//_pStatusBox[i]->setX(214 + i * 66);
-		_pStatusBox[i]->update();
-		//바뀐 번호로 엑스좌표를 가져옴 
-
-
-		//_pStatusBox[i]->setX()
-		//0,1,3알파값이 다름 원작
-		if (_pStatusBox[i]->getFrameX() != 2 && _pStatusSelect->getSelectState() != SWAP_STATE)
+		switch (i)
 		{
-			switch (i)
-			{
-			case 0:
+		case 0:
 
-				_pStatusBox[i]->setAlpha(100);
-				break;
-			case 1:
-				_pStatusBox[i]->setAlpha(100);
-				break;
-			case 3:
-				_pStatusBox[i]->setAlpha(100);
-				break;
-			}
-		}
-		else if (_pStatusSelect->getSelectState() == SWAP_STATE)
-		{
-			switch (i)
-			{
-			case 0:
-
-				_pStatusBox[i]->setAlpha(255);
-				break;
-			case 1:
-				_pStatusBox[i]->setAlpha(255);
-				break;
-			case 3:
-				_pStatusBox[i]->setAlpha(255);
-				break;
-			}
+			_pStatusBox[i]->setAlpha(100);
+			break;
+		case 1:
+			_pStatusBox[i]->setAlpha(100);
+			break;
+		case 3:
+			_pStatusBox[i]->setAlpha(100);
+			break;
 		}
 	}
-
-	collision();
-	spaceKeyAndLButton();
-	swapSetting();
-
-	if (KEYMANAGER->isOnceKeyDown('X'))
+	else if (_pStatusSelect->getSelectState() == SWAP_STATE)
 	{
-		_numA++;
-	}
-	if (KEYMANAGER->isOnceKeyDown('Z'))
-	{
-		_numA--;
-	}
+		switch (i)
+		{
+		case 0:
 
-	_pExplainUse->alphaPlus(_pStatusSelect->getAlpha());
-	_pTempBox->update();
-	for (int i = 0; i < 12; i++)
-	{
-		_pItem[i]->update();
+			_pStatusBox[i]->setAlpha(255);
+			break;
+		case 1:
+			_pStatusBox[i]->setAlpha(255);
+			break;
+		case 3:
+			_pStatusBox[i]->setAlpha(255);
+			break;
+		}
 	}
+}
+
+collision();
+spaceKeyAndLButton();
+swapSetting();
+
+if (KEYMANAGER->isOnceKeyDown('X'))
+{
+	_numA++;
+}
+if (KEYMANAGER->isOnceKeyDown('Z'))
+{
+	_numA--;
+}
+
+_pExplainUse->alphaPlus(_pStatusSelect->getAlpha());
+_pTempBox->update();
+for (int i = 0; i < 12; i++)
+{
+	_pItem[i]->update();
+}
 }
 
 void STATUSUI::render(HDC hdc)
@@ -289,6 +289,7 @@ void STATUSUI::render(HDC hdc)
 
 
 	}
+	//아이템 렌더
 	for (int i = 0; i < 12; i++)
 	{
 		if (_pStatusSelect->getSelectState() == ITEM_STATE && _pItemBox[i]->getIsItem() == 1)
@@ -306,6 +307,21 @@ void STATUSUI::render(HDC hdc)
 
 		}
 	}
+	//스킬 설명 렌더
+	for (int i = 0; i < 10; i++)
+	{
+		if (_pStatusBox[i]->getIsCollision())
+		{
+			//충돌이고 스킬상태이면
+			fontRender(hdc, "[", "Aharoni", 214, 520, 40, RGB(183, 192, 195));
+			fontRender(hdc, _pStatusBox[i]->_pSkillIcon->getVSkillIcon()[_pStatusBox[i]->_pSkillIcon->getNum()].name, "Aharoni", 240, 530, 20, RGB(255, 204, 0));
+			fontRender(hdc, "]", "Aharoni", _rcText.right, 520, 40, RGB(183, 192, 195));
+			fontRender2(hdc, _pStatusBox[i]->_pSkillIcon->getVSkillIcon()[_pStatusBox[i]->_pSkillIcon->getNum()].info, "Aharoni", 214, 560, 20, RGB(183, 192, 195));
+			break;
+		}
+	}
+
+
 	//_pItem[0]->setNum(_numA);
 
 	for (int i = 0; i < 12; i++)
