@@ -27,7 +27,7 @@ void SHOKENOVA::init(PLAYER::SKILL_NAME eSkillName)
 void SHOKENOVA::update()
 {
 	_fTimer += TIMEMANAGER->getElapsedTime();
-	if (_bIsKeyDown && _fTimer >= 1.0f)
+	if (_bIsKeyDown && _fTimer >= 0.2f)
 	{
 		_pSkillEffectMgr->activityEffect("lightEffect01", SKILL::_pPlayer->getPosX() + RND->getFromFloatTo(-100, 100), SKILL::_pPlayer->getPosY() + RND->getFromFloatTo(-100, 100));
 		_pSkillEffectMgr->activityEffect("lightEffect02", SKILL::_pPlayer->getPosX() + RND->getFromFloatTo(-100, 100), SKILL::_pPlayer->getPosY() + RND->getFromFloatTo(-100, 100));

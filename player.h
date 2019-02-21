@@ -146,11 +146,11 @@ private:
 
 	float		_fDashTime;
 
-
+	//상태패턴
 	STATE*		_pCurrentState;
 	STATE*		_arState[static_cast<const int>(PLAYER::PLAYER_STATE::MAX)];
 
-
+	//움직임 세분화
 	MOVE_DIRECTION			_eMoveDirection;
 	CIRCLEEFFECT*		_pCirEffect;
 
@@ -167,7 +167,7 @@ private:
 	float		_fAttackPosY;
 
 
-
+	//스킬 상태패턴
 	SKILL*		_arSkill[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];
 	float		_arSkillDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];			//스킬 딜레이 시간//스킬 세팅된것이 6개 있다고 치자...
 	float		_arCurrentDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];		//스킬 쿨 차면 쓸수 있다

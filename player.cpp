@@ -77,6 +77,7 @@ void PLAYER::init(float fPosX, float fPosY)
 	OBJECT::init(fPosX, fPosY, 100, 100);
 	OBJECT::setPosZ(5);
 
+	//이미지 로드
 	OBJECT::setImage(IMAGEMANAGER->addFrameImage("wizardSprites", "resource/player/wizardSprite.bmp", WIZARD_SPRITE_WIDTH, WIZARD_SPRITE_HEIGHT, WIZARD_SPRITE_MAXFRAMEX, WIZARD_SPRITE_MAXFRAMEY, true, RGB(255, 0, 255)));
 	setEnumName();
 	_pAnimation = new animation();
@@ -231,6 +232,7 @@ void PLAYER::render(HDC hdc)
 
 void PLAYER::setEnumName()
 {
+	//키값을 만들 스트링 정리
 	_arDirection[static_cast<int>(PLAYER::DIRECTION::LEFT)] = "LEFT";
 	_arDirection[static_cast<int>(PLAYER::DIRECTION::RIGHT)] = "RIGHT";
 	_arDirection[static_cast<int>(PLAYER::DIRECTION::FORWARD)] = "FORWARD";
@@ -1428,6 +1430,7 @@ void PLAYER::getDamage(float fDamage)
 		setState(PLAYER::PLAYER_STATE::DAMAGE);
 		setAction(PLAYER::ACTION::DAMAGE);
 		settingAni();
+		setSkill(PLAYER::SKILL_NAME::NONE);
 	}
 }
 
