@@ -467,17 +467,22 @@ void Enemy::skillAttack(float x, float y)
 	setState(ActionState::ATTACK1);
 	setAction(ActionState::ATTACK1, _direction);
 
-	RECT rcTemp;
-	if (IntersectRect(&rcTemp, _pPlayer->getCollisionRect(), &_rc))
+	if (Enemy::EnemyType::SUMMONER == _enType)
 	{
-		_pPlayer->getDamage(_fDamage);
+		//_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
+		//if (_targetDistance < 20.0f)
+		//{
+		//	_pPlayer->getDamage(_fDamage);
+		//}
 	}
-	/*_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
-	if (_targetDistance < 20.0f)
+	else
 	{
-		_pPlayer->getDamage(_fDamage);
-	}*/
-
+		RECT rcTemp;
+		if (IntersectRect(&rcTemp, _pPlayer->getCollisionRect(), &_rc))
+		{
+			_pPlayer->getDamage(_fDamage);
+		}
+	}
 }
 
 void Enemy::skillMove()
