@@ -234,12 +234,13 @@ void BOSS::render(HDC hdc)
 	//RectangleMakeCenter(hdc, renderX, renderY, BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
 
 	//bulletRender(hdc);
+	/*
 	RECT tt;
 	tt = _pHpBar[1]->getRC();
 	for (int i = 0; i < 2; i++)
 	{
 		_pHpBar[i]->render(hdc);
-	}
+	}*/
 
 	_pIceSpear->render(hdc);
 }
