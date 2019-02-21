@@ -529,7 +529,7 @@ void MENU::buttonClick()
 			SOUNDMANAGER->stop("correct");
 			SOUNDMANAGER->play("correct");
 			SOUNDMANAGER->stop("title");
-			SOUNDMANAGER->play("happy");
+			SOUNDMANAGER->play("gameScene");
 			singlePlayer();
 		}
 		//¸Ê

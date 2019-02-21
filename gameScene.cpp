@@ -252,7 +252,12 @@ void GAMESCENE::update()
 			SCENEMANAGER->changeScene("intro");
 		}
 	}
-
+	if (_pPlayer->getPosX() >= 3920 && _pPlayer->getPosX() <= 4150 && _pPlayer->getPosY() >= 1280 && _pPlayer->getPosY() <= 1410)
+	{
+		SOUNDMANAGER->stop("gameScene");
+		SOUNDMANAGER->play("ice");
+		SCENEMANAGER->changeScene("bossStage");
+	}
 }
 
 void GAMESCENE::release()

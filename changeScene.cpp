@@ -20,11 +20,7 @@ HRESULT CHANGESCENE::init()
 
 void CHANGESCENE::update()
 {
-	if (_pPlayer->getPosX() >= 3920&& _pPlayer->getPosX()<=4150 &&_pPlayer->getPosY() >=1280&& _pPlayer->getPosY() <= 1410)
-	{
 	
-		SCENEMANAGER->changeScene("bossStage");
-	}
 	
 }
 
