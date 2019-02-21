@@ -43,6 +43,8 @@ void Enemy::init()
 
 void Enemy::update()
 {
+	if (ActionState::DEATH_END == _state) return;
+
 	if (ActionState::HIDDEN == _state)
 	{
 		// 적출현 사정 거리
@@ -56,25 +58,33 @@ void Enemy::update()
 	{
 		_timeSet += TIMEMANAGER->getElapsedTime();
 
-		// 적출현 사정 거리
-		_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
-		if (_targetDistance < 100.0f)
+		if (_timeSet > 0.4f)
 		{
-			//skillAttack(_pPlayer->getPosX(), _pPlayer->getPosY());
-		}
-		else
-		{
-			setBattle();
-		}
+			// 적출현 사정 거리
+			_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
+			if (_targetDistance < 100.0f)
+			{
+				skillAttack(_pPlayer->getPosX(), _pPlayer->getPosY());
+			}
+			else
+			{
+				if (ActionState::DEATH != _state)
+				{
+					if (_fCurrentHP < 0) {
+						_deathTime += TIMEMANAGER->getElapsedTime();
+						setDeath();
+					}
+					else
+					{
+						moveEnemy();
+						setRect();
+					}
 
+					handleKeyInput();
+				}
+			}
 
-		if (ActionState::DEATH != _state)
-		{
-			if (_fCurrentHP < 0) setDeath();
-
-			setRect();
-			moveEnemy();
-			handleKeyInput();
+			_timeSet = 0;
 		}
 
 		_pCurrentState->update(this);
@@ -90,7 +100,7 @@ void Enemy::release()
 
 void Enemy::render(HDC hdc)
 {
-	if (ActionState::HIDDEN != _state)
+	if (ActionState::HIDDEN != _state && ActionState::DEATH_END != _state)
 	{
 		OBJECT::_pImg->aniRenderCenter(hdc, _posX, _posY, _pAnimation);
 		//RectangleMakeCenter(hdc, _posX, _posY, MOB_RECT_HEIGHT, MOB_RECT_HEIGHT);
@@ -263,8 +273,6 @@ void Enemy::showEnemy()
 
 void Enemy::setBattle()
 {
-	
-	moveEnemy();
 }
 
 void Enemy::createStates()
@@ -362,43 +370,58 @@ void Enemy::handleKeyInput()
 void Enemy::moveUp(float speed)
 {
 	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(PI / 2.0f, speed));
+	tileCollisionTop(speed);
 	setRect();
 }
 
 void Enemy::moveDown(float speed)
 {
 	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(PI / 2.0f + PI, speed));
+	tIleCollisionBottom(speed);
 	setRect();
 }
 
 void Enemy::moveLeft(float speed)
 {
 	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(PI, speed));
+	tIleCollisionLeft(speed);
 	setRect();
 }
 
 void Enemy::moveRight(float speed)
 {
 	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(0.0f, speed));
+	tIleCollisionRight(speed);
 	setRect();
 }
 
 void Enemy::moveEnemy()
 {
-	// Astart 로 찾은경로로 이동
-
-	if (_timeSet > 0.5f)
+	// Astar 로 찾은경로로 이동
+	if ( _pPathList.size() != 0 && _endPath == false)
 	{
+		_iPath = _pPathList.begin();
+		_iPathEnd = _pPathList.end();
+		if (_iPath == _iPathEnd)
+		{
+			_endPath = true;
+		}
 
-		//_timeSet = 0;
+		_iPath++;
+		_currentX = (*_iPath)->nIndexX * _pMap->getTileSize();
+		_currentY = (*_iPath)->nIndexY * _pMap->getTileSize();
+		OBJECT::setPosX(_currentX);
+		OBJECT::setPosY(_currentY);
+
+		if (_pPlayer->getPosX() < _currentX)
+			setDirection(DIRECTION::LEFT);
+		else
+			setDirection(DIRECTION::RIGHT);
+			
+		setState(ActionState::RUN);
+		setAction(ActionState::RUN, _direction);
+		setRect();
 	}
-
-	for (size_t i = 0; i < _pPathList.size(); i++)
-	{
-
-		//OBJECT::setPosX();
-	}
-
 
 
 	/*
@@ -427,26 +450,20 @@ void Enemy::moveEnemy()
 
 void Enemy::skillAttack(float x, float y)
 {
-	// 공격 텀
- 	if (_timeSet > 1.0f)
+	setState(ActionState::ATTACK1);
+	setAction(ActionState::ATTACK1, _direction);
+
+	RECT rcTemp;
+	if (IntersectRect(&rcTemp, _pPlayer->getCollisionRect(), &_rc))
 	{
-		setState(ActionState::ATTACK1);
-		setAction(ActionState::ATTACK1, _direction);
-
-		
-		RECT rcTemp;
-		if (IntersectRect(&rcTemp, _pPlayer->getCollisionRect(), &_rc))
-		{
-			_pPlayer->getDamage(_fDamage);
-		}
-		/*_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
-		if (_targetDistance < 20.0f)
-		{
-			_pPlayer->getDamage(_fDamage);
-		}*/
-
-		_timeSet = 0;
+		_pPlayer->getDamage(_fDamage);
 	}
+	/*_targetDistance = getDistance(_posX, _posY, _pPlayer->getPosX(), _pPlayer->getPosY());
+	if (_targetDistance < 20.0f)
+	{
+		_pPlayer->getDamage(_fDamage);
+	}*/
+
 }
 
 void Enemy::skillMove()
@@ -475,5 +492,156 @@ void Enemy::setDeath()
 {
 	setState(ActionState::DEATH);
 	setAction(ActionState::DEATH, _direction);
+
+	if (_deathTime > 2.0f)
+	{
+		_state = ActionState::DEATH_END;
+	}
+}
+
+void Enemy::tileCollisionTop(float fSpeed)
+{
+	RECT rcTmp;
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize(), (int)(_rc.top) / _pMap->getTileSize())->getRectTile(), &_rc))
+		{
+			if (_pMap->getTile((_rc.left) / _pMap->getTileSize(), (int)(_rc.top) / _pMap->getTileSize())->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				moveDown(fSpeed);
+				return;
+			}
+		}
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (int)(_rc.top) / _pMap->getTileSize())->getRectTile(), &_rc))
+		{
+			if (_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (int)(_rc.top) / _pMap->getTileSize())->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				moveDown(fSpeed);
+			}
+		}
+		return;
+	}
+	if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize(), (int)(_rc.top) / _pMap->getTileSize())->getRectTile(), &_rc))
+	{
+		if (_pMap->getTile((_rc.left) / _pMap->getTileSize(), (int)(_rc.top) / _pMap->getTileSize())->getTerrian() != TILE::TERRIAN::PASS)
+		{
+			moveDown(fSpeed);
+			return;
+		}
+	}
+	if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (int)(_rc.top) / _pMap->getTileSize())->getRectTile(), &_rc))
+	{
+		if (_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (int)(_rc.top) / _pMap->getTileSize())->getTerrian() != TILE::TERRIAN::PASS)
+		{
+			moveDown(fSpeed);
+		}
+	}
+}
+
+void Enemy::tIleCollisionBottom(float fSpeed)
+{
+	RECT rcTmp;
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize(), (_rc.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rc))
+		{
+			if (_pMap->getTile((_rc.left) / _pMap->getTileSize(), (int)(_rc.top) / _pMap->getTileSize() + 1)->getTerrian() == TILE::TERRIAN::WALL) {
+				moveUp(fSpeed);
+				return;
+			}
+		}
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (_rc.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rc))
+		{
+			if (_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (int)(_rc.top) / _pMap->getTileSize() + 1)->getTerrian() == TILE::TERRIAN::WALL)
+				moveUp(fSpeed);
+		}
+		return;
+	}
+	if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize(), (_rc.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rc))
+	{
+		if (_pMap->getTile((_rc.left) / _pMap->getTileSize(), (int)(_rc.top) / _pMap->getTileSize() + 1)->getTerrian() != TILE::TERRIAN::PASS) {
+			moveUp(fSpeed);
+			return;
+		}
+	}
+	if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (_rc.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rc))
+	{
+		if (_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (int)(_rc.top) / _pMap->getTileSize() + 1)->getTerrian() != TILE::TERRIAN::PASS)
+			moveUp(fSpeed);
+	}
+}
+
+void Enemy::tIleCollisionLeft(float fSpeed)
+{
+	RECT rcTmp;
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize(), (_rc.top) / _pMap->getTileSize())->getRectTile(), &_rc))
+		{
+			if (_pMap->getTile((_rc.left) / _pMap->getTileSize(), (int)(_rc.top) / _pMap->getTileSize())->getTerrian() == TILE::TERRIAN::WALL) {
+				moveRight(fSpeed);
+				return;
+			}
+
+		}
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize(), (_rc.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rc))
+		{
+			if (_pMap->getTile((_rc.left) / _pMap->getTileSize(), (int)(_rc.top) / _pMap->getTileSize() + 1)->getTerrian() == TILE::TERRIAN::WALL)
+				moveRight(fSpeed);
+		}
+
+		return;
+	}
+
+	if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize(), (_rc.top) / _pMap->getTileSize())->getRectTile(), &_rc))
+	{
+		if (_pMap->getTile((_rc.left) / _pMap->getTileSize(), (int)(_rc.top) / _pMap->getTileSize())->getTerrian() != TILE::TERRIAN::PASS) {
+			moveRight(fSpeed);
+			return;
+		}
+
+	}
+	if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize(), (_rc.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rc))
+	{
+		if (_pMap->getTile((_rc.left) / _pMap->getTileSize(), (int)(_rc.top) / _pMap->getTileSize() + 1)->getTerrian() != TILE::TERRIAN::PASS)
+			moveRight(fSpeed);
+	}
+}
+
+void Enemy::tIleCollisionRight(float fSpeed)
+{
+	RECT rcTmp;
+
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DASH)])
+	{
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (_rc.top) / _pMap->getTileSize())->getRectTile(), &_rc))
+		{
+			if (_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (int)(_rc.top) / _pMap->getTileSize())->getTerrian() == TILE::TERRIAN::WALL)
+			{
+				moveLeft(fSpeed);
+				return;
+			}
+		}
+		if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (_rc.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rc))
+		{
+			if (_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (int)(_rc.top) / _pMap->getTileSize() + 1)->getTerrian() == TILE::TERRIAN::WALL)
+				moveLeft(fSpeed);
+		}
+		return;
+	}
+
+	if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (_rc.top) / _pMap->getTileSize())->getRectTile(), &_rc))
+	{
+		if (_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (int)(_rc.top) / _pMap->getTileSize())->getTerrian() != TILE::TERRIAN::PASS)
+		{
+			moveLeft(fSpeed);
+			return;
+		}
+	}
+	if (IntersectRect(&rcTmp, &_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (_rc.top) / _pMap->getTileSize() + 1)->getRectTile(), &_rc))
+	{
+		if (_pMap->getTile((_rc.left) / _pMap->getTileSize() + 1, (int)(_rc.top) / _pMap->getTileSize() + 1)->getTerrian() != TILE::TERRIAN::PASS)
+			moveLeft(fSpeed);
+	}
 }
 

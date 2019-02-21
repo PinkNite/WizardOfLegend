@@ -22,6 +22,8 @@ private:
 	ASTAR*				_pAStar;
 	list<ASTAR::TILENODE*>		_pPathList;
 
+	float		_fTimeSet;
+
 public:
 	BossStageScene();
 	~BossStageScene();

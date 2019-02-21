@@ -38,7 +38,7 @@ void BOSS::init()
 	IMAGEMANAGER->addImage("IceChakram", "resource/boss/ice/IceChakram.bmp", 50, 50, true, RGB(255, 0, 255));
 
 
-	OBJECT::init(100, 100, BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
+	OBJECT::init(1100, 800, BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
 	OBJECT::_pImg = IMAGEMANAGER->addFrameImage("iceBossImg", "resource/boss/ice/IceBoss.bmp",
 		BOSS_IMAGE_WIDTH, BOSS_IMAGE_HEIGHT, BOSS_MAX_FRAME_X, BOSS_MAX_FRAME_Y, true, RGB(255, 0, 255));
 
@@ -71,7 +71,7 @@ void BOSS::update()
 	{
 		// 보스 출현 사정 거리
 		float targetDistance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), _pPlayer->getPosX(), _pPlayer->getPosY());
-		if (targetDistance < 300.f)
+		if (targetDistance < 400.f)
 		{
 			showBoss();
 		}
@@ -97,7 +97,7 @@ void BOSS::update()
 			_dashSpeed -= TIMEMANAGER->getElapsedTime() + 1;
 
 			float distance = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), _pPlayer->getPosX(), _pPlayer->getPosY());
-			if (distance > 200.0f)
+			if (distance > 300.0f)
 			{
 				OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_targetAngle, _dashSpeed));
 				OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_targetAngle, _dashSpeed));

@@ -22,7 +22,6 @@ HRESULT BossStageScene::init()
 	_pMap = new MAP();
 	_pMap->initBossMap("map");
 
-	//_pMap->settingLimitRect();
 	_pMap->setCamera(_pCamera);
 
 	_pAStar = new ASTAR();
@@ -31,6 +30,7 @@ HRESULT BossStageScene::init()
 	_pPlayer = new PLAYER();
 	_pPlayer->setLinkMap(_pMap);
 	_pPlayer->init(500.0f, 500.0f);
+
 
 	_pSkillEffectMgr = new SKILL_EFFECT_MGR();
 
@@ -173,15 +173,20 @@ void BossStageScene::update()
 	_pPlayer->update();
 	_pSkillEffectMgr->update();
 
-	// 길찾기 업데이트 
-	POINT startTile = _pAStar->getTileIndex(_pEnemy->getPosX(), _pEnemy->getPosY());
-	POINT endTile = _pAStar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
-	_pAStar->startFinder(startTile.x, startTile.y, endTile.x, endTile.y);
-	_pAStar->pathFinder();
-	_pPathList = _pAStar->getPath();
-	if (0 <_pPathList.size())
+	_fTimeSet += TIMEMANAGER->getElapsedTime();
+	if (_fTimeSet > 0.5f)
 	{
-		_pEnemy->setShortPath(_pPathList);
+		// 길찾기 업데이트 
+		POINT startTile = _pAStar->getTileIndex(_pEnemy->getPosX(), _pEnemy->getPosY());
+		POINT endTile = _pAStar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
+		_pAStar->startFinder(startTile.x, startTile.y, endTile.x, endTile.y);
+		_pAStar->pathFinder();
+		_pPathList = _pAStar->getPath();
+		if (0 < _pPathList.size())
+		{
+			_pEnemy->setShortPath(_pPathList);
+		}
+		_fTimeSet = 0.f;
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('1'))
