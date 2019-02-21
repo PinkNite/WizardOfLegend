@@ -184,7 +184,7 @@ public:
 	void bulletMove();
 	void bulletRender(HDC hdc);
 	void setRect();
-	void moveBoss();
+	//void moveBoss();
 	void setWings(bool isMax);
 	void setBossIdle();
 	void setDamage(float damage);

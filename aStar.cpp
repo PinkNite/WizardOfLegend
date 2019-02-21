@@ -224,7 +224,7 @@ void ASTAR::pathFinder()
 
 	}
 
-	if (_listClosedyPath.size() > 300)
+	if (_listClosedyPath.size() > 20)
 	{
 
 		list<TILENODE*>::iterator iter = _listOpendNode.begin();

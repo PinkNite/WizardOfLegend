@@ -61,7 +61,7 @@ void MAP::loadBossMap()
 
 	char strTmp[100]{};
 	string strNameTmp = "";
-	strNameTmp.append("mapFull02.map");
+	strNameTmp.append("mapFull03.map");
 	file = CreateFile(strNameTmp.c_str(), GENERIC_READ, NULL, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -90,7 +90,7 @@ void MAP::loadBossMap()
 	char *str = new char[nData];
 
 	strNameTmp = "";
-	strNameTmp.append("map02.map");
+	strNameTmp.append("map03.map");
 
 	file = CreateFile(strNameTmp.c_str(), GENERIC_READ, NULL, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
