@@ -123,7 +123,6 @@ HRESULT BossStageScene::init()
 
 	_pMagicMgr->setPlayer(_pPlayer);
 
-	_pMap->drawMap(_pCamera->getBackGoroundBuffer());
 	_pStatueMgr->init(_pMap, _pCamera);
 
 	_pMouse = new image;
