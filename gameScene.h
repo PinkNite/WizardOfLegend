@@ -37,7 +37,6 @@ private:
 	MAP*		_pMap;
 
 	STATUEMGR*	_pStatueMgr;
-	UI*			_pUi;
 
 	float		_fDeathTimer;
 	list<ASTAR::TILENODE*>		_pPathList;
