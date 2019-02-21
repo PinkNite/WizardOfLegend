@@ -46,6 +46,9 @@ private:
 	STATUSBOX* _pItemBox[12];
 
 	int _findX[6];
+	//설정 바뀐 폰트를 가져올 변수
+	const char* _changeFont;
+
 public:
 	STATUSBOX* _pStatusBox[10];//이게 늘어나서 아이템을 받아야함
 	STATUSBOX* _pTempBox;
