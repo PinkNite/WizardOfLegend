@@ -25,7 +25,7 @@
 
 #include "camera.h"
 #include "map.h"
-
+#include "UI.h"
 
 
 PLAYER::PLAYER() :
@@ -1436,6 +1436,10 @@ void PLAYER::input()
 {
 	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DEATH)] ||
 		_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::DAMAGE)])
+	{
+		return;
+	}
+	if (_pUi->getIsClick())
 	{
 		return;
 	}

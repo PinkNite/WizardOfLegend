@@ -9,6 +9,7 @@
 #include "boss.h"
 #include "map.h"
 #include "StatueMgr.h"
+#include "UI.h"
 
 
 class MINTESTSCENE : public gameNode
@@ -25,6 +26,7 @@ private:
 	MAP*		_pMap;
 
 	STATUEMGR*	_pStatueMgr;
+	UI*			_pUi;
 public:
 	MINTESTSCENE();
 	~MINTESTSCENE();

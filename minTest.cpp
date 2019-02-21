@@ -17,11 +17,11 @@ HRESULT MINTESTSCENE::init()
 	_pPlayer = new PLAYER();
 	_pMap = new MAP();
 	_pStatueMgr = new STATUEMGR();
-
+	_pUi = new UI();
 	_pMap->init("map");
 	_pPlayer->setLinkMap(_pMap);
 	_pPlayer->init(500.0f,500.0f);
-
+	_pPlayer->setUi(_pUi);
 	int nSizeX = _pMap->getMapCountX() * _pMap->getTileSize();
 	int nSizeY = _pMap->getMapCountY() * _pMap->getTileSize();
 	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY,nSizeX,nSizeY);

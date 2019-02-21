@@ -11,6 +11,8 @@ class MAGICMGR;
 class SKILL_EFFECT_MGR;
 class CAMERA;
 class MAP;
+class UI;
+
 class PLAYER : public OBJECT
 {
 public:
@@ -185,6 +187,8 @@ private:
 	float		_fDashStartPosX;
 	float		_fDashStartPosY;
 
+	UI*		_pUi;
+	
 public:
 	PLAYER();
 	~PLAYER();
@@ -327,4 +331,8 @@ private:
 	void tileCollisionBottomLeft(float fSpeed);
 	void tileCollisionBottomRight(float fSpeed);
 
+
+
+public:
+	void setUi(UI * pUi) { _pUi = pUi; }
 };

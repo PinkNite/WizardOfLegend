@@ -167,6 +167,9 @@ HRESULT LEETEST::init()
 	_pRelics = new RELICS;
 	_pRelics->init(50, 50);
 	
+
+	_pPlayer->setUi(_pUI);
+
 	return S_OK;
 }
 
