@@ -169,6 +169,7 @@ HRESULT GAMESCENE::init()
 	}
 
 	_pMagicMgr->setPlayer(_pPlayer);
+	_pMagicMgr->setEnemyList(_vEnemyList);
 
 	//_pMap->settingLimitRect();
 
@@ -234,6 +235,10 @@ void GAMESCENE::update()
 
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 
+	for (int i = 0; i < _vEnemyList.size(); i++)
+	{
+		_vEnemyList[i]->update();
+	}
 
 	if (_pPlayer->getIsDeath())
 	{
