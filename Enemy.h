@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "animation.h"
 #include "aStar.h"
+#include "action.h"
 
 class MAP;
 class PLAYER;
@@ -77,6 +78,7 @@ private:
 	ActionState	_state;
 	DIRECTION	_direction;
 	MOVE		_move;
+	action*		_action;
 
 	list<ASTAR::TILENODE*>	_pPathList;
 	list<ASTAR::TILENODE*>::iterator _iPath;

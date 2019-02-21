@@ -36,6 +36,9 @@ void Enemy::init()
 	_timeSet = 0.0f;
 	_pAnimation = new animation();
 
+	_action = new action();
+	_action->init();
+
 	createStates();
 	createEnumNames();
 	setState(ActionState::HIDDEN);
@@ -402,6 +405,13 @@ void Enemy::moveEnemy()
 	{
 		_iPath = _pPathList.begin();
 		_iPathEnd = _pPathList.end();
+
+		//float endX = (*_iPathEnd)->nIndexX * _pMap->getTileSize();
+		//float endY = (*_iPathEnd)->nIndexY * _pMap->getTileSize();
+
+		// 보간법 수정필요
+		//_action->moveTo(OBJECT::getImage(), endX, endY, 2.0f);
+
 		if (_iPath == _iPathEnd)
 		{
 			_endPath = true;
@@ -412,12 +422,12 @@ void Enemy::moveEnemy()
 		_currentY = (*_iPath)->nIndexY * _pMap->getTileSize();
 		OBJECT::setPosX(_currentX);
 		OBJECT::setPosY(_currentY);
-
 		if (_pPlayer->getPosX() < _currentX)
 			setDirection(DIRECTION::LEFT);
 		else
 			setDirection(DIRECTION::RIGHT);
-			
+
+
 		setState(ActionState::RUN);
 		setAction(ActionState::RUN, _direction);
 		setRect();
