@@ -27,6 +27,8 @@ private:
 
 	STATUEMGR*	_pStatueMgr;
 	UI*			_pUi;
+
+	float		_fDeathTimer;
 public:
 	MINTESTSCENE();
 	~MINTESTSCENE();

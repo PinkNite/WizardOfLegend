@@ -20,16 +20,16 @@ HRESULT MINTESTSCENE::init()
 	_pUi = new UI();
 	_pMap->init("map");
 	_pPlayer->setLinkMap(_pMap);
-	_pPlayer->init(500.0f,500.0f);
+	_pPlayer->init(500.0f, 500.0f);
 	_pPlayer->setUi(_pUi);
 	int nSizeX = _pMap->getMapCountX() * _pMap->getTileSize();
 	int nSizeY = _pMap->getMapCountY() * _pMap->getTileSize();
-	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY,nSizeX,nSizeY);
+	_pCamera->init(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY, nSizeX, nSizeY);
 	_pMap->setCamera(_pCamera);
 
 
-	_pMagicMgr			= new MAGICMGR();
-	_pSkillEffectMgr	= new SKILL_EFFECT_MGR();
+	_pMagicMgr = new MAGICMGR();
+	_pSkillEffectMgr = new SKILL_EFFECT_MGR();
 
 	_pMagicMgr->setLink(_pCamera);
 	_pMagicMgr->setPlayer(_pPlayer);
@@ -44,10 +44,10 @@ HRESULT MINTESTSCENE::init()
 		6, 128, 128, 2.0f, 10.0f, false);
 	_pSkillEffectMgr->addEffect(IMAGEMANAGER->addFrameImage("flameBurn", "resource/skill/flameBurnMark.bmp", 192, 48, 4, 1, true, RGB(255, 0, 255)),
 		1, 48, 48, 1000, "flameBurn");
-	
+
 	IMAGEMANAGER->addFrameImage("fireStrike", "resource/skill/fireStrike.bmp", 1280, 128, 10, 1, true, Mins::getMazenta());
 
-	_pMagicMgr->addObject("fireStrike", 100, 128, 128, IMAGEMANAGER->findImage("fireStrike"), 20, 128, 128, 0.5f,12.0f,false);
+	_pMagicMgr->addObject("fireStrike", 100, 128, 128, IMAGEMANAGER->findImage("fireStrike"), 20, 128, 128, 0.5f, 12.0f, false);
 
 
 	//¼îÅ©³ë¹Ù
@@ -57,7 +57,7 @@ HRESULT MINTESTSCENE::init()
 	IMAGEMANAGER->addFrameImage("lightEffect04", "resource/skill/lightEffect04.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
 
 	IMAGEMANAGER->addFrameImage("shokeNova", "resource/skill/shokeNova.bmp", 2048, 512, 4, 1, true, Mins::getMazenta());
-	
+
 	IMAGEMANAGER->addFrameImage("thunder", "resource/skill/thunder.bmp", 307, 1024, 4, 2, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("thunderGround", "resource/skill/thunderGround.bmp", 135, 31, 3, 1, true, Mins::getMazenta());
 
@@ -90,8 +90,8 @@ HRESULT MINTESTSCENE::init()
 	KEYANIMANAGER->addArrayCoordinateFrameAnimation("Rock", "dlbSmallRock", "dlbSmallRock", arr, 4, 16, true, 16);
 
 
-	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("shokeNova", "shokeNova"), "shokeNova", 3, 512, 512, IMAGEMANAGER->findImage("shokeNova"), 6, 512, 512, 1.0f,12.0f, false);
-	
+	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("shokeNova", "shokeNova"), "shokeNova", 3, 512, 512, IMAGEMANAGER->findImage("shokeNova"), 6, 512, 512, 1.0f, 12.0f, false);
+
 	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("lightEffect01"), 6, 64, 64, 100, "lightEffect01");
 	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("lightEffect02"), 6, 64, 64, 100, "lightEffect02");
 	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("lightEffect03"), 6, 64, 64, 100, "lightEffect03");
@@ -103,13 +103,13 @@ HRESULT MINTESTSCENE::init()
 	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("electricBurnMark"), 4, 48, 48, 100, "electricBurnMark");
 
 
-	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "bicRock"), "bicRock", 100, 128, 128, IMAGEMANAGER->findImage("bicRock"), 16,128, 128, 0.5f, 13.0f, true);
+	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "bicRock"), "bicRock", 100, 128, 128, IMAGEMANAGER->findImage("bicRock"), 16, 128, 128, 0.5f, 13.0f, true);
 	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "smallRock"), "smallRock", 100, 64, 64, IMAGEMANAGER->findImage("smallRock"), 16, 64, 64, 1.0f, 11.0f, true);
 	_pMagicMgr->addObject(KEYANIMANAGER->findAnimation("Rock", "dlbSmallRock"), "dlbSmallRock", 100, 32, 32, IMAGEMANAGER->findImage("dlbSmallRock"), 16, 32, 32, 0.3f, 10.0f, true);
 
 	_pMagicMgr->addObject("upRock", 10, 121, 128, IMAGEMANAGER->findImage("upRock"), 1, 121, 128, 0.3f, 20.0f, false);
 
-	_pMagicMgr->addObject("iceCrystal", 100, 140, 199, IMAGEMANAGER->findImage("iceCrystal"), 15, 140, 199, 0.3f,14.0f, false);
+	_pMagicMgr->addObject("iceCrystal", 100, 140, 199, IMAGEMANAGER->findImage("iceCrystal"), 15, 140, 199, 0.3f, 14.0f, false);
 
 	_pMagicMgr->addObject("icePunch", 10, 110, 110, IMAGEMANAGER->findImage("icePunch"), 0, 0, 0.3f, 20.0f, false);
 
@@ -120,7 +120,7 @@ HRESULT MINTESTSCENE::init()
 	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("dropRock"), 1, 32, 32, 1200, "dropRock");
 	_pSkillEffectMgr->addEffect(IMAGEMANAGER->findImage("dropRightRock"), 1, 32, 32, 1200, "dropRightRock");
 
-	_pMagicMgr->addObject("dropRock", 1200, 32, 32, IMAGEMANAGER->findImage("dropRock"), 0, 0, 0.3f,0.0f, false);
+	_pMagicMgr->addObject("dropRock", 1200, 32, 32, IMAGEMANAGER->findImage("dropRock"), 0, 0, 0.3f, 0.0f, false);
 	_pMagicMgr->addObject("dropRightRock", 1200, 32, 32, IMAGEMANAGER->findImage("dropRightRock"), 0, 0, 0.3f, 0.0f, false);
 
 
@@ -141,7 +141,7 @@ HRESULT MINTESTSCENE::init()
 	IMAGEMANAGER->addFrameImage("WaterBounce1", "resource/boss/ice/WaterBounce1.bmp", 600, 120, 5, 1, true, Mins::getMazenta());
 
 	_pMagicMgr->addObject("WaterBalls", 100, 40, 40, IMAGEMANAGER->findImage("WaterBounce1"), 4, 120, 120, 10.0f, 1.3f, 30.0f, false);
-	_pMagicMgr->addObject("IceChakram", 100,  40, 40, IMAGEMANAGER->findImage("IceChakram"), 4, 50, 50, 10.0f, 1.3f, 30.0f, false);
+	_pMagicMgr->addObject("IceChakram", 100, 40, 40, IMAGEMANAGER->findImage("IceChakram"), 4, 50, 50, 10.0f, 1.3f, 30.0f, false);
 
 	_pMagicMgr->setPlayer(_pPlayer);
 
@@ -150,11 +150,14 @@ HRESULT MINTESTSCENE::init()
 	_pMap->drawMap(_pCamera->getBackGoroundBuffer());
 	_pStatueMgr->init(_pMap, _pCamera);
 
+
+	_fDeathTimer = 0.0f;
 	return S_OK;
 }
 
 void MINTESTSCENE::update()
 {
+
 	KEYANIMANAGER->update();
 	_pCamera->update();
 	_pPlayer->update();
@@ -189,11 +192,22 @@ void MINTESTSCENE::update()
 	_pBoss->update();
 
 	//_pCamera->settingCameraRange(static_cast<int>(_pPlayer->getPosX() - WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() - WINSIZEY / 2.0f),
-		//static_cast<int>(_pPlayer->getPosX() + WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() + WINSIZEY / 2.0f));
+	//static_cast<int>(_pPlayer->getPosX() + WINSIZEX / 2.0f), static_cast<int>(_pPlayer->getPosY() + WINSIZEY / 2.0f));
 	//_pMap->update();
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 
 	//_pMap->settingLimitRect();
+
+	if (_pPlayer->getIsDeath())
+	{
+		_fDeathTimer += TIMEMANAGER->getElapsedTime();
+
+		if (_fDeathTimer >= 2.0f)
+		{
+			SCENEMANAGER->changeScene("intro");
+		}
+	}
+
 }
 
 void MINTESTSCENE::release()

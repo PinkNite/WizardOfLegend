@@ -320,6 +320,8 @@ public:
 
 	bool isOnDropArea();
 
+	bool getIsDeath() { return _bIsDeath; }
+
 private:
 	void tileCollisionTop(float fSpeed);
 	void tIleCollisionBottom(float fSpeed);
@@ -330,8 +332,6 @@ private:
 	void tileCollisionTopRight(float fSpeed);
 	void tileCollisionBottomLeft(float fSpeed);
 	void tileCollisionBottomRight(float fSpeed);
-
-
 
 public:
 	void setUi(UI * pUi) { _pUi = pUi; }

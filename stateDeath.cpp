@@ -51,4 +51,5 @@ void STATE_DEATH::onBtnR(PLAYER * pPlayer)
 
 void STATE_DEATH::update(PLAYER * pPlayer)
 {
+
 }

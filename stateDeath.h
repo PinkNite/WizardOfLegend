@@ -6,7 +6,6 @@
 class STATE_DEATH : public STATE {
 private:
 
-
 public:
 	STATE_DEATH();
 	~STATE_DEATH();

@@ -163,6 +163,7 @@ void PLAYER::update()
 	_pCurrentSkill->update();
 	_pCurrentState->update(this);
 
+
 	//叫号 せせせ
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)]->update();
 	_arSkill[static_cast<int>(PLAYER::SKILL_NAME::REBOUNDINGICICLES)]->update();
@@ -187,8 +188,6 @@ void PLAYER::update()
 		setAction(PLAYER::ACTION::DEATH);
 		settingAni();
 	}
-
-
 
 	//_pMap->getTile(nTileIndexX, nTileIndexY)->Tilesefewa();
 	//_pMap->getTile(nTileIndexX+1, nTileIndexY )->Tilesefewa();
