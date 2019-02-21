@@ -471,6 +471,9 @@
     <ClInclude Include="StatueMgr.h">
       <Filter>PlayGround\stonestatue</Filter>
     </ClInclude>
+    <ClInclude Include="changeScene.h">
+      <Filter>PlayGround\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -787,6 +790,9 @@
     </ClCompile>
     <ClCompile Include="StatueMgr.cpp">
       <Filter>PlayGround\stonestatue</Filter>
+    </ClCompile>
+    <ClCompile Include="changeScene.cpp">
+      <Filter>PlayGround\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

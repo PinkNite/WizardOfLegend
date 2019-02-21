@@ -14,6 +14,7 @@
 #include "itemManager.h"
 #include "UI.h"
 
+
 class GAMESCENE : public gameNode
 {
 public:
@@ -30,9 +31,9 @@ private:
 	MAGICMGR*			_pMagicMgr;
 	SKILL_EFFECT_MGR*	_pSkillEffectMgr;
 	CAMERA*				_pCamera;
+	
 
-	BOSS* _pBoss;
-	bool _isBoss;
+	
 
 	MAP*		_pMap;
 

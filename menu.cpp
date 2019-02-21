@@ -484,7 +484,7 @@ void MENU::selectButtonSetting()
 
 void MENU::singlePlayer()
 {
-	SCENEMANAGER->changeScene("MinTest");
+	SCENEMANAGER->changeScene("gameScene");
 }
 
 void MENU::mapEditor()

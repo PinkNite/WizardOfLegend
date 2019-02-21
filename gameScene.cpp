@@ -183,6 +183,10 @@ HRESULT GAMESCENE::init()
 	_pUI->init();
 	_pItemManager = new ITEMMANAGER;
 	_pItemManager->init();
+	
+	
+	
+
 	ShowCursor(false);
 
 
@@ -214,15 +218,15 @@ void GAMESCENE::update()
 			if (_vEnemyList[i]->getActionState() == Enemy::ActionState::DEATH) continue;
 			if (_vEnemyList[i]->getActionState() == Enemy::ActionState::DEATH_END) continue;
 
-			POINT startTile = _pAStar->getTileIndex(_vEnemyList[i]->getPosX(), _vEnemyList[i]->getPosY());
-			POINT endTile = _pAStar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
-			_pAStar->startFinder(startTile.x, startTile.y, endTile.x, endTile.y);
-			_pAStar->pathFinder();
-			_pPathList = _pAStar->getPath();
-			if (0 < _pPathList.size())
-			{
-				_vEnemyList[i]->setShortPath(_pPathList);
-			}
+			//POINT startTile = _pAStar->getTileIndex(_vEnemyList[i]->getPosX(), _vEnemyList[i]->getPosY());
+			//POINT endTile = _pAStar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
+			//_pAStar->startFinder(startTile.x, startTile.y, endTile.x, endTile.y);
+			//_pAStar->pathFinder();
+			//_pPathList = _pAStar->getPath();
+			//if (0 < _pPathList.size())
+			//{
+			//	_vEnemyList[i]->setShortPath(_pPathList);
+			//}
 		}
 		_fTimeSet = 0.f;
 	}
@@ -230,7 +234,7 @@ void GAMESCENE::update()
 
 	_pUI->update();
 	_pItemManager->update();
-
+	
 
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
 
@@ -256,7 +260,6 @@ void GAMESCENE::release()
 	_pPlayer->release();
 	_pSkillEffectMgr->release();
 	_pMagicMgr->release();
-	_pBoss->release();
 	_pStatueMgr->release();
 	_pAStar->release();
 
@@ -292,4 +295,5 @@ void GAMESCENE::render()
 	_pMouse->render(getMemDC(), _ptMouse.x - 32, _ptMouse.y - 32);
 
 	KEYANIMANAGER->render();
+	
 }
