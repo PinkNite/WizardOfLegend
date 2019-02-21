@@ -19,8 +19,8 @@ HRESULT playGround::init()
 	//intro
 	SOUNDMANAGER->addSound("title", "resource/sound/TitleScreen.wav", 1, 1);
 	SOUNDMANAGER->addSound("mapEditor", "resource/sound/PlayerRoom.wav", 1, 1);
-	SOUNDMANAGER->addSound("boss", "resource/sound/ice.wav", 1, 1);
-	SOUNDMANAGER->addSound("happy", "resource/sound/Tutorial.wav", 1, 1);
+	SOUNDMANAGER->addSound("ice", "resource/sound/ice.wav", 1, 1);
+	SOUNDMANAGER->addSound("gameScene", "resource/sound/Tutorial.wav", 1, 1);
 	SOUNDMANAGER->addSound("ending", "resource/sound/Ending.wav", 1, 1);
 	SOUNDMANAGER->addSound("credit", "resource/sound/Credits.wav", 1, 1);
 	SOUNDMANAGER->addSound("correct", "resource/sound/Correct.wav", 1, 0);
