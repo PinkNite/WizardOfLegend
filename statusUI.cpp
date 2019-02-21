@@ -15,7 +15,7 @@ STATUSUI::~STATUSUI()
 HRESULT STATUSUI::init()
 {
 	_pTemp = new PLAYER;
-	_pTemp->init();
+	_pTemp->init(500.0f,500.0f);
 
 	IMAGEMANAGER->addImage("statusUI", "resource/UI/statusUI.bmp", 480, 724, true, RGB(255, 0, 255));
 	OBJECT::setImage(IMAGEMANAGER->findImage("statusUI"));

@@ -127,6 +127,9 @@
     <Filter Include="PlayGround\Scene\bossStage\gameScene">
       <UniqueIdentifier>{b3f8dc85-5f75-4ebc-9f6b-c4ce89993a5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\stonestatue">
+      <UniqueIdentifier>{562bc739-7f40-4cc9-9ab4-2b21da083f24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -461,6 +464,9 @@
     </ClInclude>
     <ClInclude Include="itemWhite.h">
       <Filter>PlayGround\item</Filter>
+    </ClInclude>
+    <ClInclude Include="stoneStatue.h">
+      <Filter>PlayGround\stonestatue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

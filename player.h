@@ -194,7 +194,7 @@ public:
 	//씬이 끝나면 저장이 필요하다. 스킬은 무엇을 들고 있는지 망토는 무엇인지 등등의 정보를 저장한다.
 	void save();
 	//초기화
-	void init();
+	void init(float fPosX, float fPosY);
 
 
 	//자식들에서 재정의 필수

@@ -19,7 +19,7 @@ HRESULT MINTESTSCENE::init()
 	_pMap->init("map");
 
 	_pPlayer->setLinkMap(_pMap);
-	_pPlayer->init();
+	_pPlayer->init(500.0f,500.0f);
 
 	int nSizeX = _pMap->getMapCountX() * _pMap->getTileSize();
 	int nSizeY = _pMap->getMapCountY() * _pMap->getTileSize();

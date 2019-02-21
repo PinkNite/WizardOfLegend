@@ -71,10 +71,10 @@ void PLAYER::save()
 {
 }
 
-void PLAYER::init()
+void PLAYER::init(float fPosX, float fPosY)
 {
 	//초기 위치 중앙값
-	OBJECT::init(500, 500, 100, 100);
+	OBJECT::init(fPosX, fPosY, 100, 100);
 	OBJECT::setPosZ(5);
 
 	OBJECT::setImage(IMAGEMANAGER->addFrameImage("wizardSprites", "resource/player/wizardSprite.bmp", WIZARD_SPRITE_WIDTH, WIZARD_SPRITE_HEIGHT, WIZARD_SPRITE_MAXFRAMEX, WIZARD_SPRITE_MAXFRAMEY, true, RGB(255, 0, 255)));

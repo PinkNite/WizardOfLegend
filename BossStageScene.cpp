@@ -29,7 +29,7 @@ HRESULT BossStageScene::init()
 
 	_pPlayer = new PLAYER();
 	_pPlayer->setLinkMap(_pMap);
-	_pPlayer->init();
+	_pPlayer->init(500.0f, 500.0f);
 
 	_pSkillEffectMgr = new SKILL_EFFECT_MGR();
 
