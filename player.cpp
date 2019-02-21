@@ -140,6 +140,24 @@ void PLAYER::update()
 	_fAttackPosX = OBJECT::getPosX() + Mins::presentPowerX(_fAttackDirAngle, 64.0f);
 	_fAttackPosY = OBJECT::getPosY() + Mins::presentPowerY(_fAttackDirAngle, 64.0f);
 
+	int	nTileIndexX = 0;
+	int	nTileIndexY = 0;
+	nTileIndexX = OBJECT::getPosX() / _pMap->getTileSize();
+	nTileIndexY = (OBJECT::getPosY() + 32.0f) / _pMap->getTileSize();
+
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::IDLE)] ||
+		_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::RUN)])
+	{
+		if (_pMap->getTile(nTileIndexX, nTileIndexY)->getTerrian() == TILE::TERRIAN::DMAGE_PASS)
+		{
+			setState(PLAYER::PLAYER_STATE::DAMAGE);
+			setAction(PLAYER::ACTION::DAMAGE);
+			settingAni();
+		}
+	}
+
+
+
 	input();
 	_pCurrentSkill->update();
 	_pCurrentState->update(this);
@@ -169,27 +187,13 @@ void PLAYER::update()
 		settingAni();
 	}
 
-	int	nTileIndexX = 0;
-	int	nTileIndexY = 0;
-	nTileIndexX = OBJECT::getPosX() / _pMap->getTileSize();
-	nTileIndexY = (OBJECT::getPosY() + 32.0f) / _pMap->getTileSize();
 
-	_pMap->getTile(nTileIndexX, nTileIndexY)->Tilesefewa();
+
+	//_pMap->getTile(nTileIndexX, nTileIndexY)->Tilesefewa();
 	//_pMap->getTile(nTileIndexX+1, nTileIndexY )->Tilesefewa();
 	//_pMap->getTile(nTileIndexX, nTileIndexY +1)->Tilesefewa();
 	//_pMap->getTile(nTileIndexX-1, nTileIndexY )->Tilesefewa();
 
-	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::IDLE)] ||
-		_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::RUN)])
-	{
-		
-		if (_pMap->getTile(nTileIndexX, nTileIndexY )->getTerrian() == TILE::TERRIAN::DMAGE_PASS)
-		{
-			setState(PLAYER::PLAYER_STATE::DAMAGE);
-			setAction(PLAYER::ACTION::DAMAGE);
-			settingAni();
-		}
-	}
 
 
 
