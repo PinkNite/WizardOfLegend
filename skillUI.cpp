@@ -10,6 +10,7 @@
 
 
 SKILLUI::SKILLUI()
+	:_isClick(0)
 {
 }
 
@@ -215,78 +216,80 @@ void SKILLUI::update()
 			}
 		}
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	if (!_isClick)
 	{
-		for (int i = 0; i < 6; i++)
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			if (_pSkillBox[i]->getX() == _findX[0])
+			for (int i = 0; i < 6; i++)
 			{
-				_pSkillBox[i]->setSkillUse(USE);
-				break;
+				if (_pSkillBox[i]->getX() == _findX[0])
+				{
+					_pSkillBox[i]->setSkillUse(USE);
+					break;
+				}
+			}
+
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+		{
+			for (int i = 0; i < 6; i++)
+			{
+				if (_pSkillBox[i]->getX() == _findX[1])
+				{
+					_pSkillBox[i]->setSkillUse(USE);
+					break;
+				}
+			}
+
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+		{
+			for (int i = 0; i < 6; i++)
+			{
+				if (_pSkillBox[i]->getX() == _findX[2])
+				{
+					_pSkillBox[i]->setSkillUse(USE);
+					break;
+				}
+			}
+		}
+		if (KEYMANAGER->isOnceKeyDown('Q'))
+		{
+			for (int i = 0; i < 6; i++)
+			{
+				if (_pSkillBox[i]->getX() == _findX[3])
+				{
+					_pSkillBox[i]->setSkillUse(USE);
+					break;
+				}
+			}
+
+		}
+		if (KEYMANAGER->isOnceKeyDown('E'))
+		{
+			for (int i = 0; i < 6; i++)
+			{
+				if (_pSkillBox[i]->getX() == _findX[4])
+				{
+					_pSkillBox[i]->setSkillUse(USE);
+					break;
+				}
+			}
+
+		}
+		if (KEYMANAGER->isOnceKeyDown('R'))
+		{
+			for (int i = 0; i < 6; i++)
+			{
+				if (_pSkillBox[i]->getX() == _findX[5])
+				{
+					_pSkillBox[i]->setSkillUse(USE);
+					break;
+				}
 			}
 		}
 
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			if (_pSkillBox[i]->getX() == _findX[1])
-			{
-				_pSkillBox[i]->setSkillUse(USE);
-				break;
-			}
-		}
-
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			if (_pSkillBox[i]->getX() == _findX[2])
-			{
-				_pSkillBox[i]->setSkillUse(USE);
-				break;
-			}
-		}
-	}
-	if (KEYMANAGER->isOnceKeyDown('Q'))
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			if (_pSkillBox[i]->getX() == _findX[3])
-			{
-				_pSkillBox[i]->setSkillUse(USE);
-				break;
-			}
-		}
-
-	}
-	if (KEYMANAGER->isOnceKeyDown('E'))
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			if (_pSkillBox[i]->getX() == _findX[4])
-			{
-				_pSkillBox[i]->setSkillUse(USE);
-				break;
-			}
-		}
-
-	}
-	if (KEYMANAGER->isOnceKeyDown('R'))
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			if (_pSkillBox[i]->getX() == _findX[5])
-			{
-				_pSkillBox[i]->setSkillUse(USE);
-				break;
-			}
-		}
-	}
-
-
 
 }
 
@@ -298,10 +301,10 @@ void SKILLUI::render(HDC hdc)
 	{
 
 		_pSkillBox[i]->render(hdc);
-		/*char str[200];
+		char str[200];
 
-		sprintf_s(str, "%d", _pSkillBox[0]->_pSkillIcon->getNum());
-		TextOut(hdc, 600, 600, str, strlen(str));*/
+		//sprintf_s(str, "%d", _);
+		//TextOut(hdc, 600, 600, str, strlen(str));
 
 	}
 

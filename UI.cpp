@@ -77,7 +77,7 @@ void UI::release()
 void UI::update()
 {
 
-
+	_pSkillUI->setIsClick(_isClick);
 
 	_pSkillUI->update();
 	//키를 누르면 작동되게

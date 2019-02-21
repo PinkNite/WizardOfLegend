@@ -4,6 +4,7 @@
 #include "skillIcon.h"
 #include "statusUI.h"
 #include "player.h"
+
 class ITEM;
 
 class SKILLBUTTON;
@@ -15,6 +16,7 @@ class SKILLUI :public OBJECT
 {
 private:
 
+	
 
 	STATUSBOX* _pStatusBox[2];
 	SKILLBUTTON* _pSkillButton[8];
@@ -28,7 +30,7 @@ private:
 	ITEM* _pItem;//2번은 맵이미지
 	string _name;
 	PLAYER* _pPlayer;
-
+	bool _isClick;
 	//  검색에 쓸 좌표
 	int _findX[6];
 	int _findY[6];
@@ -49,5 +51,6 @@ public:
 	void setLinkUI(ITEM* item) { _pItem = item; }
 	void setStatusUI(STATUSUI* ui) { _pStatusUI = ui; }
 	void setLinkPlayer(PLAYER* p) { _pPlayer = p; }
+	void setIsClick(bool click) { _isClick = click; }
 };
 

@@ -329,10 +329,10 @@ void STATUSUI::render(HDC hdc)
 		_pStatusButton[i]->render(hdc);
 	}
 
-	char str[222];
+	/*char str[222];
 
 		sprintf_s(str, "%d", _pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON));
-		TextOut(hdc, 800, 500, str, strlen(str));
+		TextOut(hdc, 800, 500, str, strlen(str));*/
 	//for (int i = 0; i < 6; i++)
 	//{
 
