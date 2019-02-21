@@ -319,7 +319,7 @@ void MAGICMGR::CollisionBossToMagic()
 			if (IntersectRect(&rcTmp, _pBoss->getCollisionRect(), pMagic->getRect()))
 			{
 				//보스 데이미 입는것 해주세요
-				_pBoss->setDamage(50.0f);
+				_pBoss->setDamage(pMagic->getDamage());
 			}
 		}
 		

@@ -157,6 +157,7 @@ private:
 	void addBossKeyAni(const string& strDir, const string& strAction, int startFrame, int endFrame, int fps, bool isLoop, void * cbFunction);
 
 public:
+	void setUi(UI * pUi) { _pUi = pUi; }
 	void showBoss();
 	void setBattle();
 

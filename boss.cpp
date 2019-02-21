@@ -55,10 +55,6 @@ void BOSS::init()
 	setEnumName();
 	createAnimation();
 
-	//_direction = DIRECTION::DOWN;
-	//_action = ACTION::READY;
-	//startBossAnimation();
-
 	initState();
 
 	_pIceSpear = new throwIceSpear();
@@ -67,7 +63,7 @@ void BOSS::init()
 
 void BOSS::update()
 {
-	if (ACTION::READY == _action || ACTION::ENTRANCE == _action)
+	if (ACTION::READY == _action || ACTION::ENTRANCE == _action || ACTION::DEATH == _action)
 	{
 		if (ACTION::READY == _action)
 		{

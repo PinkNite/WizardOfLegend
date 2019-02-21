@@ -144,6 +144,7 @@ HRESULT BossStageScene::init()
 	_pBoss->setCameraLink(_pCamera);
 	_pBoss->setMagicMgr(_pMagicMgr);
 	_pBoss->setPlayer(_pPlayer);
+	_pBoss->setUi(_pUI);
 
 	_pMagicMgr->setBoss(_pBoss);
 
