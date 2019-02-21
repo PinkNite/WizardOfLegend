@@ -114,6 +114,12 @@ void ASTAR::pathFinder()
 	//열린좌표에 같은 값이 있으면 코스트를 비교하여 작은 애한테 부모와 코스트를 바꾸어서 대입
 	//앤드면 이제 부모들을 쭉 불러와서 길을 만든다.. 이건 메이크 패스
 	//앤드가 아니면 다시 재귀적으로 돌린다.
+
+	if (_listOpendNode.empty())
+	{
+		return;
+	}
+
 	TILENODE* pNode = _listOpendNode.front();
 	_listClosedyPath.push_back(pNode);
 	_listOpendNode.pop_front();
@@ -263,7 +269,7 @@ POINT ASTAR::getTileIndex(float x, float y)
 	POINT point;
 	point.x = int(x) / _pMap->getTileSize();
 	point.y = int(y) / _pMap->getTileSize();
-	return POINT();
+	return point;
 }
 
 

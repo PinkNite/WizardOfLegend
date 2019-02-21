@@ -47,6 +47,109 @@ void MAP::init(const char * mapName)
 
 }
 
+void MAP::initBossMap(const char * mapName)
+{
+	_strMapName = mapName;
+
+	loadBossMap();
+}
+
+void MAP::loadBossMap()
+{
+	HANDLE file;
+	DWORD read;
+
+	char strTmp[100]{};
+	string strNameTmp = "";
+	strNameTmp.append("mapFull02.map");
+	file = CreateFile(strNameTmp.c_str(), GENERIC_READ, NULL, NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	ReadFile(file, strTmp, 100, &read, NULL);
+	CloseHandle(file);
+
+	char* temp;
+	const char* separator = "/"; //구분자
+	char* token;
+
+	//맵툴에는 타일 사이즈/ 타일 가로 갯수/ 타일 세로 갯수 / 파레트 셀 갯수
+
+	token = strtok_s(strTmp, separator, &temp);
+
+	_nTileSize = (atoi(token)) * 2;
+	token = strtok_s(NULL, separator, &temp);
+	_nTileCountX = (atoi(token));
+	token = strtok_s(NULL, separator, &temp);
+	_nTileCountY = atoi(token);
+
+
+	//맵만들기
+	createMap();
+
+	int nData = _nTileCountX * _nTileCountY * 80;
+	char *str = new char[nData];
+
+	strNameTmp = "";
+	strNameTmp.append("map02.map");
+
+	file = CreateFile(strNameTmp.c_str(), GENERIC_READ, NULL, NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	ReadFile(file, str, nData, &read, NULL);
+	CloseHandle(file);
+
+
+	char* tmp;
+	char* tokenMap;
+
+	tokenMap = strtok_s(str, separator, &tmp);
+
+	for (int j = 0; j < _nTileCountY; j++)
+	{
+		for (int i = 0; i < _nTileCountX; i++)
+		{
+
+			//노드인덱스/주변값/벽/프레임x/프레임y			
+			/*_vvMap[j][i]->setNodeIndex(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setAroundWall(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setIsWall(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setFrameX(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setFrameY(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setObject(static_cast<TILE::OBJECT>(atoi(tokenMap)));
+			_vvMap[j][i]->setttingObject();
+			tokenMap = strtok_s(NULL, separator, &tmp);*/
+			_vvMap[j][i]->setIsWall(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setFrameX(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setFrameY(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setObjFrameX(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setObjFrameY(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setTerrainPageIndex(atoi(tokenMap));
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setObject(static_cast<TILE::OBJECT>(atoi(tokenMap)));
+			_vvMap[j][i]->setttingObject2();
+			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setTerrian(static_cast<TILE::TERRIAN>(atoi(tokenMap)));
+			_vvMap[j][i]->setttingTerrain2();
+			tokenMap = strtok_s(NULL, separator, &tmp);
+		}
+	}
+
+	delete[] str;
+	str = nullptr;
+}
+
+
+
 void MAP::load()
 {
 	HANDLE file;

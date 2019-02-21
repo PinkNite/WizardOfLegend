@@ -20,6 +20,8 @@ private:
 	MAGICMGR*			_pMagicMgr;
 	SKILL_EFFECT_MGR*	_pSkillEffectMgr;
 	ASTAR*				_pAStar;
+	list<ASTAR::TILENODE*>		_pPathList;
+
 public:
 	BossStageScene();
 	~BossStageScene();

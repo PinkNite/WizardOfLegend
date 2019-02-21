@@ -33,8 +33,6 @@ void Enemy::init()
 	IMAGEMANAGER->addFrameImage("Summoner", "resource/enemy/SummonerSource.bmp", 750, 1050, 5, 7, true, RGB(255, 0, 255));
 	//IMAGEMANAGER->addFrameImage("Lancer", "resource/enemy/lancer.bmp", 491, 840, 6, 7, true, RGB(255, 0, 255));
 
-	_pAstar = new ASTAR();
-
 	_timeSet = 0.0f;
 	_pAnimation = new animation();
 
@@ -69,13 +67,16 @@ void Enemy::update()
 			setBattle();
 		}
 
-		if (_fCurrentHP < 0 && ActionState::DEATH != _state)
+
+		if (ActionState::DEATH != _state)
 		{
-			setDeath();
+			if (_fCurrentHP < 0) setDeath();
+
+			setRect();
+			moveEnemy();
+			handleKeyInput();
 		}
 
-		setRect();
-		handleKeyInput();
 		_pCurrentState->update(this);
 		_pCamera->pushRenderObject(this);
 	}
@@ -254,8 +255,6 @@ void Enemy::setEnemy(EnemyType enType, float x, float y)
 
 void Enemy::showEnemy()
 {
-	_pAstar->init(300, _pMap);
-
 	setState(ActionState::IDLE);
 	setAction(ActionState::IDLE, DIRECTION::RIGHT);
 
@@ -264,11 +263,6 @@ void Enemy::showEnemy()
 
 void Enemy::setBattle()
 {
-	POINT startTileId = _pAstar->getTileIndex(_posX, _posY);
-	POINT endTileId = _pAstar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
-	//POINT endTileId = _pAstar->getTileIndex(*_pPlayer->getCollisionRect());
-	_pAstar->startFinder(startTileId.x, startTileId.y, endTileId.x, endTileId.y);
-	//_pAstar->pathFinder();
 	
 	moveEnemy();
 }
@@ -392,6 +386,21 @@ void Enemy::moveRight(float speed)
 void Enemy::moveEnemy()
 {
 	// Astart 로 찾은경로로 이동
+
+	if (_timeSet > 0.5f)
+	{
+
+		//_timeSet = 0;
+	}
+
+	for (size_t i = 0; i < _pPathList.size(); i++)
+	{
+
+		//OBJECT::setPosX();
+	}
+
+
+
 	/*
 	if (_pCurrentState == _arState[static_cast<int>(ActionState::RUN)])
 	{

@@ -43,12 +43,14 @@ private:
 public:
 	//기본 셋
 	void	init(const char* mapName);
+	void	initBossMap(const char* mapName);
 	void	release();
 	void	render(HDC hdc);
 	void	update();
 	//추가분
 
 	void	load();
+	void	loadBossMap();
 
 	void	settingLimitRect();
 

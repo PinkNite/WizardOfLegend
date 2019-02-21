@@ -20,7 +20,8 @@ HRESULT BossStageScene::init()
 	_pMagicMgr->setLink(_pCamera);
 
 	_pMap = new MAP();
-	_pMap->init("map");
+	_pMap->initBossMap("map");
+
 	//_pMap->settingLimitRect();
 	_pMap->setCamera(_pCamera);
 
@@ -137,6 +138,8 @@ HRESULT BossStageScene::init()
 	_pEnemy->setPlayer(_pPlayer);
 	_pEnemy->setCameraLink(_pCamera);
 	_pEnemy->setEnemy(Enemy::EnemyType::GHOUL, 200.0f, 400.0f);
+	_pEnemy->showEnemy();
+
 	_pMagicMgr->setEnemy(_pEnemy);
 
 	_pCamera->setting(static_cast<int>(_pPlayer->getPosX()), static_cast<int>(_pPlayer->getPosY()));
@@ -169,6 +172,18 @@ void BossStageScene::update()
 	_pMagicMgr->update();
 	_pPlayer->update();
 	_pSkillEffectMgr->update();
+
+	// 길찾기 업데이트 
+	POINT startTile = _pAStar->getTileIndex(_pEnemy->getPosX(), _pEnemy->getPosY());
+	POINT endTile = _pAStar->getTileIndex(_pPlayer->getPosX(), _pPlayer->getPosY());
+	_pAStar->startFinder(startTile.x, startTile.y, endTile.x, endTile.y);
+	_pAStar->pathFinder();
+	_pPathList = _pAStar->getPath();
+	if (0 <_pPathList.size())
+	{
+		_pEnemy->setShortPath(_pPathList);
+	}
+
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
 		//_pBoss->spell01(BOSS::SKILL_TYPE::CHAKRAM);

@@ -65,18 +65,17 @@ private:
 	float		_fDamage;
 	float		_targetDistance;
 
-
 	string		_objName;
 	EnemyType	_enType;
 	ActionState	_state;
 	DIRECTION	_direction;
 	MOVE		_move;
+	list<ASTAR::TILENODE*>	_pPathList;
 
 	EnemyState *	_pCurrentState;
 	EnemyState *	_arState[static_cast<const int>(ActionState::MAX)];
 
 	MAP *		_pMap;
-	ASTAR *		_pAstar;
 	PLAYER *	_pPlayer;
 	CAMERA *	_pCamera;
 public:
@@ -102,6 +101,7 @@ public:
 	void setMap(MAP* pMap) { _pMap = pMap; }
 	void setPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 	void setCameraLink(CAMERA* pCamera) { _pCamera = pCamera; }
+	void setShortPath(list<ASTAR::TILENODE*> pPathList) { _pPathList = pPathList; }
 
 	// 몹 종류, 위치 설정
 	void setEnemy(EnemyType enType, float x, float y);
