@@ -23,12 +23,28 @@ HRESULT HPBAR::init(int x, int y)
 	return S_OK;
 }
 
+HRESULT HPBAR::initBoss(int x, int y)
+{
+	OBJECT::setImage(IMAGEMANAGER->addFrameImage("hpBar", "resource/UI/hpBar.bmp", 207, 54, 1, 2, true, RGB(255, 0, 255)));
+	OBJECT::init(x, y, 207, 54);
+	_x = x;
+	_y = y;
+	_width = OBJECT::getImage()->GetWidth();
+	_rc = RectMake(_x, _y, _width, OBJECT::getImage()->getFrameHeight());
+	_hpWidth = _width;
+	return S_OK;
+}
+
+
+
 void HPBAR::release()
 {
 }
 
 void HPBAR::update()
 {
+
+	
 	_rc = RectMake(_x, _y, _width, OBJECT::getImage()->getFrameHeight());
 
 }

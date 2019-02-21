@@ -19,6 +19,7 @@ public:
 	HPBAR();
 	~HPBAR();
 	HRESULT init(int x, int y);
+	HRESULT initBoss(int x, int y);
 	void release();
 	void update();
 	void render(HDC hdc);

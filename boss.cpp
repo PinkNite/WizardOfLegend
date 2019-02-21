@@ -59,6 +59,23 @@ void BOSS::init()
 
 	_pIceSpear = new throwIceSpear();
 	_pIceSpear->init();
+
+	for (int i = 0; i < 2; i++)
+	{
+		//0번 hp바의 렉트 라이트가 레프트가 되고 시간에 영향을 받는다.업데이트에서
+		_pHpBar[i] = new HPBAR;
+		switch (i)
+		{
+		case 0:
+			_pHpBar[i]->initBoss(800, 40 + 10);
+			break;
+		case 1:
+			_pHpBar[i]->initBoss(800, 40 + 10);
+			break;
+		}
+		_pHpBar[i]->setFrameY(i);
+	}
+
 }
 
 void BOSS::update()
@@ -145,6 +162,15 @@ void BOSS::update()
 		handleInputKey();
 	}
 
+	_pHpBar[1]->setGauge(_fCurrentHP, _fMaxHP);//플레이어값받아온게 들어감
+	_pHpBar[0]->setDamage(_fCurrentHP, _fMaxHP);
+	for (int i = 0; i < 2; i++)
+	{
+		_pHpBar[i]->update();
+		_pHpBar[1]->setX(_posX);
+		_pHpBar[1]->setY(_posY);
+	}
+
 	_pCamera->pushRenderObject(this);
 	if (_pCurrentState != nullptr)
 	{
@@ -208,6 +234,12 @@ void BOSS::render(HDC hdc)
 	//RectangleMakeCenter(hdc, renderX, renderY, BOSS_RECT_WIDTH, BOSS_RECT_HEIGHT);
 
 	//bulletRender(hdc);
+	RECT tt;
+	tt = _pHpBar[1]->getRC();
+	for (int i = 0; i < 2; i++)
+	{
+		_pHpBar[i]->render(hdc);
+	}
 
 	_pIceSpear->render(hdc);
 }
@@ -536,7 +568,7 @@ void BOSS::spell02(SKILL_TYPE type)
 {
 	_timeSet = 0.f;
 	POINTFLOAT* bossPoint = new POINTFLOAT{ _posX, _posY };
-	POINTFLOAT* targetPoint = new POINTFLOAT{ _pPlayer->getPosX(), _pPlayer->getPosY()};
+	POINTFLOAT* targetPoint = new POINTFLOAT{ _pPlayer->getPosX(), _pPlayer->getPosY() };
 	_pIceSpear->UseSkill(bossPoint, targetPoint, 3);
 
 	//setState(BOSS_STATE::SKILL_02);
@@ -576,7 +608,7 @@ void BOSS::skillFire(float x, float y)
 			{
 				_pMagicMgr->pushMagicKey("WaterBalls", false, getPosX(), getPosY(), _bullet[i]->distance / 2.0f, _bullet[i]->angle);
 			}
-			
+
 			break;
 		}
 

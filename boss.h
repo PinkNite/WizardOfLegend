@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "animation.h"
 #include "throwIceSpear.h"
-#include "UI.h"
+#include "hpBar.h"
 
 class PLAYER;
 class BossState;
@@ -84,8 +84,6 @@ private:
 	const int BOSS_RECT_WIDTH = 70;
 	const int BOSS_RECT_HEIGHT = 140; // FrameSize: 150, 200
 
-	UI*	  _pUi;
-
 	float _fMaxHP;
 	float _fCurrentHP;
 	float _fSpeed;
@@ -132,6 +130,7 @@ private:
 	BossState*	_pCurrentState;
 	BossState*	_arState[static_cast<const int>(BOSS_STATE::MAX)];
 
+	HPBAR*		_pHpBar[2];
 	PLAYER *	_pPlayer;
 	CAMERA *	_pCamera;
 	MAGICMGR*   _pMagicMgr;
@@ -157,7 +156,6 @@ private:
 	void addBossKeyAni(const string& strDir, const string& strAction, int startFrame, int endFrame, int fps, bool isLoop, void * cbFunction);
 
 public:
-	void setUi(UI * pUi) { _pUi = pUi; }
 	void showBoss();
 	void setBattle();
 
