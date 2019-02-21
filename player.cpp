@@ -379,11 +379,11 @@ void PLAYER::settingSkill()
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::FIRE_STRIKE)] = 0.5f;
 
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::SHOKE_NOVA)] = 6.0f;
-	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)] = 5.0f;
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::CHAIN_LIGHTNING)] = 6.0f;
 
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::STONE_SHOT)] = 0.5f;
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::SHATTERINGSTRIKE)] = 5.0f;
-	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::REBOUNDINGICICLES)] = 4.0f;
+	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::REBOUNDINGICICLES)] = 5.0f;
 	_arSkillDelayTime[static_cast<int>(PLAYER::SKILL_NAME::GLACIALCROSS)] = 5.0f;
 
 	for (int i = 0; i < static_cast<int>(PLAYER::SKILL_NAME::MAX); i++)

@@ -150,7 +150,15 @@ private:
 	STATE*		_pCurrentState;
 	STATE*		_arState[static_cast<const int>(PLAYER::PLAYER_STATE::MAX)];
 
-	//움직임 세분화
+
+	//스킬 상태패턴
+	SKILL*		_pCurrentSkill;
+	SKILL*		_arSkill[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];
+	float		_arSkillDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];			//스킬 딜레이 시간//스킬 세팅된것이 6개 있다고 치자...
+	float		_arCurrentDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];		//스킬 쿨 차면 쓸수 있다
+	SKILL_NAME	_arSettingSkill[static_cast<const int>(PLAYER::SKILL_KEY::MAX)];			//무슨키에 무슨 스킬이 세팅되어있는지
+
+																							//움직임 세분화
 	MOVE_DIRECTION			_eMoveDirection;
 	CIRCLEEFFECT*		_pCirEffect;
 
@@ -161,19 +169,9 @@ private:
 
 	float		_arStandardAngle[4];
 
-	SKILL*		_pCurrentSkill;
 
 	float		_fAttackPosX;
 	float		_fAttackPosY;
-
-
-	//스킬 상태패턴
-	SKILL*		_arSkill[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];
-	float		_arSkillDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];			//스킬 딜레이 시간//스킬 세팅된것이 6개 있다고 치자...
-	float		_arCurrentDelayTime[static_cast<const int>(PLAYER::SKILL_NAME::MAX)];		//스킬 쿨 차면 쓸수 있다
-	SKILL_NAME	_arSettingSkill[static_cast<const int>(PLAYER::SKILL_KEY::MAX)];			//무슨키에 무슨 스킬이 세팅되어있는지
-
-
 
 	int			_nNormalSkillCoount;
 

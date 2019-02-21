@@ -26,6 +26,8 @@ HRESULT playGround::init()
 	SOUNDMANAGER->addSound("correct", "resource/sound/Correct.wav", 1, 0);
 	SOUNDMANAGER->addSound("crowdCheer", "resource/sound/CrowdCheer.wav", 1, 0);
 	
+
+
 	_pMapEditScene = new MAPEDIT();
 	_pstageScene = new STAGESCENE();
 	_pMinTest = new MINTESTSCENE();
@@ -44,10 +46,10 @@ HRESULT playGround::init()
 
 	SCENEMANAGER->changeScene("mapEditScene");
 	//SCENEMANAGER->changeScene("MinTest");
-	//SCENEMANAGER->changeScene("bossStage");
+	SCENEMANAGER->changeScene("bossStage");
 	//SCENEMANAGER->changeScene("intro");
 	//SCENEMANAGER->changeScene("leeTest");
-	SCENEMANAGER->changeScene("gameScene");
+	//SCENEMANAGER->changeScene("gameScene");
 
 	return S_OK;
 }

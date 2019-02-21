@@ -5,6 +5,7 @@
 class MAGICMGR;
 class SKILL_EFFECT_MGR;
 class PLAYER;
+
 class SKILL
 {
 public:
@@ -24,8 +25,6 @@ protected:
 	PLAYER*				_pPlayer;
 	int					_nSkillType;		//스킬 타입이 담긴다.
 	PLAYER::SKILL_NAME	_eSkillName;		//스킬 이름이 담긴다.
-
-
 	MAP*				_pMap;
 
 public:

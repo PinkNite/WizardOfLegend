@@ -13,6 +13,10 @@ GAMESCENE::~GAMESCENE()
 
 HRESULT GAMESCENE::init()
 {
+
+	SOUNDMANAGER->play("ice");
+
+
 	_pCamera = new CAMERA();
 	_pPlayer = new PLAYER();
 	_pMap = new MAP();
