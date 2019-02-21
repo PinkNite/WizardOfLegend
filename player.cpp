@@ -179,8 +179,10 @@ void PLAYER::update()
 	//_pMap->getTile(nTileIndexX, nTileIndexY +1)->Tilesefewa();
 	//_pMap->getTile(nTileIndexX-1, nTileIndexY )->Tilesefewa();
 
-	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::IDLE)])
+	if (_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::IDLE)] ||
+		_pCurrentState == _arState[static_cast<int>(PLAYER::PLAYER_STATE::RUN)])
 	{
+		
 		if (_pMap->getTile(nTileIndexX, nTileIndexY )->getTerrian() == TILE::TERRIAN::DMAGE_PASS)
 		{
 			setState(PLAYER::PLAYER_STATE::DAMAGE);
@@ -207,6 +209,7 @@ void PLAYER::release()
 void PLAYER::render(HDC hdc)
 {
 	_pCirEffect->render(hdc);
+
 	//Rectangle(hdc, _rcMovingCollision);
 	OBJECT::getImage()->aniRenderCenter(hdc, static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()), _pAnimation);
 
