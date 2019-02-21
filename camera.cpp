@@ -44,10 +44,10 @@ void CAMERA::render(HDC hdc)
 	while (iter != end)
 	{
 		OBJECT* pObject = (*iter);
-		if (pObject->getPosX() > _left + 64 &&
-			pObject->getPosY() > _top + 64 &&
-			pObject->getPosX() < _left + _width + 64 &&
-			pObject->getPosY() < _top + _height + 64 )
+		//if (pObject->getPosX() > _left + pObject->getWidth() &&
+		//	pObject->getPosY() > _top + pObject->getHeight() &&
+		//	pObject->getPosX() < _left + _width + pObject->getWidth() &&
+		//	pObject->getPosY() < _top + _height + pObject->getHeight())
 		{
 			pObject->render(getMemDC());
 		}

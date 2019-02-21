@@ -16,8 +16,9 @@ HRESULT MINTESTSCENE::init()
 	_pCamera = new CAMERA();
 	_pPlayer = new PLAYER();
 	_pMap = new MAP();
-	_pMap->init("map");
+	_pStatueMgr = new STATUEMGR();
 
+	_pMap->init("map");
 	_pPlayer->setLinkMap(_pMap);
 	_pPlayer->init(500.0f,500.0f);
 
@@ -147,6 +148,7 @@ HRESULT MINTESTSCENE::init()
 	//_pMap->settingLimitRect();
 
 	_pMap->drawMap(_pCamera->getBackGoroundBuffer());
+	_pStatueMgr->init(_pMap, _pCamera);
 
 	return S_OK;
 }
@@ -158,7 +160,7 @@ void MINTESTSCENE::update()
 	_pPlayer->update();
 	_pMagicMgr->update();
 	_pSkillEffectMgr->update();
-
+	_pStatueMgr->update();
 	// boss code
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
@@ -200,16 +202,20 @@ void MINTESTSCENE::release()
 	_pSkillEffectMgr->release();
 	_pMagicMgr->release();
 	_pBoss->release();
+	_pStatueMgr->release();
 
 	delete _pPlayer;
 	delete _pSkillEffectMgr;
 	delete _pMagicMgr;
 	delete _pCamera;
+	delete _pStatueMgr;
+
 
 	_pPlayer = nullptr;
 	_pSkillEffectMgr = nullptr;
 	_pMagicMgr = nullptr;
 	_pCamera = nullptr;
+	_pStatueMgr = nullptr;
 }
 
 void MINTESTSCENE::render()

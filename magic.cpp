@@ -33,6 +33,7 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	OBJECT::setPosY(_fPosY);
 	OBJECT::setPosZ(nHeight);
 	OBJECT::setHeight(nHeight);
+	OBJECT::setWidth(nWidth);
 	OBJECT::setImage(pImg);
 	_fDamage = 10.0f;
 	_bIsCollisionRemove = bIsCollisionRemove;
@@ -59,6 +60,7 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, animation * pAni, float 
 	OBJECT::setPosY(_fPosY);
 	OBJECT::setPosZ(nHeight);
 	OBJECT::setHeight(nHeight);
+	OBJECT::setWidth(nWidth);
 	OBJECT::setImage(pImg);
 	_fDamage = 10.0f;
 	_bIsCollisionRemove = bIsCollisionRemove;
@@ -86,6 +88,7 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFrameX, int nFrameY
 	OBJECT::setPosY(_fPosY);
 	OBJECT::setPosZ(nHeight);
 	OBJECT::setHeight(nHeight);
+	OBJECT::setWidth(nWidth);
 	OBJECT::setImage(pImg);
 	_fDamage = 10.0f;
 	_bIsCollisionRemove = bIsCollisionRemove;
@@ -117,6 +120,7 @@ void MAGIC::init(int nWidth, int nHeight, image * pImg, int nFps, int nFrameMaxX
 	OBJECT::setPosY(_fPosY);
 	OBJECT::setPosZ(nHeight);
 	OBJECT::setHeight(nHeight);
+	OBJECT::setWidth(nWidth);
 	OBJECT::setImage(pImg);
 	_fDamage = 10.0f;
 	_bIsCollisionRemove = false;

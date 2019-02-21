@@ -8,6 +8,9 @@
 #include "camera.h"
 #include "boss.h"
 #include "map.h"
+#include "StatueMgr.h"
+
+
 class MINTESTSCENE : public gameNode
 {
 private:
@@ -21,6 +24,7 @@ private:
 
 	MAP*		_pMap;
 
+	STATUEMGR*	_pStatueMgr;
 public:
 	MINTESTSCENE();
 	~MINTESTSCENE();
