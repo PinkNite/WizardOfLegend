@@ -190,7 +190,7 @@ void SKILLUI::update()
 	}
 	for (int i = 0; i < 6; i++)
 	{
-		if (_pSkillBox[i]->getX() == 0)
+		if (_pSkillBox[i]->getX() >= 0)
 		{
 			if (_findX[i] == _pSkillBox[i]->getX())
 			{
@@ -198,6 +198,7 @@ void SKILLUI::update()
 			}
 			else
 			{
+				
 				//안 같으면 
 				_pSkillBox[i]->setX(_findX[i]);
 				_pSkillBox[i]->_pSkillIcon->setX(_findX[i]+8);
