@@ -34,6 +34,7 @@ private:
 	int _findY[6];
 	int _findUpX[6];
 	int _findUpY[6];
+	
 	int _index; //인덱스번호로 찾자
 public:
 	SKILLUI();

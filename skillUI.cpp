@@ -30,8 +30,10 @@ HRESULT SKILLUI::init()
 	_y = WINSIZEY - 90 + 10;
 	for (int i = 0; i < 6; i++)
 	{
-		_findX[i] = _pStatusUI->_pStatusBox[i]->getSkillX();
-		_findY[i] = _pStatusUI->_pStatusBox[i]->getSkillY();
+		/*_findX[i] = _pStatusUI->_pStatusBox[i]->getSkillX();
+		_findY[i] = _pStatusUI->_pStatusBox[i]->getSkillY();*/
+		_findX[i] = 60 + (i * 60) + 3;
+		_findY[i] = WINSIZEY - 90;
 	}
 	for (int i = 0; i < 6; i++)
 	{
@@ -39,7 +41,7 @@ HRESULT SKILLUI::init()
 		_findUpY[i] = 150;
 		
 	}
-
+	//_pStatusBox[i]->setSkillXY(60 + (i * 60) + 3, WINSIZEY - 90);
 
 	for (int i = 0; i < 2; i++)//탭과 지도
 	{
@@ -139,13 +141,18 @@ void SKILLUI::update()
 	for (int i = 0; i < 6; i++)
 	{
 		//_pSkillBox[i]->_pSkillIcon->setNum(_pStatusUI->_pStatusBox[i]->_pSkillIcon->getNum());
-
-		_pSkillBox[i]->setX(_pStatusUI->_pStatusBox[i]->getSkillX());
-		_pSkillBox[i]->setY(_pStatusUI->_pStatusBox[i]->getSkillY());
-		_pSkillBox[i]->update();
-
+		for (int j = 0; j < 10; j++)
+		{
+			if (_pStatusUI->_pStatusBox[j]->getX() == _findUpX[i])
+			{
+				_pSkillBox[i]->setX(_findX[i]);
+				_pSkillBox[i]->setY(_findY[i]);
+				_pSkillBox[i]->update();
+			}
+		}
 
 	}
+		
 	
 	//박스에 있는 스킬을 검사해서 해당 넘버로 초기화 해준다.
 	for (int i = 0; i < 6; i++)
