@@ -33,6 +33,12 @@ HRESULT SKILLUI::init()
 		_findX[i] = _pStatusUI->_pStatusBox[i]->getSkillX();
 		_findY[i] = _pStatusUI->_pStatusBox[i]->getSkillY();
 	}
+	for (int i = 0; i < 6; i++)
+	{
+		_findUpX[i] = 214 + i * 66;
+		_findUpY[i] = 150;
+		
+	}
 
 
 	for (int i = 0; i < 2; i++)//탭과 지도
@@ -132,12 +138,74 @@ void SKILLUI::update()
 {
 	for (int i = 0; i < 6; i++)
 	{
-		_pSkillBox[i]->_pSkillIcon->setNum(_pStatusUI->_pStatusBox[i]->_pSkillIcon->getNum());
+		//_pSkillBox[i]->_pSkillIcon->setNum(_pStatusUI->_pStatusBox[i]->_pSkillIcon->getNum());
+
 		_pSkillBox[i]->setX(_pStatusUI->_pStatusBox[i]->getSkillX());
 		_pSkillBox[i]->setY(_pStatusUI->_pStatusBox[i]->getSkillY());
 		_pSkillBox[i]->update();
 
 
+	}
+	
+	//박스에 있는 스킬을 검사해서 해당 넘버로 초기화 해준다.
+	for (int i = 0; i < 6; i++)
+	{
+		switch (i)
+		{
+		case 0:
+			for (int j = 0; j < 10; j++)
+			{
+				if (_findUpX[i] == _pStatusUI->_pStatusBox[j]->getX())
+				{
+					_pSkillBox[i]->_pSkillIcon->setNum(_pStatusUI->_pStatusBox[j]->_pSkillIcon->getNum());
+					//system("pause");
+					break;
+				}
+			}
+			
+			break;
+
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+		
+		case 4:
+		
+		case 5:
+			for (int j = 0; j < 10; j++)
+			{
+				if (_findUpX[i] == _pStatusUI->_pStatusBox[j]->getX())
+				{
+					_pSkillBox[i]->_pSkillIcon->setNum(_pStatusUI->_pStatusBox[j]->_pSkillIcon->getNum());
+					//system("pause");
+					break;
+				}
+			}
+			break;
+
+		}
+	
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		if (_pSkillBox[i]->getX() == 0)
+		{
+			if (_findX[i] == _pSkillBox[i]->getX())
+			{
+				break;
+			}
+			else
+			{
+				//안 같으면 
+				_pSkillBox[i]->setX(_findX[i]);
+				_pSkillBox[i]->_pSkillIcon->setX(_findX[i]+8);
+				_index = i;
+				break;
+				
+			}
+		}
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
@@ -224,8 +292,8 @@ void SKILLUI::render(HDC hdc)
 		_pSkillBox[i]->render(hdc);
 		/*char str[200];
 
-		sprintf_s(str, "%d", _pStatusUI->_pStatusBox[i]->getSkillX());
-		TextOut(hdc, _pStatusUI->_pStatusBox[i]->getSkillX(), _pSkillBox[i]->getY()-50, str, strlen(str));*/
+		sprintf_s(str, "%d", _pSkillBox[0]->_pSkillIcon->getNum());
+		TextOut(hdc, 600, 600, str, strlen(str));*/
 
 	}
 

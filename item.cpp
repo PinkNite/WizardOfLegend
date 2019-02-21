@@ -1507,7 +1507,7 @@ HRESULT ITEM::init(int x, int y)
 
 
 	_pItemWhite = new ITEMWHITE;
-	_pItemWhite->init(x, y);
+	_pItemWhite->init(x-15, y-15);
 
 	return S_OK;
 }
@@ -1544,8 +1544,10 @@ void ITEM::render(HDC hdc)
 
 
 	OBJECT::getImage()->alphaFrameRender(hdc, _x, _y, _vItem[_num].frameX, _vItem[_num].frameY, _alpha);
-	_pItemWhite->render(hdc);
-
+	if (_pItemWhite->getIsAction())
+	{
+		_pItemWhite->render(hdc);
+	}
 	//렐릭스쪽에 쓸것////////
 /*
 	char str[200];

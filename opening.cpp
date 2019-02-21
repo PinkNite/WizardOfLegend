@@ -452,13 +452,13 @@ bool OPENING::isCollision(int x, int y, int x2, int y2)
 
 void OPENING::soundUpdate()
 {
-	if (_time > 12 && _time < 13)
+	if (_time > 10 && _time < 11)
 	{
-		SOUNDMANAGER->play("crowdCheer", 1.0f);
+		//SOUNDMANAGER->play("crowdCheer", 1.0f);
 	}
 	if (_time > 17 && _time < 18)
 	{
-		SOUNDMANAGER->stop("crowdCheer");
+		//SOUNDMANAGER->stop("crowdCheer");
 		SOUNDMANAGER->play("title", 1);
 	}
 

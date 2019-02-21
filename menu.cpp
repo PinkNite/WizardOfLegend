@@ -508,7 +508,7 @@ void MENU::option()
 
 void MENU::credit()
 {
-	SCENEMANAGER->changeScene("leeTest");
+	SCENEMANAGER->changeScene("credit");
 
 }
 

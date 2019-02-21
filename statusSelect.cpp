@@ -129,11 +129,11 @@ void STATUSSELECT::keySetting()
 
 void STATUSSELECT::selectStateChange()
 {
-	if (_y > 148)
+	if (_y > 210)
 	{
 		_selectState = ITEM_STATE;
 	}
-	else if (_y <= 148 && _selectState != SWAP_STATE)
+	else if (_y <= 210 && _selectState != SWAP_STATE)
 	{
 		_selectState = SKILL_STATE;
 	}

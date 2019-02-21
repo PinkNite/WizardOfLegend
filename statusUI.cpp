@@ -21,6 +21,11 @@ HRESULT STATUSUI::init()
 	OBJECT::setImage(IMAGEMANAGER->findImage("statusUI"));
 	OBJECT::init(51 + (2 * 51 + 2 * 2), 51 + 25, OBJECT::getImage()->GetWidth(), OBJECT::getImage()->GetHeight());
 
+	for (int i = 0; i < 6; i++)
+	{
+		_findX[i] = 214 + i * 66;
+		
+	}
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -33,6 +38,7 @@ HRESULT STATUSUI::init()
 			break;
 		default:
 			_pStatusBox[i]->init(130 + i * 50, 210);
+			_pStatusBox[i]->setSkillY(WINSIZEY-90);
 			break;
 		}
 
@@ -86,6 +92,7 @@ HRESULT STATUSUI::init()
 		case 6:
 			_pStatusBox[i]->_pSkillIcon->setNum(2);// 프레임
 			_pStatusBox[i]->setSkillName(static_cast<int> (2));
+			_pStatusBox[i]->setSkillNum(static_cast<int> (0));
 			break;
 		case 7:
 			_pStatusBox[i]->_pSkillIcon->setNum(8);//빙하횡단?
@@ -108,6 +115,7 @@ HRESULT STATUSUI::init()
 		_pItemBox[i] = new STATUSBOX;
 		_pItemBox[i]->init(214 + (i % 6) * 66, 333 + (i / 6) * 60);
 		_pItemBox[i]->_pSkillIcon->setNum(0);// 아무것도 없당
+		
 
 
 	}
@@ -133,7 +141,7 @@ HRESULT STATUSUI::init()
 	//스왑용 템프박스
 	_pTempBox = new STATUSBOX;
 	_pTempBox->init(50, 50);
-	_pTempSkill = new SKILLICON;
+	/*_pTempSkill = new SKILLICON;*/
 	for (int i = 0; i < 6; i++)
 	{
 
@@ -149,8 +157,10 @@ HRESULT STATUSUI::init()
 	{
 		_pItem[i] = new ITEM;
 		_pItem[i]->init(214 + (i % 6) * 66, 333 + (i / 6) * 60);
-		_pItem[i]->setNum(0);
-		_pItem[i]->setItemWhiteAction(1);
+		_pItem[i]->setNum(i);
+		_pItem[i]->setItemWhiteAction(0);
+		
+		
 	}
 
 
@@ -165,44 +175,44 @@ void STATUSUI::release()
 void STATUSUI::update()
 {
 
-	for (int i = 0; i < 6; i++)
-	{
-		switch (i)
-		{
-		case 0:
-			_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
-			//_pStatusBox[i]->setSkillNum(SKILL_0);
-			break;
-		case 1:
-			_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
-			//_pStatusBox[i]->setSkillNum(SKILL_1);
-			break;
-		case 2:
-			_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
-			//_pStatusBox[i]->setSkillNum(SKILL_2);
-			break;
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	switch (i)
+	//	{
+	//	case 0:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_0);
+	//		break;
+	//	case 1:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_1);
+	//		break;
+	//	case 2:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_2);
+	//		break;
 
-		case 3:
-			_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
-			//_pStatusBox[i]->setSkillNum(SKILL_3);
-			break;
-		case 4:
-			_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
-			//_pStatusBox[i]->setSkillNum(SKILL_4);
-			break;
-		case 5:
-			_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
-			//_pStatusBox[i]->setSkillNum(SKILL_5);
-			//_pStatusBox[i]->_pSkillIcon->setNum(6);
-			break;
-		default:
-			_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
-			break;
-		}
-	}
+	//	case 3:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_3);
+	//		break;
+	//	case 4:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_4);
+	//		break;
+	//	case 5:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
+	//		//_pStatusBox[i]->setSkillNum(SKILL_5);
+	//		//_pStatusBox[i]->_pSkillIcon->setNum(6);
+	//		break;
+	//	default:
+	//		_pStatusBox[i]->_pSkillIcon->setNum(static_cast<int> (_pStatusBox[i]->getSkillName()));
+	//		break;
+	//	}
+	//}
 
 	_pStatusSelect->update();
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		//_pStatusBox[i]->setX(214 + i * 66);
 		_pStatusBox[i]->update();
@@ -319,16 +329,16 @@ void STATUSUI::render(HDC hdc)
 		_pStatusButton[i]->render(hdc);
 	}
 
-	//char str[222];
+	char str[222];
 
+		sprintf_s(str, "%d", _pPlayer->getCurrentSkill(PLAYER::SKILL_KEY::LBUTTON));
+		TextOut(hdc, 800, 500, str, strlen(str));
 	//for (int i = 0; i < 6; i++)
 	//{
 
 	//	//sprintf_s(str, "%d,%d", _pStatusBox[i]->getX(), _pStatusBox[i]->getY());
 	//	//TextOut(hdc, _pStatusBox[i]->getX(), _pStatusBox[i]->getY(), str, strlen(str));
 	//	
-	//	sprintf_s(str, "%d", _pStatusBox[i]->getSkillNum());
-	//	TextOut(hdc, 500 + i * 50, 500, str, strlen(str));
 	//	sprintf_s(str, "%d", _pStatusBox[i]->getSkillName());
 	//	TextOut(hdc, 500 + i * 50, 400, str, strlen(str));
 	//	
@@ -403,9 +413,10 @@ void STATUSUI::collision()
 			if (_pItemBox[i]->getIsItem())
 			{
 				_pItem[i]->setIsDrop(1);
-
+				break;
 			}
 		}
+		
 	}
 }
 
@@ -414,153 +425,273 @@ void STATUSUI::spaceKeyAndLButton()
 
 	for (int i = 0; i < 10; i++)
 	{
-		//스왑모드가 아닐때 충돌상태이고 해당박스와 키가 눌렸다 //카운트가 0일때만 들어오세요
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusSelect->getSelectState() != SWAP_STATE && _pStatusBox[i]->getIsCollision() && _count == 0)
+		switch (i)
 		{
-			_pStatusSelect->setSelectState(SWAP_STATE);//스왑모드가 되고
-			_pStatusBox[i]->setIsClick(true);//클릭상태만들어주고
-			_pStatusBox[i]->setFrameX(2);//프레임 녹색으로 해주고 
-			_count = 1;//일이됨
-			_temp = i;
-			break;//나옴
-		}
-		else if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusSelect->getSelectState() == SWAP_STATE && _pStatusBox[i]->getIsCollision() && _count == 1 && _pStatusBox[i]->getFrameX() == 2)
-		{
-			// 녹색이미지이면 해당박스랑 충돌일때
-			_pStatusSelect->setSelectState(SKILL_STATE);//스왑모드가 되고
-			_pStatusBox[i]->setIsClick(false);//클릭상태만들어주고
-			_pStatusBox[i]->setFrameX(0);//프레임 녹색으로 해주고 
-			_count = 0;//0
+		case 0: case 6:
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusBox[i]->getIsCollision() && _count == 0)
+			{
 
-			break;//나옴
-		}
-		else if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusSelect->getSelectState() == SWAP_STATE && _pStatusBox[i]->getIsCollision() && _count == 1 && _pStatusBox[_temp]->getFrameX() == 2 && _temp != i)
-		{
-			//system("pause");
-			//다른 박스랑 충돌할때
-			//스왑
-			_pStatusSelect->setSelectState(SKILL_STATE);//상태는 스킬
-			_pStatusBox[_temp]->setIsClick(false);
-			_pStatusBox[_temp]->setFrameX(0);//프레임 원래색
-			_count = 0;//0
-			//여기부터 스왑
-			/*_pTempBox = _pStatusBox[_temp];
-			_pTempBox->setX(_pStatusBox[_temp]->getX());
+				if (i == 6)
+				{
+					_temp = 0;
+					_pTempBox->setX(_pStatusBox[_temp]->getX());//6
+					_pTempBox->setY(_pStatusBox[_temp]->getY());//6
 
-
-			_pStatusBox[_temp] = _pStatusBox[i];
-
-			_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());
-
-			_pStatusBox[i] = _pTempBox;
-
-			_pStatusBox[i]->setX(_pTempBox->getX());*/
-
-			_pTempBox->setX(_pStatusBox[_temp]->getX());
-			_pTempBox->setSkillX(_pStatusBox[_temp]->getSkillX());
-
-			_pTempBox->setSkillNum(_pStatusBox[_temp]->getSkillNum());
-			//_pTempBox->setSkillName(_pStatusBox[_temp]->getSkillName());
-
-			_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());
-			_pStatusBox[_temp]->setSkillX(_pStatusBox[i]->getSkillX());
-
-			_pStatusBox[_temp]->setSkillNum(_pStatusBox[i]->getSkillNum());
-			//_pStatusBox[_temp]->setSkillName(_pStatusBox[i]->getSkillName());
+					_pTempBox->setSkillNum(_pStatusBox[_temp]->getSkillNum());
 
 
 
-			_pStatusBox[i]->setX(_pTempBox->getX());
-			_pStatusBox[i]->setSkillX(_pTempBox->getSkillX());
+					//_pTempBox->setSkillName(_pStatusBox[_temp]->getSkillName());
+					_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());//0<-
+					_pStatusBox[_temp]->setY(_pStatusBox[i]->getY());
 
-			_pStatusBox[i]->setSkillNum(_pTempBox->getSkillNum());
-			//_pStatusBox[i]->setSkillName(_pTempBox->getSkillName());
-			//해당스킬 번호도 스왑하고 그 스킬 번호에 따라 스킬 버튼이 업데이트 된다.
+					_pStatusBox[_temp]->setSkillNum(_pStatusBox[i]->getSkillNum());
+					//_pStatusBox[_temp]->setSkillName(_pStatusBox[i]->getSkillName());
+					_pStatusBox[i]->setX(_pTempBox->getX());//0<-6
+					_pStatusBox[i]->setY(_pTempBox->getY());//0<-6
 
-			break;
-		}
-		else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse) && _pStatusSelect->getSelectState() != SWAP_STATE && _count == 0)
-		{
-			//system("pause");
-			_pStatusSelect->setSelectState(SWAP_STATE);//스왑모드가 되고
-			_pStatusBox[i]->setIsClick(true);//클릭상태만들어주고
-			_pStatusBox[i]->setFrameX(2);//프레임 녹색으로 해주고 
-			_count = 1;//일이됨
-			_temp = i;
-			_pStatusSelect->setX(_pStatusBox[i]->getRC().left - 3);
-			_pStatusSelect->setY(_pStatusBox[i]->getRC().top - 2);
-			break;//나옴
-		}
-		else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse) && _pStatusSelect->getSelectState() == SWAP_STATE && _count == 1 && _pStatusBox[i]->getFrameX() == 2)
-		{
-			// 녹색이미지이면 해당박스랑 충돌일때
-			//system("pause");
-			_pStatusSelect->setSelectState(SKILL_STATE);//스왑모드가 되고
-			_pStatusBox[i]->setIsClick(false);//클릭상태만들어주고
-			_pStatusBox[i]->setFrameX(0);//프레임 녹색으로 해주고 
-			_count = 0;//0
-			_pStatusSelect->setX(_pStatusBox[i]->getRC().left - 3);
-			_pStatusSelect->setY(_pStatusBox[i]->getRC().top - 2);
-			break;//나옴
-		}
-		else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse) && _pStatusSelect->getSelectState() == SWAP_STATE && _count == 1 && _pStatusBox[_temp]->getFrameX() == 2 && _temp != i)
-		{
-			//system("pause");
-			//다른 박스랑 충돌할때
-			//스왑
-			_pStatusSelect->setSelectState(SKILL_STATE);//상태는 스킬
-			_pStatusBox[_temp]->setIsClick(false);
-			_pStatusBox[_temp]->setFrameX(0);//프레임 원래색
-			_count = 0;//0
-			//여기부터 스왑
-			_pStatusSelect->setX(_pStatusBox[i]->getRC().left - 3);
-			_pStatusSelect->setY(_pStatusBox[i]->getRC().top - 2);
+					_pStatusBox[i]->setSkillNum(_pTempBox->getSkillNum());
+					//_pStatusBox[i]->setSkillName(_pTempBox->getSkillName());
+				
+
+				}
+				else if (i == 0)
+				{
+					_temp = 6;
+					_pTempBox->setX(_pStatusBox[_temp]->getX());//6
+					_pTempBox->setY(_pStatusBox[_temp]->getY());//6
+
+					_pTempBox->setSkillNum(_pStatusBox[_temp]->getSkillNum());
+					//_pTempBox->setSkillName(_pStatusBox[_temp]->getSkillName());
+					_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());//0<-
+					_pStatusBox[_temp]->setY(_pStatusBox[i]->getY());
+
+					_pStatusBox[_temp]->setSkillNum(_pStatusBox[i]->getSkillNum());
+					//_pStatusBox[_temp]->setSkillName(_pStatusBox[i]->getSkillName());
+					_pStatusBox[i]->setX(_pTempBox->getX());//0<-6
+					_pStatusBox[i]->setY(_pTempBox->getY());//0<-6
+
+					_pStatusBox[i]->setSkillNum(_pTempBox->getSkillNum());
+					//_pStatusBox[i]->setSkillName(_pTempBox->getSkillName());
+				
+
+				}
 
 
-			/*	_pTempBox = _pStatusBox[_temp];
+				break;//나옴
+			}
+
+			else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse) && _count == 0)
+			{
 
 
-				_pStatusBox[_temp] = _pStatusBox[i];
+				if (i == 6)
+				{
+					_temp = 0;
+					_pTempBox->setX(_pStatusBox[_temp]->getX());//6
+					_pTempBox->setY(_pStatusBox[_temp]->getY());//6
 
+					_pTempBox->setSkillNum(_pStatusBox[_temp]->getSkillNum());
+					//_pTempBox->setSkillName(_pStatusBox[_temp]->getSkillName());
+					_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());//0<-
+					_pStatusBox[_temp]->setY(_pStatusBox[i]->getY());
 
-				_pStatusBox[i] = _pTempBox;*/
+					_pStatusBox[_temp]->setSkillNum(_pStatusBox[i]->getSkillNum());
+				//	_pStatusBox[_temp]->setSkillName(_pStatusBox[i]->getSkillName());
+					_pStatusBox[i]->setX(_pTempBox->getX());//0<-6
+					_pStatusBox[i]->setY(_pTempBox->getY());//0<-6
 
-				//int tempSkillNum, tempSkillName;
-				////int iSkillNum, iSkillName;
-			_pTempBox->setX(_pStatusBox[_temp]->getX());
-			_pTempBox->setSkillX(_pStatusBox[_temp]->getSkillX());
+					_pStatusBox[i]->setSkillNum(_pTempBox->getSkillNum());
+					//_pStatusBox[i]->setSkillName(_pTempBox->getSkillName());
+					
+					
 
-			_pTempBox->setSkillNum(_pStatusBox[_temp]->getSkillNum());
-			//_pTempBox->setSkillName(_pStatusBox[_temp]->getSkillName());
+				}
+				else if (i == 0)
+				{
+					_temp = 6;
+					_pTempBox->setX(_pStatusBox[_temp]->getX());//6
+					_pTempBox->setY(_pStatusBox[_temp]->getY());//6
 
-			_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());
-			_pStatusBox[_temp]->setSkillX(_pStatusBox[i]->getSkillX());
+					_pTempBox->setSkillNum(_pStatusBox[_temp]->getSkillNum());
+					//_pTempBox->setSkillName(_pStatusBox[_temp]->getSkillName());
+					_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());//0<-
+					_pStatusBox[_temp]->setY(_pStatusBox[i]->getY());
 
-			_pStatusBox[_temp]->setSkillNum(_pStatusBox[i]->getSkillNum());
-			//_pStatusBox[_temp]->setSkillName(_pStatusBox[i]->getSkillName());
+					_pStatusBox[_temp]->setSkillNum(_pStatusBox[i]->getSkillNum());
+					//_pStatusBox[_temp]->setSkillName(_pStatusBox[i]->getSkillName());
+					_pStatusBox[i]->setX(_pTempBox->getX());//0<-6
+					_pStatusBox[i]->setY(_pTempBox->getY());//0<-6
 
+					_pStatusBox[i]->setSkillNum(_pTempBox->getSkillNum());
+					//_pStatusBox[i]->setSkillName(_pTempBox->getSkillName());
+			
+				/*	_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY>(_pStatusBox[_temp]->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[_temp]->getSkillName()));
+					_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY>(_pStatusBox[i]->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[i]->getSkillName()));
+*/
 
-
-			_pStatusBox[i]->setX(_pTempBox->getX());
-			_pStatusBox[i]->setSkillX(_pTempBox->getSkillX());
-
-			_pStatusBox[i]->setSkillNum(_pTempBox->getSkillNum());
-			//_pStatusBox[i]->setSkillName(_pTempBox->getSkillName());
-
-
+				}
+				break;//나옴
+			}
 
 
 			break;
+		case 1:
+			//노 스왑
+			break;
+		case 2:
+			//노스왑
+			break;
+
+		default:
+			//스왑모드가 아닐때 충돌상태이고 해당박스와 키가 눌렸다 //카운트가 0일때만 들어오세요
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusSelect->getSelectState() != SWAP_STATE && _pStatusBox[i]->getIsCollision() && _count == 0)
+			{
+				_pStatusSelect->setSelectState(SWAP_STATE);//스왑모드가 되고
+				_pStatusBox[i]->setIsClick(true);//클릭상태만들어주고
+				_pStatusBox[i]->setFrameX(2);//프레임 녹색으로 해주고 
+				_count = 1;//일이됨
+				_temp = i;
+				break;//나옴
+			}
+			else if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusSelect->getSelectState() == SWAP_STATE && _pStatusBox[i]->getIsCollision() && _count == 1 && _pStatusBox[i]->getFrameX() == 2)
+			{
+				// 녹색이미지이면 해당박스랑 충돌일때
+				_pStatusSelect->setSelectState(SKILL_STATE);//스왑모드가 되고
+				_pStatusBox[i]->setIsClick(false);//클릭상태만들어주고
+				_pStatusBox[i]->setFrameX(0);//프레임 녹색으로 해주고 
+				_count = 0;//0
+
+				break;//나옴
+			}
+			else if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _pStatusSelect->getSelectState() == SWAP_STATE && _pStatusBox[i]->getIsCollision() && _count == 1 && _pStatusBox[_temp]->getFrameX() == 2 && _temp != i)
+			{
+				//system("pause");
+				//다른 박스랑 충돌할때
+				//스왑
+				_pStatusSelect->setSelectState(SKILL_STATE);//상태는 스킬
+				_pStatusBox[_temp]->setIsClick(false);
+				_pStatusBox[_temp]->setFrameX(0);//프레임 원래색
+				_count = 0;//0
+				//여기부터 스왑
+			
+
+				_pTempBox->setX(_pStatusBox[_temp]->getX());
+				_pTempBox->setY(_pStatusBox[_temp]->getY());
+				_pTempBox->setSkillX(_pStatusBox[_temp]->getSkillX());
+				_pTempBox->setSkillY(_pStatusBox[_temp]->getSkillY());
+				_pTempBox->setSkillNum(_pStatusBox[_temp]->getSkillNum());
+				
+
+				_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());
+				_pStatusBox[_temp]->setY(_pStatusBox[i]->getY());
+				_pStatusBox[_temp]->setSkillX(_pStatusBox[i]->getSkillX());
+				_pStatusBox[_temp]->setSkillY(_pStatusBox[i]->getSkillY());
+				_pStatusBox[_temp]->setSkillNum(_pStatusBox[i]->getSkillNum());
+			
+
+
+
+				_pStatusBox[i]->setX(_pTempBox->getX());
+				_pStatusBox[i]->setY(_pTempBox->getY());
+				_pStatusBox[i]->setSkillX(_pTempBox->getSkillX());
+				_pStatusBox[i]->setSkillY(_pTempBox->getSkillY());
+				_pStatusBox[i]->setSkillNum(_pTempBox->getSkillNum());
+			
+				//해당스킬 번호도 스왑하고 그 스킬 번호에 따라 스킬 버튼이 업데이트 된다.
+
+				break;
+			}
+			else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse) && _pStatusSelect->getSelectState() != SWAP_STATE && _count == 0)
+			{
+				//system("pause");
+				_pStatusSelect->setSelectState(SWAP_STATE);//스왑모드가 되고
+				_pStatusBox[i]->setIsClick(true);//클릭상태만들어주고
+				_pStatusBox[i]->setFrameX(2);//프레임 녹색으로 해주고 
+				_count = 1;//일이됨
+				_temp = i;
+				_pStatusSelect->setX(_pStatusBox[i]->getRC().left - 3);
+				_pStatusSelect->setY(_pStatusBox[i]->getRC().top - 2);
+				break;//나옴
+			}
+			else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse) && _pStatusSelect->getSelectState() == SWAP_STATE && _count == 1 && _pStatusBox[i]->getFrameX() == 2)
+			{
+				// 녹색이미지이면 해당박스랑 충돌일때
+				//system("pause");
+				_pStatusSelect->setSelectState(SKILL_STATE);//스왑모드가 되고
+				_pStatusBox[i]->setIsClick(false);//클릭상태만들어주고
+				_pStatusBox[i]->setFrameX(0);//프레임 녹색으로 해주고 
+				_count = 0;//0
+				_pStatusSelect->setX(_pStatusBox[i]->getRC().left - 3);
+				_pStatusSelect->setY(_pStatusBox[i]->getRC().top - 2);
+				break;//나옴
+			}
+			else if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_pStatusBox[i]->getRC(), _ptMouse) && _pStatusSelect->getSelectState() == SWAP_STATE && _count == 1 && _pStatusBox[_temp]->getFrameX() == 2 && _temp != i)
+			{
+				//system("pause");
+				//다른 박스랑 충돌할때
+				//스왑
+				_pStatusSelect->setSelectState(SKILL_STATE);//상태는 스킬
+				_pStatusBox[_temp]->setIsClick(false);
+				_pStatusBox[_temp]->setFrameX(0);//프레임 원래색
+				_count = 0;//0
+				//여기부터 스왑
+				_pStatusSelect->setX(_pStatusBox[i]->getRC().left - 3);
+				_pStatusSelect->setY(_pStatusBox[i]->getRC().top - 2);
+
+
+				_pTempBox->setX(_pStatusBox[_temp]->getX());
+				_pTempBox->setY(_pStatusBox[_temp]->getY());
+				_pTempBox->setSkillX(_pStatusBox[_temp]->getSkillX());
+				_pTempBox->setSkillY(_pStatusBox[_temp]->getSkillY());
+				_pTempBox->setSkillNum(_pStatusBox[_temp]->getSkillNum());
+
+
+				_pStatusBox[_temp]->setX(_pStatusBox[i]->getX());
+				_pStatusBox[_temp]->setY(_pStatusBox[i]->getY());
+				_pStatusBox[_temp]->setSkillX(_pStatusBox[i]->getSkillX());
+				_pStatusBox[_temp]->setSkillY(_pStatusBox[i]->getSkillY());
+				_pStatusBox[_temp]->setSkillNum(_pStatusBox[i]->getSkillNum());
+
+
+
+
+				_pStatusBox[i]->setX(_pTempBox->getX());
+				_pStatusBox[i]->setY(_pTempBox->getY());
+				_pStatusBox[i]->setSkillX(_pTempBox->getSkillX());
+				_pStatusBox[i]->setSkillY(_pTempBox->getSkillY());
+				_pStatusBox[i]->setSkillNum(_pTempBox->getSkillNum());
+
+
+
+
+
+				break;
+			}
+			break;
 		}
+
+
 	}
-
 
 	for (int i = 0; i < 6; i++)
 	{
-		_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY>(_pStatusBox[i]->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[i]->getSkillName()));
-		//_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (0), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[0]->getSkillName()));
+		for (int j = 0; j < 10; j++)
+		{
+			if (_findX[i] == _pStatusBox[j]->getX())
+			{
+				_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (_pStatusBox[j]->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[j]->getSkillName()));
+			}
+
+		}
 	}
 
+	for (int i = 1; i < 6; i++)
+	{
+		//_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY>(_pStatusBox[i]->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[i]->getSkillName()));
+		//_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY> (0), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[0]->getSkillName()));
+	}
+	//_pPlayer->setCurrentSkill(static_cast<PLAYER::SKILL_KEY>(_pStatusBox[7]->getSkillNum()), static_cast<PLAYER::SKILL_NAME> (_pStatusBox[7]->getSkillName()));
 
 
 }

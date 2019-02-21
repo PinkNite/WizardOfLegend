@@ -20,8 +20,8 @@ HRESULT ITEMWHITE::init(int x, int y)
 	_x = x;
 	_y = y;
 	KEYANIMANAGER->addObject("itemWhite1");
-	int arr[] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 };
-	KEYANIMANAGER->addArrayFrameAnimation("itemWhite1", "itemAction", "itemWhite", arr, 24, 1, 1);
+	int arr[] = {16,17,18,19};
+	KEYANIMANAGER->addArrayFrameAnimation("itemWhite1", "itemAction", "itemWhite", arr, 4, 1, 1);
 	_pAni = KEYANIMANAGER->findAnimation("itemWhite1", "itemAction");
 
 	return S_OK;
@@ -36,9 +36,10 @@ void ITEMWHITE::update()
 	if (_isAction)
 	{
 		_count++;
-		if (_count % 100 == 0)
+		if (_count % 35 == 0)
 		{
 			_pAni->start();
+			_count = 0;
 		}
 	}
 

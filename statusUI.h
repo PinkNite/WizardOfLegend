@@ -44,6 +44,8 @@ private:
 	ITEM* _pItem[12];
 
 	STATUSBOX* _pItemBox[12];
+
+	int _findX[6];
 public:
 	STATUSBOX* _pStatusBox[10];//이게 늘어나서 아이템을 받아야함
 	STATUSBOX* _pTempBox;

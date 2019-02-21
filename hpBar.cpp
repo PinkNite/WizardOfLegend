@@ -96,7 +96,7 @@ void HPBAR::setDamage(float currentHp, float maxHP)
 	_count2++;
 	_hpWidth = (hp / maxHP)*OBJECT::getImage()->GetWidth();
 	
-	if (_count2 % 5 == 0)
+	if (_count2 % 3 == 0)
 	{
 
 		if (_hpWidth < _width)
