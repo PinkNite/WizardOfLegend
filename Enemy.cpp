@@ -90,7 +90,10 @@ void Enemy::update()
 			_timeSet = 0;
 		}
 
-		_pCurrentState->update(this);
+		if (_pCurrentState != NULL && _pCurrentState != nullptr)
+		{
+			_pCurrentState->update(this);
+		}
 		_pCamera->pushRenderObject(this);
 	}
 }
